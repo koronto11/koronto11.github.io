@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[hexo_photo]]></title>
+    <url>%2F2018%2F03%2F06%2Fhexo-photo%2F</url>
+    <content type="text"><![CDATA[图片测试，来自Hexo大佬的指导，不通过第三方图床上传图片 1.首先确认_config.yml 中有 post_asset_folder:true。Hexo 提供了一种更方便管理 Asset 的设定：post_asset_folder当您设置post_asset_folder为true参数后，在建立文件时，Hexo会自动建立一个与文章同名的文件夹，您可以把与该文章相关的所有资源都放到那个文件夹，如此一来，您便可以更方便的使用资源。 2.在hexo的目录下执行npm install https://github.com/CodeFalling/hexo-asset-image –save（需要等待一段时间）。 3.完成安装后用hexo新建文章的时候会发现_posts目录下面会多出一个和文章名字一样的文件夹。图片就可以放在文件夹下面。结构如下： 本地图片测试├── apppicker.jpg├── logo.jpg└── rules.jpg本地图片测试.md这样的目录结构（目录名和文章名一致），只要使用 就可以插入图片。其中[]里面不写文字则没有图片标题。生成的结构为 public/2016/3/9/本地图片测试├── apppicker.jpg├── index.html├── logo.jpg└── rules.jpg同时，生成的 html 是 而不是愚蠢的 注意:通过常规的 markdown 语法和相对路径来引用图片和其它资源可能会导致它们在存档页或者主页上显示不正确。在Hexo2时代，社区创建了很多插件来解决这个问题。但是，随着Hexo3的发布，许多新的标签插件被加入到了核心代码中。这使得你可以更简单地在文章中引用你的资源。 作者：TSimeon链接：https://www.jianshu.com/p/c2ba9533088a來源：简书著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。]]></content>
+      <categories>
+        <category>Hexo教程</category>
+      </categories>
+      <tags>
+        <tag>HEXO技巧</tag>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[HEXO技巧分享--busuanzi技术]]></title>
     <url>%2F2018%2F03%2F05%2Ftest2%2F</url>
     <content type="text"><![CDATA[在新版的Next主题中，就内置了不蒜子作为统计工具我们只需要在主题config中配置即可 操作： 打开文件：themes/next/_config.yml busuanzi_count: count values only if the other configs are false enable: true custom uv span for the whole site site_uv: true site_uv_header: 访问人数 site_uv_footer: 人 custom pv span for the whole site site_pv: true site_pv_header: 总访问量 site_pv_footer: 次 custom pv span for one page only page_pv: true page_pv_header: 阅读数 page_pv_footer: 相关操作： enable: true 添加相关中文说明，不添加也行。 但若是我们想自己集成不蒜子具体实现方法 打开\themes\next\layout_partials\footer.swig文件,在copyright前加上这段代码 &lt;script async src=&quot;https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js&quot;&gt; &lt;/script&gt; 然后再合适的位置添加显示统计的代码 themes\iissnan\layout_third-party\analytics\busuanzi-counter.swig中 在这里有两中不同计算方式的统计代码： pv的方式，单个用户连续点击n篇文章，记录n次访问量&lt;span id=&quot;busuanzi_container_site_pv&quot;&gt; 本站总访问量&lt;span id=&quot;busuanzi_value_site_pv&quot;&gt;&lt;/span&gt;次 &lt;/span&gt; uv的方式，单个用户连续点击n篇文章，只记录1次访客数&lt;span id=&quot;busuanzi_container_site_uv&quot;&gt; 本站总访问量&lt;span id=&quot;busuanzi_value_site_uv&quot;&gt;&lt;/span&gt;次 &lt;/span&gt; 添加之后再执行hexo d -g，然后再刷新页面就能看到效果]]></content>
