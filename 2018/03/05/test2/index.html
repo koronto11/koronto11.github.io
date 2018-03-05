@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="刻写未来！">
 <meta property="og:description" content="在新版的Next主题中，就内置了不蒜子作为统计工具我们只需要在主题config中配置即可 操作： 打开文件：themes/next/_config.yml">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-05T16:05:47.409Z">
+<meta property="og:updated_time" content="2018-03-05T16:09:11.853Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HEXO技巧分享--busuanzi技术">
 <meta name="twitter:description" content="在新版的Next主题中，就内置了不蒜子作为统计工具我们只需要在主题config中配置即可 操作： 打开文件：themes/next/_config.yml">
@@ -361,25 +361,21 @@
 <p>操作：</p>
 <p>打开文件：<br>themes/next/_config.yml</p>
 <a id="more"></a>
-<h1 id="Show-PV-UV-of-the-website-page-with-busuanzi"><a href="#Show-PV-UV-of-the-website-page-with-busuanzi" class="headerlink" title="Show PV/UV of the website/page with busuanzi."></a>Show PV/UV of the website/page with busuanzi.</h1><h1 id="Get-more-information-on-http-ibruce-info-2015-04-04-busuanzi"><a href="#Get-more-information-on-http-ibruce-info-2015-04-04-busuanzi" class="headerlink" title="Get more information on http://ibruce.info/2015/04/04/busuanzi/"></a>Get more information on <a href="http://ibruce.info/2015/04/04/busuanzi/" target="_blank" rel="noopener">http://ibruce.info/2015/04/04/busuanzi/</a></h1><p>busuanzi_count:</p>
+<p>busuanzi_count:</p>
 <h1 id="count-values-only-if-the-other-configs-are-false"><a href="#count-values-only-if-the-other-configs-are-false" class="headerlink" title="count values only if the other configs are false"></a>count values only if the other configs are false</h1><p>  <code>enable: true</code></p>
-<h1 id="custom-uv-span-for-the-whole-site"><a href="#custom-uv-span-for-the-whole-site" class="headerlink" title="custom uv span for the whole site"></a>custom uv span for the whole site</h1><p>  <code>site_uv: true
-  site_uv_header: &lt;i class=&quot;fa fa-user&quot;&gt;&lt;/i&gt; 访问人数
-  site_uv_footer: 人</code></p>
-<h1 id="custom-pv-span-for-the-whole-site"><a href="#custom-pv-span-for-the-whole-site" class="headerlink" title="custom pv span for the whole site"></a>custom pv span for the whole site</h1><p>  <code>site_pv: true
-  site_pv_header: &lt;i class=&quot;fa fa-eye&quot;&gt;&lt;/i&gt; 总访问量
-  site_pv_footer: 次</code></p>
-<h1 id="custom-pv-span-for-one-page-only"><a href="#custom-pv-span-for-one-page-only" class="headerlink" title="custom pv span for one page only"></a>custom pv span for one page only</h1><p>  <code>page_pv: true
-  page_pv_header: &lt;i class=&quot;fa fa-file-o&quot;&gt;&lt;/i&gt; 阅读数
-  page_pv_footer:</code></p>
+<h1 id="custom-uv-span-for-the-whole-site"><a href="#custom-uv-span-for-the-whole-site" class="headerlink" title="custom uv span for the whole site"></a>custom uv span for the whole site</h1><p>   site_uv: true<br>   site_uv_header: <i class="fa fa-user"></i> 访问人数<br>   site_uv_footer: 人</p>
+<h1 id="custom-pv-span-for-the-whole-site"><a href="#custom-pv-span-for-the-whole-site" class="headerlink" title="custom pv span for the whole site"></a>custom pv span for the whole site</h1><p>  site_pv: true<br>  site_pv_header: <i class="fa fa-eye"></i> 总访问量<br>  site_pv_footer: 次</p>
+<h1 id="custom-pv-span-for-one-page-only"><a href="#custom-pv-span-for-one-page-only" class="headerlink" title="custom pv span for one page only"></a>custom pv span for one page only</h1><p>  page_pv: true<br>  page_pv_header: <i class="fa fa-file-o"></i> 阅读数<br>  page_pv_footer:</p>
 <p>相关操作： </p>
 <ol>
 <li>enable: true </li>
 <li>添加相关中文说明，不添加也行。</li>
 </ol>
 <p>但若是我们想自己集成不蒜子<br>具体实现方法</p>
-<p>打开\themes\next\layout_partials\footer.swig文件,在copyright前加上这段代码<br>    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></p>
-<p>然后再合适的位置添加显示统计的代码</p>
+<p>打开\themes\next\layout_partials\footer.swig文件,在copyright前加上这段代码</p>
+<pre><code>&lt;script async src=&quot;https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js&quot;&gt;
+&lt;/script&gt;
+</code></pre><p>然后再合适的位置添加显示统计的代码</p>
 <!--more-->
 <p>themes\iissnan\layout_third-party\analytics\busuanzi-counter.swig中</p>
 <p>在这里有两中不同计算方式的统计代码：</p>
@@ -608,7 +604,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Show-PV-UV-of-the-website-page-with-busuanzi"><span class="nav-number">1.</span> <span class="nav-text">Show PV/UV of the website/page with busuanzi.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Get-more-information-on-http-ibruce-info-2015-04-04-busuanzi"><span class="nav-number">2.</span> <span class="nav-text">Get more information on http://ibruce.info/2015/04/04/busuanzi/</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#count-values-only-if-the-other-configs-are-false"><span class="nav-number">3.</span> <span class="nav-text">count values only if the other configs are false</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#custom-uv-span-for-the-whole-site"><span class="nav-number">4.</span> <span class="nav-text">custom uv span for the whole site</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#custom-pv-span-for-the-whole-site"><span class="nav-number">5.</span> <span class="nav-text">custom pv span for the whole site</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#custom-pv-span-for-one-page-only"><span class="nav-number">6.</span> <span class="nav-text">custom pv span for one page only</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pv的方式，单个用户连续点击n篇文章，记录n次访问量"><span class="nav-number">7.</span> <span class="nav-text">pv的方式，单个用户连续点击n篇文章，记录n次访问量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#uv的方式，单个用户连续点击n篇文章，只记录1次访客数"><span class="nav-number">8.</span> <span class="nav-text">uv的方式，单个用户连续点击n篇文章，只记录1次访客数</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#count-values-only-if-the-other-configs-are-false"><span class="nav-number">1.</span> <span class="nav-text">count values only if the other configs are false</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#custom-uv-span-for-the-whole-site"><span class="nav-number">2.</span> <span class="nav-text">custom uv span for the whole site</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#custom-pv-span-for-the-whole-site"><span class="nav-number">3.</span> <span class="nav-text">custom pv span for the whole site</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#custom-pv-span-for-one-page-only"><span class="nav-number">4.</span> <span class="nav-text">custom pv span for one page only</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pv的方式，单个用户连续点击n篇文章，记录n次访问量"><span class="nav-number">5.</span> <span class="nav-text">pv的方式，单个用户连续点击n篇文章，记录n次访问量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#uv的方式，单个用户连续点击n篇文章，只记录1次访客数"><span class="nav-number">6.</span> <span class="nav-text">uv的方式，单个用户连续点击n篇文章，只记录1次访客数</span></a></li></ol></div>
             
 
           </div>
