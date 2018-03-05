@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="在新版的Next主题中，就内置了不蒜子作为统计工具我们只需要在主题config中配置即可 操作： 打开文件：themes/next/_config.yml Show PV/UV of the website/page with busuanzi.Get more information on http://ibruce.info/2015/04/04/busuanzi/busuanzi_count">
+<meta name="description" content="在新版的Next主题中，就内置了不蒜子作为统计工具我们只需要在主题config中配置即可 操作： 打开文件：themes/next/_config.yml">
 <meta name="keywords" content="HEXO技巧,hexo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HEXO技巧分享--busuanzi技术">
 <meta property="og:url" content="http://yoursite.com/2018/03/05/test2/index.html">
 <meta property="og:site_name" content="刻写未来！">
-<meta property="og:description" content="在新版的Next主题中，就内置了不蒜子作为统计工具我们只需要在主题config中配置即可 操作： 打开文件：themes/next/_config.yml Show PV/UV of the website/page with busuanzi.Get more information on http://ibruce.info/2015/04/04/busuanzi/busuanzi_count">
+<meta property="og:description" content="在新版的Next主题中，就内置了不蒜子作为统计工具我们只需要在主题config中配置即可 操作： 打开文件：themes/next/_config.yml">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-05T12:58:36.696Z">
+<meta property="og:updated_time" content="2018-03-05T13:05:16.185Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HEXO技巧分享--busuanzi技术">
-<meta name="twitter:description" content="在新版的Next主题中，就内置了不蒜子作为统计工具我们只需要在主题config中配置即可 操作： 打开文件：themes/next/_config.yml Show PV/UV of the website/page with busuanzi.Get more information on http://ibruce.info/2015/04/04/busuanzi/busuanzi_count">
+<meta name="twitter:description" content="在新版的Next主题中，就内置了不蒜子作为统计工具我们只需要在主题config中配置即可 操作： 打开文件：themes/next/_config.yml">
 
 
 
@@ -360,6 +360,7 @@
         <p>在新版的Next主题中，就内置了不蒜子作为统计工具<br>我们只需要在主题config中配置即可</p>
 <p>操作：</p>
 <p>打开文件：<br>themes/next/_config.yml</p>
+<a id="more"></a>
 <h1 id="Show-PV-UV-of-the-website-page-with-busuanzi"><a href="#Show-PV-UV-of-the-website-page-with-busuanzi" class="headerlink" title="Show PV/UV of the website/page with busuanzi."></a>Show PV/UV of the website/page with busuanzi.</h1><h1 id="Get-more-information-on-http-ibruce-info-2015-04-04-busuanzi"><a href="#Get-more-information-on-http-ibruce-info-2015-04-04-busuanzi" class="headerlink" title="Get more information on http://ibruce.info/2015/04/04/busuanzi/"></a>Get more information on <a href="http://ibruce.info/2015/04/04/busuanzi/" target="_blank" rel="noopener">http://ibruce.info/2015/04/04/busuanzi/</a></h1><p>busuanzi_count:</p>
 <h1 id="count-values-only-if-the-other-configs-are-false"><a href="#count-values-only-if-the-other-configs-are-false" class="headerlink" title="count values only if the other configs are false"></a>count values only if the other configs are false</h1><p>  enable: true</p>
 <h1 id="custom-uv-span-for-the-whole-site"><a href="#custom-uv-span-for-the-whole-site" class="headerlink" title="custom uv span for the whole site"></a>custom uv span for the whole site</h1><p>  site_uv: true<br>  site_uv_header: <i class="fa fa-user"></i> 访问人数<br>  site_uv_footer: 人</p>
@@ -375,7 +376,7 @@
 <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 <p>然后再合适的位置添加显示统计的代码</p>
-<a id="more"></a>
+<!--more-->
 <p>themes\iissnan\layout_third-party\analytics\busuanzi-counter.swig中<br>   </p>
 <p>在这里有两中不同计算方式的统计代码：</p>
 <h1 id="pv的方式，单个用户连续点击n篇文章，记录n次访问量"><a href="#pv的方式，单个用户连续点击n篇文章，记录n次访问量" class="headerlink" title="pv的方式，单个用户连续点击n篇文章，记录n次访问量"></a>pv的方式，单个用户连续点击n篇文章，记录n次访问量</h1><pre><code>&lt;span id=&quot;busuanzi_container_site_pv&quot;&gt;
