@@ -1090,7 +1090,7 @@ pre .javascript .function {
   bottom: 19px;
 }
 .header {
-  background: url("");
+  background: url(".\hexo\hexo\source\image\koro.jpg");
 }
 .header-inner {
   position: relative;
@@ -1822,7 +1822,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #5c57cf;
+  background: #8ff;
 }
 .links-of-blogroll {
   font-size: 13px;
