@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[区块链技术解读--哈希算法]]></title>
+    <url>%2F2018%2F03%2F06%2F%E5%8C%BA%E5%9D%97%E9%93%BE01%2F</url>
+    <content type="text"><![CDATA[哈希算法 Hash算法是密码学基础，较常用的是MD5系和SHA系的散列算法结构最重要的两条特性为不可逆和无冲突但是这两条特性在数学上是不成立的不可逆即不可能反向推出哈希码所对应的明文内容，但是既然明文对应密文，非动态，那么就一直可以推出明文，在算法上利用穷举法或者彩虹表可以反解出明文内容因为一个函数必然可逆，且由于HASH函数的值域有限，理论上会有无穷多个不同的原始值，它们的hash值都相同，就是一个密文对应无限明文。无冲突不算是真的无冲突，密文对应明文，但是密文根据算法的不同，有限制规定的长度，而明文是无限的，所以是有可能发生哈希碰撞的 MD5和SHA做到的，是求逆和求冲突在计算上不可能，也就是正向计算很容易，而反向计算即使穷尽人类所有的计算资源都做不到。 哈希加密算法 MD5,SHA-1,SHA-2,SHA-256,SHA-512,SHA-3,RIPEMD-160等引用自 http://www.atool.org/hash.php MD5算法MD5即Message-Digest Algorithm 5（信息-摘要算法 5），用于确保信息传输完整一致。是计算机广泛使用的散列算法之一（又译摘要算法、哈希算法），主流编程语言普遍已有MD5实现。 将数据（如汉字）运算为另一固定长度值，是散列算法的基础原理，MD5的前身有MD2、MD3和MD4。MD5一度被广泛应用于安全领域。但是由于MD5的弱点被不断发现以及计算机能力不断的提升，现在已经可以构造两个具有相同MD5的信息[2]，使本算法不再适合当前的安全环境。目前，MD5计算广泛应用于错误检查。例如在一些BitTorrent下载中，软件通过计算MD5和检验下载到的碎片的完整性。MD5是输入不定长度信息，输出固定长度128-bits的算法。经过程序流程，生成四个32位数据，最后联合起来成为一个128-bits散列。基本方式为，求余、取余、调整长度、与链接变量进行循环运算。得出结果。 SHA-1哈希加密算法SHA-1在许多安全协议中广为使用，包括TLS和SSL、PGP、SSH、S/MIME和IPsec，曾被视为是MD5（更早之前被广为使用的散列函数）的后继者。但SHA-1的安全性如今被密码学家严重质疑。 SHA-2哈希加密算法SHA-224、SHA-256、SHA-384，和SHA-512并称为SHA-2。新的散列函数并没有接受像SHA-1一样的公众密码社区做详细的检验，所以它们的密码安全性还不被大家广泛的信任。虽然至今尚未出现对SHA-2有效的攻击，它的算法跟SHA-1基本上仍然相似；因此有些人开始发展其他替代的散列算法。 SHA-3哈希加密算法SHA-3，之前名为Keccak算法，是一个加密杂凑算法。SHA-3并不是要取代SHA-2，因为SHA-2目前并没有出现明显的弱点。由于对MD5出现成功的破解，以及对SHA-0和SHA-1出现理论上破解的方法，NIST感觉需要一个与之前算法不同的，可替换的加密杂凑算法，也就是现在的SHA-3。 RIPEMD-160哈希加密算法RIPEMD-160 是一个 160 位加密哈希函数。它旨在用于替代 128 位哈希函数 MD4、MD5 和 RIPEMD。RIPEMD 是在 EU 项目 RIPE（RACE Integrity Primitives Evaluation，1988-1992）的框架中开发的。]]></content>
+      <categories>
+        <category>区块链技术</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+        <tag>数字货币</tag>
+        <tag>互联网金融</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[HEXO技巧分享--不借助第三方图库上传图片]]></title>
     <url>%2F2018%2F03%2F06%2Fhexo-photo%2F</url>
     <content type="text"><![CDATA[图片测试，来自Hexo大佬的指导，不通过第三方图床上传图片 1.首先确认_config.yml 中有 post_asset_folder:true。Hexo 提供了一种更方便管理 Asset 的设定：post_asset_folder当您设置post_asset_folder为true参数后，在建立文件时，Hexo会自动建立一个与文章同名的文件夹，您可以把与该文章相关的所有资源都放到那个文件夹，如此一来，您便可以更方便的使用资源。 2.在hexo的目录下执行npm install https://github.com/CodeFalling/hexo-asset-image –save（需要等待一段时间）。 3.完成安装后用hexo新建文章的时候会发现_posts目录下面会多出一个和文章名字一样的文件夹。图片就可以放在文件夹下面。结构如下： 本地图片测试├── apppicker.jpg├── logo.jpg└── rules.jpg本地图片测试.md这样的目录结构（目录名和文章名一致），只要使用 ![logo](本地图片测试/logo.jpg)格式 就可以插入图片。其中[]里面不写文字则没有图片标题。生成的结构为 public/2016/3/9/本地图片测试├── apppicker.jpg├── index.html├── logo.jpg└── rules.jpg同时，生成的 html 是 &lt;img src=&quot;/2016/3/9/本地图片测试/logo.jpg&quot; alt=&quot;logo&quot;&gt; 而不是愚蠢的 &lt;img src=&quot;本地图片测试/logo.jpg&quot; alt=&quot;logo&quot;&gt; 注意:通过常规的 markdown 语法和相对路径来引用图片和其它资源可能会导致它们在存档页或者主页上显示不正确。在Hexo2时代，社区创建了很多插件来解决这个问题。但是，随着Hexo3的发布，许多新的标签插件被加入到了核心代码中。这使得你可以更简单地在文章中引用你的资源。 比如说：当你打开文章资源文件夹功能后，你把一个 example.jpg图片放在了你的资源文件夹中，如果通过使用相对路径的常规 markdown 语法 ，它将 不会 出现在首页上。（但是它会在文章中按你期待的方式工作） 正确的引用图片方式是使用下列的标签插件而不是markdown 作者：TSimeon链接：https://www.jianshu.com/p/c2ba9533088a來源：简书著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。]]></content>
