@@ -92,7 +92,13 @@
 <meta property="og:image" content="http://yoursite.com/2018/03/06/区块链01/main.png">
 <meta property="og:image" content="http://yoursite.com/2018/03/06/区块链01/IMG_3237.JPG">
 <meta property="og:image" content="http://yoursite.com/2018/03/06/区块链01/IMG_3238.JPG">
-<meta property="og:updated_time" content="2018-03-06T04:40:47.778Z">
+<meta property="og:image" content="http://yoursite.com/2018/03/06/区块链01/tushuo01.JPG">
+<meta property="og:image" content="http://yoursite.com/2018/03/06/区块链01/tushuo03.JPG">
+<meta property="og:image" content="http://yoursite.com/2018/03/06/区块链01/tushuo04.JPG">
+<meta property="og:image" content="http://yoursite.com/2018/03/06/区块链01/tushuo02.JPG">
+<meta property="og:image" content="http://yoursite.com/2018/03/06/区块链01/tushuo05.JPG">
+<meta property="og:image" content="http://yoursite.com/2018/03/06/区块链01/tushuo06.JPG">
+<meta property="og:updated_time" content="2018-03-06T08:19:12.079Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="区块链技术解读--哈希算法">
 <meta name="twitter:description" content="哈希算法">
@@ -412,6 +418,32 @@
 <h2 id="SHA-2哈希加密算法"><a href="#SHA-2哈希加密算法" class="headerlink" title="SHA-2哈希加密算法"></a>SHA-2哈希加密算法</h2><p>SHA-224、SHA-256、SHA-384，和SHA-512并称为SHA-2。<br>新的散列函数并没有接受像SHA-1一样的公众密码社区做详细的检验，所以它们的密码安全性还不被大家广泛的信任。<br>虽然至今尚未出现对SHA-2有效的攻击，它的算法跟SHA-1基本上仍然相似；因此有些人开始发展其他替代的散列算法。</p>
 <h2 id="SHA-3哈希加密算法"><a href="#SHA-3哈希加密算法" class="headerlink" title="SHA-3哈希加密算法"></a>SHA-3哈希加密算法</h2><p>SHA-3，之前名为Keccak算法，是一个加密杂凑算法。<br>SHA-3并不是要取代SHA-2，因为SHA-2目前并没有出现明显的弱点。<br>由于对MD5出现成功的破解，以及对SHA-0和SHA-1出现理论上破解的方法，NIST感觉需要一个与之前算法不同的，可替换的加密杂凑算法，也就是现在的SHA-3。</p>
 <h2 id="RIPEMD-160哈希加密算法"><a href="#RIPEMD-160哈希加密算法" class="headerlink" title="RIPEMD-160哈希加密算法"></a>RIPEMD-160哈希加密算法</h2><p>RIPEMD-160 是一个 160 位加密哈希函数。<br>它旨在用于替代 128 位哈希函数 MD4、MD5 和 RIPEMD。<br>RIPEMD 是在 EU 项目 RIPE（RACE Integrity Primitives Evaluation，1988-1992）的框架中开发的。</p>
+<p>引用自新浪微博</p>
+<blockquote>
+<p><a href="http://blog.sina.com.cn/s/blog_1799256a10102x3fh.html" target="_blank" rel="noopener">http://blog.sina.com.cn/s/blog_1799256a10102x3fh.html</a></p>
+</blockquote>
+<p>Hash算法将任意长度的二进制值映射为较短的固定长度的二进制值，这个小的二进制值称为哈希值。哈希值是一段数据唯一且极其紧凑的数值表示形式。如果散列一段明文而且哪怕只更改该段落的一个字母，随后的哈希都将产生不同的值。要找到散列为同一个值的两个不同的输入，在计算上是不可能的，所以数据的哈希值可以检验数据的完整性。一般用于快速查找和加密算法。</p>
+<p>再引入一个hash表概念，计算机数据结构中，给定一个表M，关键字key，存在函数H(key)，对任意给定的关键字值key，代入函数后若能得到包含该关键字的记录在表中的地址，则称表M为hash表。</p>
+<p>简单理解hash算法就是这一种单向的加密，一个明文加密称为密文，不可逆推，只有加密过程，没有解密过程。说明了hash函数和hash表的概念，那么目前常用的hash算法有MD5（已被破解），SHA系列算法（比特币中使用sha-256算法）。SHA这里稍微提下（secure hash algorithm）这不是一个算法，这是一个hash函数集，现在有sha-224、sha-256、sha-384、sha-512等算法。在09年中本聪设计比特币的时候，当时sha-256被认为最安全的算法之一，故选择了sha-256，到目前为止还没有被破解。</p>
+<p>解释到这里，可能会联想到，hash算法中key在计算后如果出现了同一位置，冲突的产生，这里简单说下几种冲突处理，如有兴趣可以查看hash算法论文。</p>
+<p>1.拉链法：这种方法可以完全避免冲突，将所有关键字为同义词的结点链接在同一个单链表中。若选定的散列表长度为m，则可将散列表定义为一个由m个头指针组成的指针数组t[0..m-1]。凡是散列地址为i的结点，均插入到以t为头指针的单链表中。t中各分量的初值均应为空指针。在拉链法中，装填因子α可以大于1，但一般均取α≤1。</p>
+<p>2.多哈希法：设计两种以上的hash函数，避免冲突，这个感觉比较不靠谱，但是从概率上来说多种hash函数还是降低了冲突的出现。</p>
+<p>3.开放地址法：开放地址法有一个公式：Hi=(H(key)+di) MOD m i=1,2,…,k(k&lt;=m-1），其中，m为哈希表的表长。di 是产生冲突的时候的增量序列。如果di值可能为1,2,3,…m-1，称线性探测再散列。如果di取1，则每次冲突之后，向后移动1个位置.如果di取值可能为1,-1,4,-4,9,-9,16,-16,…k<em>k,-k</em>k(k&lt;=m/2），称二次探测再散列。如果di取值可能为伪随机数列。称伪随机探测再散列。</p>
+<p>Hash算法函数根据分类：加法hash、位运算hash、乘法hash、除法hash、查表hash等。</p>
+<h1 id="区块链中的哈希解读"><a href="#区块链中的哈希解读" class="headerlink" title="区块链中的哈希解读"></a>区块链中的哈希解读</h1><p>因为区块链技术作为比特币的底层技术之一，目的是用于保证数字货币在交易环节中的安全性。</p>
+<p>在徐明星的图说区块链中以一种图解更直观的形式这样说道</p>
+<p><img src="/2018/03/06/区块链01/tushuo01.JPG" alt="logo"><br><img src="/2018/03/06/区块链01/tushuo03.JPG" alt="logo"><br><img src="/2018/03/06/区块链01/tushuo04.JPG" alt="logo"></p>
+<p>结合区块链，在区块链中很多地方都用到了hash函数：</p>
+<p>1.区块链中节点的地址、公钥、私钥的计算。以地址为例：公钥经过一次SHA256计算，再进行一次RIPEMD160计算，得到一个公钥哈希（20字节\160比特），添加版本信息，再来两次SHA256运算、取前4比特字节，放到哈希公钥加版本信息后，再经过base58编码，最终得到地址。</p>
+<p>2.merkle tree：是数据结构中的一种树结构，可以是二叉树，也可以是多叉树，他和数据结构中树的特点几乎一致，和普通树不同的是：merkle tree上的叶节点存放hash计算后的hash值，非叶节点是其对应的子节点串联的字符串的hash值。用于区块头和SPV认证中。</p>
+<p>3.比特币中的挖矿，工作量证明（pow），计算的其实就是一个nonce，当这个随机数和其他散列过的数据合并时，产生一个比规定目标小（target）值。挖矿也可以理解一种快速不可逆的计算。SHA256(SHA256(version + prev_hash + merkle_root + ntime + nbits + x )) &lt; TARGET。</p>
+<p>4.比特币中的bloom filter布隆过滤器，布隆过滤器基于hash函数的快速查找。解决了客户端检索的问题，原理是Bloom filter可以快速判断出某检索值一定不存在于某个指定的集合，从而可以过滤掉大量无关数据，减少客户端不必要的下载量。</p>
+<p>简单介绍了HASH算法，和区块链中用到的HASH算法，区块链是多个技术的结合，结合各自特点出现的一种新的技术架构，HASH算法和加密技术为区块链的自证信任化及安全控制提供了基础，算法的碰撞和现在量子计算的发展，之前在区块链的安全性的文章中笔者有过说明，技术不断发展，肯定会有更适合的技术保障应用的实现。</p>
+<p><img src="/2018/03/06/区块链01/tushuo02.JPG" alt="logo"></p>
+<p>SHA (Secure Hash Algorithm，译作安全散列算法) 是美国国家安全局 (NSA) 设计，美国国家标准与技术研究院 (NIST) 发布的一系列密码散列函数，经历了SHA-0，SHA-1，SHA-2，SHA-3系列发展。NSA于2007年正式宣布在全球范围内征集新新一代（SHA-3）算法设计，2012年公布评选结果， Keccak算法最终获胜成为唯一官方标准SHA-3算法，但还有四种算法同时进入了第三轮评选，分别是：BLAKE, GrøSTL, JH和SKEIN，这些算法其实也非常安全，而且经受审查，被各种竞争币频繁使用。 </p>
+<p><img src="/2018/03/06/区块链01/tushuo05.JPG" alt="logo"></p>
+<p>比特币采用SHA256算法，该算法属于SHA-2系列，在中本聪发明比特币时（2008）被公认为最安全最先进的算法之一。除了生成地址中有一个环节使用了REPID-160算法，比特币系统中但凡有需要做Hash运算的地方都是用SHA256。随着比特币被更多人了解，大家开始好奇中本聪为何选择了SHA256，同时对SHA256的安全性发表各种意见，SHA256妥妥经受了质疑，到目前为止，没有公开的证据表明SHA256有漏洞，SHA256依然牢牢抗住保卫比特币安全的大旗。当然大家心里都明白，没有永远安全的算法，SHA256被替代是早晚的事，中本聪自己也说明了算法升级的必要和过程。</p>
+<p><img src="/2018/03/06/区块链01/tushuo06.JPG" alt="logo"></p>
 
       
     </div>
@@ -649,7 +681,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#哈希算法"><span class="nav-number">1.</span> <span class="nav-text">哈希算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MD5算法"><span class="nav-number">1.1.</span> <span class="nav-text">MD5算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SHA-1哈希加密算法"><span class="nav-number">1.2.</span> <span class="nav-text">SHA-1哈希加密算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SHA-2哈希加密算法"><span class="nav-number">1.3.</span> <span class="nav-text">SHA-2哈希加密算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SHA-3哈希加密算法"><span class="nav-number">1.4.</span> <span class="nav-text">SHA-3哈希加密算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RIPEMD-160哈希加密算法"><span class="nav-number">1.5.</span> <span class="nav-text">RIPEMD-160哈希加密算法</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#哈希算法"><span class="nav-number">1.</span> <span class="nav-text">哈希算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MD5算法"><span class="nav-number">1.1.</span> <span class="nav-text">MD5算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SHA-1哈希加密算法"><span class="nav-number">1.2.</span> <span class="nav-text">SHA-1哈希加密算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SHA-2哈希加密算法"><span class="nav-number">1.3.</span> <span class="nav-text">SHA-2哈希加密算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SHA-3哈希加密算法"><span class="nav-number">1.4.</span> <span class="nav-text">SHA-3哈希加密算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RIPEMD-160哈希加密算法"><span class="nav-number">1.5.</span> <span class="nav-text">RIPEMD-160哈希加密算法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#区块链中的哈希解读"><span class="nav-number">2.</span> <span class="nav-text">区块链中的哈希解读</span></a></li></ol></div>
             
 
           </div>
