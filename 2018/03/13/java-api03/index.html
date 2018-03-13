@@ -81,18 +81,20 @@
 
 
 
-<meta name="description" content="future is detail！">
+<meta name="description" content="Excel是我们平时工作中比较常用的用于存储二维表数据的，JAVA也可以直接对Excel进行操作，在这篇博客中将为大家介绍两种操作Excel的方式，分别为：jxl和poi。 对于两者的区别网上有测试如下：">
 <meta name="keywords" content="java,大数据,java类库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JAVA开发常用类库--Excel读写库">
 <meta property="og:url" content="http://yoursite.com/2018/03/13/java-api03/index.html">
 <meta property="og:site_name" content="刻写未来！">
-<meta property="og:description" content="future is detail！">
+<meta property="og:description" content="Excel是我们平时工作中比较常用的用于存储二维表数据的，JAVA也可以直接对Excel进行操作，在这篇博客中将为大家介绍两种操作Excel的方式，分别为：jxl和poi。 对于两者的区别网上有测试如下：">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-13T07:46:29.411Z">
+<meta property="og:image" content="http://yoursite.com/2018/03/13/java-api03/main.png">
+<meta property="og:updated_time" content="2018-03-13T10:34:36.332Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA开发常用类库--Excel读写库">
-<meta name="twitter:description" content="future is detail！">
+<meta name="twitter:description" content="Excel是我们平时工作中比较常用的用于存储二维表数据的，JAVA也可以直接对Excel进行操作，在这篇博客中将为大家介绍两种操作Excel的方式，分别为：jxl和poi。 对于两者的区别网上有测试如下：">
+<meta name="twitter:image" content="http://yoursite.com/2018/03/13/java-api03/main.png">
 
 
 
@@ -393,7 +395,282 @@
       
 
       
-        
+        <p>Excel是我们平时工作中比较常用的用于存储二维表数据的，JAVA也可以直接对Excel进行操作，在这篇博客中将为大家介绍两种操作Excel的方式，分别为：jxl和poi。</p>
+<p>对于两者的区别网上有测试如下：</p>
+<p><img src="/2018/03/13/java-api03/main.png" alt="logo"></p>
+<a id="more"></a>
+<p>在小数据量时jxl快于poi，在大数据量时poi要快于jxl。但差距都不明显。</p>
+<h1 id="jxl"><a href="#jxl" class="headerlink" title="jxl"></a>jxl</h1><p>jxl.jar是通过java操作excel表格的工具类库；</p>
+<p>在开始进行Java读写Excel前，我们需要先下一个jxl的jar包，这个jar包中提供了相关读写Excel的方法，在百度里所搜一下jxl.jar下载就会出现很多下载地址了，这里不再累述。随后我们将jxl.jar放到classpath下或者在工程的buildpath中添加jxl.jar后，便可以开始Java读写Excel的神秘之旅了。</p>
+<p>通过模拟实现创建一个表格，然后模拟添加到表格中数据，实际开发过程中都是通过从数据库导入到表格中的数据:</p>
+<h2 id="写xls-xlsx"><a href="#写xls-xlsx" class="headerlink" title="写xls/xlsx"></a>写xls/xlsx</h2><pre><code>package com.bie;
+
+import java.io.File;
+import java.io.IOException;
+
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
+
+/** 
+ * @author BieHongLi 
+ * @version 创建时间：2017年3月3日 下午4:03:18 
+ * 创建excel表格
+ */
+public class CreateExcel {
+
+    public static void main(String[] args) 
+            throws IOException, RowsExceededException, WriteException {
+        //1:创建excel文件
+        File file=new File(&quot;test.xls&quot;);
+        file.createNewFile();
+
+        //2:创建工作簿
+        WritableWorkbook workbook=Workbook.createWorkbook(file);
+        //3:创建sheet,设置第二三四..个sheet，依次类推即可
+        WritableSheet sheet=workbook.createSheet(&quot;用户管理&quot;, 0);
+        //4：设置titles
+        String[] titles={&quot;编号&quot;,&quot;账号&quot;,&quot;密码&quot;};
+        //5:单元格
+        Label label=null;
+        //6:给第一行设置列名
+        for(int i=0;i&lt;titles.length;i++){
+            //x,y,第一行的列名
+            label=new Label(i,0,titles[i]);
+            //7：添加单元格
+            sheet.addCell(label);
+        }
+        //8：模拟数据库导入数据
+        for(int i=1;i&lt;10;i++){
+            //添加编号，第二行第一列
+            label=new Label(0,i,i+&quot;&quot;);
+            sheet.addCell(label);
+
+            //添加账号
+            label=new Label(1,i,&quot;10010&quot;+i);
+            sheet.addCell(label);
+
+            //添加密码
+            label=new Label(2,i,&quot;123456&quot;);
+            sheet.addCell(label);
+        }
+
+        //写入数据，一定记得写入数据，不然你都开始怀疑世界了，excel里面啥都没有
+        workbook.write();
+        //最后一步，关闭工作簿
+        workbook.close();
+    }
+}
+</code></pre><p>读取excel表格里面的数据，案例如下所示:</p>
+<h2 id="读xls-xlsx"><a href="#读xls-xlsx" class="headerlink" title="读xls/xlsx"></a>读xls/xlsx</h2><pre><code>package com.bie;
+
+import java.io.File;
+
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
+
+/** 
+ * @author BieHongLi 
+ * @version 创建时间：2017年3月3日 下午5:28:53 
+ * 读取excel的表格的数据
+ */
+public class ReadExcel {
+
+    public static void main(String[] args) throws Exception{
+        //1:创建workbook
+        Workbook workbook=Workbook.getWorkbook(new File(&quot;test.xls&quot;)); 
+        //2:获取第一个工作表sheet
+        Sheet sheet=workbook.getSheet(0);
+        //3:获取数据
+        System.out.println(&quot;行：&quot;+sheet.getRows());
+        System.out.println(&quot;列：&quot;+sheet.getColumns());
+        for(int i=0;i&lt;sheet.getRows();i++){
+            for(int j=0;j&lt;sheet.getColumns();j++){
+                Cell cell=sheet.getCell(j,i);
+                System.out.print(cell.getContents()+&quot; &quot;);
+            }
+            System.out.println();
+        }
+
+        //最后一步：关闭资源
+        workbook.close();
+    }
+
+
+}
+</code></pre><h1 id="poi"><a href="#poi" class="headerlink" title="poi"></a>poi</h1><p>工作中经常需要对Excel进行读写操作，java操作excel文件比较流行的是apache poi包，excel分为xls（2003）和xlsx（2007）两种格式，操作这两种格式的excel需要不同的poi包。</p>
+<p>注意别弄混</p>
+<h2 id="xls格式"><a href="#xls格式" class="headerlink" title="xls格式"></a>xls格式</h2><pre><code>&lt;dependency&gt;
+     &lt;groupId&gt;org.apache.poi&lt;/groupId&gt;
+     &lt;artifactId&gt;poi&lt;/artifactId&gt;
+     &lt;version&gt;3.11-beta1&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre><h2 id="xlsx格式"><a href="#xlsx格式" class="headerlink" title="xlsx格式"></a>xlsx格式</h2><pre><code>&lt;dependency&gt;
+      &lt;groupId&gt;org.apache.poi&lt;/groupId&gt;
+      &lt;artifactId&gt;poi-ooxml&lt;/artifactId&gt;
+      &lt;version&gt;3.11-beta1&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre><h2 id="读xls"><a href="#读xls" class="headerlink" title="读xls"></a>读xls</h2><pre><code>File file = new File(&quot;src/test/resources/test.xls&quot;);
+POIFSFileSystem poifsFileSystem = new POIFSFileSystem(new FileInputStream(file));
+HSSFWorkbook hssfWorkbook =  new HSSFWorkbook(poifsFileSystem);
+HSSFSheet hssfSheet = hssfWorkbook.getSheetAt(0);
+
+int rowstart = hssfSheet.getFirstRowNum();
+int rowEnd = hssfSheet.getLastRowNum();
+for(int i=rowstart;i&lt;=rowEnd;i++)
+{
+    HSSFRow row = hssfSheet.getRow(i);
+    if(null == row) continue;
+    int cellStart = row.getFirstCellNum();
+    int cellEnd = row.getLastCellNum();
+
+    for(int k=cellStart;k&lt;=cellEnd;k++)
+    {
+        HSSFCell cell = row.getCell(k);
+        if(null==cell) continue;
+        System.out.print(&quot;&quot; + k + &quot;  &quot;);
+        //System.out.print(&quot;type:&quot;+cell.getCellType());
+
+        switch (cell.getCellType())
+        {
+            case HSSFCell.CELL_TYPE_NUMERIC: // 数字
+                            System.out.print(cell.getNumericCellValue()
+                        + &quot;   &quot;);
+                break;
+            case HSSFCell.CELL_TYPE_STRING: // 字符串
+                System.out.print(cell.getStringCellValue()
+                        + &quot;   &quot;);
+                break;
+            case HSSFCell.CELL_TYPE_BOOLEAN: // Boolean
+                System.out.println(cell.getBooleanCellValue()
+                        + &quot;   &quot;);
+                break;
+            case HSSFCell.CELL_TYPE_FORMULA: // 公式
+                System.out.print(cell.getCellFormula() + &quot;   &quot;);
+                break;
+            case HSSFCell.CELL_TYPE_BLANK: // 空值
+                System.out.println(&quot; &quot;);
+                break;
+            case HSSFCell.CELL_TYPE_ERROR: // 故障
+                System.out.println(&quot; &quot;);
+                break;
+            default:
+                System.out.print(&quot;未知类型   &quot;);
+                break;
+        }
+
+    }
+    System.out.print(&quot;\n&quot;);
+}
+</code></pre><h2 id="读xlsx"><a href="#读xlsx" class="headerlink" title="读xlsx"></a>读xlsx</h2><pre><code>File file = new File(&quot;src/test/resources/test.xlsx&quot;);
+
+XSSFWorkbook xssfWorkbook = new XSSFWorkbook(file);
+XSSFSheet xssfSheet = xssfWorkbook.getSheetAt(0);
+
+int rowstart = xssfSheet.getFirstRowNum();
+int rowEnd = xssfSheet.getLastRowNum();
+for(int i=rowstart;i&lt;=rowEnd;i++)
+{
+    XSSFRow row = xssfSheet.getRow(i);
+    if(null == row) continue;
+    int cellStart = row.getFirstCellNum();
+    int cellEnd = row.getLastCellNum();
+
+    for(int k=cellStart;k&lt;=cellEnd;k++)
+    {
+        XSSFCell cell = row.getCell(k);
+        if(null==cell) continue;
+
+        switch (cell.getCellType())
+        {
+            case HSSFCell.CELL_TYPE_NUMERIC: // 数字
+                System.out.print(cell.getNumericCellValue()
+                        + &quot;   &quot;);
+                break;
+            case HSSFCell.CELL_TYPE_STRING: // 字符串
+                System.out.print(cell.getStringCellValue()
+                        + &quot;   &quot;);
+                break;
+            case HSSFCell.CELL_TYPE_BOOLEAN: // Boolean
+                System.out.println(cell.getBooleanCellValue()
+                        + &quot;   &quot;);
+                break;
+            case HSSFCell.CELL_TYPE_FORMULA: // 公式
+                System.out.print(cell.getCellFormula() + &quot;   &quot;);
+                break;
+            case HSSFCell.CELL_TYPE_BLANK: // 空值
+                System.out.println(&quot; &quot;);
+                break;
+            case HSSFCell.CELL_TYPE_ERROR: // 故障
+                System.out.println(&quot; &quot;);
+                break;
+            default:
+                System.out.print(&quot;未知类型   &quot;);
+                break;
+        }
+
+    }
+    System.out.print(&quot;\n&quot;);
+}
+</code></pre><h2 id="写xls"><a href="#写xls" class="headerlink" title="写xls"></a>写xls</h2><pre><code>HSSFWorkbook workbook = null;
+workbook = new HSSFWorkbook();
+//获取参数个数作为excel列数
+int columeCount = 6;
+//获取List size作为excel行数
+int rowCount = 20;
+HSSFSheet sheet = workbook.createSheet(&quot;sheet name&quot;);
+//创建第一栏
+HSSFRow headRow = sheet.createRow(0);
+String[] titleArray = {&quot;id&quot;, &quot;name&quot;, &quot;age&quot;, &quot;email&quot;, &quot;address&quot;, &quot;phone&quot;};
+for(int m=0;m&lt;=columeCount-1;m++)
+{
+    HSSFCell cell = headRow.createCell(m);
+    cell.setCellType(HSSFCell.CELL_TYPE_STRING);
+    sheet.setColumnWidth(m, 6000);
+    HSSFCellStyle style = workbook.createCellStyle();
+    HSSFFont font = workbook.createFont();
+    font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+    short color = HSSFColor.RED.index;
+    font.setColor(color);
+    style.setFont(font);
+    //填写数据
+    cell.setCellStyle(style);
+    cell.setCellValue(titleArray[m]);
+
+}
+int index = 0;
+//写入数据
+for(RowEntity entity : pRowEntityList)
+{
+    //logger.info(&quot;写入一行&quot;);
+    HSSFRow row = sheet.createRow(index+1);
+    for(int n=0;n&lt;=columeCount-1;n++)
+        row.createCell(n);
+    row.getCell(0).setCellValue(entity.getId());
+    row.getCell(1).setCellValue(entity.getName());
+    row.getCell(2).setCellValue(entity.getAge());
+    row.getCell(3).setCellValue(entity.getEmail());
+    row.getCell(4).setCellValue(entity.getAddress());
+    row.getCell(5).setCellValue(entity.getPhone());
+    index++;
+}
+
+//写到磁盘上
+try {
+    FileOutputStream fileOutputStream = new FileOutputStream(new File(path));
+    workbook.write(fileOutputStream);
+    fileOutputStream.close();
+} catch (FileNotFoundException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+</code></pre><h2 id="写xlsx"><a href="#写xlsx" class="headerlink" title="写xlsx"></a>写xlsx</h2><p>和写xls类似，使用2007对应的对象即可。</p>
+
       
     </div>
     
@@ -528,8 +805,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -640,6 +926,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#jxl"><span class="nav-number">1.</span> <span class="nav-text">jxl</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#写xls-xlsx"><span class="nav-number">1.1.</span> <span class="nav-text">写xls/xlsx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读xls-xlsx"><span class="nav-number">1.2.</span> <span class="nav-text">读xls/xlsx</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#poi"><span class="nav-number">2.</span> <span class="nav-text">poi</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#xls格式"><span class="nav-number">2.1.</span> <span class="nav-text">xls格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xlsx格式"><span class="nav-number">2.2.</span> <span class="nav-text">xlsx格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读xls"><span class="nav-number">2.3.</span> <span class="nav-text">读xls</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读xlsx"><span class="nav-number">2.4.</span> <span class="nav-text">读xlsx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写xls"><span class="nav-number">2.5.</span> <span class="nav-text">写xls</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写xlsx"><span class="nav-number">2.6.</span> <span class="nav-text">写xlsx</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
