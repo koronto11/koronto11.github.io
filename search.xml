@@ -5,8 +5,8 @@
     <url>%2F2018%2F03%2F14%2Fjava-api08%2F</url>
     <content type="text"><![CDATA[像日志和数据库连接池一样，消息传递也是很多实际的Java项目中必备的。Java提供了JMS Java消息服务，但这不是JDK的一部分,你需要单独的引入jms.jar。类似地，如果您准备使用第三方消息传递协议， Tibco RV 是个不错的选择。 1、问： 什么是 Java 消息服务？答: Java 消息服务(Java Message Service，JMS) API 是一个用于访问企业消息传递系统的 API。是 Java 2 Platform, Enterprise（J2EE）的一部分。 2、目前流行的消息传送产品有哪些？答：目前流行的有ActiveMQ、IBM WebSphere MQ、SonicMQ等 3、什么时候可以用到java消息机制？答 （1）异构系统集成，整合现有资源，提高资源的利用率 （2）异步请求处理，减轻或消除系统瓶颈，提高用户生产率和系统的整体可伸缩性 （3）组件解偶，增加系统的灵活性 4、消息传送的两种模型发布/订阅模型客户端发送消息到一个名为主题（topic）的虚拟通道中，每个订阅该主题的消费者都会接收到每条消息的一个副本。点对点模型客户端通过队列（queue）这个虚拟通道来同步和异步发送、接收消息，发送到队列的消息只能被一个接收者所接收，即使有多个消费者时也只能有一个消费者处理消息 5、JMS包含哪些接口？JMS API可以分为3个主要部分：公共API、点对点API和发布/订阅API。在JMS1.1中，公共API可被用于向一个队列或一个主题发送消息，或从其中接收消息。点对点API专门用于使用队列的消息传送，而发布/订阅API则专门用于使用主题的消息传送。在JMS公共API内部，和发送和接收JMS消息有关的JMS API接口主要有7个： ConnectionFactory Destination Connection Session Message MessageProducer MessageConsumer 在这些公共接口中，ConnectionFactory和Destination必须使用JNDI（遵照JMS规范要求）从提供者处获得。其他接口则可以通过工厂方法在不同的API接口中创建。举例来说，一旦有了一个ConnectionFactory，就可以创建一个 Connection。一旦有了一个Connection，就可以创建一个Session。而一旦有了一个Session，就可以创建一个 Message、MessageProducer和MessageConsumer。这7个主要的JMS公共API接口之间的关系如图1-5所示。在JMS中，是Session对象保存着用于消息传送的事务性工作单元（transactional unit），而不是Connection对象。这和JDBC不同，JDBC中是Connection对象保存事务性工作单元。这就意味着在使用JMS时，一个应用程序通常只会有一个Connection对象，但是它可以有一个Session对象池。另外，还有和异常处理、消息优先级及消息持久性有关的其他接口 6、java消息分为哪些部分？消息头、消息属性、消息自身 7、消息过滤消息订阅者需要对消息进行过滤，否则订阅者就会接受到主题或队列的每一条消息，浪费了不必要的资源（CPU、内存等），而使用消息过滤技术，能让订阅者只接受它需要的消息。（消息过滤对于队列消费尤其重要，因为一个队列消费者消费消息后其他消费者就不再可用，此时如果不对消息进行过滤处理，这条消息就很可能被浪费掉）。消息选择器使用消息属性和消息头作为条件表达式的传送载体（消息体不能作为消息选择器的参考对象）。消息选择器由标识符、常量和比较运算符组成：例： 创建一个消息如下：TextMessage textMessage = Session.createTextMessage(); textMessage.setText(“mytestMsg”); textMessage.setStringProperty(“city”,”hangzhou”); textMessage.setStringProperty(“company”,”mycompany”); 这条消息中设置的消息属性名“city”和“company”代表消息选择器的标识符，”hangzhou”和”mycompany”代表常量 在消费端创建一个选择器： String selector = “city = ‘hangzhou’ AND company=’mycompany’”; QueueReceiver qReceiver = qSession.createReceiver(testQ,selector); 其中“=”和“AND”为比较运算符，其他常用比较运算符还有： 算数比较运算符（=、&gt;、&lt;、&lt;=、&lt;&gt;等） like运算符、BETWEEN运算符、IN运算符、IS NULL运算符等 8 、消息过滤 消息订阅者需要对消息进行过滤，否则订阅者就会接受到主题或队列的每一条消息，浪费了不必要的资源（ CPU、内存等），而使用消息过滤技术，能让订阅者只接受它需要的消息。（消息过滤对于队列消费尤其重要，因为一个队列消费者消费消息后其他消费者就不再可用，此时如果不对消息进行过滤处理，这条消息就很可能被浪费掉）。 消息选择器使用消息属性和消息头作为条件表达式的传送载体（消息体不能作为消息选择器的参考对象）。 消息选择器由标识符、常量和比较运算符组成： 例： 创建一个消息如下： TextMessage textMessage = Session.createTextMessage(); textMessage.setText(“mytestMsg”); textMessage.setStringProperty(“city”,”hangzhou”); textMessage.setStringProperty(“company”,”alibaba”); 这条消息中设置的消息属性名 “city” 和 “company” 代表消息选择器的标识符， ”hangzhou” 和 ”alibaba”代表常量 在消费端创建一个选择器： String selector = “city = ‘hangzhou’ AND company=’alibaba’ ”; QueueReceiver qReceiver = qSession.createReceiver(testQ,selector); 其中 “=” 和 “AND” 为比较运算符，其他常用比较运算符还有： 算数比较运算符（ = 、 &gt; 、 &lt; 、 &lt;= 、 &lt;&gt; 等） like 运算符、 BETWEEN 运算符、 IN 运算符、 IS NULL 运算符等 9 、消息传送的可靠性 在消息的传送过程中由于网络、软硬件故障等都会导致消息的发送失败， jms 为保证消息的传送定义了 3 条法则： （ 1 ）消息自主性，消息是自包含的自主性实体，当发送端发出这条消息后这条消息就不再受发送端的限制，它可以在多个进程间被多次发送。 （ 2 ）存储转发，当消息被标记位持久性消息时，就由 jms 提供者利用 “ 保存并转发 ” 机制，将消息保存在可信的介质上，防止发生故障时仍然可以正常恢复 （ 3 ）消息确认机制，服务器确认已经从发送端收到了消息，消费者则从确认从服务器接收了消息，对消息传送过程的监控，保证了消息的可靠传送。 消息确认的 3 种模式： 1 、 AUTO_ACKNOWLEDGE从消息生产者角度：发送消息后就开始阻塞，直到从消息服务器收到回复，期间如发生异常则认为消息未被传送 从消息服务器角度：非持久消息在接受到消息后通知生产者，并将消息存入内存，持久性消息在接受道消息后先存入磁盘，然后通知生产者 从消费者角度：接受到消息后就向服务器发送确认信息，如果服务器没有收到确认，会重新发送 2 、 CLIENT_ACKNOWLEDGE消费者可在处理完业务逻辑后在代码重显示调用 message.acknowledge() 通知 jms 提供者已成功接收道消息3 、 DUPS_ACKNOWLEDGE可将一条消息向同一目的地发送两次以上 这里介绍两个概念： （ 1 ）持久化消息：消息持久化就是在发送者将消息发送出去后，消息中心首先将消息存储到本地数据文件、内存数据库或者远程数据库等，然后试图将消息发送给接收 者，发送成功则将消息从存储中删除，失败则继续尝试。消息中心启动以后首先要检查制定的存储位置，如果有未发送成功的消息，则需要把消息发送出去。通过在消息头设置来实现：如 MessageProducer producer = session.createProducer(destination); producer.setDeliveryMode(DeliveryMode.PERSISTENT); (2) 持久订阅者和非持久订阅者：非持久订阅者是指某个订阅者由于某种原因停止运行，那么在停止运行期间发布到该订阅者所订阅主题的消息就会无法获得，持久订阅者则刚好相反，持久订阅者会接收发送到订阅主题的所有消息，无论订阅者是否正常运行，电子邮件就是类似的一个例子。 持久化消息和持久订阅者在服务器和消费者端之间的消息传送保证机制比较类似，但在有一种情况下他们还是存在区别的，对持久订阅者来说，当消息服务器向发送者发送确认消息之后，并为当前未运行的持久订阅者将消息保存到介质之间如果发送故障，该消息就会丢失，而持久化消息则是先保存消息道介质，然后才向发送者发送确认消息，所以不存在这个问题，因此严格来说持久化消息的可靠性会更高。 10 、事务性消息 jms 事务性保证了一组发送的消息或接收的消息要么全部成功要么全部失败，概念上和我们在java 中使用的jta 相似，但jms 事务是由jms 提供者来管理的，而不是jta 。 使用方法如下： // 此处用true ，表示使用事务性消息 Session session =connection.createSession(true, Session.AUTO_ACKNOWLEDGE); // 用来发送的3 个消息 MessageProducer sender = session.createProducer(“queue/testQueue”); try{ TextMessage message1 = session.createTextMessage(“ 要发送的消息1”); sender.send(message); TextMessage message2 = session.createTextMessage(“ 要发送的消息2”); sender.send(message); TextMessage message3 = session.createTextMessage(“ 要发送的消息3”); sender.send(message); session.commit(); }catch(Exception e){ try{ session.rollback(); }catch(JMSException e){ } }]]></content>
       <tags>
-        <tag>大数据</tag>
         <tag>java</tag>
+        <tag>大数据</tag>
         <tag>java类库</tag>
       </tags>
   </entry>
@@ -18,8 +18,8 @@
         <category>JAVA</category>
       </categories>
       <tags>
-        <tag>大数据</tag>
         <tag>java</tag>
+        <tag>大数据</tag>
         <tag>java类库</tag>
       </tags>
   </entry>
@@ -31,8 +31,8 @@
         <category>JAVA</category>
       </categories>
       <tags>
-        <tag>大数据</tag>
         <tag>java</tag>
+        <tag>大数据</tag>
         <tag>java类库</tag>
       </tags>
   </entry>
@@ -44,8 +44,8 @@
         <category>JAVA</category>
       </categories>
       <tags>
-        <tag>大数据</tag>
         <tag>java</tag>
+        <tag>大数据</tag>
         <tag>java类库</tag>
       </tags>
   </entry>
@@ -57,8 +57,8 @@
         <category>JAVA</category>
       </categories>
       <tags>
-        <tag>大数据</tag>
         <tag>java</tag>
+        <tag>大数据</tag>
         <tag>java类库</tag>
       </tags>
   </entry>
@@ -70,8 +70,8 @@
         <category>JAVA</category>
       </categories>
       <tags>
-        <tag>大数据</tag>
         <tag>java</tag>
+        <tag>大数据</tag>
         <tag>java类库</tag>
       </tags>
   </entry>
@@ -83,8 +83,8 @@
         <category>JAVA</category>
       </categories>
       <tags>
-        <tag>大数据</tag>
         <tag>java</tag>
+        <tag>大数据</tag>
         <tag>java类库</tag>
       </tags>
   </entry>
@@ -108,8 +108,8 @@
         <category>JAVA</category>
       </categories>
       <tags>
-        <tag>大数据</tag>
         <tag>java</tag>
+        <tag>大数据</tag>
         <tag>java类库</tag>
       </tags>
   </entry>
