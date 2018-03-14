@@ -33,9 +33,9 @@
     </summary>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
     
@@ -60,9 +60,9 @@
       <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
     
@@ -73,26 +73,24 @@
     <link href="http://yoursite.com/2018/03/14/java-api06/"/>
     <id>http://yoursite.com/2018/03/14/java-api06/</id>
     <published>2018-03-14T04:09:18.000Z</published>
-    <updated>2018-03-14T04:17:56.257Z</updated>
+    <updated>2018-03-14T10:20:06.965Z</updated>
     
-    <content type="html"><![CDATA[<p><strong>Java 类库概念：</strong><br>Java 的应用程序接口 (API) 以包的形式来组织，每个包提供了大量的相关类、接口和异常处理类，这些包的集合就是 Java 的类库</p><p>包名以 Java 开始的包是 Java 核心包 (Java Core Package) ；</p><p>包名以 Javax 开始的包是 Java 扩展包 (Java Extension Package) ，例如 javax.swing 包；</p><p>常用的 Java 核心包 (Java Core Package)</p><ol><li><p><strong>java.lang</strong>      Java 编程语言的基本类库</p></li><li><p>java.applet     创建 applet 需要的所有类</p></li><li><p>java.awt       创建用户界面以及绘制和管理图形、图像的类</p></li><li><p>java.io        通过数据流、对象序列以及文件系统实现的系统输入、输出</p></li><li><p>java.net       用于实现网络通讯应用的所有类</p></li><li><p><strong>java.util</strong>       集合类、时间处理模式、日期时间工具等各类常用工具包</p></li></ol><p>其它还有</p><ol><li><p>java.sql        访问和处理来自于 Java 标准数据源数据的类</p></li><li><p>java.test       以一种独立于自然语言的方式处理文本、日期、数字和消息的类和接口</p></li><li><p>java.security    设计网络安全方案需要的一些类</p></li><li><p>java.beans     开发 Java Beans 需要的所有类</p></li><li><p>java.math      简明的整数算术以及十进制算术的基本函数</p></li><li><p>java.rmi       与远程方法调用相关的所有类，rmi即Remote Method Invoke远程方法调用</p></li></ol><p>常用的 Java 扩展包 (Java Extension Package)</p><ol><li><p>javax.accessibility  定义了用户界面组件之间相互访问的一种机制</p></li><li><p>javax.naming.*     为命名服务提供了一系列类和接口</p></li><li><p>javax.swing.*       提供了一系列轻量级的用户界面组件，是目前 Java 用户界面常用的包</p></li></ol><p>注 1 ：最重要且常用的是 1 和 6 ，已用黑体标出的为，需重点掌握</p><p>注 2 ：在使用 Java 时，除了 java.lang 外，其他的包都需要 import 语句引入之后才能使用。</p><p>重点讲解内容：java.lang和java.util。具体各方法在开发文档里写的很清楚</p><p>java.lang 包</p><p>这个包称为 java 语言包，是由编译器自动引入的。程序中不必用 import 语句就可以使用。它所包含的类和接口对所有实际的 Java 程序都是必要的。</p><ol><li><p>object 类</p></li><li><p>数学类 (Math)</p></li><li><p>数据类型类</p></li><li><p>线程类</p></li><li><p>字符串类 (String 类和 StringBuffer 类 )</p></li><li><p>系统及运行类 (System 类和 Runtime 类 )</p></li><li><p>错误和异常处理类 (Throwable 、 Exception 、 Error)</p></li><li><p>过程类 (process)</p></li></ol><p>java.util 包</p><ol><li><p>日期类、日历类（ Data 、 Calendar 、 GregorianCalendar ）</p></li><li><p>随机数类（ Random ）</p></li><li><p>位运算类（ BitSet ）</p></li><li><p>矢量类（ Vector ）</p></li><li><p>数据结构类（ Stack ）</p></li><li><p>散列表类（ Hashtable ）</p></li><li><p>StringTokenizer类</p></li></ol>]]></content>
+    <content type="html"><![CDATA[<p><strong>Java 类库概念：</strong><br>Java 的应用程序接口 (API) 以包的形式来组织，每个包提供了大量的相关类、接口和异常处理类，这些包的集合就是 Java 的类库</p><p>包名以 Java 开始的包是 Java 核心包 (Java Core Package) ；</p><p>包名以 Javax 开始的包是 Java 扩展包 (Java Extension Package) ，例如 javax.swing 包；</p><a id="more"></a><p>常用的 Java 核心包 (Java Core Package)</p><ol><li><p><strong>java.lang</strong>      Java 编程语言的基本类库</p></li><li><p>java.applet     创建 applet 需要的所有类</p></li><li><p>java.awt       创建用户界面以及绘制和管理图形、图像的类</p></li><li><p>java.io        通过数据流、对象序列以及文件系统实现的系统输入、输出</p></li><li><p>java.net       用于实现网络通讯应用的所有类</p></li><li><p><strong>java.util</strong>       集合类、时间处理模式、日期时间工具等各类常用工具包</p></li></ol><p>其它还有</p><ol><li><p>java.sql        访问和处理来自于 Java 标准数据源数据的类</p></li><li><p>java.test       以一种独立于自然语言的方式处理文本、日期、数字和消息的类和接口</p></li><li><p>java.security    设计网络安全方案需要的一些类</p></li><li><p>java.beans     开发 Java Beans 需要的所有类</p></li><li><p>java.math      简明的整数算术以及十进制算术的基本函数</p></li><li><p>java.rmi       与远程方法调用相关的所有类，rmi即Remote Method Invoke远程方法调用</p></li></ol><p>常用的 Java 扩展包 (Java Extension Package)</p><ol><li><p>javax.accessibility  定义了用户界面组件之间相互访问的一种机制</p></li><li><p>javax.naming.*     为命名服务提供了一系列类和接口</p></li><li><p>javax.swing.*       提供了一系列轻量级的用户界面组件，是目前 Java 用户界面常用的包</p></li></ol><p>注 1 ：最重要且常用的是 1 和 6 ，已用黑体标出的为，需重点掌握</p><p>注 2 ：在使用 Java 时，除了 java.lang 外，其他的包都需要 import 语句引入之后才能使用。</p><p>重点讲解内容：java.lang和java.util。具体各方法在开发文档里写的很清楚</p><p>java.lang 包</p><p>这个包称为 java 语言包，是由编译器自动引入的。程序中不必用 import 语句就可以使用。它所包含的类和接口对所有实际的 Java 程序都是必要的。</p><ol><li><p>object 类</p></li><li><p>数学类 (Math)</p></li><li><p>数据类型类</p></li><li><p>线程类</p></li><li><p>字符串类 (String 类和 StringBuffer 类 )</p></li><li><p>系统及运行类 (System 类和 Runtime 类 )</p></li><li><p>错误和异常处理类 (Throwable 、 Exception 、 Error)</p></li><li><p>过程类 (process)</p></li></ol><p>java.util 包</p><ol><li><p>日期类、日历类（ Data 、 Calendar 、 GregorianCalendar ）</p></li><li><p>随机数类（ Random ）</p></li><li><p>位运算类（ BitSet ）</p></li><li><p>矢量类（ Vector ）</p></li><li><p>数据结构类（ Stack ）</p></li><li><p>散列表类（ Hashtable ）</p></li><li><p>StringTokenizer类</p></li></ol>]]></content>
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;&lt;strong&gt;Java 类库概念：&lt;/strong&gt;&lt;br&gt;Java 的应用程序接口 (API) 以包的形式来组织，每个包提供了大量的相关类、接口和异常处理类，这些包的集合就是 Java 的类库&lt;/p&gt;
-&lt;p&gt;包名以 Java 开始的包是 Java 核心包 (Java C
-      
+      &lt;p&gt;&lt;strong&gt;Java 类库概念：&lt;/strong&gt;&lt;br&gt;Java 的应用程序接口 (API) 以包的形式来组织，每个包提供了大量的相关类、接口和异常处理类，这些包的集合就是 Java 的类库&lt;/p&gt;
+&lt;p&gt;包名以 Java 开始的包是 Java 核心包 (Java Core Package) ；&lt;/p&gt;
+&lt;p&gt;包名以 Javax 开始的包是 Java 扩展包 (Java Extension Package) ，例如 javax.swing 包；&lt;/p&gt;
     
     </summary>
     
       <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
     
@@ -116,9 +114,9 @@
       <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
     
@@ -145,9 +143,9 @@
       <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
     
@@ -173,9 +171,9 @@
       <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
     
@@ -200,9 +198,9 @@
       <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
     
@@ -252,9 +250,9 @@
       <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
     
