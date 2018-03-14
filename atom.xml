@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-13T12:28:59.864Z</updated>
+  <updated>2018-03-14T09:29:47.573Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,94 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JAVA开发常用类库--消息传递库</title>
+    <link href="http://yoursite.com/2018/03/14/java-api08/"/>
+    <id>http://yoursite.com/2018/03/14/java-api08/</id>
+    <published>2018-03-14T08:23:02.000Z</published>
+    <updated>2018-03-14T09:29:47.573Z</updated>
+    
+    <content type="html"><![CDATA[<p>像日志和数据库连接池一样，消息传递也是很多实际的Java项目中必备的。Java提供了JMS Java消息服务，但这不是JDK的一部分,你需要单独的引入jms.jar。类似地，如果您准备使用第三方消息传递协议， Tibco RV 是个不错的选择。</p><p>1、问： 什么是 Java 消息服务？<br>答: Java 消息服务(Java Message Service，JMS) API 是一个用于访问企业消息传递系统的 API。是 Java 2 Platform, Enterprise（J2EE）的一部分。</p><p>2、目前流行的消息传送产品有哪些？<br>答：目前流行的有ActiveMQ、IBM WebSphere MQ、SonicMQ等</p><p>3、什么时候可以用到java消息机制？<br>答 （1）异构系统集成，整合现有资源，提高资源的利用率<br>   （2）异步请求处理，减轻或消除系统瓶颈，提高用户生产率和系统的整体可伸缩性<br>   （3）组件解偶，增加系统的灵活性</p><p>4、消息传送的两种模型<br>发布/订阅模型<br>客户端发送消息到一个名为主题（topic）的虚拟通道中，每个订阅该主题的消费者都会接收到每条消息的一个副本。<br>点对点模型<br>客户端通过队列（queue）这个虚拟通道来同步和异步发送、接收消息，发送到队列的消息只能被一个接收者所接收，即使有多个消费者时也只能有一个消费者处理消息</p><p>5、JMS包含哪些接口？<br>JMS API可以分为3个主要部分：公共API、点对点API和发布/订阅API。在JMS1.1中，公共API可被用于向一个队列或一个主题发送消息，或从其中接收消息。点对点API专门用于使用队列的消息传送，而发布/订阅API则专门用于使用主题的消息传送。<br>在JMS公共API内部，和发送和接收JMS消息有关的JMS API接口主要有7个：</p><ul><li>ConnectionFactory</li><li>Destination</li><li>Connection</li><li>Session</li><li>Message</li><li>MessageProducer</li><li>MessageConsumer</li></ul><p>在这些公共接口中，ConnectionFactory和Destination必须使用JNDI（遵照JMS规范要求）从提供者处获得。其他接口则可以通过工厂方法在不同的API接口中创建。举例来说，一旦有了一个ConnectionFactory，就可以创建一个 Connection。一旦有了一个Connection，就可以创建一个Session。而一旦有了一个Session，就可以创建一个 Message、MessageProducer和MessageConsumer。这7个主要的JMS公共API接口之间的关系如图1-5所示。<br>在JMS中，是Session对象保存着用于消息传送的事务性工作单元（transactional unit），而不是Connection对象。这和JDBC不同，JDBC中是Connection对象保存事务性工作单元。这就意味着在使用JMS时，一个应用程序通常只会有一个Connection对象，但是它可以有一个Session对象池。<br>另外，还有和异常处理、消息优先级及消息持久性有关的其他接口</p><p>6、java消息分为哪些部分？<br>消息头、消息属性、消息自身</p><p>7、消息过滤<br>消息订阅者需要对消息进行过滤，否则订阅者就会接受到主题或队列的每一条消息，浪费了不必要的资源（CPU、内存等），而使用消息过滤技术，能让订阅者只接受它需要的消息。（消息过滤对于队列消费尤其重要，因为一个队列消费者消费消息后其他消费者就不再可用，此时如果不对消息进行过滤处理，这条消息就很可能被浪费掉）。<br>消息选择器使用消息属性和消息头作为条件表达式的传送载体（消息体不能作为消息选择器的参考对象）。<br>消息选择器由标识符、常量和比较运算符组成：<br>例：<br> 创建一个消息如下：<br>TextMessage textMessage = Session.createTextMessage();<br> textMessage.setText(“mytestMsg”);<br> textMessage.setStringProperty(“city”,”hangzhou”);<br> textMessage.setStringProperty(“company”,”mycompany”);<br> 这条消息中设置的消息属性名“city”和“company”代表消息选择器的标识符，”hangzhou”和”mycompany”代表常量</p><p>  在消费端创建一个选择器：<br>  String selector = “city = ‘hangzhou’ AND company=’mycompany’”;<br>  QueueReceiver qReceiver = qSession.createReceiver(testQ,selector);<br>  其中“=”和“AND”为比较运算符，其他常用比较运算符还有：<br>  算数比较运算符（=、&gt;、&lt;、&lt;=、&lt;&gt;等）<br>  like运算符、BETWEEN运算符、IN运算符、IS NULL运算符等</p><p>8 、消息过滤</p><p>消息订阅者需要对消息进行过滤，否则订阅者就会接受到主题或队列的每一条消息，浪费了不必要的资源（ CPU、内存等），而使用消息过滤技术，能让订阅者只接受它需要的消息。（消息过滤对于队列消费尤其重要，因为一个队列消费者消费消息后其他消费者就不再可用，此时如果不对消息进行过滤处理，这条消息就很可能被浪费掉）。</p><p>消息选择器使用消息属性和消息头作为条件表达式的传送载体（消息体不能作为消息选择器的参考对象）。</p><p>消息选择器由标识符、常量和比较运算符组成：</p><p>例：</p><p>创建一个消息如下：</p><p>TextMessage textMessage = Session.createTextMessage();</p><p> textMessage.setText(“mytestMsg”);</p><p>  textMessage.setStringProperty(“city”,”hangzhou”);</p><p> textMessage.setStringProperty(“company”,”alibaba”);</p><p> 这条消息中设置的消息属性名 “city” 和 “company” 代表消息选择器的标识符， ”hangzhou” 和 ”alibaba”代表常量</p><p>  在消费端创建一个选择器：</p><p>  String selector = “city = ‘hangzhou’ AND company=’alibaba’ ”;</p><p>  QueueReceiver qReceiver = qSession.createReceiver(testQ,selector);</p><p>  其中 “=” 和 “AND” 为比较运算符，其他常用比较运算符还有：</p><p>  算数比较运算符（ = 、 &gt; 、 &lt; 、 &lt;= 、 &lt;&gt; 等）</p><p>  like 运算符、 BETWEEN 运算符、 IN 运算符、 IS NULL 运算符等</p><p>9 、消息传送的可靠性</p><p>在消息的传送过程中由于网络、软硬件故障等都会导致消息的发送失败， jms 为保证消息的传送定义了 3 条法则：</p><p>（ 1 ）消息自主性，消息是自包含的自主性实体，当发送端发出这条消息后这条消息就不再受发送端的限制，它可以在多个进程间被多次发送。</p><p>（ 2 ）存储转发，当消息被标记位持久性消息时，就由 jms 提供者利用 “ 保存并转发 ” 机制，将消息保存在可信的介质上，防止发生故障时仍然可以正常恢复</p><p>（ 3 ）消息确认机制，服务器确认已经从发送端收到了消息，消费者则从确认从服务器接收了消息，对消息传送过程的监控，保证了消息的可靠传送。 消息确认的 3 种模式：</p><p>1 、 AUTO_ACKNOWLEDGE<br>从消息生产者角度：发送消息后就开始阻塞，直到从消息服务器收到回复，期间如发生异常则认为消息未被传送   </p><p>从消息服务器角度：非持久消息在接受到消息后通知生产者，并将消息存入内存，持久性消息在接受道消息后先存入磁盘，然后通知生产者   </p><p>从消费者角度：接受到消息后就向服务器发送确认信息，如果服务器没有收到确认，会重新发送   </p><p>2 、 CLIENT_ACKNOWLEDGE<br>消费者可在处理完业务逻辑后在代码重显示调用 message.acknowledge() 通知 jms 提供者已成功接收道消息<br>3 、 DUPS_ACKNOWLEDGE<br>可将一条消息向同一目的地发送两次以上  </p><p>这里介绍两个概念：</p><p>（ 1 ）持久化消息：消息持久化就是在发送者将消息发送出去后，消息中心首先将消息存储到本地数据文件、内存数据库或者远程数据库等，然后试图将消息发送给接收 者，发送成功则将消息从存储中删除，失败则继续尝试。消息中心启动以后首先要检查制定的存储位置，如果有未发送成功的消息，则需要把消息发送出去。通过在消息头设置来实现：如</p><pre><code>MessageProducer producer = session.createProducer(destination);producer.setDeliveryMode(DeliveryMode.PERSISTENT);</code></pre><p>(2) 持久订阅者和非持久订阅者：非持久订阅者是指某个订阅者由于某种原因停止运行，那么在停止运行期间发布到该订阅者所订阅主题的消息就会无法获得，持久订阅者则刚好相反，持久订阅者会接收发送到订阅主题的所有消息，无论订阅者是否正常运行，电子邮件就是类似的一个例子。</p><p>持久化消息和持久订阅者在服务器和消费者端之间的消息传送保证机制比较类似，但在有一种情况下他们还是存在区别的，对持久订阅者来说，当消息服务器向发送者发送确认消息之后，并为当前未运行的持久订阅者将消息保存到介质之间如果发送故障，该消息就会丢失，而持久化消息则是先保存消息道介质，然后才向发送者发送确认消息，所以不存在这个问题，因此严格来说持久化消息的可靠性会更高。</p><p>10 、事务性消息</p><p>jms 事务性保证了一组发送的消息或接收的消息要么全部成功要么全部失败，概念上和我们在java 中使用的jta 相似，但jms 事务是由jms 提供者来管理的，而不是jta 。</p><p>使用方法如下：</p><p>   // 此处用true ，表示使用事务性消息</p><pre><code>Session session =connection.createSession(true, Session.AUTO_ACKNOWLEDGE);</code></pre><p>// 用来发送的3 个消息</p><pre><code>MessageProducer sender = session.createProducer(“queue/testQueue”);try{    TextMessage message1 = session.createTextMessage(“ 要发送的消息1”);　　    sender.send(message);    TextMessage message2 = session.createTextMessage(“ 要发送的消息2”);　　    sender.send(message);    TextMessage message3 = session.createTextMessage(“ 要发送的消息3”);　　    sender.send(message);        session.commit();    }catch(Exception e){        try{          session.rollback();       }catch(JMSException e){       }    }</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;像日志和数据库连接池一样，消息传递也是很多实际的Java项目中必备的。Java提供了JMS Java消息服务，但这不是JDK的一部分,你需要单独的引入jms.jar。类似地，如果您准备使用第三方消息传递协议， Tibco RV 是个不错的选择。&lt;/p&gt;
+&lt;p&gt;1、问： 什么
+      
+    
+    </summary>
+    
+    
+      <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+      <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JAVA开发常用类库--字节码库</title>
+    <link href="http://yoursite.com/2018/03/14/java-api07/"/>
+    <id>http://yoursite.com/2018/03/14/java-api07/</id>
+    <published>2018-03-14T04:18:19.000Z</published>
+    <updated>2018-03-14T08:18:09.293Z</updated>
+    
+    <content type="html"><![CDATA[<p>也许你写了无数行的代码，也许你能非常溜的使用高级语言，但是你未必了解那些高级语言的执行过程。例如大行其道的Java。</p><p>Java号称是一门“一次编译到处运行”的语言，但是我们对这句话的理解深度又有多少呢？从我们写的java文件到通过编译器编译成java字节码文件（也就是.class文件），这个过程是java编译过程；而我们的java虚拟机执行的就是字节码文件。不论该字节码文件来自何方，由哪种编译器编译，甚至是手写字节码文件，只要符合java虚拟机的规范，那么它就能够执行该字节码文件。那么本文主要讲讲java字节码文件相关知识。接下来我们通过具体的Demo来深入理解：</p><h1 id="首先我们来写一个java源文件"><a href="#首先我们来写一个java源文件" class="headerlink" title="首先我们来写一个java源文件"></a>首先我们来写一个java源文件</h1><p><img src="/2018/03/14/java-api07/p1.png" alt="logo"></p><p>上面是我们写的一个java程序，很简单，只有一个成员变量a以及一个方法testMethod() 。</p><p>接下来我们用javac命令或者ide工具将该java源文件编译成java字节码文件。</p><p><img src="/2018/03/14/java-api07/p2.png" alt="logo"></p><p>上图是编译好的字节码文件，我们可以看到一堆16进制的字节。如果你使用IDE去打开，也许看到的是已经被反编译的我们所熟悉的java代码，而这才是纯正的字节码，这也是我们今天需要讲的内容重点。</p><p>也许你会对这样一堆字节码感到头疼，不过没关系，我们慢慢试着你看懂它，或许有不一样的收获。在开始之前我们先来看一张图</p><p><img src="/2018/03/14/java-api07/p3.png" alt="logo"></p><p>这张图是一张java字节码的总览图，我们也就是按照上面的顺序来对字节码进行解读的。一共含有10部分，包含魔数，版本号，常量池等等，接下来我们按照顺序一步一步解读。</p><h2 id="魔数"><a href="#魔数" class="headerlink" title="魔数"></a>魔数</h2><p>从上面的总览图中我们知道前4个字节表示的是魔数，对应我们Demo的是 0XCAFE BABE。什么是魔数？魔数是用来区分文件类型的一种标志，一般都是用文件的前几个字节来表示。比如0XCAFE BABE表示的是class文件，那么有人会问，文件类型可以通过文件名后缀来判断啊？是的，但是文件名是可以修改的（包括后缀），那么为了保证文件的安全性，讲文件类型写在文件内部来保证不被篡改。<br>从java的字节码文件类型我们看到，CAFE BABE翻译过来是咖啡宝贝之意，然后再看看java图标。</p><p>CAFE BABE = 咖啡。</p><p><img src="/2018/03/14/java-api07/p4.png" alt="logo"></p><h2 id="版本号"><a href="#版本号" class="headerlink" title="版本号"></a>版本号</h2><p>我们识别了文件类型之后，接下来要知道版本号。版本号含主版本号和次版本号，都是各占2个字节。在此Demo种为0X0000 0033。其中前面的0000是次版本号，后面的0033是主版本号。通过进制转换得到的是次版本号为0，主版本号为51。<br>从oracle官方网站我们能够知道，51对应的正式jdk1.7，而其次版本为0，所以该文件的版本为1.7.0。如果需要验证，可以在用java –version命令输出版本号，或者修改编译目标版本–target重新编译，查看编译后的字节码文件版本号是否做了相应的修改。</p><p>至此，我们共了解了前8字节的含义，下面讲讲常量池相关内容。</p><h2 id="常量池"><a href="#常量池" class="headerlink" title="常量池"></a>常量池</h2><p>紧接着主版本号之后的就是常量池入口。常量池是Class文件中的资源仓库，在接下来的内容中我们会发现很多地方会涉及，如Class Name，Interfaces等。常量池中主要存储2大类常量：字面量和符号引用。字面量如文本字符串，java中声明为final的常量值等等，而符号引用如类和接口的全局限定名，字段的名称和描述符，方法的名称和描述符。</p><p>为什么需要类和接口的全局限定名呢？系统引用类或者接口的时候不是通过内存地址进行操作吗？这里大家仔细想想，java虚拟机在没有将类加载到内存的时候根本都没有分配内存地址，也就不存在对内存的操作，所以java虚拟机首先需要将类加载到虚拟机中，那么这个过程设计对类的定位（需要加载A包下的B类，不能加载到别的包下面的别的类中），所以需要通过全局限定名来判别唯一性。这就是为什么叫做全局，限定的意思，也就是唯一性。</p><p>在进行具体常量池分析之前，我们先来了解一下常量池的项目类型表：</p><p><img src="/2018/03/14/java-api07/p5.png" alt="logo"></p><p>上面的表中描述了11中数据类型的结构，其实在jdk1.7之后又增加了3种（CONSTANT_MethodHandle_info,CONSTANT_MethodType_info以及CONSTANT_InvokeDynamic_info)。这样算起来一共是14种。接下来我们按照Demo的字节码进行逐一翻译。</p><p>0x0015：由于常量池的数量不固定（n+2），所以需要在常量池的入口处放置一项u2类型的数据代表常量池数量。因此该16进制是21，表示有20项常量，索引范围为1~20。明明是21，为何是20呢？因为Class文件格式规定，设计者就讲第0项保留出来了，以备后患。从这里我们知道接下来我们需要翻译出20项常量。<br>Constant #1 （一共有20个常量，这是第一个，以此类推…）<br>0x0a-：从常量类型表中我们发现，第一个数据均是u1类型的tag，16进制的0a是十进制的10，对应表中的MethodRef_info。<br>0x-00 04-：Class_info索引项#4<br>0x-00 11-：NameAndType索引项#17<br>Constant #2<br>0x-09: FieldRef_info<br>0x0003 :Class_info索引项#3<br>0x0012：NameAndType索引项#18<br>Constant #3<br>0x07-: Class_info<br>0x-00 13-: 全局限定名常量索引为#19<br>Constant #4<br>0x-07 :Class_info<br>0x0014:全局限定名常量索引为#20<br>Constant #5<br>0x01:Utf-8_info<br>0x-00 01-:字符串长度为1（选择接下来的一个字节长度转义）<br>0x-61:”a”(十六进制转ASCII字符)<br>Constant #6<br>0x01:Utf-8_info<br>0x-00 01：字符串长度为1<br>0x-49:”I”<br>Constant #7<br>0x01:Utf-8_info<br>0x-00 06:字符串长度为6<br>0x-3c 696e 6974 3e-:”<init>“<br>Constant #8<br>0x01 :UTF-8_info<br>0x0003:字符串长度为3<br>0x2829 56:”()V”<br>Constant #9<br>0x-01:Utf-8_info<br>0x0004：字符串长度为4<br>0x436f 6465:”Code”<br>Constant #10<br>0x01:Utf-8_info<br>0x00 0f:字符串长度为15<br>0x4c 696e 654e 756d 6265 7254 6162 6c65:”LineNumberTable”<br>Constant #11<br>ox01: Utf-8_info<br>0x00 12字符串长度为18<br>0x-4c 6f63 616c 5661 7269 6162 6c65 5461 626c 65:”LocalVariableTable”<br>Constant #12<br>0x01:Utf-8_info<br>0x0004 字符串长度为4<br>0x7468 6973 :”this”<br>Constant #13<br>0x01:Utf-8_info<br>0x0f:字符串长度为15<br>0x4c 636f 6d2f 6465 6d6f 2f44 656d 6f3b:”Lcom/demo/Demo;”<br>Constant #14<br>0x01:Utf-8_info<br>0x00 0a:字符串长度为10<br>ox74 6573 744d 6574 686f 64:”testMethod”<br>Constant #15<br>0x01:Utf-8_info<br>0x000a:字符串长度为10<br>0x536f 7572 6365 4669 6c65 :”SourceFile”<br>Constant #16<br>0x01:Utf-8_info<br>0x0009:字符串长度为9<br>0x-44 656d 6f2e 6a61 7661 :”Demo.java”<br>Constant #17<br>0x0c :NameAndType_info<br>0x0007:字段或者名字名称常量项索引#7<br>0x0008:字段或者方法描述符常量索引#8<br>Constant #18<br>0x0c:NameAndType_info<br>0x0005:字段或者名字名称常量项索引#5<br>0x0006:字段或者方法描述符常量索引#6<br>Constant #19<br>0x01:Utf-8_info<br>0x00 0d:字符串长度为13<br>0x63 6f6d 2f64 656d 6f2f 4465 6d6f:”com/demo/Demo”<br>Constant #20<br>0x01:Utf-8_info<br>0x00 10 :字符串长度为16<br>0x6a 6176 612f 6c61 6e67 2f4f 626a 6563 74 :”java/lang/Object”<br>到这里为止我们解析了所有的常量。接下来是解析访问标志位。</init></p><h2 id="Access-Flag-访问标志"><a href="#Access-Flag-访问标志" class="headerlink" title="Access_Flag 访问标志"></a>Access_Flag 访问标志</h2><p>访问标志信息包括该Class文件是类还是接口，是否被定义成public，是否是abstract，如果是类，是否被声明成final。通过上面的源代码，我们知道该文件是类并且是public。</p><p><img src="/2018/03/14/java-api07/p6.png" alt="logo"></p><p>0x 00 21：是0x0020和0x0001的并集。其中0x0020这个标志值涉及到了字节码指令，后期会有专题对字节码指令进行讲解。</p><p>类索引</p><p>类索引用于确定类的全限定名<br>0x00 03 表示引用第3个常量，同时第3个常量引用第19个常量，查找得”com/demo/Demo”。#3.#19</p><h2 id="父类索引"><a href="#父类索引" class="headerlink" title="父类索引"></a>父类索引</h2><p>0x00 04 同理：#4.#20(java/lang/Object)</p><h2 id="接口索引"><a href="#接口索引" class="headerlink" title="接口索引"></a>接口索引</h2><p>通过java_byte.jpeg图我们知道，这个接口有2+n个字节，前两个字节表示的是接口数量，后面跟着就是接口的表。我们这个类没有任何接口，所以应该是0000。果不其然，查找字节码文件得到的就是0000。</p><h2 id="字段表集合"><a href="#字段表集合" class="headerlink" title="字段表集合"></a>字段表集合</h2><p>字段表用于描述类和接口中声明的变量。这里的字段包含了类级别变量以及实例变量，但是不包括方法内部声明的局部变量。<br>同样，接下来就是2+n个字段属性。我们只有一个属性a，按道理应该是0001。查找文件果不其然是0001。<br>那么接下来我们要针对这样的字段进行解析。附上字段表结构图</p><p><img src="/2018/03/14/java-api07/p7.png" alt="logo"></p><p>0x00 02 ：访问标志为private（自行搜索字段访问标志）<br>0x00 05 : 字段名称索引为#5，对应的是”a”<br>0x 00 06 :描述符索引为#6，对应的是”I”<br>0x 00 00 :属性表数量为0，因此没有属性表。<br>tips:一些不太重要的表（字段，方法访问标志表）可以自行搜索，这里就不贴出来了，防止篇幅过大。</p><h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>我们只有一个方法testMethod，按照道理应该前2个字节是0001。通过查找发现是0x00 02。这是什么原因，这代表着有2个方法呢？且继续看……</p><p><img src="/2018/03/14/java-api07/p8.png" alt="logo"></p><p>上图是一张方法表结构图，按照这个图我们分析下面的字节码：</p><p>第1个方法：</p><p>0x00 01：访问标志 ACC_PUBLIC，表明该方法是public。（可自行搜索方法访问标志表）<br>0x00 07：方法名索引为#7，对应的是”<init>“<br>0x00 08：方法描述符索引为#8，对应的是”()V”<br>0x00 01：属性表数量为1(一个属性表)<br>那么这里涉及到了属性表。什么是属性表呢？可以这么理解，它是为了描述一些专有信息的，上面的方法带有一张属性表。所有属性表的结构如下图：<br>一个u2的属性名称索引，一个u2的属性长度加上属性长度的info。<br>虚拟机规范预定义的属性有很多，比如Code，LineNumberTable，LocalVariableTable，SourceFile等等，这个网上可以搜索到。</init></p><p><img src="/2018/03/14/java-api07/p9.png" alt="logo"></p><p>按照上面的表结构解析得到下面信息：<br>0x0009:名称索引为#9(“Code”)。<br>0x000 00038：属性长度为56字节。<br>那么接下来解析一个Code属性表，按照下图解析</p><p><img src="/2018/03/14/java-api07/p9.png" alt="logo"></p><p>前面6个字节（名称索引2字节+属性长度4字节）已经解析过了，所以接下来就是解析剩下的56-6=50字节即可。<br>0x00 02 ：max_stack=2<br>0x00 01 : max_locals=1<br>0x00 0000 0a : code_length=10<br>0x2a b700 012a 04b5 0002 b1 : 这是code代码，可以通过虚拟机字节码指令进行查找。<br>2a=aload_0(将第一个引用变量推送到栈顶)<br>b7=invokespecial(调用父类构造方法)<br>00=什么都不做<br>01 =将null推送到栈顶<br>2a=同上<br>04=iconst_1 将int型1推送到栈顶<br>b5=putfield 为指定的类的实例变量赋值<br>00= 同上<br>02=iconst_m1 将int型-1推送栈顶<br>b1=return 从当前方法返回void<br>整理，去除无动作指令得到下面<br>0 : aload_0<br>1 : invokespecial<br>4 : aload_0<br>5 : iconst_1<br>6 : putfield<br>9 : return<br>关于虚拟机字节码指令这块内容，后期会继续深入下去…… 目前只需要了解即可。接下来顺着Code属性表继续解析下去:<br>0x00 00 : exception_table_length=0<br>0x00 02 : attributes_count=2(Code属性表内部还含有2个属性表)<br>0x00 0a: 第一个属性表是”LineNumberTable”</p><p><img src="/2018/03/14/java-api07/p10.png" alt="logo"></p><p>0x00 0000 0a : “属性长度为10”<br>0x00 02 ：line_number_table_length=2<br>line_number_table是一个数量为line_number_table_length，类型为line_number_info的集合，line_number_info表包括了start_pc和line_number两个u2类型的数据项，前者是字节码行号，后者是Java源码行号<br>0x00 00 : start_pc =0<br>0x00 03 : end_pc =3<br>0x00 04 : start_pc=4<br>0x00 04 : end_pc=4</p><p>0x00 0b 第二个属性表是：”LocalVariableTable”</p><p><img src="/2018/03/14/java-api07/p11.png" alt="logo"></p><p><img src="/2018/03/14/java-api07/p12.png" alt="logo"></p><p>local_variable_table.png<br>local_variable_info.png<br>0x00 0000 0c：属性长度为12<br>0x00 01 : local_variable_table_length=1<br>然后按照local_variable_info表结构进行解析：<br>0x00 00 : start_pc=0<br>0x00 0a：length=10<br>0x000c : name_index=”this”<br>0x000d : descriptor_index #13 (“Lcom/demo/Demo”)<br>0000 index=0<br>//——-到这里第一个方法就解析完成了——-//<br>Method（<init>)–1个属性Code表-2个属性表（LineNumberTable ，LocalVariableTable）接下来解析第二个方法</init></p><p>第2个方法：</p><p>0x00 04：”protected”<br>0x00 0e: #14（”testMethod”）<br>0x00 08 : “()V”<br>0x0001 ： 属性数量=1<br>0x0009 ：”Code”<br>0x0000 002b 属性长度为43<br>解析一个Code表<br>0000 :max_stack =0<br>0001 : max_local =1<br>0000 0001 : code_length =1<br>0xb1 : return(该方法返回void)<br>0x0000 异常表长度=0<br>0x0002 属性表长度为2<br>//第一个属性表<br>0x000a : #10，LineNumberTable<br>0x0000 0006 : 属性长度为6<br>0x0001 : line_number_length = 1<br>0x0000 : start_pc =0<br>0x0008 : end_pc =8<br>//第二个属性表<br>0x000b : #11 ，LocalVariableTable<br>0x0000 000c : 属性长度为12<br>0x0001 : local_variable_table_length =1<br>0x0000 :start_pc = 0<br>0x0001: length = 1<br>0x000c : name_index =#12 “this”<br>0x000d : 描述索引#13 “Lcom/demo/Demo;”<br>0000 index=0</p><p>//到这里为止，方法解析都完成了，回过头看看顶部解析顺序图，我们接下来就要解析Attributes了。</p><h2 id="Attribute"><a href="#Attribute" class="headerlink" title="Attribute"></a>Attribute</h2><p>0x0001 ：同样的，表示有1个Attributes了。<br>0x000f : #15(“SourceFile”)<br>0x0000 0002 attribute_length=2<br>0x0010 : sourcefile_index = #16(“Demo.java”)<br>SourceFile属性用来记录生成该Class文件的源码文件名称。</p><p><img src="/2018/03/14/java-api07/p13.png" alt="logo"></p><h1 id="另话"><a href="#另话" class="headerlink" title="另话"></a>另话</h1><p>其实，我们写了这么多确实很麻烦，不过这种过程自己体验一遍的所获所得还是不同的。现在，使用java自带的反编译器来解析字节码文件。<br>javap -verbose Demo //不用带后缀.class</p><p><img src="/2018/03/14/java-api07/p14.png" alt="logo"></p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>到此为止，讲解完成了class文件的解析，这样以后我们也能看懂字节码文件了。了解class文件的结构对后面进一步了解虚拟机执行引擎非常重要，所以这是基础并重要的一步。</p><p>作者：小腊月<br>链接：<a href="https://www.jianshu.com/p/252f381a6bc4" target="_blank" rel="noopener">https://www.jianshu.com/p/252f381a6bc4</a><br>來源：简书<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p><hr><p>以上是java字节码的介绍<br>属于JVM底层的知识</p><p>接下来介绍的是java操作字节库的类库有哪些及相关操作</p><h1 id="字节码操作"><a href="#字节码操作" class="headerlink" title="字节码操作"></a>字节码操作</h1><p>1.Java动态性的两种常见实现方式：</p><p>字节码操作<br>反射</p><p>2.运行时操作字节码可以实现如下功能：</p><p>动态生成新的类<br>动态改变某个类的结构(添加/删除/修改 新的属性/方法)</p><p>3.优势：</p><p>比反射开销小，性能高<br>Javaasist性能高于反射，低于ASM</p><h2 id="常见的字节码操作类库"><a href="#常见的字节码操作类库" class="headerlink" title="常见的字节码操作类库"></a>常见的字节码操作类库</h2><p>1.BCEL</p><p>Byte Code Engineering Library(BCEL)，这是Apache Software Foundation的Jakarta项目的一部分。BCEL是Java classworking 广泛使用的一种框架，它可以让您深入jvm汇编语言进行类库操作的细节。BCEL与javassist有不同的处理字节码方法，BCEL在实际的jvm指令层次上进行操作(BCEL拥有丰富的jvm指令集支持) 而javassist所强调的是源代码级别的工作。</p><p>2.ASM</p><p>是一个轻量级Java字节码操作框架，直接涉及到JVM底层的操作和指令<br>高性能，高质量</p><p>3.CGLB(code generation library)</p><p>生成类库，基于ASM实现</p><p>4.javassist</p><p>是一个开源的分析，编辑和创建Java字节码的类库。性能较ASM差，跟cglib差不多，但是使用简单。很多开源框架都在使用它。<br>主页： <a href="http://www.csg.ci.i.u-tokyo.ac.jp/~chiba/javassist/" target="_blank" rel="noopener">http://www.csg.ci.i.u-tokyo.ac.jp/~chiba/javassist/</a></p><h2 id="javassist库的API详解"><a href="#javassist库的API详解" class="headerlink" title="javassist库的API详解"></a>javassist库的API详解</h2><p>javassist的最外层的API和java的反射包中的API及其类似</p><p>它主要有CtClass, CtMethod,CtField几个类组成，用于执行和JDK反射API中java.lang.Class, java.lang,reflect.Method,java.lang.reflect.Method.Field相同的操作</p><p>创建一个类</p><pre><code>public class JavassistTest {      public static void main(String[] args) throws Exception {          ClassPool pool = ClassPool.getDefault();          CtClass cc = pool.makeClass(&quot;bean.User&quot;);          //创建属性          CtField field01 = CtField.make(&quot;private int id;&quot;,cc);          CtField field02 = CtField.make(&quot;private String name;&quot;, cc);          cc.addField(field01);          cc.addField(field02);          //创建方法          CtMethod method01 = CtMethod.make(&quot;public String getName(){return name;}&quot;, cc);          CtMethod method02 = CtMethod.make(&quot;public void setName(String name){this.name = name;}&quot;, cc);          cc.addMethod(method01);          cc.addMethod(method02);          //添加有参构造器          CtConstructor constructor = new CtConstructor(new CtClass[]{CtClass.intType,pool.get(&quot;java.lang.String&quot;)},cc);          constructor.setBody(&quot;{this.id=id;this.name=name;}&quot;);          cc.addConstructor(constructor);          //无参构造器          CtConstructor cons = new CtConstructor(null,cc);          cons.setBody(&quot;{}&quot;);          cc.addConstructor(cons);          cc.writeFile(&quot;E:/workspace/TestCompiler/src&quot;);      }  } </code></pre><p>方法操作</p><p>修改已有的方法体（插入代码到已有方法体）<br>新增方法<br>删除方法</p><p>$0 $1 $2          $0代表是this, $1代表方法参数的第一个参数，$2代表方法参数的第二个参数，以此类推，$N代表方法参数的第N个<br>$args             The type of $args is OBject[]. $args(0)对应的是$1，不是$0<br>$$                 一个方法调用的深度<br>$r                 方法返回值的类型<br>$_                 方法返回值。(修改方法体时不支持)<br>addCatch()         方法中加入try catch块  $e代表 异常对象<br>$class             this的类型(Class)。也就是$0的类型<br>$sig             方法参数的类型(Class)数组，数组的顺序。</p><p>构造方法操作</p><p>getConstructors()</p><p>注解操作</p><pre><code>public @interface Author{String name();int year();}@Author(name=&quot;over&quot;,year=2012)public class Point{int x,int y;}CtClass cc=ClassPool.getDefault().get(&quot;Point&quot;);Object[] all = cc.getAnnotations();Author a =(Author)all[0];String name = a.name();int year = a.year();System.out.println(name+&quot;:&quot;+year);</code></pre><h2 id="局限性"><a href="#局限性" class="headerlink" title="局限性"></a>局限性</h2><p>JDK5.0新语法不支持(包括泛型，枚举)，不支持注解修改，但可以通过底层的javassist类来解决，具体参考：javassist,bytecode.annotation<br>不支持数组的初始化，如String[]{“a”,”b”},除非只有数组的容量为1<br>不支持内部类和匿名类<br>不支持continue和break 表达式<br>对于继承关系，有些不支持 。例如</p><pre><code>class A{}class B extends A{}Class C extends B{}</code></pre><p>查资料： javassist与反射的性能比较</p><pre><code>public class Demo01 {      //获取类的简单信息      public static void test01() throws Exception{          ClassPool pool = ClassPool.getDefault();          CtClass cc = pool.get(&quot;bean.User&quot;);          //得到字节码          byte[] bytes = cc.toBytecode();          System.out.println(Arrays.toString(bytes));          System.out.println(cc.getName());//获取类名          System.out.println(cc.getSimpleName());//获取简要类名          System.out.println(cc.getSuperclass());//获取父类          System.out.println(cc.getInterfaces());//获取接口          System.out.println(cc.getMethods());//获取      }      //新生成一个方法      public static void test02() throws Exception{          ClassPool pool = ClassPool.getDefault();          CtClass cc = pool.get(&quot;bean.User&quot;);          //第一种          //CtMethod cm = CtMethod.make(&quot;public String getName(){return name;}&quot;, cc);          //第二种          //参数：返回值类型，方法名，参数，对象          CtMethod cm = new CtMethod(CtClass.intType,&quot;add&quot;,new CtClass[]{CtClass.intType,CtClass.intType},cc);          cm.setModifiers(Modifier.PUBLIC);//访问范围          cm.setBody(&quot;{return $1+$2;}&quot;);          //cc.removeMethod(m) 删除一个方法          cc.addMethod(cm);          //通过反射调用方法          Class clazz = cc.toClass();          Object obj = clazz.newInstance();//通过调用无参构造器，生成新的对象          Method m = clazz.getDeclaredMethod(&quot;add&quot;, int.class,int.class);          Object result = m.invoke(obj, 2,3);          System.out.println(result);      }      //修改已有的方法      public static void test03() throws Exception{          ClassPool pool  = ClassPool.getDefault();          CtClass cc = pool.get(&quot;bean.User&quot;);          CtMethod cm = cc.getDeclaredMethod(&quot;hello&quot;,new CtClass[]{pool.get(&quot;java.lang.String&quot;)});          cm.insertBefore(&quot;System.out.println(\&quot;调用前\&quot;);&quot;);//调用前          cm.insertAt(29, &quot;System.out.println(\&quot;29\&quot;);&quot;);//行号          cm.insertAfter(&quot;System.out.println(\&quot;调用后\&quot;);&quot;);//调用后          //通过反射调用方法          Class clazz = cc.toClass();          Object obj = clazz.newInstance();          Method m = clazz.getDeclaredMethod(&quot;hello&quot;, String.class);          Object result = m.invoke(obj, &quot;张三&quot;);          System.out.println(result);           }      //修改已有属性      public static void test04() throws Exception{          ClassPool pool  = ClassPool.getDefault();          CtClass cc = pool.get(&quot;bean.User&quot;);          //属性          CtField cf = new CtField(CtClass.intType,&quot;age&quot;,cc);          cf.setModifiers(Modifier.PRIVATE);          cc.addField(cf);          //增加响应的get set方法          cc.addMethod(CtNewMethod.getter(&quot;getAge&quot;,cf));          cc.addMethod(CtNewMethod.setter(&quot;setAge&quot;,cf));          //访问属性          Class clazz = cc.toClass();          Object obj = clazz.newInstance();                 Field field = clazz.getDeclaredField(&quot;age&quot;);          System.out.println(field);          Method m = clazz.getDeclaredMethod(&quot;setAge&quot;, int.class);          m.invoke(obj, 16);          Method m2 = clazz.getDeclaredMethod(&quot;getAge&quot;, null);          Object resutl = m2.invoke(obj,null);                  System.out.println(resutl);      }      //操作构造方法      public static void test05() throws Exception{          ClassPool pool = ClassPool.getDefault();          CtClass cc = pool.get(&quot;bean.User&quot;);          CtConstructor[] cons = cc.getConstructors();          for(CtConstructor con:cons){              System.out.println(con);          }      }      public static void main(String[] args) throws Exception {          //test01();          //test02();          //test03();          //test04();          test05();      }  }  </code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;也许你写了无数行的代码，也许你能非常溜的使用高级语言，但是你未必了解那些高级语言的执行过程。例如大行其道的Java。&lt;/p&gt;
+&lt;p&gt;Java号称是一门“一次编译到处运行”的语言，但是我们对这句话的理解深度又有多少呢？从我们写的java文件到通过编译器编译成java字节码文件
+      
+    
+    </summary>
+    
+      <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
+    
+    
+      <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+      <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JAVA开发常用类库--常用类库</title>
+    <link href="http://yoursite.com/2018/03/14/java-api06/"/>
+    <id>http://yoursite.com/2018/03/14/java-api06/</id>
+    <published>2018-03-14T04:09:18.000Z</published>
+    <updated>2018-03-14T04:17:56.257Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>Java 类库概念：</strong><br>Java 的应用程序接口 (API) 以包的形式来组织，每个包提供了大量的相关类、接口和异常处理类，这些包的集合就是 Java 的类库</p><p>包名以 Java 开始的包是 Java 核心包 (Java Core Package) ；</p><p>包名以 Javax 开始的包是 Java 扩展包 (Java Extension Package) ，例如 javax.swing 包；</p><p>常用的 Java 核心包 (Java Core Package)</p><ol><li><p><strong>java.lang</strong>      Java 编程语言的基本类库</p></li><li><p>java.applet     创建 applet 需要的所有类</p></li><li><p>java.awt       创建用户界面以及绘制和管理图形、图像的类</p></li><li><p>java.io        通过数据流、对象序列以及文件系统实现的系统输入、输出</p></li><li><p>java.net       用于实现网络通讯应用的所有类</p></li><li><p><strong>java.util</strong>       集合类、时间处理模式、日期时间工具等各类常用工具包</p></li></ol><p>其它还有</p><ol><li><p>java.sql        访问和处理来自于 Java 标准数据源数据的类</p></li><li><p>java.test       以一种独立于自然语言的方式处理文本、日期、数字和消息的类和接口</p></li><li><p>java.security    设计网络安全方案需要的一些类</p></li><li><p>java.beans     开发 Java Beans 需要的所有类</p></li><li><p>java.math      简明的整数算术以及十进制算术的基本函数</p></li><li><p>java.rmi       与远程方法调用相关的所有类，rmi即Remote Method Invoke远程方法调用</p></li></ol><p>常用的 Java 扩展包 (Java Extension Package)</p><ol><li><p>javax.accessibility  定义了用户界面组件之间相互访问的一种机制</p></li><li><p>javax.naming.*     为命名服务提供了一系列类和接口</p></li><li><p>javax.swing.*       提供了一系列轻量级的用户界面组件，是目前 Java 用户界面常用的包</p></li></ol><p>注 1 ：最重要且常用的是 1 和 6 ，已用黑体标出的为，需重点掌握</p><p>注 2 ：在使用 Java 时，除了 java.lang 外，其他的包都需要 import 语句引入之后才能使用。</p><p>重点讲解内容：java.lang和java.util。具体各方法在开发文档里写的很清楚</p><p>java.lang 包</p><p>这个包称为 java 语言包，是由编译器自动引入的。程序中不必用 import 语句就可以使用。它所包含的类和接口对所有实际的 Java 程序都是必要的。</p><ol><li><p>object 类</p></li><li><p>数学类 (Math)</p></li><li><p>数据类型类</p></li><li><p>线程类</p></li><li><p>字符串类 (String 类和 StringBuffer 类 )</p></li><li><p>系统及运行类 (System 类和 Runtime 类 )</p></li><li><p>错误和异常处理类 (Throwable 、 Exception 、 Error)</p></li><li><p>过程类 (process)</p></li></ol><p>java.util 包</p><ol><li><p>日期类、日历类（ Data 、 Calendar 、 GregorianCalendar ）</p></li><li><p>随机数类（ Random ）</p></li><li><p>位运算类（ BitSet ）</p></li><li><p>矢量类（ Vector ）</p></li><li><p>数据结构类（ Stack ）</p></li><li><p>散列表类（ Hashtable ）</p></li><li><p>StringTokenizer类</p></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;strong&gt;Java 类库概念：&lt;/strong&gt;&lt;br&gt;Java 的应用程序接口 (API) 以包的形式来组织，每个包提供了大量的相关类、接口和异常处理类，这些包的集合就是 Java 的类库&lt;/p&gt;
+&lt;p&gt;包名以 Java 开始的包是 Java 核心包 (Java C
+      
+    
+    </summary>
+    
+      <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
+    
+    
+      <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+      <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
+    
+  </entry>
   
   <entry>
     <title>JAVA开发常用类库--日期和时间库</title>
@@ -34,9 +122,9 @@
       <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
     
@@ -63,9 +151,9 @@
       <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
     
@@ -91,9 +179,9 @@
       <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
     
@@ -118,9 +206,9 @@
       <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
     
@@ -170,9 +258,9 @@
       <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
     
