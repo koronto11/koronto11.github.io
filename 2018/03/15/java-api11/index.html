@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="java,大数据,java类库," />
+  <meta name="keywords" content="大数据,java,java类库," />
 
 
 
@@ -82,14 +82,14 @@
 
 
 <meta name="description" content="dom解析是常用dom4j。android中我们常用的是sax、pull。因为它们更省内存。而html解析,则也有很多框架 java的HTML解析通常用在利用java做网页的垂直爬虫 HTML是WEB的核心，互联网中你看到的所有页面都是HTML，不管它们是由JavaScript，JSP，PHP,ASP或者是别的什么WEB技术动态生成的。你的浏览器会去解析HTML并替你去渲染它们。不过如果你需要自己">
-<meta name="keywords" content="java,大数据,java类库">
+<meta name="keywords" content="大数据,java,java类库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JAVA开发常用类库--HTML解析库">
 <meta property="og:url" content="http://yoursite.com/2018/03/15/java-api11/index.html">
 <meta property="og:site_name" content="刻写未来！">
 <meta property="og:description" content="dom解析是常用dom4j。android中我们常用的是sax、pull。因为它们更省内存。而html解析,则也有很多框架 java的HTML解析通常用在利用java做网页的垂直爬虫 HTML是WEB的核心，互联网中你看到的所有页面都是HTML，不管它们是由JavaScript，JSP，PHP,ASP或者是别的什么WEB技术动态生成的。你的浏览器会去解析HTML并替你去渲染它们。不过如果你需要自己">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-15T05:38:22.474Z">
+<meta property="og:updated_time" content="2018-03-15T09:22:44.155Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA开发常用类库--HTML解析库">
 <meta name="twitter:description" content="dom解析是常用dom4j。android中我们常用的是sax、pull。因为它们更省内存。而html解析,则也有很多框架 java的HTML解析通常用在利用java做网页的垂直爬虫 HTML是WEB的核心，互联网中你看到的所有页面都是HTML，不管它们是由JavaScript，JSP，PHP,ASP或者是别的什么WEB技术动态生成的。你的浏览器会去解析HTML并替你去渲染它们。不过如果你需要自己">
@@ -547,8 +547,16 @@ Elements links = doc.select(&quot;a[href]&quot;);
 <p>HtmlParser的功能比较完备，也挺灵活，但谈不上方便。这个项目很久没有维护了，最新版本是2.1。HtmlParser的核心元素是Node，对应一个HTML标签，支持getChildren()等树状遍历方式。HtmlParser另外一个核心元素是NodeFilter，通过实现NodeFilter接口，可以对页面元素进行筛选。</p>
 <p>htmlparser是一个纯的java写的html解析的库,它不依赖于其它的java库文件,主要用于改造或提取html。它能超高速解析html,而且不会出错。现在htmlparser最新版本为2.0。 据说htmlparser就是目前最好的html解析和分析的工具。 无论你是想抓取网页数据还是改造html的内容,用了htmlparser绝对会忍不住称赞。</p>
 <p>在线文档:<a href="http://www.osctools.net/apidocs/apidoc?api=HTMLParser[/url];http://htmlparser.sourceforge.net/project-info.html" target="_blank" rel="noopener">http://www.osctools.net/apidocs/apidoc?api=HTMLParser[/url];http://htmlparser.sourceforge.net/project-info.html</a> </p>
-<p>示例代码:<br>    Parser parser = new Parser (“<a href="http://www.dangdang.com&quot;)" target="_blank" rel="noopener">http://www.dangdang.com&quot;)</a>;<br>    NodeList list = parser.parse (null);<br>    Node node = list.elementAt (0);<br>    NodeList sublist = node.getChildren ();<br>    System.out.println (sublist.size ()); </p>
+<p>示例代码:<br>    Parser parser = new Parser (“<a href="http://www.dangdang.com&quot;)" target="_blank" rel="noopener">http://www.dangdang.com&quot;)</a>;<br>    NodeList list = parser.parse (null);<br>    Node node = list.elementAt (0);<br>    NodeList sublist = node.getChildren ();<br>    System.out.println (sublist.size ());</p>
 <ul>
+<li>Apache tika</li>
+</ul>
+<p>tika是专为抽取而生的工具，还支持PDF、Zip甚至是Java Class。使用tika分析HTML，需要自己定义一个抽取内容的Handler并继承org.xml.sax.helpers.DefaultHandler，解析方式就是xml标准的方式。crawler4j中就使用了tika作为解析工具。SAX这种流式的解析方式对于分析大文件很有用，我个人倒是认为对于解析html意义不是很大。</p>
+<pre><code>InputStream inputStream = null;
+HtmlParser htmlParser = new HtmlParser();
+htmlParser.parse(new ByteArrayInputStream(page.getContentData()), 
+contentHandler, metadata, new ParseContext()); 
+</code></pre><ul>
 <li>HtmlCleaner与XPath</li>
 </ul>
 <p>HtmlCleaner最大的优点是：支持XPath的方式选取元素。XPath是一门在XML中查找信息的语言，也可以用于抽取HTML元素。XPath与CSS Selector大部分功能都是重合的，但是CSS Selector专门针对HTML，写法更简洁，而XPath则是通用的标准，可以精确到属性值。XPath有一定的学习成本，但是对经常需要编写爬虫的人来说，这点投入绝对是值得的。</p>
@@ -563,23 +571,27 @@ Object[] objects = tagNode.evaluateXPath(&quot;xpathStr&quot;);
 <p>在这里评价这些工具的主要标准是“方便”。就拿抽取页面所有链接这一基本任务来说，几种代码分别如下：</p>
 <ul>
 <li><p>XPath:</p>
-  <!-- lang: java -->
-<p>  tagNode.evaluateXPath(“//a/@href”)</p>
-</li>
+<pre><code>&lt;!-- lang: java --&gt;
+tagNode.evaluateXPath(&quot;//a/@href&quot;)
+</code></pre></li>
 <li><p>CSS Selector:</p>
-  <!-- lang: java -->
-<p>  //使用类似js的实现<br>  $(“a[href]”).attr(“href”)</p>
-</li>
+<pre><code>&lt;!-- lang: java --&gt;
+//使用类似js的实现
+$(&quot;a[href]&quot;).attr(&quot;href&quot;)
+</code></pre></li>
 <li><p>HtmlParser：</p>
-  <!-- lang: java -->
-<p>  Parser p = new Parser(value);<br>  NodeFilter aFilter = new TagNameFilter(“a”);<br>  NodeList nodes = p.extractAllNodesThatMatch(aFilter);<br>  for (int i = 0; i &lt; nodes.size(); i++) {</p>
-<pre><code>Node eachNode = nodes.elementAt(i);
-if (eachNode instanceof LinkTag) {
-    LinkTag linkTag = (LinkTag) eachNode;
-    System.out.println(linkTag.extractLink());
+<pre><code>&lt;!-- lang: java --&gt;
+Parser p = new Parser(value);
+NodeFilter aFilter = new TagNameFilter(&quot;a&quot;);
+NodeList nodes = p.extractAllNodesThatMatch(aFilter);
+for (int i = 0; i &lt; nodes.size(); i++) {
+    Node eachNode = nodes.elementAt(i);
+    if (eachNode instanceof LinkTag) {
+        LinkTag linkTag = (LinkTag) eachNode;
+        System.out.println(linkTag.extractLink());
+    }
 }
-</code></pre><p>  }</p>
-</li>
+</code></pre></li>
 </ul>
 <p>XPath是最简单的，可以精确选取到href属性值；而CSS Selector则次之，可以选取到HTML标签，属性值需要调用函数去获取；而HtmlParser和SAX则需要手动写程序去处理标签了，比较麻烦。</p>
 
@@ -628,9 +640,9 @@ if (eachNode instanceof LinkTag) {
       
         <div class="post-tags">
           
-            <a href="/tags/java/" rel="tag"># java</a>
-          
             <a href="/tags/大数据/" rel="tag"># 大数据</a>
+          
+            <a href="/tags/java/" rel="tag"># java</a>
           
             <a href="/tags/java类库/" rel="tag"># java类库</a>
           
@@ -654,6 +666,10 @@ if (eachNode instanceof LinkTag) {
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/15/java-api12/" rel="prev" title="JAVA开发常用类库--嵌入式SQL">
+                JAVA开发常用类库--嵌入式SQL <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -737,7 +753,7 @@ if (eachNode instanceof LinkTag) {
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
