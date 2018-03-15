@@ -1,0 +1,1840 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java,大数据,java类库," />
+
+
+
+
+
+  <link rel="alternate" href="https://koronto11.github.io/" title="刻写未来！" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="我不是很喜欢JDK的一个重要原因就包括他们缺乏对HTTP的支持。虽然可以使用java.net包类，但是这和直接使用像 Apache HttpClient 和 HttpCore 等开源类库比起来麻烦太多了。 尽管JDK 9将开始HTTP 2.0，也对HTTP的支持做了优化，但是我还是强烈建议所有的Java开发人员熟悉流行的HTTP处理类库，例如HttpClient和HttpCore HTTP等库。">
+<meta name="keywords" content="java,大数据,java类库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA开发常用类库--HTTP库">
+<meta property="og:url" content="http://yoursite.com/2018/03/15/java-api09/index.html">
+<meta property="og:site_name" content="刻写未来！">
+<meta property="og:description" content="我不是很喜欢JDK的一个重要原因就包括他们缺乏对HTTP的支持。虽然可以使用java.net包类，但是这和直接使用像 Apache HttpClient 和 HttpCore 等开源类库比起来麻烦太多了。 尽管JDK 9将开始HTTP 2.0，也对HTTP的支持做了优化，但是我还是强烈建议所有的Java开发人员熟悉流行的HTTP处理类库，例如HttpClient和HttpCore HTTP等库。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2018/03/15/java-api09/p1.png">
+<meta property="og:updated_time" content="2018-03-15T04:59:52.073Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JAVA开发常用类库--HTTP库">
+<meta name="twitter:description" content="我不是很喜欢JDK的一个重要原因就包括他们缺乏对HTTP的支持。虽然可以使用java.net包类，但是这和直接使用像 Apache HttpClient 和 HttpCore 等开源类库比起来麻烦太多了。 尽管JDK 9将开始HTTP 2.0，也对HTTP的支持做了优化，但是我还是强烈建议所有的Java开发人员熟悉流行的HTTP处理类库，例如HttpClient和HttpCore HTTP等库。">
+<meta name="twitter:image" content="http://yoursite.com/2018/03/15/java-api09/p1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/15/java-api09/"/>
+
+
+
+
+
+  <title>JAVA开发常用类库--HTTP库 | 刻写未来！</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">刻写未来！</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-main">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Main
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/15/java-api09/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黄上">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/koro.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刻写未来！">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JAVA开发常用类库--HTTP库</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-15T12:19:21+08:00">
+                2018-03-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JAVA/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>我不是很喜欢JDK的一个重要原因就包括他们缺乏对HTTP的支持。虽然可以使用java.net包类，但是这和直接使用像 Apache HttpClient 和 HttpCore 等开源类库比起来麻烦太多了。</p>
+<p>尽管JDK 9将开始HTTP 2.0，也对HTTP的支持做了优化，但是我还是强烈建议所有的Java开发人员熟悉流行的HTTP处理类库，例如HttpClient和HttpCore HTTP等库。</p>
+<a id="more"></a>
+<h1 id="传统的java-net包类"><a href="#传统的java-net包类" class="headerlink" title="传统的java.net包类"></a>传统的java.net包类</h1><p>InetAddress类:表示互联网协议 (IP) 地址</p>
+<p>URL类:代表一个统一资源定位符，它是指向互联网“资源”的指针。</p>
+<p>   资源可以是简单的文件或目录，也可以是对更为复杂的对象的引用，例如对数据库或搜索引擎的查询。</p>
+<p>URLConnection类:用于读取和写入此 URL 引用的资源。</p>
+<p>使用步骤:<br>通过在 URL 上调用 openConnection 方法创建连接对象。<br>处理设置参数和一般请求属性。<br>使用 connect 方法建立到远程对象的实际连接。<br>远程对象变为可用。远程对象的头字段和内容变为可访问。</p>
+<p>DatagramPacket类:此类表示数据报包。</p>
+<p>  数据报包用来实现无连接包投递服务。每条报文仅根据该包中包含的信息从一台机器路由到另一台机器。</p>
+<p>DatagramSocket类:此类表示用来发送和接收数据报包的套接字。</p>
+<p>数据报套接字是包投递服务的发送或接收点。每个在数据报套接字上发送或接收的包都是单独编址和路由的。从一台机<br>器发送到另一台机器的多个包可能选择不同的路由，也可能按不同的顺序到达。</p>
+<ul>
+<li>ServerSocket类:此类实现服务器套接字。</li>
+</ul>
+<p>ServerSocket类主要用在服务器端程序的开发上，用于接收客户端的连接请求</p>
+<p><img src="/2018/03/15/java-api09/p1.png" alt="logo"></p>
+<p>服务器套接字等待请求通过网络传入。它基于该请求执行某些操作，然后可能向请求者返回结果。</p>
+<ul>
+<li>Socket类:此类实现客户端套接字（也可以就叫“套接字”）。</li>
+</ul>
+<p>则是在客户端上运行的，在服务器每次运行时都要使用accept()方法来获取客户端连接，此方法执行之后服务器端将进入阻塞状态，<br>直到客户端连接之后才可以继续向下执行，此方法的返回值类型是Socket，每一个Socket都表示一个客户端对象</p>
+<p>本包中的主线应该是Socket和ServalSocket两个类。将围绕socket和serverSocket的通信而展开。</p>
+<p>首先，如何建立一个客户端和服务器端的通信？</p>
+<p>一、客户端</p>
+<p>1.首先new一个socket（有连接的socket和未连接的socket两种：指定服务器端的ip地址（或主机名）与port号的为连接的，没指定或使用socket（Proxy proxy）的为未连接的）。</p>
+<p>2.设置socket的各项参数：时间？（连接之后还能设置么？)</p>
+<p>3.通过getInputputStream()和getOutputStream()方法得到InputStream和OutputStream流。</p>
+<p>4.操作InputStream和OutputStream流读取或写入数据。</p>
+<p>5.close</p>
+<p>二、服务器端</p>
+<p>1.首先new一个serverSocket（有绑定的serverSocket和未绑定的serverSocket两种：指定服务器端的Port号为绑定的，未指定的为未绑定的）。</p>
+<p>2.设置serverSocket的各项参数：buffersize？</p>
+<p>3.调用accept()方法获得一个和客户端连接的Socket。</p>
+<p>4.通过getInputputStream()和getOutputStream()方法得到InputStream和OutputStream流。</p>
+<p>5.close</p>
+<p>通过以上步骤我们基本上就建立起了客户端和服务器端的通信链路。然后我们讲讲关于Socket和ServerSocket参数设置的问题。</p>
+<p>本文的第二个主线是DatagramSocket和DatagramPacket两个类。</p>
+<p>首先，如何通过UDP协议建立一个客户端和服务器端的通信？</p>
+<p>一、客户端</p>
+<p>1.首先new 一个DatagramSocket（有绑定的DatagramSocket和未绑定的DatagramSocket两种：需指定本地的ip地址和port号，DatagramSocket(SocketAddress localAddr)如果localAddr未null，则为未绑定）。</p>
+<p>2,new一个DatagramPacket实例（需指定主机地址和端口号），填充数据，将其传递给DatagramSocket的send方法。</p>
+<p>3.接收数据时将DatagramPacket实例传递给DatagramSocket的receive方法。</p>
+<p>3,close</p>
+<p>二、服务器端</p>
+<p>其实本质和客户端一样的。</p>
+<p>示例：</p>
+<pre><code>import java.io.BufferedReader;  
+import java.io.IOException;  
+import java.io.InputStreamReader;  
+import java.io.PrintWriter;  
+import java.net.URL;  
+import java.net.URLConnection;  
+import java.util.List;  
+import java.util.Map;  
+
+/** 
+ * @Title   SendRequestUtils.java 
+ * @Package com.pro.huanbao.common.utils 
+ * @author  wanpu_ly 
+ * @dade    2017年10月13日 上午8:43:42 
+ * @version V1.0 
+ * 类说明:  
+ */  
+public class SendRequestUtils {  
+
+    /** 
+     * 向指定URL发送GET方法的请求 
+     *  
+     * @param url 
+     *            发送请求的URL 
+     * @param param 
+     *            请求参数，请求参数应该是 name1=value1&amp;name2=value2 的形式。 
+     * @return URL 所代表远程资源的响应结果 
+     */  
+    public static String sendGet(String url, String param) {  
+        String result = &quot;&quot;;  
+        BufferedReader in = null;  
+        try {  
+            String urlNameString = url + &quot;?&quot; + param;  
+            if (param == null) {  
+                urlNameString = url;  
+            }  
+            URL realUrl = new URL(urlNameString);  
+            // 打开和URL之间的连接  
+            URLConnection connection = realUrl.openConnection();  
+            // 设置通用的请求属性  
+            connection.setRequestProperty(&quot;accept&quot;, &quot;*/*&quot;);  
+            connection.setRequestProperty(&quot;connection&quot;, &quot;Keep-Alive&quot;);  
+            connection.setRequestProperty(&quot;user-agent&quot;,  
+                    &quot;Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)&quot;);  
+            // 建立实际的连接  
+            connection.connect();  
+            // 获取所有响应头字段  
+            Map&lt;String, List&lt;String&gt;&gt; map = connection.getHeaderFields();  
+            // 遍历所有的响应头字段  
+            for (String key : map.keySet()) {  
+                System.out.println(key + &quot;---&gt;&quot; + map.get(key));  
+            }  
+            // 定义 BufferedReader输入流来读取URL的响应  
+            in = new BufferedReader(new InputStreamReader(  
+                    connection.getInputStream()));  
+            String line;  
+            while ((line = in.readLine()) != null) {  
+                result += line;  
+            }  
+        } catch (Exception e) {  
+            System.out.println(&quot;发送GET请求出现异常！&quot; + e);  
+            e.printStackTrace();  
+        }  
+        // 使用finally块来关闭输入流  
+        finally {  
+            try {  
+                if (in != null) {  
+                    in.close();  
+                }  
+            } catch (Exception e2) {  
+                e2.printStackTrace();  
+            }  
+        }  
+        return result;  
+    }  
+
+    /**  
+     * 向指定 URL 发送POST方法的请求  
+     *   
+     * @param url  
+     *            发送请求的 URL  
+     * @param param  
+     *            请求参数，请求参数应该是 name1=value1&amp;name2=value2 的形式。  
+     * @return 所代表远程资源的响应结果  
+     */  
+    public static String sendPost(String url, String param) {  
+        PrintWriter out = null;  
+        BufferedReader in = null;  
+        String result = &quot;&quot;;  
+        try {  
+            URL realUrl = new URL(url);  
+            // 打开和URL之间的连接  
+            URLConnection conn = realUrl.openConnection();  
+            // 设置通用的请求属性  
+            conn.setRequestProperty(&quot;accept&quot;, &quot;*/*&quot;);  
+            conn.setRequestProperty(&quot;connection&quot;, &quot;Keep-Alive&quot;);  
+            conn.setRequestProperty(&quot;user-agent&quot;,  
+                    &quot;Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)&quot;);  
+            // 发送POST请求必须设置如下两行  
+            conn.setDoOutput(true);  
+            conn.setDoInput(true);  
+            // 获取URLConnection对象对应的输出流  
+            out = new PrintWriter(conn.getOutputStream());  
+            // 发送请求参数  
+            out.print(param);  
+            // flush输出流的缓冲  
+            out.flush();  
+            // 定义BufferedReader输入流来读取URL的响应  
+            in = new BufferedReader(  
+                    new InputStreamReader(conn.getInputStream()));  
+            String line;  
+            while ((line = in.readLine()) != null) {  
+                result += line;  
+            }  
+        } catch (Exception e) {  
+            System.out.println(&quot;发送 POST 请求出现异常！&quot;+e);  
+            e.printStackTrace();  
+        }  
+        //使用finally块来关闭输出流、输入流  
+        finally{  
+            try{  
+                if(out!=null){  
+                    out.close();  
+                }  
+                if(in!=null){  
+                    in.close();  
+                }  
+            }  
+            catch(IOException ex){  
+                ex.printStackTrace();  
+            }  
+        }  
+        return result;  
+    }    
+}  
+</code></pre><p>不过由于java.net的局限性和性能上的不足，基本上开发互联网产品的时候不会用到</p>
+<p>接下来介绍一些第三方流行的Http库</p>
+<h1 id="apache的httpclient工具类"><a href="#apache的httpclient工具类" class="headerlink" title="apache的httpclient工具类"></a>apache的httpclient工具类</h1><p>示例：</p>
+<pre><code>package org.egg.utils;
+
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+
+/**
+ * @author dataochen
+ * @Description
+ * @date: 2017/11/7 17:49
+ */
+public class HttpRequestUtil {
+    private static CloseableHttpClient httpClient;
+
+    static {
+        PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
+        cm.setMaxTotal(100);
+        cm.setDefaultMaxPerRoute(20);
+        cm.setDefaultMaxPerRoute(50);
+        httpClient = HttpClients.custom().setConnectionManager(cm).build();
+    }
+
+    public static String get(String url) {
+        CloseableHttpResponse response = null;
+        BufferedReader in = null;
+        String result = &quot;&quot;;
+        try {
+            HttpGet httpGet = new HttpGet(url);
+            RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(30000).setConnectionRequestTimeout(30000).setSocketTimeout(30000).build();
+            httpGet.setConfig(requestConfig);
+            httpGet.setConfig(requestConfig);
+            httpGet.addHeader(&quot;Content-type&quot;, &quot;application/json; charset=utf-8&quot;);
+            httpGet.setHeader(&quot;Accept&quot;, &quot;application/json&quot;);
+            response = httpClient.execute(httpGet);
+            in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+            StringBuffer sb = new StringBuffer(&quot;&quot;);
+            String line = &quot;&quot;;
+            String NL = System.getProperty(&quot;line.separator&quot;);
+            while ((line = in.readLine()) != null) {
+                sb.append(line + NL);
+            }
+            in.close();
+            result = sb.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (null != response) {
+                    response.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    public static String post(String url, String jsonString) {
+        CloseableHttpResponse response = null;
+        BufferedReader in = null;
+        String result = &quot;&quot;;
+        try {
+            HttpPost httpPost = new HttpPost(url);
+            RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(30000).setConnectionRequestTimeout(30000).setSocketTimeout(30000).build();
+            httpPost.setConfig(requestConfig);
+            httpPost.setConfig(requestConfig);
+            httpPost.addHeader(&quot;Content-type&quot;, &quot;application/json; charset=utf-8&quot;);
+            httpPost.setHeader(&quot;Accept&quot;, &quot;application/json&quot;);
+            httpPost.setEntity(new StringEntity(jsonString, Charset.forName(&quot;UTF-8&quot;)));
+            response = httpClient.execute(httpPost);
+            in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+            StringBuffer sb = new StringBuffer(&quot;&quot;);
+            String line = &quot;&quot;;
+            String NL = System.getProperty(&quot;line.separator&quot;);
+            while ((line = in.readLine()) != null) {
+                sb.append(line + NL);
+            }
+            in.close();
+            result = sb.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (null != response) {
+                    response.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+}
+</code></pre><p>代码所用jar包maven坐标：<br><!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient --><br>    <dependency><br>        <groupid>org.apache.httpcomponents</groupid><br>        <artifactid>httpclient</artifactid><br>        <version>4.5.3</version><br>    </dependency><br><!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpcore --><br>    <dependency><br>        <groupid>org.apache.httpcomponents</groupid><br>        <artifactid>httpcore</artifactid><br>        <version>4.4.8</version><br>    </dependency></p>
+<p>Http协议的重要性相信不用我多说了，HttpClient相比传统JDK自带的URLConnection，增加了易用性和灵活性（具体区别，日后我们再讨论），它不仅是客户端发送Http请求变得容易，而且也方便了开发人员测试接口（基于Http协议的），即提高了开发的效率，也方便提高代码的健壮性。因此熟练掌握HttpClient是很重要的必修内容，掌握HttpClient后，相信对于Http协议的了解会更加深入。</p>
+<p>一、简介<br>HttpClient是Apache Jakarta Common下的子项目，用来提供高效的、最新的、功能丰富的支持HTTP协议的客户端编程工具包，并且它支持HTTP协议最新的版本和建议。HttpClient已经应用在很多的项目中，比如Apache Jakarta上很著名的另外两个开源项目Cactus和HTMLUnit都使用了HttpClient。</p>
+<p>二、特性</p>
+<ol>
+<li>基于标准、纯净的java语言。实现了Http1.0和Http1.1</li>
+<li>以可扩展的面向对象的结构实现了Http全部的方法（GET, POST, PUT, DELETE, HEAD, OPTIONS, and TRACE）。</li>
+<li>支持HTTPS协议。</li>
+<li>通过Http代理建立透明的连接。</li>
+<li>利用CONNECT方法通过Http代理建立隧道的https连接。</li>
+<li>Basic, Digest, NTLMv1, NTLMv2, NTLM2 Session, SNPNEGO/Kerberos认证方案。</li>
+<li>插件式的自定义认证方案。</li>
+<li>便携可靠的套接字工厂使它更容易的使用第三方解决方案。</li>
+<li>连接管理器支持多线程应用。支持设置最大连接数，同时支持设置每个主机的最大连接数，发现并关闭过期的连接。</li>
+<li>自动处理Set-Cookie中的Cookie。</li>
+<li>插件式的自定义Cookie策略。</li>
+<li>Request的输出流可以避免流中内容直接缓冲到socket服务器。</li>
+<li>Response的输入流可以有效的从socket服务器直接读取相应内容。</li>
+<li>在http1.0和http1.1中利用KeepAlive保持持久连接。</li>
+<li>直接获取服务器发送的response code和 headers。</li>
+<li>设置连接超时的能力。</li>
+<li>实验性的支持http1.1 response caching。</li>
+<li>源代码基于Apache License 可免费获取</li>
+</ol>
+<p>三、使用方法<br>   Mavn坐标<br>Java代码  收藏代码<br>    <dependency><br>        <groupid>org.apache.httpcomponents</groupid><br>        <artifactid>httpclient</artifactid><br>        <version>4.3.4</version><br>    </dependency>  </p>
+<p>使用HttpClient发送请求、接收响应很简单，一般需要如下几步即可。</p>
+<ol>
+<li>创建HttpClient对象。</li>
+<li>创建请求方法的实例，并指定请求URL。如果需要发送GET请求，创建HttpGet对象；如果需要发送POST请求，创建HttpPost对象。</li>
+<li>如果需要发送请求参数，可调用HttpGet、HttpPost共同的setParams(HetpParams params)方法来添加请求参数；对于HttpPost对象而言，也可调用setEntity(HttpEntity entity)方法来设置请求参数。</li>
+<li>调用HttpClient对象的execute(HttpUriRequest request)发送请求，该方法返回一个HttpResponse。</li>
+<li>调用HttpResponse的getAllHeaders()、getHeaders(String name)等方法可获取服务器的响应头；调用HttpResponse的getEntity()方法可获取HttpEntity对象，该对象包装了服务器的响应内容。程序可通过该对象获取服务器的响应内容。</li>
+<li>释放连接。无论执行方法是否成功，都必须释放连接</li>
+</ol>
+<p>四.post跟get请求示例<br>Java代码  收藏代码<br>    package com.ickes;  </p>
+<pre><code>import java.util.ArrayList;  
+import java.util.List;  
+import org.apache.http.HttpEntity;  
+import org.apache.http.NameValuePair;  
+import org.apache.http.client.entity.UrlEncodedFormEntity;  
+import org.apache.http.client.methods.CloseableHttpResponse;  
+import org.apache.http.client.methods.HttpGet;  
+import org.apache.http.client.methods.HttpPost;  
+import org.apache.http.entity.StringEntity;  
+import org.apache.http.impl.client.CloseableHttpClient;  
+import org.apache.http.impl.client.HttpClients;  
+import org.apache.http.message.BasicNameValuePair;  
+import org.apache.http.protocol.HTTP;  
+import org.apache.http.util.EntityUtils;  
+
+public class HttpClientDemo {  
+
+    public static void main(String[] args) throws Exception  {   
+        get();  
+    }  
+
+    /** 
+     * post方式提交json代码 
+     * @throws Exception  
+     */  
+    public static void postJson() throws Exception{  
+        //创建默认的httpClient实例.   
+        CloseableHttpClient httpclient = null;  
+        //接收响应结果  
+        CloseableHttpResponse response = null;  
+        try {  
+            //创建httppost  
+            httpclient = HttpClients.createDefault();    
+            String url =&quot;http://192.168.16.36:8081/goSearch/gosuncn/deleteDocs.htm&quot;;  
+            HttpPost httpPost = new HttpPost(url);  
+            httpPost.addHeader(HTTP.CONTENT_TYPE,&quot;application/x-www-form-urlencoded&quot;);  
+            //参数  
+            String json =&quot;{&apos;ids&apos;:[&apos;html1&apos;,&apos;html2&apos;]}&quot;;  
+            StringEntity se = new StringEntity(json);  
+            se.setContentEncoding(&quot;UTF-8&quot;);  
+            se.setContentType(&quot;application/json&quot;);//发送json需要设置contentType  
+            httpPost.setEntity(se);  
+            response = httpclient.execute(httpPost);  
+            //解析返结果  
+            HttpEntity entity = response.getEntity();   
+            if(entity != null){  
+                String resStr = EntityUtils.toString(entity, &quot;UTF-8&quot;);      
+                System.out.println(resStr);  
+            }  
+        } catch (Exception e) {  
+            throw e;  
+        }finally{  
+            httpclient.close();  
+            response.close();  
+        }  
+    }  
+
+     /**  
+     * post方式提交表单（模拟用户登录请求）  
+     * @throws Exception  
+     */    
+    public static void postForm() throws Exception  {    
+        // 创建默认的httpClient实例.      
+        CloseableHttpClient httpclient = null;  
+        //发送请求  
+        CloseableHttpResponse response = null;  
+        try {  
+            httpclient = HttpClients.createDefault();    
+            // 创建httppost      
+            String url= &quot;http://localhost:8080/search/ajx/user.htm&quot;;  
+            HttpPost httppost = new HttpPost(url);    
+            // 创建参数队列      
+            List&lt;NameValuePair&gt; formparams = new ArrayList&lt;NameValuePair&gt;();    
+            formparams.add(new BasicNameValuePair(&quot;username&quot;, &quot;admin&quot;));    
+            formparams.add(new BasicNameValuePair(&quot;password&quot;, &quot;123456&quot;));  
+            //参数转码  
+            UrlEncodedFormEntity uefEntity = new UrlEncodedFormEntity(formparams, &quot;UTF-8&quot;);    
+            httppost.setEntity(uefEntity);   
+            response = httpclient.execute(httppost);    
+            HttpEntity entity = response.getEntity();    
+            if (entity != null) {    
+                  System.out.println(EntityUtils.toString(entity, &quot;UTF-8&quot;));    
+            }    
+            //释放连接  
+        } catch (Exception e) {  
+            throw e;  
+        }finally{  
+             httpclient.close();  
+             response.close();  
+        }  
+    }    
+
+    /**  
+     * 发送 get请求  
+     * @throws Exception  
+     */    
+    public static void get() throws Exception {    
+        CloseableHttpClient httpclient = null;  
+        CloseableHttpResponse response = null;  
+        try {  
+            httpclient = HttpClients.createDefault();    
+            // 创建httpget.      
+            HttpGet httpget = new HttpGet(&quot;http://www.baidu.com/&quot;);    
+            // 执行get请求.      
+            response = httpclient.execute(httpget);    
+            // 获取响应实体      
+            HttpEntity entity = response.getEntity();    
+
+            // 打印响应状态      
+            System.out.println(response.getStatusLine().getStatusCode());    
+            if (entity != null) {    
+                // 打印响应内容      
+                System.out.println(&quot;Response content: &quot; + EntityUtils.toString(entity));    
+            }  
+        } catch (Exception e) {  
+            throw e;  
+        }finally{  
+            httpclient.close();  
+            response.close();  
+        }  
+    }  
+}  
+</code></pre><p>五、SSL跟上传文件实例</p>
+<p>Java代码  收藏代码<br>    package com.test;  </p>
+<pre><code>import java.io.File;  
+import java.io.FileInputStream;  
+import java.io.IOException;  
+import java.io.UnsupportedEncodingException;  
+import java.security.KeyManagementException;  
+import java.security.KeyStore;  
+import java.security.KeyStoreException;  
+import java.security.NoSuchAlgorithmException;  
+import java.security.cert.CertificateException;  
+import java.util.ArrayList;  
+import java.util.List;  
+import javax.net.ssl.SSLContext;  
+import org.apache.http.HttpEntity;  
+import org.apache.http.NameValuePair;  
+import org.apache.http.ParseException;  
+import org.apache.http.client.ClientProtocolException;  
+import org.apache.http.client.entity.UrlEncodedFormEntity;  
+import org.apache.http.client.methods.CloseableHttpResponse;  
+import org.apache.http.client.methods.HttpGet;  
+import org.apache.http.client.methods.HttpPost;  
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;  
+import org.apache.http.conn.ssl.SSLContexts;  
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;  
+import org.apache.http.entity.ContentType;  
+import org.apache.http.entity.mime.MultipartEntityBuilder;  
+import org.apache.http.entity.mime.content.FileBody;  
+import org.apache.http.entity.mime.content.StringBody;  
+import org.apache.http.impl.client.CloseableHttpClient;  
+import org.apache.http.impl.client.HttpClients;  
+import org.apache.http.message.BasicNameValuePair;  
+import org.apache.http.util.EntityUtils;  
+import org.junit.Test;  
+
+public class HttpClientTest {  
+
+    @Test  
+    public void jUnitTest() {  
+        ssl();  
+    }  
+
+    /** 
+     * HttpClient连接SSL 
+     */  
+    public void ssl() {  
+        CloseableHttpClient httpclient = null;  
+        try {  
+            KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());  
+            FileInputStream instream = new FileInputStream(new File(&quot;d:\\tomcat.keystore&quot;));  
+            try {  
+                // 加载keyStore d:\\tomcat.keystore    
+                trustStore.load(instream, &quot;123456&quot;.toCharArray());  
+            } catch (CertificateException e) {  
+                e.printStackTrace();  
+            } finally {  
+                try {  
+                    instream.close();  
+                } catch (Exception ignore) {  
+                }  
+            }  
+            // 相信自己的CA和所有自签名的证书  
+            SSLContext sslcontext = SSLContexts.custom().loadTrustMaterial(trustStore, new TrustSelfSignedStrategy()).build();  
+            // 只允许使用TLSv1协议  
+            SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslcontext, new String[] { &quot;TLSv1&quot; }, null,  
+                    SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);  
+            httpclient = HttpClients.custom().setSSLSocketFactory(sslsf).build();  
+            // 创建http请求(get方式)  
+            HttpGet httpget = new HttpGet(&quot;https://localhost:8443/myDemo/Ajax/serivceJ.action&quot;);  
+            System.out.println(&quot;executing request&quot; + httpget.getRequestLine());  
+            CloseableHttpResponse response = httpclient.execute(httpget);  
+            try {  
+                HttpEntity entity = response.getEntity();  
+                System.out.println(&quot;----------------------------------------&quot;);  
+                System.out.println(response.getStatusLine());  
+                if (entity != null) {  
+                    System.out.println(&quot;Response content length: &quot; + entity.getContentLength());  
+                    System.out.println(EntityUtils.toString(entity));  
+                    EntityUtils.consume(entity);  
+                }  
+            } finally {  
+                response.close();  
+            }  
+        } catch (ParseException e) {  
+            e.printStackTrace();  
+        } catch (IOException e) {  
+            e.printStackTrace();  
+        } catch (KeyManagementException e) {  
+            e.printStackTrace();  
+        } catch (NoSuchAlgorithmException e) {  
+            e.printStackTrace();  
+        } catch (KeyStoreException e) {  
+            e.printStackTrace();  
+        } finally {  
+            if (httpclient != null) {  
+                try {  
+                    httpclient.close();  
+                } catch (IOException e) {  
+                    e.printStackTrace();  
+                }  
+            }  
+        }  
+    }  
+
+    /** 
+     * 上传文件 
+     */  
+    public void upload() {  
+        CloseableHttpClient httpclient = HttpClients.createDefault();  
+        try {  
+            HttpPost httppost = new HttpPost(&quot;http://localhost:8080/myDemo/Ajax/serivceFile.action&quot;);  
+
+            FileBody bin = new FileBody(new File(&quot;F:\\image\\sendpix0.jpg&quot;));  
+            StringBody comment = new StringBody(&quot;A binary file of some kind&quot;, ContentType.TEXT_PLAIN);  
+
+            HttpEntity reqEntity = MultipartEntityBuilder.create().addPart(&quot;bin&quot;, bin).addPart(&quot;comment&quot;, comment).build();  
+
+            httppost.setEntity(reqEntity);  
+
+            System.out.println(&quot;executing request &quot; + httppost.getRequestLine());  
+            CloseableHttpResponse response = httpclient.execute(httppost);  
+            try {  
+                System.out.println(&quot;----------------------------------------&quot;);  
+                System.out.println(response.getStatusLine());  
+                HttpEntity resEntity = response.getEntity();  
+                if (resEntity != null) {  
+                    System.out.println(&quot;Response content length: &quot; + resEntity.getContentLength());  
+                }  
+                EntityUtils.consume(resEntity);  
+            } finally {  
+                response.close();  
+            }  
+        } catch (ClientProtocolException e) {  
+            e.printStackTrace();  
+        } catch (IOException e) {  
+            e.printStackTrace();  
+        } finally {  
+            try {  
+                httpclient.close();  
+            } catch (IOException e) {  
+                e.printStackTrace();  
+            }  
+        }  
+    }  
+}  
+</code></pre><p>   本实例是采用HttpClient4.3最新版本。该版本与之前的代码写法风格相差较大，大家多留意下。</p>
+<p>参考：<a href="http://blog.csdn.net/wangpeng047/article/details/19624529" target="_blank" rel="noopener">http://blog.csdn.net/wangpeng047/article/details/19624529</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/weixin.png" alt="黄上 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/zifubao.png" alt="黄上 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/大数据/" rel="tag"># 大数据</a>
+          
+            <a href="/tags/java类库/" rel="tag"># java类库</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/14/java-api08/" rel="next" title="JAVA开发常用类库--消息传递库">
+                <i class="fa fa-chevron-left"></i> JAVA开发常用类库--消息传递库
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/15/java-api10/" rel="prev" title="JAVA开发常用类库--邮件">
+                JAVA开发常用类库--邮件 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNDU1Mi8xMTA5MA=="></div>
+    </div>
+
+  
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/koro.jpg"
+                alt="黄上" />
+            
+              <p class="site-author-name" itemprop="name">黄上</p>
+              <p class="site-description motion-element" itemprop="description">future is detail！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="https://koronto11.github.io/" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/koronto11" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://blog.csdn.net/koronto" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/xiang-zi-14-26/activities" target="_blank" title="zhihu">
+                      
+                        <i class="fa fa-fw fa-vk"></i>zhihu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://theme-next.iissnan.com/" title="主题文档" target="_blank">主题文档</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://hexo.io/zh-cn/docs/" title="官方文档" target="_blank">官方文档</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#传统的java-net包类"><span class="nav-number">1.</span> <span class="nav-text">传统的java.net包类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#apache的httpclient工具类"><span class="nav-number">2.</span> <span class="nav-text">apache的httpclient工具类</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黄上</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      本站总访问量:<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+    <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNDU1Mi8xMTA5MA==">
+  <script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+  </script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
