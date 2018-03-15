@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="大数据,java,java类库," />
+  <meta name="keywords" content="java,大数据,java类库," />
 
 
 
@@ -82,14 +82,14 @@
 
 
 <meta name="description" content="嵌入式SQL嵌入式SQL(英文 Embedded SQL)是一种将SQL语句直接写入C语言，COBOL，FORTRAN, Ada等编程语言的源代码中的方法。借此方法，可使得应用程序拥有了访问数据以及处理数据的能力。在这一方法中，将SQL文嵌入的目标源码的语言称为宿主语言。 在SQL标准的SQL86(1986年发布)中定义了对于COBOL, FORTRAN（福传语言，即数学公式语言）, PI/L等语">
-<meta name="keywords" content="大数据,java,java类库">
+<meta name="keywords" content="java,大数据,java类库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JAVA开发常用类库--嵌入式SQL">
 <meta property="og:url" content="http://yoursite.com/2018/03/15/java-api12/index.html">
 <meta property="og:site_name" content="刻写未来！">
 <meta property="og:description" content="嵌入式SQL嵌入式SQL(英文 Embedded SQL)是一种将SQL语句直接写入C语言，COBOL，FORTRAN, Ada等编程语言的源代码中的方法。借此方法，可使得应用程序拥有了访问数据以及处理数据的能力。在这一方法中，将SQL文嵌入的目标源码的语言称为宿主语言。 在SQL标准的SQL86(1986年发布)中定义了对于COBOL, FORTRAN（福传语言，即数学公式语言）, PI/L等语">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-15T09:30:17.458Z">
+<meta property="og:updated_time" content="2018-03-15T12:22:40.428Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA开发常用类库--嵌入式SQL">
 <meta name="twitter:description" content="嵌入式SQL嵌入式SQL(英文 Embedded SQL)是一种将SQL语句直接写入C语言，COBOL，FORTRAN, Ada等编程语言的源代码中的方法。借此方法，可使得应用程序拥有了访问数据以及处理数据的能力。在这一方法中，将SQL文嵌入的目标源码的语言称为宿主语言。 在SQL标准的SQL86(1986年发布)中定义了对于COBOL, FORTRAN（福传语言，即数学公式语言）, PI/L等语">
@@ -395,6 +395,7 @@
       
         <h1 id="嵌入式SQL"><a href="#嵌入式SQL" class="headerlink" title="嵌入式SQL"></a>嵌入式SQL</h1><p>嵌入式SQL(英文 Embedded SQL)是一种将SQL语句直接写入C语言，COBOL，FORTRAN, Ada等编程语言的源代码中的方法。<br>借此方法，可使得应用程序拥有了访问数据以及处理数据的能力。在这一方法中，将SQL文嵌入的目标源码的语言称为宿主语言。</p>
 <p>在SQL标准的SQL86(1986年发布)中定义了对于COBOL, FORTRAN（福传语言，即数学公式语言）, PI/L等语言的嵌入式SQL的规范。在SQL89(1989年发布)规范中，定义了对于C语言的嵌入式SQL的规范。一些大型的数据库厂商发布的数据库产品中，都提供了对于嵌入式SQL的支持。比如Oracle, DB2等。</p>
+<a id="more"></a>
 <h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p>提供对于嵌入式SQL的支持，需要数据库厂商除了提供DBMS之外，还必须提供一些工具。为了实现对于嵌入式SQL的支持，技术上必须解决以下4个问题:</p>
 <p>1.宿主语言的编译器不可能识别和接受SQL文，需要解决如何将SQL的宿主语言源代码编译成可执行码;<br>2.宿主语言的应用程序如何与DBMS之间传递数据和消息;<br>3.如何把对数据的查询结果逐次赋值给宿主语言程序中的变量以供其处理;<br>4.数据库的数据类型与宿主语言的数据类型有时不完全对应或等价，如何解决必要的数据类型转换问题。</p>
 <p>嵌入式SQL源码的处理流程 为了解决上述这些问题，数据库厂商需要提供一个嵌入式SQL的预编译器，把包含有嵌入式SQL文的宿主语言源码转换成纯宿主语言的代码。这样一来，源码即可使用宿主语言对应的编译器进行编译。通常情况下，经过嵌入式SQL的预编译之后，原有的嵌入式SQL会被转换成一系列函数调用。因此，数据库厂商还需要提供一系列函数库，以确保链接器能够把代码中的函数调用与对应的实现链接起来。</p>
@@ -454,9 +455,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/大数据/" rel="tag"># 大数据</a>
-          
             <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/大数据/" rel="tag"># 大数据</a>
           
             <a href="/tags/java类库/" rel="tag"># java类库</a>
           
