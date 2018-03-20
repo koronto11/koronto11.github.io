@@ -119,7 +119,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/03/20/分布式01/image001.png">
 <meta property="og:image" content="http://yoursite.com/2018/03/20/分布式01/image002.png">
 <meta property="og:image" content="http://yoursite.com/2018/03/20/分布式01/image003.png">
-<meta property="og:updated_time" content="2018-03-20T11:40:55.553Z">
+<meta property="og:updated_time" content="2018-03-20T13:09:18.479Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微服务架构简析">
 <meta name="twitter:description" content="微服务是什么？谈及微服务架构，2016年应该是软件业微服务爆发的元年，微服务到底是什么？观察现有的软件业，使用单独一款开发语言区开发一款较为全面的产品很少，大多数都是各种语言编写的功能模块进行组装成完整的业务模型，各语言效率优势互补。微服务架构所强调的特点就是业务系统需要彻底的组件化与模块分割，原有的单个业务系统分割成多个小应用，每个小应用可以进行独立开发，管理，运行和测试，甚至连每个产品的前端（">
@@ -520,7 +520,7 @@
 <h3 id="小型且专注于业务领域"><a href="#小型且专注于业务领域" class="headerlink" title="小型且专注于业务领域"></a>小型且专注于业务领域</h3><p>小并不能充分描述微服务，使用这个词只是为了尝试表明微服务相对于整体式应用程序的大小。在此上下文中，小的定义可能在各个系统中各不相同，而且没有规则来定义服务必须有多小。<br>我的理解是将传统整体式应用服务拆分为可独立运行互不干扰的最小组件，这个组件涵盖软件设计的全部细节，前段后端数据端，开发者必须熟悉小组件设计的全部设计环节，这岂不是以后每个人都必须是全栈式开发人员？</p>
 <p>微服务的另一个重要特征是，每个服务专注负责一项精细的业务。Vaughn Vernon 在他撰写的图书《实现领域驱动设计》中定义了术语业务领域。他将业务领域定义为，”某个组织执行的操作和它执行操作的环境。”他还指定，”每个组织都有自己独特的知识范围和操作方式。这个理解范围和它执行操作的方法就是它的领域。”被分解为微服务的单元实际上就是领域内的业务实体，<strong>这意味着每个微服务处理完成一个完整的业务任务</strong>。例如：Mortgage Services 是一个业务领域。Loan Origination 是该领域中一个可能的微服务。Loan Refinancing 可能是同一个领域中的另一个微服务。跨服务边界的调用和更改通常很耗资源，必须避免。拥有这些服务的团队成为相应业务领域或子领域的专家，而不是任意技术领域的专家。</p>
 <p>微服务通常负责一个精细的工作单元，所以它在规模上相对较小。一条著名的指导原则是”两块披萨的团队规模”方案，意思是说，如果两块披萨不能将整个团队喂饱，那么这个开发微服务的团队可能太大了。微服务必须足够小，使得团队中的每个人都能理解该服务的整体设计和实现。另外，它的大小必须足以让团队在必要时轻松地维护或重写服务。</p>
-<h3 id="与技术中立"><a href="#与技术中立" class="headerlink" title="与技术中立"></a>与技术中立</h3><p>开发微服务的团队必须使用他们熟悉的技术。不要规定开发团队应该使用何种编程语言。让开发人员自由选择对任务最有意义的技术和执行任务的人。这种工作方式能够充分利用团队成员拥有的最佳技术和技能。微服务架构仍需要技术决策；举例而言，使用具象状态传输 (REST) 应用编程接口 (API) 访问更好一些，还是使用某种类型的排队来访问更好一些？但是，一般而言，您可以为微服务架构选择广泛范围内的任何技术。</p>
+<h3 id="与技术中立"><a href="#与技术中立" class="headerlink" title="与技术中立"></a>与技术中立</h3><p>开发微服务的团队必须使用他们熟悉的技术。不要规定开发团队应该使用何种编程语言。让开发人员自由选择对任务最有意义的技术和执行任务的人。这种工作方式能够充分利用团队成员拥有的最佳技术和技能。微服务架构仍需要技术决策；举例而言，使用具象状态传输 (REST) 应用编程接口 (API) 访问更好一些（即RESTful API），还是使用某种类型的排队来访问更好一些？但是，一般而言，您可以为微服务架构选择广泛范围内的任何技术。</p>
 <ul>
 <li>具象状态传输 (REST)<br>具象状态传输（REST，英文：Representational State Transfer）是Roy Thomas Fielding博士于2000年在他的博士论文中提出来的一种万维网软件架构风格，目的是便于不同软件/程序在网络（例如互联网）中互相传递信息。<br>目前在三种主流的Web服务实现方案中，因为REST模式与复杂的SOAP和XML-RPC相比更加简洁，越来越多的web服务开始采用REST风格设计和实现。例如，Amazon.com提供接近REST风格的Web服务运行图书查询；雅虎提供的Web服务也是REST风格的。<br>这个后期会将互联网WEB架构单独开篇讲解。</li>
 </ul>
@@ -825,7 +825,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -975,7 +975,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共84.0k字</span>
+  <span class="post-count">博客全站共85.8k字</span>
 </div>
 
         
