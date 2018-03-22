@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-21T18:22:42.865Z</updated>
+  <updated>2018-03-22T06:00:44.034Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>好用的代码规范检查工具--checkstyle</title>
+    <link href="http://yoursite.com/2018/03/22/checkstyle/"/>
+    <id>http://yoursite.com/2018/03/22/checkstyle/</id>
+    <published>2018-03-22T05:22:32.000Z</published>
+    <updated>2018-03-22T06:00:44.034Z</updated>
+    
+    <content type="html"><![CDATA[<p>CheckStyle是SourceForge下的一个项目，提供了一个帮助Java开发人员遵守某些编码规范的工具。它能够自动化代码规范检查过程，从而使得开发人员从这项重要但枯燥的任务中解脱出来。它可以根据设置好的编码规则来检查代码。比如符合规范的变量命名，方法体的最大行数，重复代码检查等等。</p><p>如果你的项目经理开会时说：“我希望我们写出来的代码就象一个人写的!”，那么用Checkstyle绝对是正确选择！</p><a id="more"></a><h1 id="如何在Eclipse上安装插件"><a href="#如何在Eclipse上安装插件" class="headerlink" title="如何在Eclipse上安装插件"></a>如何在Eclipse上安装插件</h1><p>在eclipse上安装插件，这里直接以安装checkstyle为例子，以后的插件安装根据这个流程来就可以了。</p><p>列举了几个网上的方法（大概有5种方法可以将插件安装到eclipse上）</p><h2 id="第一种：直接复制法"><a href="#第一种：直接复制法" class="headerlink" title="第一种：直接复制法"></a>第一种：直接复制法</h2><p>假设Eclipse的安装目录在C:\eclipse，解压下载的eclipse 插件或者安装eclipse 插件到指定目录文件夹，打开安装文件夹，在安装文件夹里的根目录分别包含两个文件夹features和plugins ，然后把两个文件夹里的文件分别复制到C:\eclipse下所对应的文件夹下的features 和plugins 下，一般的把插件文件直接复制到eclipse目录里是最直接也是最愚蠢的一种方法！因为日后想要删除这些插件会非常的困难（你根本分不清哪个是哪个），不推荐使用。<br>　注意：直接将插件包解压到plugins文件夹下之后，重启eclipse，可能不会加载新的插件。<br>　解决方法是：<br>　　　1、打开命令行，到当前eclipse的目录下，输入eclipse -clean，重新启动eclipse，这样eclipse就会加上新的插件了。<br>　　　2、如果插件不能生效，则请将eclipse\configuration\org.eclipse.update目录（此目录会记录你插件等更新历史）删除后再启动eclipse；<br>　　你可以在eclipse的菜单”Help”–&gt;”About Eclipse SDK”–&gt;”Feature Details” 和”Plug-in Details”中看到新安装的插件。</p><h2 id="第二种：使用link文件法"><a href="#第二种：使用link文件法" class="headerlink" title="第二种：使用link文件法"></a>第二种：使用link文件法</h2><p>a.假设Eclipse的安装目录在C:\eclipse，在该文件夹下，新建这样的目录结构C:\eclipse\PluginsEclipse\jode\eclipse；<br>　　<br>b.解压下载的eclipse 插件或者安装eclipse 插件到指定目录BB（如：C:\BB）文件夹，打开BB文件夹，然后把 BB文件夹里的两个文件夹features和plugins复制到刚刚新建好 C:\eclipse\PluginsEclipse\jode\eclipse，这样eclipse中就有了两个插件目录features and plugins下。</p><p>c.在C:\eclipse目录中新建links（C:\eclipse\links）目录，在links目录中建立一个以link为扩展名的文本文件如jode.link，内容如下path=C:/eclipse/PluginsEclipse/jode 或者path=C:\eclipse\PluginsEclipse\jode（插件的目录），保存后重启eclipse插件就会安装完成。<br>　注意：link文件中path=插件目录的path路径分隔要用\或是/<br>    /eclipse/<br>    　　links/<br>    　　　　jode.link<br>    　　　　webtools.link<br>    　　　　updateManager.link<br>/eclipse/ links/ jode.link webtools.link updateManager.link … … 可以在eclipse的菜单”Help”–&gt;”AboutEclipse SDK”–&gt;”Feature Details” 和”Plug-in Details”中看到新安装的插件。</p><h2 id="第三种：使用eclipse自带图形界面安装"><a href="#第三种：使用eclipse自带图形界面安装" class="headerlink" title="第三种：使用eclipse自带图形界面安装"></a>第三种：使用eclipse自带图形界面安装</h2><p>选择Help &gt; Software Updates &gt; Manager Configuration，再选择Add &gt; Extension Location 找到你要安装插件的目录就可以了。使用eclipse的help-&gt;SoftwareUpdates -&gt;Find and install… search for new features… 输入软件安装地址进行安装强烈推荐这种方法，优点很多比如可以方便的添加删除，也不用自己写link文件！(注意：这种安装你即使没有下载安装包也可以从远程下载，只要知道链接即可，不过国内下载很多插件由于网络原因很慢，或者不能下载下来。)<br>　　备注：Eclipse插件的目录结构<br>/eclipse-plugins/<br>　　eclipse/<br>　　　　.eclipseextension<br>　　　　　　features/<br>　　　　　　plugins/<br>　　第2.3种方法所指向的目录都指的是”eclipse”目录，如果用第3种方法，在eclipse这个目录下必须有文件.eclipseextension，如果下载的插件没有这个文件，</p><p>那就随便eclipse安装目录下的那个文件拷过去就行，只有有这么个文件就可以了，内容没什么用，主要是一些版本信息。例如：</p><pre><code>id=org.eclipse.platform name=Eclipse Platformversion=3.1.1id=org.eclipse.platform name=Eclipse Platform version=3.1.1</code></pre><h2 id="第四种：使用dropins安装插件"><a href="#第四种：使用dropins安装插件" class="headerlink" title="第四种：使用dropins安装插件"></a>第四种：使用dropins安装插件</h2><p>从Eclipse3.5开始，安装目录下就多了一个dropins目录。只要将插件解压后拖到该目录即可安装插件。比如安装svn插件subclipse-1.8.16.zip，只需要如下的三步即可：<br>　　1、使用winrar等压缩软件将压缩包解压至某一文件夹，比如subclipse-1.8.16<br>　　2、将此目录移动/复制至Eclipse安装目录下的dropins目录<br>　　3、重启Eclipse。<br>　　由于此种安装方式可以将不同的插件安装在不同的目录里，并且不用麻烦地写配置文件，因此管理起来会非常方便，推荐使用。</p><h2 id="使用eclipse-marketplace自动下载"><a href="#使用eclipse-marketplace自动下载" class="headerlink" title="使用eclipse marketplace自动下载"></a>使用eclipse marketplace自动下载</h2><p>这个是我用的方法，不能离线，需要从网上下载，eclipse market在线安装</p><p>在早期的eclipse版本中，market功能不是很好用，经常搜索不到插件或下来。忘记在哪个版本开始，使用market就很方便了。<br>建议采用这种方式来安装，直接搜索，选择要安装的插件内容。无需记录引用插件位置。</p><p>打开Help -&gt; eclipse market，搜索checkstyle<br>选择想要的版本 -&gt; install</p><p>勾选所想要应用的功能</p><p>接受协议，安装完成后，重启eclipse生效。（方便快捷，适用于有网络的环境下）</p><h2 id="检查安装是否生效"><a href="#检查安装是否生效" class="headerlink" title="检查安装是否生效"></a>检查安装是否生效</h2><p>打开eclipse，Window–&gt;Preferences,如果列表中出现了checkstyle的菜单，则表示安装成功了。</p><p>注意：如果启动eclipse时，提示ClassNotFoundException等异常信息，则启动时加上一个“-clean”参数启动即可。</p><p>cd F:\Program Files\eclipse\eclipse.exe -clean</p><h2 id="资源整理"><a href="#资源整理" class="headerlink" title="资源整理"></a>资源整理</h2><p>CheckStyle插件地址：<a href="http://eclipse-cs.sourceforge.net/update" target="_blank" rel="noopener">http://eclipse-cs.sourceforge.net/update</a></p><p>github开源插件地址：<a href="https://github.com/checkstyle/eclipse-cs" target="_blank" rel="noopener">https://github.com/checkstyle/eclipse-cs</a></p><p>eclipse如何安装插件：<a href="http://blog.csdn.net/netdevgirl/article/details/54382301" target="_blank" rel="noopener">http://blog.csdn.net/netdevgirl/article/details/54382301</a></p><p>Eclipse中安装和使用CheckStyle： <a href="http://blog.csdn.net/qq_36871364/article/details/72472059" target="_blank" rel="noopener">http://blog.csdn.net/qq_36871364/article/details/72472059</a></p><h1 id="Checkstyle全局配置"><a href="#Checkstyle全局配置" class="headerlink" title="Checkstyle全局配置"></a>Checkstyle全局配置</h1><p>Window –&gt;Preferences,选择checkstyle菜单，增加项目组统一的规则文件，并设置为默认规则。如下图：</p><p><img src="/2018/03/22/checkstyle/p1.png" alt="logo"></p><p><img src="/2018/03/22/checkstyle/p2.png" alt="logo"></p><p>到此全局配置已经完成。</p><h1 id="Checkstyle项目配置"><a href="#Checkstyle项目配置" class="headerlink" title="Checkstyle项目配置"></a>Checkstyle项目配置</h1><p>项目 –&gt; 右键Properties</p><p><img src="/2018/03/22/checkstyle/p3.png" alt="logo"></p><p>到此项目配置已经完成。成功的话，checkstyle已经开始工作了。</p><p>此次发现项目上有很多红叉叉，说明是代码符合规范造成的。</p><p><img src="/2018/03/22/checkstyle/p4.png" alt="logo"></p><p>根据提示信息修改后，则没有有红色的提示。</p><p><img src="/2018/03/22/checkstyle/p5.png" alt="logo"></p><h1 id="其它操作"><a href="#其它操作" class="headerlink" title="其它操作"></a>其它操作</h1><p>在项目右键菜单中，checkstyle还有一些快捷操作，如下图所示：</p><p><img src="/2018/03/22/checkstyle/p6.png" alt="logo"></p><h1 id="checkStyle-使用"><a href="#checkStyle-使用" class="headerlink" title="checkStyle 使用"></a>checkStyle 使用</h1><p>选中工程，右键选择checkstyle-&gt;check code withcheckstyle,检查错误即可</p><p>Checkstyle的结果输出</p><p>序号     输出内容意义<br>1         Type is missing a javadoc commentClass 缺少类型说明<br>2        “{” should be on the previous line “{” 应该位于前一行<br>3        Methos is missing a javadoc comment方法前面缺少javadoc注释<br>4        Expected @throws tag for “Exception”在注释中希望有@throws的说明<br>5        “.” Is preceeded with whitespace “.” 前面不能有空格<br>6        “.” Is followed by whitespace“.” 后面不能有空格<br>7        “=” is not preceeded with whitespace“=” 前面缺少空格<br>8        “=” is not followed with whitespace“=” 后面缺少空格<br>9        “}” should be on the same line“}” 应该与下条语句位于同一行<br>10        Unused @param tag for “unused”没有参数“unused”，不需注释<br>11        Variable “CA” missing javadoc变量“CA”缺少javadoc注释<br>12        Line longer than 80characters行长度超过80<br>13        Line contains a tab character行含有”tab” 字符<br>14        Redundant “Public” modifier冗余的“public” modifier<br>15        Final modifier out of order with the JSL suggestionFinalmodifier的顺序错误<br>16        Avoid using the “.<em>” form of importImport格式避免使用“.</em>”<br>17        Redundant import from the same package从同一个包中Import内容<br>18        Unusedimport-java.util.listImport进来的java.util.list没有被使用<br>19        Duplicate import to line 13重复Import同一个内容<br>20        Import from illegal package从非法包中 Import内容<br>21        “while” construct must use “{}”“while” 语句缺少“{}”<br>22        Variable “sTest1” must be private and have accessormethod变量“sTest1”应该是private的，并且有调用它的方法<br>23        Variable “ABC” must match pattern“^[a-z][a-zA-Z0-9]<em>$”变量“ABC”不符合命名规则“^[a-z][a-zA-Z0-9]</em>$”<br>24        “(” is followed by whitespace“(” 后面不能有空格 25“)” is proceededby whitespace“)” 前面不能有空格</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;CheckStyle是SourceForge下的一个项目，提供了一个帮助Java开发人员遵守某些编码规范的工具。它能够自动化代码规范检查过程，从而使得开发人员从这项重要但枯燥的任务中解脱出来。它可以根据设置好的编码规则来检查代码。比如符合规范的变量命名，方法体的最大行数，重复代码检查等等。&lt;/p&gt;
+&lt;p&gt;如果你的项目经理开会时说：“我希望我们写出来的代码就象一个人写的!”，那么用Checkstyle绝对是正确选择！&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="工具类" scheme="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7%E7%B1%BB/"/>
+    
+    
+      <category term="软件架构" scheme="http://yoursite.com/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84/"/>
+    
+      <category term="插件" scheme="http://yoursite.com/tags/%E6%8F%92%E4%BB%B6/"/>
+    
+      <category term="eclipse" scheme="http://yoursite.com/tags/eclipse/"/>
+    
+      <category term="代码规范" scheme="http://yoursite.com/tags/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/"/>
+    
+  </entry>
   
   <entry>
     <title>项目自动构建工具--maven和Gradle</title>
@@ -104,9 +133,9 @@
       <category term="WEB" scheme="http://yoursite.com/categories/WEB/"/>
     
     
-      <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
       <category term="软件架构" scheme="http://yoursite.com/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84/"/>
+    
+      <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
       <category term="REST" scheme="http://yoursite.com/tags/REST/"/>
     
@@ -189,9 +218,9 @@
     
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
-      <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
-    
       <category term="google" scheme="http://yoursite.com/tags/google/"/>
+    
+      <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
     
       <category term="protocol Buffer" scheme="http://yoursite.com/tags/protocol-Buffer/"/>
     
@@ -220,11 +249,11 @@
       <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
   </entry>
   
@@ -247,11 +276,11 @@
       <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
   </entry>
   
@@ -275,11 +304,11 @@
       <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
   </entry>
   
@@ -305,11 +334,11 @@
       <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
   </entry>
   
@@ -332,11 +361,11 @@
       <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
   </entry>
   
@@ -359,11 +388,11 @@
       <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
   </entry>
   
@@ -386,11 +415,11 @@
       <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
   </entry>
   
@@ -414,11 +443,11 @@
       <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
   </entry>
   
@@ -440,11 +469,11 @@
       <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
   </entry>
   
@@ -469,11 +498,11 @@
       <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
   </entry>
   
@@ -497,11 +526,11 @@
       <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
   </entry>
   
@@ -524,11 +553,11 @@
       <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
   </entry>
   
@@ -554,33 +583,6 @@
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
       <category term="计算机硬件基础" scheme="http://yoursite.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JAVA开发常用类库--JSON解析库</title>
-    <link href="http://yoursite.com/2018/03/07/JAVA-api/"/>
-    <id>http://yoursite.com/2018/03/07/JAVA-api/</id>
-    <published>2018-03-07T13:40:43.000Z</published>
-    <updated>2018-03-13T05:02:40.158Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="JSON是什么？"><a href="#JSON是什么？" class="headerlink" title="JSON是什么？"></a>JSON是什么？</h1><p>尽管有许多宣传关于 XML 如何拥有跨平台，跨语言的优势，然而，除非应用于 Web Services，否则，在普通的 Web 应用中，开发者经常为 XML 的解析伤透了脑筋，无论是服务器端生成或处理 XML，还是客户端用 JavaScript 解析 XML，都常常导致复杂的代码，极低的开发效率。实际上，对于大多数 Web 应用来说，他们根本不需要复杂的 XML 来传输数据，XML 的扩展性很少具有优势，许多 AJAX 应用甚至直接返回 HTML 片段来构建动态 Web 页面。和返回 XML 并解析它相比，返回 HTML 片段大大降低了系统的复杂性，但同时缺少了一定的灵活性。</p><p>现在， JSON 为 Web 应用开发者提供了另一种数据交换格式。让我们来看看 JSON 到底是什么，同 XML 或 HTML 片段相比，JSON 提供了更好的简单性和灵活性。</p><a id="more"></a><h1 id="JSON的数据格式是怎么样的？"><a href="#JSON的数据格式是怎么样的？" class="headerlink" title="JSON的数据格式是怎么样的？"></a>JSON的数据格式是怎么样的？</h1><p>和 XML 一样，JSON 也是基于纯文本的数据格式。由于 JSON 天生是为 JavaScript 准备的，因此，JSON 的数据格式非常简单，您可以用 JSON 传输一个简单的 String，Number，Boolean，也可以传输一个数组，或者一个复杂的 Object 对象。</p><p>String，Number 和 Boolean 用 JSON 表示非常简单。例如，用 JSON 表示一个简单的 String “ abc ”，其格式为：<br>    “abc”<br>除了字符 “，\，/ 和一些控制符（\b，\f，\n，\r，\t）需要编码外，其他 Unicode 字符可以直接输出。</p><p>下图是一个 String 的完整表示结构：<br><img src="/2018/03/07/JAVA-api/fig001.jpg" alt="logo"></p><p>一个 Number 可以根据整型或浮点数表示如下：<br><img src="/2018/03/07/JAVA-api/fig002.jpg" alt="logo"></p><p>这与绝大多数编程语言的表示方法一致，例如：<br>     12345（整数）<br>     -3.9e10（浮点数）</p><p>Boolean 类型表示为 true 或 false 。此外，JavaScript 中的 null 被表示为 null，注意，true、false 和 null 都没有双引号，否则将被视为一个 String 。<br>JSON 还可以表示一个数组对象，使用 [] 包含所有元素，每个元素用逗号分隔，元素可以是任意的 Value，例如，以下数组包含了一个 String，Number，Boolean 和一个 null：</p><pre><code>[&quot;abc&quot;,12345,false,null]</code></pre><p>Object 对象在 JSON 中是用 {} 包含一系列无序的 Key-Value 键值对表示的，实际上此处的 Object 相当于 Java 中的 Map&lt;String, Object&gt;，而不是 Java 的 Class 。注意 Key 只能用 String 表示。<br>例如，一个 Address 对象包含如下 Key-Value：</p><pre><code>city:Beijing street:Chaoyang Road postcode:100025（整数）</code></pre><p>用 JSON 表示如下：</p><pre><code>{&quot;city&quot;:&quot;Beijing&quot;,&quot;street&quot;:&quot; Chaoyang Road &quot;,&quot;postcode&quot;:100025}</code></pre><p>其中 Value 也可以是另一个 Object 或者数组，因此，复杂的 Object 可以嵌套表示，例如，一个 Person 对象包含 name 和 address 对象，可以表示如下：</p><pre><code>{&quot;name&quot;:&quot;Michael&quot;,&quot;address&quot;:    {&quot;city&quot;:&quot;Beijing&quot;,&quot;street&quot;:&quot; Chaoyang Road &quot;,&quot;postcode&quot;:100025}}</code></pre><p>#JavaScript 处理 JSON 数据<br>上面介绍了如何用 JSON 表示数据，接下来，我们还要解决如何在服务器端生成 JSON 格式的数据以便发送到客户端，以及客户端如何使用 JavaScript 处理 JSON 格式的数据。<br>我们先讨论如何在 Web 页面中用 JavaScript 处理 JSON 数据。我们通过一个简单的 JavaScript 方法就能看到客户端如何将 JSON 数据表示给用户：</p><pre><code>&apos;function handleJson() {    var j={&quot;name&quot;:&quot;Michael&quot;,&quot;address&quot;:      {&quot;city&quot;:&quot;Beijing&quot;,&quot;street&quot;:&quot; Chaoyang Road &quot;,&quot;postcode&quot;:100025}};    document.write(j.name);    document.write(j.address.city); }&apos;</code></pre><p> 假定服务器返回的 JSON 数据是上文的：<br>    ‘{“name”:”Michael”,”address”:<br>        {“city”:”Beijing”,”street”:” Chaoyang Road “,”postcode”:100025}<br>     }’</p><p> 只需将其赋值给一个 JavaScript 变量，就可以立刻使用该变量并更新页面中的信息了，相比 XML 需要从 DOM 中读取各种节点而言，JSON 的使用非常容易。我们需要做的仅仅是发送一个 Ajax 请求，然后将服务器返回的 JSON 数据赋值给一个变量即可。有许多 Ajax 框架早已包含了处理 JSON 数据的能力，例如 Prototype（一个流行的 JavaScript 库：<a href="http://prototypejs.org）提供了" target="_blank" rel="noopener">http://prototypejs.org）提供了</a> evalJSON() 方法，能直接将服务器返回的 JSON 文本变成一个 JavaScript 变量：</p><pre><code> new Ajax.Request(&quot;http://url&quot;, {    method: &quot;get&quot;,    onSuccess: function(transport) {    var json = transport.responseText.evalJSON();    // TODO: document.write(json.xxx);  } });</code></pre><p> #服务器端输出 JSON 格式数据<br> 讲完客户端的JSON处理，接下来到服务端的处理<br> 下面我们讨论如何在服务器端输出 JSON 格式的数据。以 Java 为例，我们将演示将一个 Java 对象编码为 JSON 格式的文本。<br>将 String 对象编码为 JSON 格式时，只需处理好特殊字符即可。另外，必须用 (“) 而非 (‘) 表示字符串：</p><pre><code>static String string2Json(String s) {   StringBuilder sb = new StringBuilder(s.length()+20);   sb.append(&apos;\&quot;&apos;);   for (int i=0; i&lt;s.length(); i++) {    char c = s.charAt(i);    switch (c) {    case &apos;\&quot;&apos;:        sb.append(&quot;\\\&quot;&quot;);        break;    case &apos;\\&apos;:        sb.append(&quot;\\\\&quot;);        break;    case &apos;/&apos;:        sb.append(&quot;\\/&quot;);        break;    case &apos;\b&apos;:        sb.append(&quot;\\b&quot;);        break;    case &apos;\f&apos;:        sb.append(&quot;\\f&quot;);        break;    case &apos;\n&apos;:        sb.append(&quot;\\n&quot;);        break;    case &apos;\r&apos;:        sb.append(&quot;\\r&quot;);        break;    case &apos;\t&apos;:        sb.append(&quot;\\t&quot;);        break;    default:        sb.append(c);    }   }   sb.append(&apos;\&quot;&apos;);   return sb.toString(); }</code></pre><p>将 Number 表示为 JSON 就容易得多，利用 Java 的多态，我们可以处理 Integer，Long，Float 等多种 Number 格式：</p><pre><code>static String number2Json(Number number) {     return number.toString(); }</code></pre><p>Boolean 类型也可以直接通过 toString() 方法得到 JSON 的表示：</p><pre><code>static String boolean2Json(Boolean bool) {     return bool.toString(); }</code></pre><p>要将数组编码为 JSON 格式，可以通过循环将每一个元素编码出来：</p><pre><code>static String array2Json(Object[] array) {   if (array.length==0)     return &quot;[]&quot;;   StringBuilder sb = new StringBuilder(array.length &lt;&lt; 4);   sb.append(&apos;[&apos;);   for (Object o : array) {     sb.append(toJson(o));     sb.append(&apos;,&apos;);   }   // 将最后添加的 &apos;,&apos; 变为 &apos;]&apos;:   sb.setCharAt(sb.length()-1, &apos;]&apos;);   return sb.toString(); }</code></pre><p>最后，我们需要将 Map&lt;String, Object&gt; 编码为 JSON 格式，因为 JavaScript 的 Object 实际上对应的是 Java 的 Map&lt;String, Object&gt; 。该方法如下：</p><pre><code>static String map2Json(Map&lt;String, Object&gt; map) {    if (map.isEmpty())       return &quot;{}&quot;;    StringBuilder sb = new StringBuilder(map.size() &lt;&lt; 4);    sb.append(&apos;{&apos;);    Set&lt;String&gt; keys = map.keySet();    for (String key : keys) {        Object value = map.get(key);        sb.append(&apos;\&quot;&apos;);        sb.append(key);        sb.append(&apos;\&quot;&apos;);        sb.append(&apos;:&apos;);        sb.append(toJson(value));        sb.append(&apos;,&apos;);    }    // 将最后的 &apos;,&apos; 变为 &apos;}&apos;:    sb.setCharAt(sb.length()-1, &apos;}&apos;);    return sb.toString(); }</code></pre><p>为了统一处理任意的 Java 对象，我们编写一个入口方法 toJson(Object)，能够将任意的 Java 对象编码为 JSON 格式：</p><pre><code>public static String toJson(Object o) {   if (o==null)      return &quot;null&quot;;   if (o instanceof String)      return string2Json((String)o);   if (o instanceof Boolean)      return boolean2Json((Boolean)o);   if (o instanceof Number)      return number2Json((Number)o);   if (o instanceof Map)      return map2Json((Map&lt;String, Object&gt;)o);   if (o instanceof Object[])      return array2Json((Object[])o);   throw new RuntimeException(&quot;Unsupported type: &quot; + o.getClass().getName()); }</code></pre><p>我们并未对 Java 对象作严格的检查。不被支持的对象（例如 List）将直接抛出 RuntimeException 。此外，为了保证输出的 JSON 是有效的，Map&lt;String, Object&gt; 对象的 Key 也不能包含特殊字符。细心的读者可能还会发现循环引用的对象会引发无限递归，例如，精心构造一个循环引用的 Map，就可以检测到 StackOverflowException：</p><pre><code>@Test(expected=StackOverflowError.class) public void testRecurrsiveMap2Json() {    Map&lt;String, Object&gt; map = new HashMap&lt;String, Object&gt;();    map.put(&quot;key&quot;, map);    JsonUtil.map2Json(map); }</code></pre><p>好在服务器处理的 JSON 数据最终都应该转化为简单的 JavaScript 对象，因此，递归引用的可能性很小。<br>最后，通过 Servlet 或 MVC 框架输出 JSON 时，需要设置正确的 MIME 类型（application/json）和字符编码。假定服务器使用 UTF-8 编码，则可以使用以下代码输出编码后的 JSON 文本：</p><pre><code>response.setContentType(&quot;application/json;charset=UTF-8&quot;); response.setCharacterEncoding(&quot;UTF-8&quot;); PrintWriter pw = response.getWriter(); pw.write(JsonUtil.toJson(obj)); pw.flush();</code></pre><p>JSON 已经是 JavaScript 标准的一部分。目前，主流的浏览器对 JSON 支持都非常完善。应用 JSON，我们可以从 XML 的解析中摆脱出来，对那些应用 Ajax 的 Web 2.0 网站来说，JSON 确实是目前最灵活的轻量级方案。</p><p>#关于作者#</p><p>关于python的学习，可以借鉴这个作家的网络教程来看<br>廖雪峰，十年软件开发经验，业余产品经理，精通Java/Python/Ruby/Scheme/Objective C等，对开源框架有深入研究，著有《Spring 2.0核心技术与最佳实践》一书，多个业余开源项目托管在GitHub</p><p><a href="https://github.com/michaelliao" target="_blank" rel="noopener">https://github.com/michaelliao</a></p><hr><p>JSON技术的调研报告</p><p>一 、各个JSON技术的简介和优劣<br>1.json-lib<br>json-lib最开始的也是应用最广泛的json解析工具，json-lib 不好的地方确实是依赖于很多第三方包，<br>包括commons-beanutils.jar，commons-collections-3.2.jar，commons-lang-2.6.jar，commons-logging-1.1.1.jar，ezmorph-1.0.6.jar，<br>对于复杂类型的转换，json-lib对于json转换成bean还有缺陷，比如一个类里面会出现另一个类的list或者map集合，json-lib从json到bean的转换就会出现问题。<br>json-lib在功能和性能上面都不能满足现在互联网化的需求。<br>2.开源的Jackson<br>相比json-lib框架，Jackson所依赖的jar包较少，简单易用并且性能也要相对高些。<br>而且Jackson社区相对比较活跃，更新速度也比较快。<br>Jackson对于复杂类型的json转换bean会出现问题，一些集合Map，List的转换出现问题。<br>Jackson对于复杂类型的bean转换Json，转换的json格式不是标准的Json格式<br>3.Google的Gson<br>Gson是目前功能最全的Json解析神器，Gson当初是为因应Google公司内部需求而由Google自行研发而来，<br>但自从在2008年五月公开发布第一版后已被许多公司或用户应用。<br>Gson的应用主要为toJson与fromJson两个转换函数，无依赖，不需要例外额外的jar，能够直接跑在JDK上。<br>而在使用这种对象转换之前需先创建好对象的类型以及其成员才能成功的将JSON字符串成功转换成相对应的对象。<br>类里面只要有get和set方法，Gson完全可以将复杂类型的json到bean或bean到json的转换，是JSON解析的神器。<br>Gson在功能上面无可挑剔，但是性能上面比FastJson有所差距。<br>4.阿里巴巴的FastJson<br>Fastjson是一个Java语言编写的高性能的JSON处理器,由阿里巴巴公司开发。<br>无依赖，不需要例外额外的jar，能够直接跑在JDK上。<br>FastJson在复杂类型的Bean转换Json上会出现一些问题，可能会出现引用的类型，导致Json转换出错，需要制定引用。<br>FastJson采用独创的算法，将parse的速度提升到极致，超过所有json库。</p><p>综上4种Json技术的比较，在项目选型的时候可以使用Google的Gson和阿里巴巴的FastJson两种并行使用，<br>如果只是功能要求，没有性能要求，可以使用google的Gson，<br>如果有性能上面的要求可以使用Gson将bean转换json确保数据的正确，使用FastJson将Json转换Bean<br>二、Google的Gson包的使用简介。<br>Gson类：解析json的最基础的工具类<br>JsonParser类：解析器来解析JSON到JsonElements的解析树<br>JsonElement类：一个类代表的JSON元素<br>JsonObject类：JSON对象类型<br>JsonArray类：JsonObject数组<br>TypeToken类：用于创建type，比如泛型List&lt;?&gt;<br>(1)maven依赖</p><p>com.google.code.gson<br>gson<br>2.2.4</p><p>(2)基础转换类<br>    public class Book{<br>    private String id;<br>    private String name;<br>    public Book() {<br>    super();<br>    }<br>    public String getId() {<br>    return id;<br>    }<br>    public void setId(String id) {<br>    this.id = id;<br>    }<br>    public String getName() {<br>    return name;<br>    }<br>    public void setName(String name) {<br>    this.name = name;<br>    }<br>    }<br>    public class Student{<br>    private String name;<br>    private int age;<br>    private String sex;<br>    private String describe;<br>    private Set books;<br>    public Student() {<br>    super();<br>    }<br>    public String getName() {<br>    return name;<br>    }<br>    public void setName(String name) {<br>    this.name = name;<br>    }<br>    public int getAge() {<br>    return age;<br>    }<br>    public void setAge(int age) {<br>    this.age = age;<br>    }<br>    public String getSex() {<br>    return sex;<br>    }<br>    public void setSex(String sex) {<br>    this.sex = sex;<br>    }<br>    public Set getBooks() {<br>    return books;<br>    }<br>    public void setBooks(Set books) {<br>    this.books = books;<br>    }<br>    public String getDescribe() {<br>    return describe;<br>    }<br>    public void setDescribe(String describe) {<br>    this.describe = describe;<br>    }<br>    }<br>(3)bean转换json<br>    Gson gson = new Gson();<br>    String json = gson.toJson(obj);<br>obj是对象<br>(4)json转换bean<br>    Gson gson = new Gson();<br>    String json = “{\”id\”:\”2\”,\”name\”:\”Json技术\”}”;<br>    Book book = gson.fromJson(json, Book.class);<br>(5)json转换复杂的bean，比如List，Set<br>将json转换成复杂类型的bean,需要使用TypeToken<br>    Gson gson = new Gson();<br>    String json = “[{\”id\”:\”1\”,\”name\”:\”Json技术\”},{\”id\”:\”2\”,\”name\”:\”java技术\”}]”;<br>//将json转换成List<br>    List list = gson.fromJson(json,new TypeToken<list>() {}.getType());<br>//将json转换成Set<br>    Set set = gson.fromJson(json,new TypeToken<set>() {}.getType());<br>(6)通过json对象直接操作json以及一些json的工具<br>a)格式化Json<br>    String json = “[{\”id\”:\”1\”,\”name\”:\”Json技术\”},{\”id\”:\”2\”,\”name\”:\”java技术\”}]”;<br>    Gson gson = new GsonBuilder().setPrettyPrinting().create();<br>    JsonParser jp = new JsonParser();<br>    JsonElement je = jp.parse(json);<br>    json = gson.toJson(je);<br>b)判断字符串是否是json,通过捕捉的异常来判断是否是json<br>    String json = “[{\”id\”:\”1\”,\”name\”:\”Json技术\”},{\”id\”:\”2\”,\”name\”:\”java技术\”}]”;<br>    boolean jsonFlag;<br>    try {<br>    new JsonParser().parse(str).getAsJsonObject();<br>    jsonFlag = true;<br>    } catch (Exception e) {<br>    jsonFlag = false;<br>    }<br>c)从json串中获取属性<br>    String json = “{\”id\”:\”1\”,\”name\”:\”Json技术\”}”;<br>    String propertyName = ‘id’;<br>    String propertyValue = “”;<br>    try {<br>    JsonParser jsonParser = new JsonParser();<br>    JsonElement element = jsonParser.parse(json);<br>    JsonObject jsonObj = element.getAsJsonObject();<br>    propertyValue = jsonObj.get(propertyName).toString();<br>    } catch (Exception e) {<br>    propertyValue = null;<br>    }<br>d)除去json中的某个属性<br>    String json = “{\”id\”:\”1\”,\”name\”:\”Json技术\”}”;<br>    String propertyName = ‘id’;<br>    JsonParser jsonParser = new JsonParser();<br>    JsonElement element = jsonParser.parse(json);<br>    JsonObject jsonObj = element.getAsJsonObject();<br>    jsonObj.remove(propertyName);<br>    json = jsonObj.toString();<br>e)向json中添加属性<br>    String json = “{\”id\”:\”1\”,\”name\”:\”Json技术\”}”;<br>    String propertyName = ‘desc’;<br>    Object propertyValue = “json各种技术的调研”;<br>    JsonParser jsonParser = new JsonParser();<br>    JsonElement element = jsonParser.parse(json);<br>    JsonObject jsonObj = element.getAsJsonObject();<br>    jsonObj.addProperty(propertyName, new Gson().toJson(propertyValue));<br>    json = jsonObj.toString();<br>f)修改json中的属性<br>    String json = “{\”id\”:\”1\”,\”name\”:\”Json技术\”}”;<br>    String propertyName = ‘name’;<br>    Object propertyValue = “json各种技术的调研”;<br>    JsonParser jsonParser = new JsonParser();<br>    JsonElement element = jsonParser.parse(json);<br>    JsonObject jsonObj = element.getAsJsonObject();<br>    jsonObj.remove(propertyName);<br>    jsonObj.addProperty(propertyName, new Gson().toJson(propertyValue));<br>    json = jsonObj.toString();<br>g)判断json中是否有属性<br>    String json = “{\”id\”:\”1\”,\”name\”:\”Json技术\”}”;<br>    String propertyName = ‘name’;<br>    boolean isContains = false ;<br>    JsonParser jsonParser = new JsonParser();<br>    JsonElement element = jsonParser.parse(json);<br>    JsonObject jsonObj = element.getAsJsonObject();<br>    isContains = jsonObj.has(propertyName);<br>h)json中日期格式的处理<br>    GsonBuilder builder = new GsonBuilder();<br>    builder.setDateFormat(“yyyy-MM-dd HH:mm:ss.SSS”);<br>    Gson gson = builder.create();<br>然后使用gson对象进行json的处理，如果出现日期Date类的对象，就会按照设置的格式进行处理<br>i)json中对于Html的转义<br>    Gson gson = new Gson();<br>这种对象默认对Html进行转义，如果不想转义使用下面的方法<br>    GsonBuilder builder = new GsonBuilder();<br>    builder.disableHtmlEscaping();<br>    Gson gson = builder.create();<br>三、阿里巴巴的FastJson包的使用简介。<br>(1)maven依赖</set></list></p><p>com.alibaba<br>fastjson<br>1.1.22</p><p>(2)基础转换类<br>同上<br>(3)bean转换json<br>将对象转换成格式化的json<br>    JSON.toJSONString(obj,true);<br>将对象转换成非格式化的json<br>    JSON.toJSONString(obj,false);<br>obj设计对象<br>对于复杂类型的转换,对于重复的引用在转成json串后在json串中出现引用的字符,比如 $ref”:”$[0].books[1]<br>    Student stu = new Student();<br>    Set books= new HashSet();<br>    Book book = new Book();<br>    books.add(book);<br>    stu.setBooks(books);<br>    List list = new ArrayList();<br>    for(int i=0;i&lt;5;i++)<br>    list.add(stu);<br>    String json = JSON.toJSONString(list,true);<br>(4)json转换bean<br>    String json = “{\”id\”:\”2\”,\”name\”:\”Json技术\”}”;<br>    Book book = JSON.parseObject(json, Book.class);<br>(5)json转换复杂的bean，比如List，Map<br>    String json = “[{\”id\”:\”1\”,\”name\”:\”Json技术\”},{\”id\”:\”2\”,\”name\”:\”java技术\”}]”;<br>//将json转换成List<br>    List list = JSON.parseObject(json,new TypeReference<arraylist>(){});<br>//将json转换成Set<br>    Set set = JSON.parseObject(json,new TypeReference<hashset>(){});<br>(6)通过json对象直接操作json<br>a)从json串中获取属性<br>    String propertyName = ‘id’;<br>    String propertyValue = “”;<br>    String json = “{\”id\”:\”1\”,\”name\”:\”Json技术\”}”;<br>    JSONObject obj = JSON.parseObject(json);<br>    propertyValue = obj.get(propertyName));<br>b)除去json中的某个属性<br>    String propertyName = ‘id’;<br>    String propertyValue = “”;<br>    String json = “{\”id\”:\”1\”,\”name\”:\”Json技术\”}”;<br>    JSONObject obj = JSON.parseObject(json);<br>    Set set = obj.keySet();<br>    propertyValue = set.remove(propertyName);<br>    json = obj.toString();<br>c)向json中添加属性<br>    String propertyName = ‘desc’;<br>    Object propertyValue = “json的玩意儿”;<br>    String json = “{\”id\”:\”1\”,\”name\”:\”Json技术\”}”;<br>    JSONObject obj = JSON.parseObject(json);<br>    obj.put(propertyName, JSON.toJSONString(propertyValue));<br>    json = obj.toString();<br>d)修改json中的属性<br>    String propertyName = ‘name’;<br>    Object propertyValue = “json的玩意儿”;<br>    String json = “{\”id\”:\”1\”,\”name\”:\”Json技术\”}”;<br>    JSONObject obj = JSON.parseObject(json);<br>    Set set = obj.keySet();<br>    if(set.contains(propertyName))<br>    obj.put(propertyName, JSON.toJSONString(propertyValue));<br>    json = obj.toString();<br>e)判断json中是否有属性<br>    String propertyName = ‘name’;<br>    boolean isContain = false;<br>    String json = “{\”id\”:\”1\”,\”name\”:\”Json技术\”}”;<br>    JSONObject obj = JSON.parseObject(json);<br>    Set set = obj.keySet();<br>    isContain = set.contains(propertyName);<br>f)json中日期格式的处理<br>    Object obj = new Date();<br>    String json = JSON.toJSONStringWithDateFormat(obj, “yyyy-MM-dd HH:mm:ss.SSS”);<br>使用JSON.toJSONStringWithDateFormat,该方法可以使用设置的日期格式对日期进行转换</hashset></arraylist></p><p>三、json-lib包的使用简介。<br>(1)maven依赖</p><p>net.sf.json-lib<br>json-lib<br>jdk15<br>2.2.2</p><p>commons-beanutils<br>commons-beanutils<br>1.8.3</p><p>commons-collections<br>commons-collections<br>3.2</p><p>commons-lang<br>commons-lang<br>2.6</p><p>commons-logging<br>commons-logging<br>1.1.1 </p><p>net.sf.ezmorph<br>ezmorph<br>1.0.6</p><p>(2)基础转换类<br>同上<br>(3)bean转换json<br>a)将类转换成Json,obj是普通的对象，不是List，Map的对象<br>    String json = JSONObject.fromObject(obj).toString();<br>b)将List，Map转换成Json<br>    String json = JSONArray.fromObject(list).toString();<br>    String json = JSONArray.fromObject(map).toString();<br>(4)json转换bean<br>    String json = “{\”id\”:\”1\”,\”name\”:\”Json技术\”}”;<br>    JSONObject jsonObj = JSONObject.fromObject(json);<br>    Book book = (Book)JSONObject.toBean(jsonObj,Book.class);<br>(5)json转换List,对于复杂类型的转换会出现问题<br>    String json = “[{\”id\”:\”1\”,\”name\”:\”Json技术\”},{\”id\”:\”2\”,\”name\”:\”Java技术\”}]”;<br>    JSONArray jsonArray = JSONArray.fromObject(json);<br>    JSONObject jsonObject;<br>    T bean;<br>    int size = jsonArray.size();<br>    List list = new ArrayList(size);<br>    for (int i = 0; i &lt; size; i++) {<br>    jsonObject = jsonArray.getJSONObject(i);<br>    bean = (T) JSONObject.toBean(jsonObject, beanClass);<br>    list.add(bean);<br>    }<br>(6)json转换Map<br>    String jsonString = “{\”id\”:\”1\”,\”name\”:\”Json技术\”}”;<br>    JSONObject jsonObject = JSONObject.fromObject(jsonString);<br>    Iterator keyIter = jsonObject.keys();<br>    String key;<br>    Object value;<br>    Map valueMap = new HashMap();<br>    while (keyIter.hasNext()) {<br>    key = (String) keyIter.next();<br>    value = jsonObject.get(key).toString();<br>    valueMap.put(key, value);<br>    }<br>(7)json对于日期的操作比较复杂，需要使用JsonConfig,比Gson和FastJson要麻烦多了<br>创建转换的接口实现类，转换成指定格式的日期<br>    class DateJsonValueProcessor implements JsonValueProcessor{<br>    public static final String DEFAULT_DATE_PATTERN = “yyyy-MM-dd HH:mm:ss.SSS”;<br>    private DateFormat dateFormat;<br>    public DateJsonValueProcessor(String datePattern) {<br>    try {<br>    dateFormat = new SimpleDateFormat(datePattern);<br>    } catch (Exception ex) {<br>    dateFormat = new SimpleDateFormat(DEFAULT_DATE_PATTERN);<br>    }<br>    }<br>    public Object processArrayValue(Object value, JsonConfig jsonConfig) {<br>    return process(value);<br>    }<br>    public Object processObjectValue(String key, Object value,<br>    JsonConfig jsonConfig) {<br>    return process(value);<br>    }<br>    private Object process(Object value) {<br>    return dateFormat.format[1];<br>    Map&lt;STRING,DATE&gt; birthDays = new HashMap&lt;STRING,DATE&gt;();<br>    birthDays.put(“WolfKing”,new Date());<br>    JSONObject jsonObject = JSONObject.fromObject(birthDays, jsonConfig);<br>    String json = jsonObject.toString();<br>    System.out.println(json);<br>    }<br>    }<br>(8)JsonObject 对于json的操作和处理<br>a)从json串中获取属性<br>    String jsonString = “{\”id\”:\”1\”,\”name\”:\”Json技术\”}”;<br>    Object key = “name”;<br>    Object value = null;<br>    JSONObject jsonObject = JSONObject.fromObject(jsonString);<br>    value = jsonObject.get(key);<br>    jsonString = jsonObject.toString();<br>b)除去json中的某个属性<br>    String jsonString = “{\”id\”:\”1\”,\”name\”:\”Json技术\”}”;<br>    Object key = “name”;<br>    Object value = null;<br>    JSONObject jsonObject = JSONObject.fromObject(jsonString);<br>    value = jsonObject.remove(key);<br>    jsonString = jsonObject.toString();<br>c)向json中添加和修改属性，有则修改，无则添加<br>    String jsonString = “{\”id\”:\”1\”,\”name\”:\”Json技术\”}”;<br>    Object key = “desc”;<br>    Object value = “json的好东西”;<br>    JSONObject jsonObject = JSONObject.fromObject(jsonString);<br>    jsonObject.put(key,value);<br>    jsonString = jsonObject.toString();<br>d)判断json中是否有属性<br>    String jsonString = “{\”id\”:\”1\”,\”name\”:\”Json技术\”}”;<br>    boolean containFlag = false;<br>    Object key = “desc”;<br>    JSONObject jsonObject = JSONObject.fromObject(jsonString);<br>    containFlag = jsonObject.containsKey(key);</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;JSON是什么？&quot;&gt;&lt;a href=&quot;#JSON是什么？&quot; class=&quot;headerlink&quot; title=&quot;JSON是什么？&quot;&gt;&lt;/a&gt;JSON是什么？&lt;/h1&gt;&lt;p&gt;尽管有许多宣传关于 XML 如何拥有跨平台，跨语言的优势，然而，除非应用于 Web Services，否则，在普通的 Web 应用中，开发者经常为 XML 的解析伤透了脑筋，无论是服务器端生成或处理 XML，还是客户端用 JavaScript 解析 XML，都常常导致复杂的代码，极低的开发效率。实际上，对于大多数 Web 应用来说，他们根本不需要复杂的 XML 来传输数据，XML 的扩展性很少具有优势，许多 AJAX 应用甚至直接返回 HTML 片段来构建动态 Web 页面。和返回 XML 并解析它相比，返回 HTML 片段大大降低了系统的复杂性，但同时缺少了一定的灵活性。&lt;/p&gt;
-&lt;p&gt;现在， JSON 为 Web 应用开发者提供了另一种数据交换格式。让我们来看看 JSON 到底是什么，同 XML 或 HTML 片段相比，JSON 提供了更好的简单性和灵活性。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
-    
-    
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
-      <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-      <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
     
   </entry>
   

@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[好用的代码规范检查工具--checkstyle]]></title>
+    <url>%2F2018%2F03%2F22%2Fcheckstyle%2F</url>
+    <content type="text"><![CDATA[CheckStyle是SourceForge下的一个项目，提供了一个帮助Java开发人员遵守某些编码规范的工具。它能够自动化代码规范检查过程，从而使得开发人员从这项重要但枯燥的任务中解脱出来。它可以根据设置好的编码规则来检查代码。比如符合规范的变量命名，方法体的最大行数，重复代码检查等等。 如果你的项目经理开会时说：“我希望我们写出来的代码就象一个人写的!”，那么用Checkstyle绝对是正确选择！ 如何在Eclipse上安装插件在eclipse上安装插件，这里直接以安装checkstyle为例子，以后的插件安装根据这个流程来就可以了。 列举了几个网上的方法（大概有5种方法可以将插件安装到eclipse上） 第一种：直接复制法假设Eclipse的安装目录在C:\eclipse，解压下载的eclipse 插件或者安装eclipse 插件到指定目录文件夹，打开安装文件夹，在安装文件夹里的根目录分别包含两个文件夹features和plugins ，然后把两个文件夹里的文件分别复制到C:\eclipse下所对应的文件夹下的features 和plugins 下，一般的把插件文件直接复制到eclipse目录里是最直接也是最愚蠢的一种方法！因为日后想要删除这些插件会非常的困难（你根本分不清哪个是哪个），不推荐使用。 注意：直接将插件包解压到plugins文件夹下之后，重启eclipse，可能不会加载新的插件。 解决方法是： 1、打开命令行，到当前eclipse的目录下，输入eclipse -clean，重新启动eclipse，这样eclipse就会加上新的插件了。 2、如果插件不能生效，则请将eclipse\configuration\org.eclipse.update目录（此目录会记录你插件等更新历史）删除后再启动eclipse； 你可以在eclipse的菜单”Help”–&gt;”About Eclipse SDK”–&gt;”Feature Details” 和”Plug-in Details”中看到新安装的插件。 第二种：使用link文件法a.假设Eclipse的安装目录在C:\eclipse，在该文件夹下，新建这样的目录结构C:\eclipse\PluginsEclipse\jode\eclipse； b.解压下载的eclipse 插件或者安装eclipse 插件到指定目录BB（如：C:\BB）文件夹，打开BB文件夹，然后把 BB文件夹里的两个文件夹features和plugins复制到刚刚新建好 C:\eclipse\PluginsEclipse\jode\eclipse，这样eclipse中就有了两个插件目录features and plugins下。 c.在C:\eclipse目录中新建links（C:\eclipse\links）目录，在links目录中建立一个以link为扩展名的文本文件如jode.link，内容如下path=C:/eclipse/PluginsEclipse/jode 或者path=C:\eclipse\PluginsEclipse\jode（插件的目录），保存后重启eclipse插件就会安装完成。 注意：link文件中path=插件目录的path路径分隔要用\或是/ /eclipse/ links/ jode.link webtools.link updateManager.link/eclipse/ links/ jode.link webtools.link updateManager.link … … 可以在eclipse的菜单”Help”–&gt;”AboutEclipse SDK”–&gt;”Feature Details” 和”Plug-in Details”中看到新安装的插件。 第三种：使用eclipse自带图形界面安装选择Help &gt; Software Updates &gt; Manager Configuration，再选择Add &gt; Extension Location 找到你要安装插件的目录就可以了。使用eclipse的help-&gt;SoftwareUpdates -&gt;Find and install… search for new features… 输入软件安装地址进行安装强烈推荐这种方法，优点很多比如可以方便的添加删除，也不用自己写link文件！(注意：这种安装你即使没有下载安装包也可以从远程下载，只要知道链接即可，不过国内下载很多插件由于网络原因很慢，或者不能下载下来。) 备注：Eclipse插件的目录结构/eclipse-plugins/ eclipse/ .eclipseextension features/ plugins/ 第2.3种方法所指向的目录都指的是”eclipse”目录，如果用第3种方法，在eclipse这个目录下必须有文件.eclipseextension，如果下载的插件没有这个文件， 那就随便eclipse安装目录下的那个文件拷过去就行，只有有这么个文件就可以了，内容没什么用，主要是一些版本信息。例如： id=org.eclipse.platform name=Eclipse Platform version=3.1.1 id=org.eclipse.platform name=Eclipse Platform version=3.1.1 第四种：使用dropins安装插件从Eclipse3.5开始，安装目录下就多了一个dropins目录。只要将插件解压后拖到该目录即可安装插件。比如安装svn插件subclipse-1.8.16.zip，只需要如下的三步即可： 1、使用winrar等压缩软件将压缩包解压至某一文件夹，比如subclipse-1.8.16 2、将此目录移动/复制至Eclipse安装目录下的dropins目录 3、重启Eclipse。 由于此种安装方式可以将不同的插件安装在不同的目录里，并且不用麻烦地写配置文件，因此管理起来会非常方便，推荐使用。 使用eclipse marketplace自动下载这个是我用的方法，不能离线，需要从网上下载，eclipse market在线安装 在早期的eclipse版本中，market功能不是很好用，经常搜索不到插件或下来。忘记在哪个版本开始，使用market就很方便了。建议采用这种方式来安装，直接搜索，选择要安装的插件内容。无需记录引用插件位置。 打开Help -&gt; eclipse market，搜索checkstyle选择想要的版本 -&gt; install 勾选所想要应用的功能 接受协议，安装完成后，重启eclipse生效。（方便快捷，适用于有网络的环境下） 检查安装是否生效打开eclipse，Window–&gt;Preferences,如果列表中出现了checkstyle的菜单，则表示安装成功了。 注意：如果启动eclipse时，提示ClassNotFoundException等异常信息，则启动时加上一个“-clean”参数启动即可。 cd F:\Program Files\eclipse\eclipse.exe -clean 资源整理CheckStyle插件地址：http://eclipse-cs.sourceforge.net/update github开源插件地址：https://github.com/checkstyle/eclipse-cs eclipse如何安装插件：http://blog.csdn.net/netdevgirl/article/details/54382301 Eclipse中安装和使用CheckStyle： http://blog.csdn.net/qq_36871364/article/details/72472059 Checkstyle全局配置Window –&gt;Preferences,选择checkstyle菜单，增加项目组统一的规则文件，并设置为默认规则。如下图： 到此全局配置已经完成。 Checkstyle项目配置项目 –&gt; 右键Properties 到此项目配置已经完成。成功的话，checkstyle已经开始工作了。 此次发现项目上有很多红叉叉，说明是代码符合规范造成的。 根据提示信息修改后，则没有有红色的提示。 其它操作在项目右键菜单中，checkstyle还有一些快捷操作，如下图所示： checkStyle 使用选中工程，右键选择checkstyle-&gt;check code withcheckstyle,检查错误即可 Checkstyle的结果输出 序号 输出内容意义1 Type is missing a javadoc commentClass 缺少类型说明2 “{” should be on the previous line “{” 应该位于前一行3 Methos is missing a javadoc comment方法前面缺少javadoc注释4 Expected @throws tag for “Exception”在注释中希望有@throws的说明5 “.” Is preceeded with whitespace “.” 前面不能有空格6 “.” Is followed by whitespace“.” 后面不能有空格7 “=” is not preceeded with whitespace“=” 前面缺少空格8 “=” is not followed with whitespace“=” 后面缺少空格9 “}” should be on the same line“}” 应该与下条语句位于同一行10 Unused @param tag for “unused”没有参数“unused”，不需注释11 Variable “CA” missing javadoc变量“CA”缺少javadoc注释12 Line longer than 80characters行长度超过8013 Line contains a tab character行含有”tab” 字符14 Redundant “Public” modifier冗余的“public” modifier15 Final modifier out of order with the JSL suggestionFinalmodifier的顺序错误16 Avoid using the “.” form of importImport格式避免使用“.”17 Redundant import from the same package从同一个包中Import内容18 Unusedimport-java.util.listImport进来的java.util.list没有被使用19 Duplicate import to line 13重复Import同一个内容20 Import from illegal package从非法包中 Import内容21 “while” construct must use “{}”“while” 语句缺少“{}”22 Variable “sTest1” must be private and have accessormethod变量“sTest1”应该是private的，并且有调用它的方法23 Variable “ABC” must match pattern“^[a-z][a-zA-Z0-9]$”变量“ABC”不符合命名规则“^[a-z][a-zA-Z0-9]$”24 “(” is followed by whitespace“(” 后面不能有空格 25“)” is proceededby whitespace“)” 前面不能有空格]]></content>
+      <categories>
+        <category>工具类</category>
+      </categories>
+      <tags>
+        <tag>软件架构</tag>
+        <tag>插件</tag>
+        <tag>eclipse</tag>
+        <tag>代码规范</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[项目自动构建工具--maven和Gradle]]></title>
     <url>%2F2018%2F03%2F22%2Fmaven01%2F</url>
     <content type="text"><![CDATA[主要区别Gradle和Maven都是项目自动构建工具，编译源代码只是整个过程的一个方面，更重要的是，你要把你的软件发布到生产环境中来产生商业价值，所以，你要运行测试，构建分布、分析代码质量、甚至为不同目标环境提供不同版本，然后部署。整个过程进行自动化操作是很有必要的。整个过程可以分成以下几个步骤： 编译源代码 运行单元测试和集成测试 执行静态代码分析、生成分析报告 创建发布版本 部署到目标环境 部署传递过程 执行冒烟测试和自动功能测试 如果你手工去执行每一个步骤无疑效率比较低而且容易出错，有了自动化构建你只需要自定义你的构建逻辑，剩下的事情交给工具去完成。虽然两者都是项目工具，但是maven现在已经是行业标准，Gradle是后起之秀，很多人对他的了解都是从android studio中得到的，Gradle抛弃了Maven的基于XML的繁琐配置，众所周知XML的阅读体验比较差，对于机器来说虽然容易识别，但毕竟是由人去维护的。取而代之的是Gradle采用了领域特定语言Groovy的配置，大大简化了构建代码的行数，比如在Maven中你要引入一个依赖： &lt;kaptcha.version&gt;2.3&lt;/kaptcha.version&gt; com.google.code.kaptcha kaptcha ${kaptcha.version} jdk15 org.springframework spring-core org.springframework spring-beans org.springframework spring-context junit junit 然后我将其转换成Gradle脚本，结果是惊人的： dependencies { compile(‘org.springframework:spring-core:2.5.6’) compile(‘org.springframework:spring-beans:2.5.6’) compile(‘org.springframework:spring-context:2.5.6’) compile(‘com.google.code.kaptcha:kaptcha:2.3:jdk15’) testCompile(‘junit:junit:4.7’) }注意配置从原来的28行缩减至7行！这还不算我省略的一些父POM配置。依赖的groupId、artifactId、 version，scope甚至是classfier，一点都不少。较之于Maven或者Ant的XML配置脚本，Gradle使用的Grovvy脚本杀伤力太大了，爱美之心，人皆有之，相比于七旬老妇松松垮垮的皱纹，大家肯定都喜欢少女紧致的脸蛋，XML就是那老妇的皱纹。Gradle给我最大的有点是两点。其一是简洁，基于Groovy的紧凑脚本实在让人爱不释手，在表述意图方面也没有什么不清晰的地方。其二是灵活，各种在Maven中难以下手的事情，在Gradle就是小菜一碟，比如修改现有的构建生命周期，几行配置就完成了，同样的事情，在Maven中你必须编写一个插件，那对于一个刚入门的用户来说，没个一两天几乎是不可能完成的任务。 gradle基于groovy领域特定语言，而maven通过xml来配置，比较繁琐 Gradle和Maven作为自动构建工具，在项目的构建中有着广泛的应用。他们之间有各自的优缺点，这里我们讨论下他们在项目构建中的一些区别并进行比较。 首先简单介绍下Gradle和Maven。Maven主要服务于基于java平台的项目构建、依赖管理和项目信息管理。无论是小型的开源类库项目，还是大型的企业级应用；无论是传统的瀑布式开发还是流行的敏捷模式，Maven都能大显身手。Gradle是以groovy语言为基础，面向java应用为主，基于DSL语法的自动化构建工具。 虽然两种构建工具有着很多相似处，但是在依赖管理、构建生命周期、加载构建系统组件等许多方面两者有着许多区别。Maven使用XML来定义生成脚本，而 Gradle构建脚本是用Groovy。 用XML的优势在于它可以更方便地定义构建逻辑，但这是比较复杂的步骤。 用Groovy的好处是写起来比XML标签要简洁许多。 不过熟悉的XML的开发人员比groovy的多，并且复杂的逻辑必须由自己编写。类似于Maven的pom.xml文件，每个Gradle项目都需要有一个对应的build.gradle文件，该文件定义一些任务（task）来完成构建工作，当然，每个任务是可配置的，任务之间也可以依赖，用户亦能配置缺省任务。 加载构建系统的组件Maven中每个用于构建的组件（编译/jar等）都作为一个插件， 每个插件都有它自己的版本和依赖关系树。 Gradle的构建系统组件都是分散的。 Maven插件的优点是在于可以独立更新，无需整个系统更新。Gradle的模型的优点是编译需要核心组件以外的组件时才下载。与此同时Gradle给了用户足够的自由去定义自己的任务，Gradle每个任务都有一个描述,可以分配到一个组。Maven中插件和命令可以描述。比如Gradle你可以排除任何运行的任务。在Maven中没有通用的排除机制，必须用插件来实现它。而且Gradle具有高级任务排序的特性，任务之间的依赖关系被建立之后能够得到完全控制，因为Gradle具有强大的语言结构来描述任务之间的执行顺序，即使任务并不取决于对方的输出。Gradle支持动态任务创建，有时你想要一个任务的行为取决于或无限价值的大范围的参数。一个很好的表达方式提供这样的任务是任务规则。并且执行任务时，Gradle 在遇到第一次失败时不停止，执行每一个要执行的任务其中所有的任务依赖关系都要被完成且没有失败。任务可以被分配去完成其他任务类似于java中的终结原则。他们总是在另一个任务执行之后运行，不管这个任务是否失败了。可以发现在一个单一的执行中许多失败任务会被很好地记录成一个错误报告并最终被汇总。 构建生命周期Maven提供有限的构建生命周期访问，插件可以连接到生命周期的特定阶段，而且只有在核心插件执行。而Gradle可以访问生成的一部分并允许用Groovy代码进行处理。Gradle Java Plugin也定义了构建生命周期，包括编译主代码、处理资源、编译测试代码、执行测试、上传归档等等任务. 相对于Maven完全线性的生命周期，Gradle的构建生命周期略微复杂，不过也更为灵活，例如jar这个任务是用来打包的，它不像Maven那样依赖于执行测试的test任务，类似的，从图中可以看到，一个最终的build任务也没有依赖于uploadArchives任务。这个生命周期并没有将用户限制得很死，由于Gradle完全是基于灵活的任务模型，因此很多事情包括覆盖现有任务，跳过任务都非常易于实现。而这些事情，在Maven的世界中，实现起来就比较的麻烦，或者说Maven就不希望用户这么做。 除了以上几个Maven核心内容与Gradle的区别，在面向对象输出模式，GUI操作界面、声明元素等方面Gradle也有良好表现。构建输出是构建用户体验的重要部分。在其他大多数构建工具中默认输出对于一个构建作者试图调试一个问题来说是有关联的。这通常会导致一个非常详细的输出会隐藏重要的警告和消息实际上是相关的开发人员运行构建。Gradle的默认输出是针对开发人员运行构建和只显示消息相关的情况下而不是滥用日志输出作为一种进度，例如在执行测试的时候。构建输出为构建用户体验是非常重要的。如果你与外部工具和库集成他们的控制台输出可能非常冗长。Gradle系统中你可以定义每个外部工具结合的日志级别的输出应该被路由。Gradle提供GUI操作界面，这是一个独立的用户界面，可以启动GUI选项，通过自定义日志模式你可以替换它的日志与自己的UI。Gradle有许多细粒度的声明性元素,如SourceSets或Android Product Flavors。它们的核心Gradle DSL然后让Gradle构建语言更加丰富。他们不断构建简洁、易于使用、维护和理解即使你有复杂的需求。Maven没有细粒声明元素，这是Maven极端顽固的主要原因。在Gradle,每个插件都可以提供自己的粗或细粒声明元素。这使你可以提供一个声明性方法甚至定制域。它还允许其他技术集成在Gradle中,让它被更多人使用。 整体来讲，Gradle给人一种简洁灵活的体验，然而必须掌握groovy也是他的问题，而且由于其灵活性，导致人们更容易破坏约定以至于让构建变得难以理解。但是Gradle确实是Maven理念的优秀实现。如果足够了解Groovy，也理解Maven的配置和构建，Gradle会是绝佳选择，尤其是它几乎能和现有的Maven系统无缝集成，而且你也能享受到简洁带来的极大乐趣，相信Gradle作为后起之秀在今后能够被完善的更好。 关于groovy语言Groovy 是 用于Java虚拟机的一种敏捷的动态语言，它是一种成熟的面向对象编程语言，既可以用于面向对象编程，又可以用作纯粹的脚本语言。使用该种语言不必编写过多的代码，同时又具有闭包和动态语言中的其他特性。 Groovy是JVM的一个替代语言（替代是指可以用 Groovy 在Java平台上进行 Java 编程），使用方式基本与使用 Java代码的方式相同，该语言特别适合与Spring的动态语言支持一起使用，设计时充分考虑了Java集成，这使 Groovy 与 Java 代码的互操作很容易。（注意：不是指Groovy替代java，而是指Groovy和java很好的结合编程。 Groovy 语法与Java 语言的语法很相似，虽然 Groovy 的语法源于Smalltalk和Ruby这类语言的理念，但是可以将它想像成 Java 语言的一种更加简单、表达能力更强的变体。（在这点上，Ruby与 Groovy 不同，因为它的语法与 Java 语法差异很大。） 许多 Java 开发人员喜欢 Groovy 代码和 Java 代码的相似性。从学习的角度看，如果知道如何编写 Java 代码，那就已经了解 Groovy 了。Groovy 和 Java 语言的主要区别是：完成同样的任务所需的 Groovy 代码比 Java 代码更少。 Groovy教程参考： https://www.w3cschool.cn/groovy/]]></content>
@@ -37,8 +51,8 @@
         <category>WEB</category>
       </categories>
       <tags>
-        <tag>大数据</tag>
         <tag>软件架构</tag>
+        <tag>大数据</tag>
         <tag>REST</tag>
       </tags>
   </entry>
@@ -79,8 +93,8 @@
       </categories>
       <tags>
         <tag>大数据</tag>
-        <tag>java类库</tag>
         <tag>google</tag>
+        <tag>java类库</tag>
         <tag>protocol Buffer</tag>
         <tag>数据交换</tag>
       </tags>
@@ -93,9 +107,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
-        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -106,9 +120,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
-        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -119,9 +133,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
-        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -132,9 +146,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
-        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -145,9 +159,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
-        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -158,9 +172,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
-        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -171,9 +185,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
-        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -184,9 +198,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
-        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -197,9 +211,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
-        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -210,9 +224,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
-        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -223,9 +237,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
-        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -236,9 +250,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
-        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -261,9 +275,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
-        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
