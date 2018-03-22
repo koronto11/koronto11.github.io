@@ -111,7 +111,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/03/22/springboot/p1.png">
 <meta property="og:image" content="http://yoursite.com/2018/03/22/springboot/p2.png">
 <meta property="og:image" content="http://yoursite.com/2018/03/22/springboot/p2.png">
-<meta property="og:updated_time" content="2018-03-22T11:41:48.132Z">
+<meta property="og:updated_time" content="2018-03-22T15:55:06.009Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Boot之路">
 <meta name="twitter:description" content="Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。也被称为spring的脚手架。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。 spring boot 致力于简洁，让开发者写更少的配置，程序能够更快的运行和启动。它是下一代javaweb框架，并且它是spring cloud（微服务）的基础。(spr">
@@ -468,8 +468,42 @@
 <p>4、controller  负责页面访问控制</p>
 <p>采用默认配置可以省去很多配置，当然也可以根据自己的喜欢来进行更改</p>
 <p>最后，启动Application main方法，至此一个java项目搭建好了！</p>
-<h2 id="项目POM-XML"><a href="#项目POM-XML" class="headerlink" title="项目POM.XML"></a>项目POM.XML</h2><p>在项目的POM.xml文件中引入父POM，来初始化一些常用的功能（不用重新去导入其他包，当然也有办法不用这个父POM），项目自动配好了，若是自己编写项目则需要手动配置。<br>    <!-- Inherit defaults from Spring Boot --><br>    <parent><br>        <groupid>org.springframework.boot</groupid><br>        <artifactid>spring-boot-starter-parent</artifactid><br>        <version>1.5.2.RELEASE</version><br>    </parent><br>    <properties><br>        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;<br>        &lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;<br>        &lt;java.version&gt;1.8&lt;/java.version&gt;<br>        &lt;tomcat.version&gt;7.0.69&lt;/tomcat.version&gt;  指定本机所装的tomcat版本，不然可能会与springboot内置的Tomcat冲突<br>    </properties><br>    <!-- spring-boot-maven-plugin插件 在SpringBoot项目中开启的方式有两种
-      一种是run java.application 还有一种就是这个插件开启--><br>    <build><br>        <plugins><br>            <plugin><br>                <groupid>org.springframework.boot</groupid><br>                <artifactid>spring-boot-maven-plugin</artifactid><br>            </plugin><br>        </plugins><br>    </build><br>    &lt;!–支持springboot所需的jar包依赖<br>    <dependencies><br>        <dependency><br>            <groupid>org.springframework.boot</groupid><br>            <artifactid>spring-boot-starter</artifactid><br>        </dependency><br>        <dependency><br>            <groupid>org.springframework.boot</groupid><br>            <artifactid>spring-boot-starter-test</artifactid><br>            <scope>test</scope><br>        </dependency><br>    </dependencies><br>以上这些就是官网提供项目的POM配置。</p>
+<h2 id="项目POM-XML"><a href="#项目POM-XML" class="headerlink" title="项目POM.XML"></a>项目POM.XML</h2><p>在项目的POM.xml文件中引入父POM，来初始化一些常用的功能（不用重新去导入其他包，当然也有办法不用这个父POM），项目自动配好了，若是自己编写项目则需要手动配置。</p>
+<pre><code>&lt;!-- Inherit defaults from Spring Boot --&gt;
+&lt;parent&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
+    &lt;version&gt;1.5.2.RELEASE&lt;/version&gt;
+&lt;/parent&gt;
+&lt;properties&gt;
+    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+    &lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;
+    &lt;java.version&gt;1.8&lt;/java.version&gt;
+    &lt;tomcat.version&gt;7.0.69&lt;/tomcat.version&gt;  指定本机所装的tomcat版本，不然可能会与springboot内置的Tomcat冲突
+&lt;/properties&gt;
+&lt;!-- spring-boot-maven-plugin插件 在SpringBoot项目中开启的方式有两种
+  一种是run java.application 还有一种就是这个插件开启--&gt;
+&lt;build&gt;
+    &lt;plugins&gt;
+        &lt;plugin&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+        &lt;/plugin&gt;
+    &lt;/plugins&gt;
+&lt;/build&gt;
+&lt;!--支持springboot所需的jar包依赖
+&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+        &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre><p>以上这些就是官网提供项目的POM配置。</p>
 <p>还需要引入一个web模块</p>
 <pre><code>&lt;dependency&gt;
         &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
