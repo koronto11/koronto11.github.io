@@ -113,7 +113,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/03/22/springboot/p3.png">
 <meta property="og:image" content="http://yoursite.com/2018/03/22/springboot/p4.png">
 <meta property="og:image" content="http://yoursite.com/2018/03/22/springboot/p5.png">
-<meta property="og:updated_time" content="2018-03-23T08:51:10.312Z">
+<meta property="og:updated_time" content="2018-03-23T18:25:07.680Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Boot之路(一)--概念介绍及注解配置">
 <meta name="twitter:description" content="Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。也被称为spring的脚手架。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。 spring boot 致力于简洁，让开发者写更少的配置，程序能够更快的运行和启动。它是下一代javaweb框架，并且它是spring cloud（微服务）的基础。(spr">
@@ -818,6 +818,9 @@ public class UserDaoTest {
 }
 </code></pre><h2 id="thymeleaf模板"><a href="#thymeleaf模板" class="headerlink" title="thymeleaf模板"></a>thymeleaf模板</h2><p>Spring boot 推荐使用来代替jsp</p>
 <p>Thymeleaf是一款用于渲染XML/XHTML/HTML5内容的模板引擎。类似JSP，Velocity，FreeMaker等，它也可以轻易的与Spring MVC等Web框架进行集成作为Web应用的模板引擎。与其它模板引擎相比，Thymeleaf最大的特点是能够直接在浏览器中打开并正确显示模板页面，而不需要启动整个Web应用。</p>
+<p>1.Thymeleaf 在有网络和无网络的环境下皆可运行，即它可以让美工在浏览器查看页面的静态效果，也可以让程序员在服务器查看带数据的动态页面效果。这是由于它支持 html 原型，然后在 html 标签里增加额外的属性来达到模板+数据的展示方式。浏览器解释 html 时会忽略未定义的标签属性，所以 thymeleaf 的模板可以静态地运行；当有数据返回到页面时，Thymeleaf 标签会动态地替换掉静态内容，使页面动态显示。</p>
+<p>2.Thymeleaf 开箱即用的特性。它提供标准和spring标准两种方言，可以直接套用模板实现JSTL、 OGNL表达式效果，避免每天套模板、该jstl、改标签的困扰。同时开发人员也可以扩展和创建自定义的方言。</p>
+<p>3.Thymeleaf 提供spring标准方言和一个与 SpringMVC 完美集成的可选模块，可以快速的实现表单绑定、属性编辑器、国际化等功能。</p>
 <p>我们已经习惯使用了什么 velocity,FreMaker，beetle之类的模版，那么到底好在哪里呢？ 比一比吧 Thymeleaf是与众不同的，因为它使用了自然的模板技术。这意味着Thymeleaf的模板语法并不会破坏文档的结构，模板依旧是有效的XML文档。模板还可以用作工作原型，Thymeleaf会在运行期替换掉静态值。Velocity与FreeMarker则是连续的文本处理器。 下面的代码示例分别使用Velocity、FreeMarker与Thymeleaf打印出一条消息：</p>
 <pre><code>Velocity: &lt;p&gt;$message&lt;/p&gt;
 FreeMarker: &lt;p&gt;${message}&lt;/p&gt;
@@ -1191,7 +1194,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共99.2k字</span>
+  <span class="post-count">博客全站共100.7k字</span>
 </div>
 
         

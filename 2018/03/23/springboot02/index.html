@@ -110,7 +110,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2018/03/23/springboot02/redis-install1.png">
 <meta property="og:image" content="http://yoursite.com/2018/03/23/springboot02/redis-install2.png">
-<meta property="og:updated_time" content="2018-03-23T12:30:48.020Z">
+<meta property="og:updated_time" content="2018-03-23T18:25:07.681Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Boot之路(二)--Nosql支持">
 <meta name="twitter:description" content="在SpringBoot中对常用的数据库支持外，对nosql 数据库也进行了封装自动化。 Redis简介REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。">
@@ -433,6 +433,189 @@
 <p><img src="/2018/03/23/springboot02/redis-install1.png" alt="logo"></p>
 <p>这时候另启一个cmd窗口，原来的不要关闭，不然就无法访问服务端了。<br>切换到redis目录下运行 redis-cli.exe -h 127.0.0.1 -p 6379 。<br>设置键值对 set myKey abc<br>取出键值对 get myKey</p>
 <p><img src="/2018/03/23/springboot02/redis-install2.png" alt="logo"></p>
+<p>Redis是目前业界使用最广泛的内存数据存储。相比memcached，Redis支持更丰富的数据结构，例如hashes, lists, sets等，同时支持数据持久化。除此之外，Redis还提供一些类数据库的特性，比如事务，HA，主从库。可以说Redis兼具了缓存系统和数据库的一些特性，因此有着丰富的应用场景。本文介绍Redis在Spring Boot中两个典型的应用场景。</p>
+<h2 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h2><p>1、引入 spring-boot-starter-redis</p>
+<pre><code>&lt;dependency&gt;  
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;  
+    &lt;artifactId&gt;spring-boot-starter-redis&lt;/artifactId&gt;  
+&lt;/dependency&gt;
+</code></pre><p>2、添加配置文件</p>
+<p>编辑配置<br>你可以通过修改 redis.conf 文件或使用 CONFIG set 命令来修改配置。</p>
+<p>CONFIG SET 命令基本语法：<br>redis 127.0.0.1:6379&gt; CONFIG SET CONFIG_SETTING_NAME NEW_CONFIG_VALUE</p>
+<p>通过修改application.properties中配置Redis连接信息文件修改如下：</p>
+<ul>
+<li>REDIS (RedisProperties)</li>
+<li>Redis数据库索引（默认为0）<br>spring.redis.database=0  </li>
+<li>Redis服务器地址<br>spring.redis.host=192.168.0.58</li>
+<li>Redis服务器连接端口<br>spring.redis.port=6379  </li>
+<li>Redis服务器连接密码（默认为空）<br>spring.redis.password=  </li>
+<li>连接池最大连接数（使用负值表示没有限制）<br>spring.redis.pool.max-active=8  </li>
+<li>连接池最大阻塞等待时间（使用负值表示没有限制）<br>spring.redis.pool.max-wait=-1  </li>
+<li>连接池中的最大空闲连接<br>spring.redis.pool.max-idle=8  </li>
+<li>连接池中的最小空闲连接<br>spring.redis.pool.min-idle=0  </li>
+<li>连接超时时间（毫秒）<br>spring.redis.timeout=0  </li>
+</ul>
+<p>3、修改项目启动类</p>
+<p>增加注解@EnableCaching，开启缓存功能，如下：</p>
+<pre><code>package springboot;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.scheduling.annotation.EnableScheduling;
+
+@SpringBootApplication
+@EnableScheduling
+@EnableCaching
+public class SpringbootApplication{
+
+    public static void main(String[] args) {
+        SpringApplication.run(SpringbootApplication.class, args);
+    }
+}
+</code></pre><p>4、新建Redis缓存配置类RedisConfig，如下：</p>
+<pre><code>package springboot.config;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+
+/**
+ * Redis缓存配置类
+ * @author szekinwin
+ *
+ */
+@Configuration
+@EnableCaching
+public class RedisConfig extends CachingConfigurerSupport{
+
+    @Value(&quot;${spring.redis.host}&quot;)
+    private String host;
+    @Value(&quot;${spring.redis.port}&quot;)
+    private int port;
+    @Value(&quot;${spring.redis.timeout}&quot;)
+    private int timeout;
+
+    //自定义缓存key生成策略
+//    @Bean
+//    public KeyGenerator keyGenerator() {
+//        return new KeyGenerator(){
+//            @Override
+//            public Object generate(Object target, java.lang.reflect.Method method, Object... params) {
+//                StringBuffer sb = new StringBuffer();
+//                sb.append(target.getClass().getName());
+//                sb.append(method.getName());
+//                for(Object obj:params){
+//                    sb.append(obj.toString());
+//                }
+//                return sb.toString();
+//            }
+//        };
+//    }
+    //缓存管理器
+    @Bean 
+    public CacheManager cacheManager(@SuppressWarnings(&quot;rawtypes&quot;) RedisTemplate redisTemplate) {
+        RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);
+        //设置缓存过期时间 
+        cacheManager.setDefaultExpiration(10000);
+        return cacheManager;
+    }
+    @Bean
+    public RedisTemplate&lt;String, String&gt; redisTemplate(RedisConnectionFactory factory){
+        StringRedisTemplate template = new StringRedisTemplate(factory);
+        setSerializer(template);//设置序列化工具
+        template.afterPropertiesSet();
+        return template;
+    }
+     private void setSerializer(StringRedisTemplate template){
+            @SuppressWarnings({ &quot;rawtypes&quot;, &quot;unchecked&quot; })
+            Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
+            ObjectMapper om = new ObjectMapper();
+            om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+            om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+            jackson2JsonRedisSerializer.setObjectMapper(om);
+            template.setValueSerializer(jackson2JsonRedisSerializer);
+     }
+}
+</code></pre><p>5、新建UserMapper</p>
+<pre><code>package springboot.dao;
+
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+
+import springboot.domain.User;
+
+@Mapper
+@CacheConfig(cacheNames = &quot;users&quot;)
+public interface UserMapper {
+
+    @Insert(&quot;insert into user(name,age) values(#{name},#{age})&quot;)
+    int addUser(@Param(&quot;name&quot;)String name,@Param(&quot;age&quot;)String age);
+
+    @Select(&quot;select * from user where id =#{id}&quot;)
+    @Cacheable(key =&quot;#p0&quot;) 
+    User findById(@Param(&quot;id&quot;) String id);
+
+    @CachePut(key = &quot;#p0&quot;)
+    @Update(&quot;update user set name=#{name} where id=#{id}&quot;)
+    void updataById(@Param(&quot;id&quot;)String id,@Param(&quot;name&quot;)String name);
+
+    //如果指定为 true，则方法调用后将立即清空所有缓存
+    @CacheEvict(key =&quot;#p0&quot;,allEntries=true)
+    @Delete(&quot;delete from user where id=#{id}&quot;)
+    void deleteById(@Param(&quot;id&quot;)String id);
+
+}
+</code></pre><p>@Cacheable将查询结果缓存到redis中，（key=”#p0”）指定传入的第一个参数作为redis的key。</p>
+<p>@CachePut，指定key，将更新的结果同步到redis中</p>
+<p>@CacheEvict，指定key，删除缓存数据，allEntries=true,方法调用后将立即清除缓存</p>
+<h2 id="共享Session-spring-session-data-redis"><a href="#共享Session-spring-session-data-redis" class="headerlink" title="共享Session-spring-session-data-redis"></a>共享Session-spring-session-data-redis</h2><p>分布式系统中，sessiong共享有很多的解决方案，其中托管到缓存中应该是最常用的方案之一，</p>
+<p>多台分布式机器共享Session的解决方案</p>
+<h3 id="如何使用-1"><a href="#如何使用-1" class="headerlink" title="如何使用"></a>如何使用</h3><ul>
+<li><p>引入依赖</p>
+  <dependency><br>      <groupid>org.springframework.session</groupid><br>      <artifactid>spring-session-data-redis</artifactid><br>  </dependency>
+　</li>
+<li><p>Session配置</p>
+<p>  @Configuration<br>  @EnableRedisHttpSession(maxInactiveIntervalInSeconds = 86400*30)<br>  public class SessionConfig {<br>  }</p>
+</li>
+</ul>
+<p>maxInactiveIntervalInSeconds: 设置Session失效时间，使用Redis Session之后，原Boot的server.session.timeout属性不再生效</p>
+<ul>
+<li>测试</li>
+</ul>
+<p>添加测试方法获取sessionid</p>
+<pre><code>@RequestMapping(&quot;/uid&quot;)
+String uid(HttpSession session) {
+    UUID uid = (UUID) session.getAttribute(&quot;uid&quot;);
+    if (uid == null) {
+        uid = UUID.randomUUID();
+    }
+    session.setAttribute(&quot;uid&quot;, uid);
+    return session.getId();
+}
+</code></pre><p>登录redis 输入 keys ‘<em>sessions</em>‘ xml t&lt;spring:session:sessions:db031986-8ecc-48d6-b471-b137a3ed6bc4 t(spring:session:expirations:1472976480000  其中 1472976480000为失效时间，意思是这个时间后session失效，db031986-8ecc-48d6-b471-b137a3ed6bc4 为sessionId,登录<a href="http://localhost:8080/uid" target="_blank" rel="noopener">http://localhost:8080/uid</a> 发现会一致，就说明session 已经在redis里面进行有效的管理了。<br>这条session作为数据储存在Redis数据库中。</p>
+<h3 id="如何在两台或者多台中共享session"><a href="#如何在两台或者多台中共享session" class="headerlink" title="如何在两台或者多台中共享session"></a>如何在两台或者多台中共享session</h3><p>其实就是按照上面的步骤在另一个项目中再次配置一次，启动后自动就进行了session共享。</p>
+<p>多台机器可以共享这个Redis数据库，里面自然有Session数据。</p>
 
       
     </div>
@@ -719,7 +902,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis"><span class="nav-number">1.</span> <span class="nav-text">Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是BSD协议？"><span class="nav-number">1.2.</span> <span class="nav-text">什么是BSD协议？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装及使用"><span class="nav-number">1.3.</span> <span class="nav-text">安装及使用</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis"><span class="nav-number">1.</span> <span class="nav-text">Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是BSD协议？"><span class="nav-number">1.2.</span> <span class="nav-text">什么是BSD协议？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装及使用"><span class="nav-number">1.3.</span> <span class="nav-text">安装及使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何使用"><span class="nav-number">1.4.</span> <span class="nav-text">如何使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#共享Session-spring-session-data-redis"><span class="nav-number">1.5.</span> <span class="nav-text">共享Session-spring-session-data-redis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何使用-1"><span class="nav-number">1.5.1.</span> <span class="nav-text">如何使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何在两台或者多台中共享session"><span class="nav-number">1.5.2.</span> <span class="nav-text">如何在两台或者多台中共享session</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -767,7 +950,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共99.2k字</span>
+  <span class="post-count">博客全站共100.7k字</span>
 </div>
 
         
