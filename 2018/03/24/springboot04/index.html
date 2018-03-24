@@ -87,7 +87,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="大数据,java,spring,springboot," />
 
 
 
@@ -100,16 +100,20 @@
 
 
 
-<meta name="description" content="future is detail！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="刻写未来！">
-<meta property="og:url" content="http://yoursite.com/tags/风险投资/index.html">
+<meta name="description" content="现如今的互联网开发，一款成熟的产品往往不只有Web作为前端，有可能要面对多个开发人员或多个开发团队：IOS开发、Android开发或是Web开发等等，现在的多终端时代，有可能我们需要开发所有市面的终端设备。 由于Spring Boot能够快速开发、便捷部署等特性，相信有很大一部分Spring Boot的用户会用来构建RESTful API。而我们构建RESTful API的目的通常都是由于多终端的">
+<meta name="keywords" content="大数据,java,spring,springboot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Boot之路(二)--Swagger2（RESTful API统一文档）">
+<meta property="og:url" content="http://yoursite.com/2018/03/24/springboot04/index.html">
 <meta property="og:site_name" content="刻写未来！">
-<meta property="og:description" content="future is detail！">
+<meta property="og:description" content="现如今的互联网开发，一款成熟的产品往往不只有Web作为前端，有可能要面对多个开发人员或多个开发团队：IOS开发、Android开发或是Web开发等等，现在的多终端时代，有可能我们需要开发所有市面的终端设备。 由于Spring Boot能够快速开发、便捷部署等特性，相信有很大一部分Spring Boot的用户会用来构建RESTful API。而我们构建RESTful API的目的通常都是由于多终端的">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2018/03/24/springboot04/p1.png">
+<meta property="og:updated_time" content="2018-03-24T18:07:35.188Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="刻写未来！">
-<meta name="twitter:description" content="future is detail！">
+<meta name="twitter:title" content="Spring Boot之路(二)--Swagger2（RESTful API统一文档）">
+<meta name="twitter:description" content="现如今的互联网开发，一款成熟的产品往往不只有Web作为前端，有可能要面对多个开发人员或多个开发团队：IOS开发、Android开发或是Web开发等等，现在的多终端时代，有可能我们需要开发所有市面的终端设备。 由于Spring Boot能够快速开发、便捷部署等特性，相信有很大一部分Spring Boot的用户会用来构建RESTful API。而我们构建RESTful API的目的通常都是由于多终端的">
+<meta name="twitter:image" content="http://yoursite.com/2018/03/24/springboot04/p1.png">
 
 
 
@@ -139,7 +143,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/风险投资/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/24/springboot04/"/>
 
 
 
@@ -147,7 +151,7 @@
 
 
 
-  <title>标签: 风险投资 | 刻写未来！</title>
+  <title>Spring Boot之路(二)--Swagger2（RESTful API统一文档） | 刻写未来！</title>
   
 
 
@@ -166,7 +170,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -304,54 +308,380 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>风险投资<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/24/springboot04/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黄上">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/koro.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刻写未来！">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/03/19/fengtou/" itemprop="url">
-              
-                <span itemprop="name">创业之路--关于风险投资</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Spring Boot之路(二)--Swagger2（RESTful API统一文档）</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-19T12:39:15+08:00"
-              content="2018-03-19" >
-          03-19
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-24T17:22:09+08:00">
+                2018-03-24
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/springboot/" itemprop="url" rel="index">
+                    <span itemprop="name">springboot</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>现如今的互联网开发，一款成熟的产品往往不只有Web作为前端，有可能要面对多个开发人员或多个开发团队：IOS开发、Android开发或是Web开发等等，现在的多终端时代，有可能我们需要开发所有市面的终端设备。</p>
+<p>由于Spring Boot能够快速开发、便捷部署等特性，相信有很大一部分Spring Boot的用户会用来构建RESTful API。而我们构建RESTful API的目的通常都是由于多终端的原因，这些终端会共用很多底层业务逻辑，因此我们会抽象出这样一层来同时服务于多个移动端或者Web前端。</p>
+<p>随着互联网技术的发展，现在的网站架构基本都由原来的后端渲染，变成了：前端渲染、先后端分离的形态，而且前端技术和后端技术在各自的道路上越走越远。<br>前端和后端的唯一联系，变成了API接口；API文档变成了前后端开发人员联系的纽带，变得越来越重要，swagger就是一款让你更好的书写API文档的框架。</p>
+<p>这样一来，我们的RESTful API就有可能要面对多个开发人员或多个开发团队：IOS开发、Android开发或是Web开发等。为了减少与其他团队平时开发期间的频繁沟通成本，传统做法我们会创建一份RESTful API文档来记录所有接口细节，然而这样的做法有以下几个问题：</p>
+<a id="more"></a>
+<p>1.由于接口众多，并且细节复杂（需要考虑不同的HTTP请求类型、HTTP头部信息、HTTP请求内容等），高质量地创建这份文档本身就是件非常吃力的事，下游的抱怨声不绝于耳。</p>
+<p>2.随着时间推移，不断修改接口实现的时候都必须同步修改接口文档，而文档与代码又处于两个不同的媒介，除非有严格的管理机制，不然很容易导致不一致现象。</p>
+<p>如何在开发团队中实现一个RESTful API的接口统一文档？</p>
+<h1 id="Swagger2"><a href="#Swagger2" class="headerlink" title="Swagger2"></a>Swagger2</h1><p>使用Swagger之前我们先需要构建一个RESTful API来做准备。</p>
+<p>RESTful API具体设计如下：</p>
+<p><img src="/2018/03/24/springboot04/p1.png" alt="logo"></p>
+<p>User实体定义：</p>
+<pre><code>public class User { 
+
+    private Long id; 
+    private String name; 
+    private Integer age; 
+
+    // 省略setter和getter 
+
+}
+</code></pre><p>实现对User对象的操作接口：</p>
+<pre><code>@RestController 
+@RequestMapping(value=&quot;/users&quot;)     // 通过这里配置使下面的映射都在/users下 
+public class UserController { 
+
+    // 创建线程安全的Map 
+    //利用Collections工具类中的synchronizedMap方法来构建同步Map
+    //SynchronizedMap类是定义在Collections中的一个静态内部类。
+    //它实现了Map接口，并对其中的每一个方法实现，通过synchronized关键字进行了同步控制
+    //这样的好处在于Map不会产生混乱，当有并发请求时这个Map会进行同步锁。
+    static Map&lt;Long, User&gt; users = Collections.synchronizedMap(new HashMap&lt;Long, User&gt;()); 
+
+    @RequestMapping(value=&quot;/&quot;, method=RequestMethod.GET) 
+    public List&lt;User&gt; getUserList() { 
+        // 处理&quot;/users/&quot;的GET请求，用来获取用户列表 
+        // 还可以通过@RequestParam从页面中传递参数来进行查询条件或者翻页信息的传递
+        //users.Values()获取用户信息的所有值并传递给一个List集合，然后通过返回集合呈现过我们 
+        List&lt;User&gt; r = new ArrayList&lt;User&gt;(users.values()); 
+        return r; 
+    } 
+
+    @RequestMapping(value=&quot;/&quot;, method=RequestMethod.POST) 
+    public String postUser(@ModelAttribute User user) { 
+        // 处理&quot;/users/&quot;的POST请求，用来创建User 
+        // 除了@ModelAttribute绑定参数之外，还可以通过@RequestParam从页面中传递参数 
+        users.put(user.getId(), user); 
+        return &quot;success&quot;; 
+    } 
+
+    @RequestMapping(value=&quot;/{id}&quot;, method=RequestMethod.GET) 
+    public User getUser(@PathVariable Long id) { 
+        // 处理&quot;/users/{id}&quot;的GET请求，用来获取url中id值的User信息 
+        // url中的id可通过@PathVariable绑定到函数的参数中 
+        return users.get(id); 
+    } 
+
+    @RequestMapping(value=&quot;/{id}&quot;, method=RequestMethod.PUT) 
+    public String putUser(@PathVariable Long id, @ModelAttribute User user) { 
+        // 处理&quot;/users/{id}&quot;的PUT请求，用来更新User信息 
+        User u = users.get(id); 
+        u.setName(user.getName()); 
+        u.setAge(user.getAge()); 
+        users.put(id, u); 
+        return &quot;success&quot;; 
+    } 
+
+    @RequestMapping(value=&quot;/{id}&quot;, method=RequestMethod.DELETE) 
+    public String deleteUser(@PathVariable Long id) { 
+        // 处理&quot;/users/{id}&quot;的DELETE请求，用来删除User 
+        users.remove(id); 
+        return &quot;success&quot;; 
+    } 
+
+}
+</code></pre><p>下面针对该Controller编写测试用例验证正确性，具体如下。当然也可以通过浏览器插件等进行请求提交验证。</p>
+<pre><code>@RunWith(SpringJUnit4ClassRunner.class) 
+//@SpringApplicationConfiguration(classes = MockServletContext.class) 
+@WebAppConfiguration 
+public class ApplicationTests { 
+
+    private MockMvc mvc; 
+
+    @Before 
+    public void setUp() throws Exception { 
+        mvc = MockMvcBuilders.standaloneSetup(new UserController()).build(); 
+    } 
+
+    @Test 
+    public void testUserController() throws Exception { 
+        // 测试UserController 
+        RequestBuilder request = null; 
+
+        // 1、get查一下user列表，应该为空 
+        request = get(&quot;/users/&quot;); 
+        mvc.perform(request) 
+                .andExpect(status().isOk()) 
+                .andExpect(content().string(equalTo(&quot;[]&quot;))); 
+
+        // 2、post提交一个user 
+        request = post(&quot;/users/&quot;) 
+                .param(&quot;id&quot;, &quot;1&quot;) 
+                .param(&quot;name&quot;, &quot;测试大师&quot;) 
+                .param(&quot;age&quot;, &quot;20&quot;); 
+        mvc.perform(request) 
+                .andExpect(content().string(equalTo(&quot;success&quot;))); 
+
+        // 3、get获取user列表，应该有刚才插入的数据 
+        request = get(&quot;/users/&quot;); 
+        mvc.perform(request) 
+                .andExpect(status().isOk()) 
+                .andExpect(content().string(equalTo(&quot;[{\&quot;id\&quot;:1,\&quot;name\&quot;:\&quot;测试大师\&quot;,\&quot;age\&quot;:20}]&quot;))); 
+
+        // 4、put修改id为1的user 
+        request = put(&quot;/users/1&quot;) 
+                .param(&quot;name&quot;, &quot;测试终极大师&quot;) 
+                .param(&quot;age&quot;, &quot;30&quot;); 
+        mvc.perform(request) 
+                .andExpect(content().string(equalTo(&quot;success&quot;))); 
+
+        // 5、get一个id为1的user 
+        request = get(&quot;/users/1&quot;); 
+        mvc.perform(request) 
+                .andExpect(content().string(equalTo(&quot;{\&quot;id\&quot;:1,\&quot;name\&quot;:\&quot;测试终极大师\&quot;,\&quot;age\&quot;:30}&quot;))); 
+
+        // 6、del删除id为1的user 
+        request = delete(&quot;/users/1&quot;); 
+        mvc.perform(request) 
+                .andExpect(content().string(equalTo(&quot;success&quot;))); 
+
+        // 7、get查一下user列表，应该为空 
+        request = get(&quot;/users/&quot;); 
+        mvc.perform(request) 
+                .andExpect(status().isOk()) 
+                .andExpect(content().string(equalTo(&quot;[]&quot;))); 
+
+    } 
+
+}
+</code></pre><p>这个是用MockMVC来做数据分析，当然我们也可以直接用浏览器发送请求来实战测试，这就需要浏览器发送GET请求和POST请求<br>那么按照我们常规的方法是编写一个网站来发送POST请求（因为POST请求是不直接表达在URL上的）<br>所以这就需要借助浏览器的一些插件来实现发送POST请求</p>
+<p>我们开发的工具是Google的Chrome浏览器，我们通过应用市场下载POSTMAN插件就可以实现浏览器发送POST请求<br>做WEB端开发的人员必须要下载这个插件作为调试页面访问请求的数据显示。</p>
+<h2 id="Postman插件概述"><a href="#Postman插件概述" class="headerlink" title="Postman插件概述"></a>Postman插件概述</h2><p>Postman插件是什么？postman插件是一款chrome插件，是谷歌浏览器的网页调试插件，这款插件可以利用Chrome插件的形式把各种模拟用户HTTP请求的数据发送到服务器，以便开发人员能够及时地作出正确的响应，或者是对产品发布之前的错误信息提前处理，进而保证产品上线之后的稳定性和安全性。Postman是一种网页调试与发送网页http请求的chrome插件。我们可以用来很方便的模拟get或者post或者其他方式的请求来调试接口。</p>
+<ul>
+<li>Postman插件功能介绍</li>
+</ul>
+<p>当开发人员需要调试一个网页是否运行正常，并不是简简单单地调试网页的HTML、CSS、脚本等信息是否运行正常，更加重要的是网页能够正确是处理各种HTTP请求，毕竟网页的HTTP请求是网站与用户之间进行交互的非常重要的一种方式，在动态网站中，用户的大部分数据都需要通过HTTP请求来与服务器进行交互。可以利用Chrome插件的形式把各种模拟用户HTTP请求的数据发送到服务器，以便开发人员能够及时地作出正确的响应，或者是对产品发布之前的错误信息提前处理，进而保证产品上线之后的稳定性和安全性。</p>
+<p>POSTman教程及安装：<a href="http://www.cnplugins.com/devtool/postman/" target="_blank" rel="noopener">http://www.cnplugins.com/devtool/postman/</a></p>
+<p>它可以轻松的整合到Spring Boot中，并与Spring MVC程序配合组织出强大RESTful API文档。它既可以减少我们创建文档的工作量，同时说明内容又整合入实现代码中，让维护文档和修改代码整合为一体，可以让我们在修改代码逻辑的同时方便的修改文档说明。另外Swagger2也提供了强大的页面测试功能来调试每个RESTful API。具体效果如下图所示：</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/weixin.png" alt="黄上 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/zifubao.png" alt="黄上 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/大数据/" rel="tag"># 大数据</a>
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/spring/" rel="tag"># spring</a>
+          
+            <a href="/tags/springboot/" rel="tag"># springboot</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/24/springboot03/" rel="next" title="Spring Boot之路(二)--Thymeleaf模板引擎">
+                <i class="fa fa-chevron-left"></i> Spring Boot之路(二)--Thymeleaf模板引擎
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_32x32">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
 
 
           </div>
@@ -359,6 +689,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNDU1Mi8xMTA5MA=="></div>
+    </div>
+
+  
+
+
 
 
         </div>
@@ -380,8 +719,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -492,6 +840,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Swagger2"><span class="nav-number">1.</span> <span class="nav-text">Swagger2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Postman插件概述"><span class="nav-number">1.1.</span> <span class="nav-text">Postman插件概述</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -648,6 +1012,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -668,6 +1036,25 @@
 
 
 
+  
+    <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNDU1Mi8xMTA5MA==">
+  <script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+  </script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
   
 
 

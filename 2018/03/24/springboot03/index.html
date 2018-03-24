@@ -87,7 +87,7 @@
 
 
 
-  <meta name="keywords" content="java,大数据,spring,springboot," />
+  <meta name="keywords" content="大数据,java,spring,springboot," />
 
 
 
@@ -101,7 +101,7 @@
 
 
 <meta name="description" content="Thymeleaf在实际的公司开发中，传统的JSP技术由于前段后端结合太过紧密，而且后端人员需要随时测试数据能不能渲染在界面上，这就需要前端与后端部门过于紧耦合，不利于实际开发，反而是模板引擎用的较多（当然也不排除一些老的公司需要维护公司以前的动态JSP网页） thymeleaf最大的优势后缀为html,就是只需要浏览器就可以展现页面了,还有就是thymeleaf可以很好的和spring集成. T">
-<meta name="keywords" content="java,大数据,spring,springboot">
+<meta name="keywords" content="大数据,java,spring,springboot">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring Boot之路(二)--Thymeleaf模板引擎">
 <meta property="og:url" content="http://yoursite.com/2018/03/24/springboot03/index.html">
@@ -111,7 +111,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/03/24/springboot03/p1.png">
 <meta property="og:image" content="http://yoursite.com/2018/03/24/springboot03/p2.png">
 <meta property="og:image" content="http://yoursite.com/2018/03/24/springboot03/p3.png">
-<meta property="og:updated_time" content="2018-03-24T09:12:53.958Z">
+<meta property="og:updated_time" content="2018-03-24T09:21:54.370Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Boot之路(二)--Thymeleaf模板引擎">
 <meta name="twitter:description" content="Thymeleaf在实际的公司开发中，传统的JSP技术由于前段后端结合太过紧密，而且后端人员需要随时测试数据能不能渲染在界面上，这就需要前端与后端部门过于紧耦合，不利于实际开发，反而是模板引擎用的较多（当然也不排除一些老的公司需要维护公司以前的动态JSP网页） thymeleaf最大的优势后缀为html,就是只需要浏览器就可以展现页面了,还有就是thymeleaf可以很好的和spring集成. T">
@@ -755,6 +755,8 @@ ${#strings.randomAlphanumeric(count)}
 </code></pre><p>也可以在引用模版的时候传参</p>
 <pre><code>&lt;head th:include=&quot;layout :: htmlhead&quot; th:with=&quot;title=&apos;Hello&apos;&quot;&gt;&lt;/head&gt;
 </code></pre><p>layout 是文件地址，如果有文件夹可以这样写 fileName/layout:htmlhead<br>htmlhead 是指定义的代码片段 如 th:fragment=”copy”</p>
+<p>开源云收藏项目的github源码：<a href="https://github.com/cloudfavorites/favorites-web" target="_blank" rel="noopener">https://github.com/cloudfavorites/favorites-web</a><br>里面用的技术包括springboot集成了tomcat和thymeleaf，源码测试里都是详细的项目功能介绍。</p>
+<p>还有就是Springboot虽然不建议使用JSP技术，但是若有相应的要求也可以使用。具体自查。</p>
 
       
     </div>
@@ -801,9 +803,9 @@ ${#strings.randomAlphanumeric(count)}
       
         <div class="post-tags">
           
-            <a href="/tags/java/" rel="tag"># java</a>
-          
             <a href="/tags/大数据/" rel="tag"># 大数据</a>
+          
+            <a href="/tags/java/" rel="tag"># java</a>
           
             <a href="/tags/spring/" rel="tag"># spring</a>
           
@@ -829,6 +831,10 @@ ${#strings.randomAlphanumeric(count)}
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/24/springboot04/" rel="prev" title="Spring Boot之路(二)--Swagger2（RESTful API统一文档）">
+                Spring Boot之路(二)--Swagger2（RESTful API统一文档） <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -939,7 +945,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1089,7 +1095,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共104.6k字</span>
+  <span class="post-count">博客全站共106.7k字</span>
 </div>
 
         
