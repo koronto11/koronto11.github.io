@@ -100,21 +100,21 @@
 
 
 
-<meta name="description" content="静态资源访问在我们开发Web应用的时候，需要引用大量的js、css、图片等静态资源。 默认配置Spring Boot默认提供静态资源目录位置需置于classpath下，目录名需符合如下规则： /static /public /resources /META-INF/resources 举例：我们可以在src/main/resources/目录下创建static，在该位置放置一个图片文件。启动程序后">
+<meta name="description" content="Thymeleaf在实际的公司开发中，传统的JSP技术由于前段后端结合太过紧密，而且后端人员需要随时测试数据能不能渲染在界面上，这就需要前端与后端部门过于紧耦合，不利于实际开发，反而是模板引擎用的较多（当然也不排除一些老的公司需要维护公司以前的动态JSP网页） thymeleaf最大的优势后缀为html,就是只需要浏览器就可以展现页面了,还有就是thymeleaf可以很好的和spring集成. T">
 <meta name="keywords" content="java,大数据,spring,springboot">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring Boot之路(二)--Thymeleaf模板引擎">
 <meta property="og:url" content="http://yoursite.com/2018/03/24/springboot03/index.html">
 <meta property="og:site_name" content="刻写未来！">
-<meta property="og:description" content="静态资源访问在我们开发Web应用的时候，需要引用大量的js、css、图片等静态资源。 默认配置Spring Boot默认提供静态资源目录位置需置于classpath下，目录名需符合如下规则： /static /public /resources /META-INF/resources 举例：我们可以在src/main/resources/目录下创建static，在该位置放置一个图片文件。启动程序后">
+<meta property="og:description" content="Thymeleaf在实际的公司开发中，传统的JSP技术由于前段后端结合太过紧密，而且后端人员需要随时测试数据能不能渲染在界面上，这就需要前端与后端部门过于紧耦合，不利于实际开发，反而是模板引擎用的较多（当然也不排除一些老的公司需要维护公司以前的动态JSP网页） thymeleaf最大的优势后缀为html,就是只需要浏览器就可以展现页面了,还有就是thymeleaf可以很好的和spring集成. T">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2018/03/24/springboot03/p1.png">
 <meta property="og:image" content="http://yoursite.com/2018/03/24/springboot03/p2.png">
 <meta property="og:image" content="http://yoursite.com/2018/03/24/springboot03/p3.png">
-<meta property="og:updated_time" content="2018-03-24T08:30:28.991Z">
+<meta property="og:updated_time" content="2018-03-24T09:12:53.958Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Boot之路(二)--Thymeleaf模板引擎">
-<meta name="twitter:description" content="静态资源访问在我们开发Web应用的时候，需要引用大量的js、css、图片等静态资源。 默认配置Spring Boot默认提供静态资源目录位置需置于classpath下，目录名需符合如下规则： /static /public /resources /META-INF/resources 举例：我们可以在src/main/resources/目录下创建static，在该位置放置一个图片文件。启动程序后">
+<meta name="twitter:description" content="Thymeleaf在实际的公司开发中，传统的JSP技术由于前段后端结合太过紧密，而且后端人员需要随时测试数据能不能渲染在界面上，这就需要前端与后端部门过于紧耦合，不利于实际开发，反而是模板引擎用的较多（当然也不排除一些老的公司需要维护公司以前的动态JSP网页） thymeleaf最大的优势后缀为html,就是只需要浏览器就可以展现页面了,还有就是thymeleaf可以很好的和spring集成. T">
 <meta name="twitter:image" content="http://yoursite.com/2018/03/24/springboot03/p1.png">
 
 
@@ -418,7 +418,12 @@
       
 
       
-        <h1 id="静态资源访问"><a href="#静态资源访问" class="headerlink" title="静态资源访问"></a>静态资源访问</h1><p>在我们开发Web应用的时候，需要引用大量的js、css、图片等静态资源。</p>
+        <h1 id="Thymeleaf"><a href="#Thymeleaf" class="headerlink" title="Thymeleaf"></a>Thymeleaf</h1><p>在实际的公司开发中，传统的JSP技术由于前段后端结合太过紧密，而且后端人员需要随时测试数据能不能渲染在界面上，这就需要前端与后端部门过于紧耦合，不利于实际开发，反而是模板引擎用的较多（当然也不排除一些老的公司需要维护公司以前的动态JSP网页）</p>
+<p>thymeleaf最大的优势后缀为html,就是只需要浏览器就可以展现页面了,还有就是thymeleaf可以很好的和spring集成.</p>
+<p>Thymeleaf是一个XML/XHTML/HTML5模板引擎，可用于Web与非Web环境中的应用开发。它是一个开源的Java库，基于Apache License 2.0许可，由Daniel Fernández创建，该作者还是Java加密库Jasypt的作者。</p>
+<a id="more"></a>
+<p>Thymeleaf提供了一个用于整合Spring MVC的可选模块，在应用开发中，你可以使用Thymeleaf来完全代替JSP或其他模板引擎，如Velocity、FreeMarker等。Thymeleaf的主要目标在于提供一种可被浏览器正确显示的、格式良好的模板创建方式，因此也可以用作静态建模。你可以使用它创建经过验证的XML与HTML模板。相对于编写逻辑或代码，开发者只需将标签属性添加到模板中即可。接下来，这些标签属性就会在DOM（文档对象模型）上执行预先制定好的逻辑。</p>
+<h1 id="静态资源访问"><a href="#静态资源访问" class="headerlink" title="静态资源访问"></a>静态资源访问</h1><p>在我们开发Web应用的时候，需要引用大量的js、css、图片等静态资源。</p>
 <h1 id="默认配置"><a href="#默认配置" class="headerlink" title="默认配置"></a>默认配置</h1><p>Spring Boot默认提供静态资源目录位置需置于classpath下，目录名需符合如下规则：</p>
 <pre><code>/static
 /public
@@ -431,10 +436,6 @@
 <p>Thymeleaf<br>FreeMarker<br>Velocity<br>Groovy<br>Mustache</p>
 <p>Spring Boot建议使用这些模板引擎，避免使用<strong>JSP</strong>，若一定要使用JSP将无法实现Spring Boot的多种特性，具体可见后文：支持JSP的配置</p>
 <p>当你使用上述模板引擎中的任何一个，它们默认的模板配置路径为：src/main/resources/templates。当然也可以修改这个路径，具体如何修改，可在后续各模板引擎的配置属性中查询并修改。</p>
-<h1 id="Thymeleaf"><a href="#Thymeleaf" class="headerlink" title="Thymeleaf"></a>Thymeleaf</h1><p>在实际的公司开发中，传统的JSP技术由于前段后端结合太过紧密，而且后端人员需要随时测试数据能不能渲染在界面上，这就需要前端与后端部门过于紧耦合，不利于实际开发，反而是模板引擎用的较多（当然也不排除一些老的公司需要维护公司以前的动态JSP网页）</p>
-<p>thymeleaf最大的优势后缀为html,就是只需要浏览器就可以展现页面了,还有就是thymeleaf可以很好的和spring集成.</p>
-<p>Thymeleaf是一个XML/XHTML/HTML5模板引擎，可用于Web与非Web环境中的应用开发。它是一个开源的Java库，基于Apache License 2.0许可，由Daniel Fernández创建，该作者还是Java加密库Jasypt的作者。</p>
-<p>Thymeleaf提供了一个用于整合Spring MVC的可选模块，在应用开发中，你可以使用Thymeleaf来完全代替JSP或其他模板引擎，如Velocity、FreeMarker等。Thymeleaf的主要目标在于提供一种可被浏览器正确显示的、格式良好的模板创建方式，因此也可以用作静态建模。你可以使用它创建经过验证的XML与HTML模板。相对于编写逻辑或代码，开发者只需将标签属性添加到模板中即可。接下来，这些标签属性就会在DOM（文档对象模型）上执行预先制定好的逻辑。</p>
 <p>示例：</p>
 <pre><code>&lt;table&gt;
   &lt;thead&gt;
@@ -591,6 +592,169 @@ HTML:
 <p>所有这些特征可以被组合并嵌套：</p>
 <pre><code>&apos;User is of type &apos; + (${user.isAdmin()} ? &apos;Administrator&apos; : (${user.type} ?: &apos;Unknown&apos;))
 </code></pre><h2 id="常用th标签都有那些？"><a href="#常用th标签都有那些？" class="headerlink" title="常用th标签都有那些？"></a>常用th标签都有那些？</h2><p><img src="/2018/03/24/springboot03/p1.png" alt="logo"><br><img src="/2018/03/24/springboot03/p2.png" alt="logo"><br><img src="/2018/03/24/springboot03/p3.png" alt="logo"></p>
+<h2 id="几种常用的使用方法"><a href="#几种常用的使用方法" class="headerlink" title="几种常用的使用方法"></a>几种常用的使用方法</h2><p>几种Thymeleaf在实际开发中的应用（需要掌握的）</p>
+<ul>
+<li><p>赋值、字符串拼接</p>
+<p>  </p><p th:text="${collect.description}">description</p><br>  <span th:text="'Welcome to our application, ' + ${user.name} + '!'"><p></p>
+</span></li>
+</ul>
+<p>注意：th:text=””,双引号里面才是正确输出的内容，拼接的字符串要用‘’单引号，<br>也有更加简易的拼接字符串的方法，用||符号</p>
+<pre><code>&lt;h1 th:text=&quot;|hello,*{hello}|&quot;&gt;Hello World&lt;/h1&gt;
+</code></pre><ul>
+<li>条件判断 If/Unless</li>
+</ul>
+<p>Thymeleaf中使用th:if和th:unless属性进行条件判断，下面的例子中，<a>标签只有在th:if中条件成立时才显示：</a></p>
+<pre><code>&lt;a th:if=&quot;${myself==&apos;yes&apos;}&quot; &gt;&lt;/a&gt;
+&lt;a th:unless=${session.user != null} th:href=&quot;@{/login}&quot; &gt;Login&lt;/a&gt;
+</code></pre><p>th:unless于th:if恰好相反，只有表达式中的条件不成立，才会显示其内容。</p>
+<p>也可以使用 (if) ? (then) : (else) 这种语法来判断显示的内容</p>
+<ul>
+<li><p>for 循环</p>
+<pre><code>&lt;tr  th:each=&quot;collect,iterStat : ${collects}&quot;&gt; 
+   &lt;th scope=&quot;row&quot; th:text=&quot;${collect.id}&quot;&gt;1&lt;/th&gt;
+   &lt;td &gt;
+      &lt;img th:src=&quot;${collect.webLogo}&quot;/&gt;
+   &lt;/td&gt;
+   &lt;td th:text=&quot;${collect.url}&quot;&gt;Mark&lt;/td&gt;
+   &lt;td th:text=&quot;${collect.title}&quot;&gt;Otto&lt;/td&gt;
+   &lt;td th:text=&quot;${collect.description}&quot;&gt;@mdo&lt;/td&gt;
+   &lt;td th:text=&quot;${terStat.index}&quot;&gt;index&lt;/td&gt;
+&lt;/tr&gt;
+</code></pre></li>
+</ul>
+<p>iterStat称作状态变量，属性有：</p>
+<p>index:当前迭代对象的index（从0开始计算）<br>count: 当前迭代对象的index(从1开始计算)<br>size:被迭代对象的大小<br>current:当前迭代变量<br>even/odd:布尔值，当前循环是否是偶数/奇数（从0开始计算）<br>first:布尔值，当前循环是否是第一个<br>last:布尔值，当前循环是否是最后一个</p>
+<ul>
+<li>URL</li>
+</ul>
+<p>URL在Web应用模板中占据着十分重要的地位，需要特别注意的是Thymeleaf对于URL的处理是通过语法@{…}来处理的。<br>如果需要Thymeleaf对URL进行渲染，那么务必使用th:href，th:src等属性，下面是一个例子</p>
+<pre><code>&lt;!-- Will produce &apos;http://localhost:8080/standard/unread&apos; (plus rewriting) --&gt;
+ &lt;a  th:href=&quot;@{/standard/{type}(type=${type})}&quot;&gt;view&lt;/a&gt;
+
+&lt;!-- Will produce &apos;/gtvg/order/3/details&apos; (plus rewriting) --&gt;
+&lt;a href=&quot;details.html&quot; th:href=&quot;@{/order/{orderId}/details(orderId=${o.id})}&quot;&gt;view&lt;/a&gt;
+</code></pre><p>设置背景</p>
+<pre><code>&lt;div th:style=&quot;&apos;background:url(&apos; + @{/&lt;path-to-image&gt;} + &apos;);&apos;&quot;&gt;&lt;/div&gt;
+</code></pre><p>根据属性值改变背景</p>
+<pre><code>&lt;div class=&quot;media-object resource-card-image&quot;  th:style=&quot;&apos;background:url(&apos; + @{(${collect.webLogo}==&apos;&apos; ? &apos;img/favicon.png&apos; : ${collect.webLogo})} + &apos;)&apos;&quot; &gt;&lt;/div&gt;
+</code></pre><p>几点说明：</p>
+<p>上例中URL最后的(orderId=${o.id}) 表示将括号内的内容作为URL参数处理，该语法避免使用字符串拼接，大大提高了可读性<br>@{…}表达式中可以通过{orderId}访问Context中的orderId变量<br>@{/order}是Context相关的相对路径，在渲染时会自动添加上当前Web应用的Context名字，假设context名字为app，那么结果应该是/app/order</p>
+<ul>
+<li>内联js</li>
+</ul>
+<p>内联文本：[[…]]内联文本的表示方式，使用时，必须先用th:inline=”text/javascript/none”激活，th:inline可以在父级标签内使用，甚至作为body的标签。内联文本尽管比th:text的代码少，不利于原型显示。</p>
+<pre><code>&lt;script th:inline=&quot;javascript&quot;&gt;
+/*&lt;![CDATA[*/
+...
+var username = /*[[${sesion.user.name}]]*/ &apos;Sebastian&apos;;
+var size = /*[[${size}]]*/ 0;
+...
+/*]]&gt;*/
+&lt;/script&gt;
+</code></pre><p>js附加代码：</p>
+<pre><code>/*[+
+var msg = &apos;This is a working application&apos;;
+ +]*/
+</code></pre><p>js移除代码：</p>
+<pre><code>/*[- */
+var msg = &apos;This is a non-working template&apos;;
+/* -]*/
+</code></pre><ul>
+<li>内嵌变量</li>
+</ul>
+<p>为了模板更加易用，Thymeleaf还提供了一系列Utility对象（内置于Context中），可以通过#直接访问：</p>
+<p>dates ： java.util.Date的功能方法类。<br>calendars : 类似#dates，面向java.util.Calendar<br>numbers : 格式化数字的功能方法类<br>strings : 字符串对象的功能类，contains,startWiths,prepending/appending等等。<br>objects: 对objects的功能类操作。<br>bools: 对布尔值求值的功能方法。<br>arrays：对数组的功能类方法。<br>lists: 对lists功能类方法<br>sets<br>maps<br>…<br>下面用一段代码来举例一些常用的方法：</p>
+<p>1.dates</p>
+<pre><code>/*
+ * Format date with the specified pattern
+ * Also works with arrays, lists or sets
+ */
+${#dates.format(date, &apos;dd/MMM/yyyy HH:mm&apos;)}
+${#dates.arrayFormat(datesArray, &apos;dd/MMM/yyyy HH:mm&apos;)}
+${#dates.listFormat(datesList, &apos;dd/MMM/yyyy HH:mm&apos;)}
+${#dates.setFormat(datesSet, &apos;dd/MMM/yyyy HH:mm&apos;)}
+
+/*
+ * Create a date (java.util.Date) object for the current date and time
+ */
+${#dates.createNow()}
+
+/*
+ * Create a date (java.util.Date) object for the current date (time set to 00:00)
+ */
+${#dates.createToday()}
+</code></pre><p>2.strings</p>
+<pre><code>/*
+ * Check whether a String is empty (or null). Performs a trim() operation before check
+ * Also works with arrays, lists or sets
+ */
+${#strings.isEmpty(name)}
+${#strings.arrayIsEmpty(nameArr)}
+${#strings.listIsEmpty(nameList)}
+${#strings.setIsEmpty(nameSet)}
+
+/*
+ * Check whether a String starts or ends with a fragment
+ * Also works with arrays, lists or sets
+ */
+${#strings.startsWith(name,&apos;Don&apos;)}                  // also array*, list* and set*
+${#strings.endsWith(name,endingFragment)}           // also array*, list* and set*
+
+/*
+ * Compute length
+ * Also works with arrays, lists or sets
+ */
+${#strings.length(str)}
+
+/*
+ * Null-safe comparison and concatenation
+ */
+${#strings.equals(str)}
+${#strings.equalsIgnoreCase(str)}
+${#strings.concat(str)}
+${#strings.concatReplaceNulls(str)}
+
+/*
+ * Random
+ */
+${#strings.randomAlphanumeric(count)}
+</code></pre><ul>
+<li>使用thymeleaf布局</li>
+</ul>
+<p>使用thymeleaf布局非常的方便</p>
+<p>定义代码片段</p>
+<pre><code>&lt;footer th:fragment=&quot;copy&quot;&gt; 
+&amp;copy; 2016
+&lt;/footer&gt;
+</code></pre><p>在页面任何地方引入：</p>
+<pre><code>&lt;body&gt; 
+  &lt;div th:include=&quot;footer :: copy&quot;&gt;&lt;/div&gt;
+  &lt;div th:replace=&quot;footer :: copy&quot;&gt;&lt;/div&gt;
+ &lt;/body&gt;‘
+</code></pre><p>th:include 和 th:replace区别，include只是加载，replace是替换</p>
+<p>返回的HTML如下：</p>
+<pre><code>&lt;body&gt; 
+   &lt;div&gt; &amp;copy; 2016 &lt;/div&gt; 
+  &lt;footer&gt;&amp;copy; 2016 &lt;/footer&gt; 
+&lt;/body&gt;
+</code></pre><p>下面是一个常用的后台页面布局，将整个页面分为头部，尾部、菜单栏、隐藏栏，点击菜单只改变content区域的页面</p>
+<pre><code>&lt;body class=&quot;layout-fixed&quot;&gt;
+  &lt;div th:fragment=&quot;navbar&quot;  class=&quot;wrapper&quot;  role=&quot;navigation&quot;&gt;
+    &lt;div th:replace=&quot;fragments/header :: header&quot;&gt;Header&lt;/div&gt;
+    &lt;div th:replace=&quot;fragments/left :: left&quot;&gt;left&lt;/div&gt;
+    &lt;div th:replace=&quot;fragments/sidebar :: sidebar&quot;&gt;sidebar&lt;/div&gt;
+    &lt;div layout:fragment=&quot;content&quot; id=&quot;content&quot; &gt;&lt;/div&gt;
+    &lt;div th:replace=&quot;fragments/footer :: footer&quot;&gt;footer&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+</code></pre><p>任何页面想使用这样的布局值只需要替换中见的 content模块即可</p>
+<pre><code>&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot; layout:decorator=&quot;layout&quot;&gt;
+  &lt;body&gt;
+     &lt;section layout:fragment=&quot;content&quot;&gt;
+   ...
+</code></pre><p>也可以在引用模版的时候传参</p>
+<pre><code>&lt;head th:include=&quot;layout :: htmlhead&quot; th:with=&quot;title=&apos;Hello&apos;&quot;&gt;&lt;/head&gt;
+</code></pre><p>layout 是文件地址，如果有文件夹可以这样写 fileName/layout:htmlhead<br>htmlhead 是指定义的代码片段 如 th:fragment=”copy”</p>
 
       
     </div>
@@ -877,7 +1041,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#静态资源访问"><span class="nav-number">1.</span> <span class="nav-text">静态资源访问</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#默认配置"><span class="nav-number">2.</span> <span class="nav-text">默认配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Thymeleaf"><span class="nav-number">3.</span> <span class="nav-text">Thymeleaf</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于Thymeleaf的默认参数配置"><span class="nav-number">4.</span> <span class="nav-text">关于Thymeleaf的默认参数配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于Thymeleaf语法"><span class="nav-number">5.</span> <span class="nav-text">关于Thymeleaf语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#命名空间"><span class="nav-number">5.1.</span> <span class="nav-text">命名空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出内容"><span class="nav-number">5.2.</span> <span class="nav-text">输出内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标准表达式语法"><span class="nav-number">5.3.</span> <span class="nav-text">标准表达式语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量表达式"><span class="nav-number">5.3.1.</span> <span class="nav-text">变量表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选择-星号-表达式"><span class="nav-number">5.3.2.</span> <span class="nav-text">选择(星号)表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文字国际化表达式"><span class="nav-number">5.3.3.</span> <span class="nav-text">文字国际化表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#URL表达式"><span class="nav-number">5.3.4.</span> <span class="nav-text">URL表达式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表达式支持的语法"><span class="nav-number">5.4.</span> <span class="nav-text">表达式支持的语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用th标签都有那些？"><span class="nav-number">5.5.</span> <span class="nav-text">常用th标签都有那些？</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Thymeleaf"><span class="nav-number">1.</span> <span class="nav-text">Thymeleaf</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态资源访问"><span class="nav-number">2.</span> <span class="nav-text">静态资源访问</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#默认配置"><span class="nav-number">3.</span> <span class="nav-text">默认配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于Thymeleaf的默认参数配置"><span class="nav-number">4.</span> <span class="nav-text">关于Thymeleaf的默认参数配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于Thymeleaf语法"><span class="nav-number">5.</span> <span class="nav-text">关于Thymeleaf语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#命名空间"><span class="nav-number">5.1.</span> <span class="nav-text">命名空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出内容"><span class="nav-number">5.2.</span> <span class="nav-text">输出内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标准表达式语法"><span class="nav-number">5.3.</span> <span class="nav-text">标准表达式语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量表达式"><span class="nav-number">5.3.1.</span> <span class="nav-text">变量表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选择-星号-表达式"><span class="nav-number">5.3.2.</span> <span class="nav-text">选择(星号)表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文字国际化表达式"><span class="nav-number">5.3.3.</span> <span class="nav-text">文字国际化表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#URL表达式"><span class="nav-number">5.3.4.</span> <span class="nav-text">URL表达式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表达式支持的语法"><span class="nav-number">5.4.</span> <span class="nav-text">表达式支持的语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用th标签都有那些？"><span class="nav-number">5.5.</span> <span class="nav-text">常用th标签都有那些？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#几种常用的使用方法"><span class="nav-number">5.6.</span> <span class="nav-text">几种常用的使用方法</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -925,7 +1089,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共103.3k字</span>
+  <span class="post-count">博客全站共104.6k字</span>
 </div>
 
         
