@@ -87,7 +87,7 @@
 
 
 
-  <meta name="keywords" content="java,大数据,spring,springboot," />
+  <meta name="keywords" content="大数据,java,spring,springboot," />
 
 
 
@@ -101,7 +101,7 @@
 
 
 <meta name="description" content="现如今的互联网开发，一款成熟的产品往往不只有Web作为前端，有可能要面对多个开发人员或多个开发团队：IOS开发、Android开发或是Web开发等等，现在的多终端时代，有可能我们需要开发所有市面的终端设备。 由于Spring Boot能够快速开发、便捷部署等特性，相信有很大一部分Spring Boot的用户会用来构建RESTful API。而我们构建RESTful API的目的通常都是由于多终端的">
-<meta name="keywords" content="java,大数据,spring,springboot">
+<meta name="keywords" content="大数据,java,spring,springboot">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring Boot之路(四)--Swagger2（RESTful API统一文档）">
 <meta property="og:url" content="http://yoursite.com/2018/03/24/springboot04/index.html">
@@ -109,7 +109,7 @@
 <meta property="og:description" content="现如今的互联网开发，一款成熟的产品往往不只有Web作为前端，有可能要面对多个开发人员或多个开发团队：IOS开发、Android开发或是Web开发等等，现在的多终端时代，有可能我们需要开发所有市面的终端设备。 由于Spring Boot能够快速开发、便捷部署等特性，相信有很大一部分Spring Boot的用户会用来构建RESTful API。而我们构建RESTful API的目的通常都是由于多终端的">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2018/03/24/springboot04/p1.png">
-<meta property="og:updated_time" content="2018-03-24T18:35:30.820Z">
+<meta property="og:updated_time" content="2018-03-25T16:26:02.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Boot之路(四)--Swagger2（RESTful API统一文档）">
 <meta name="twitter:description" content="现如今的互联网开发，一款成熟的产品往往不只有Web作为前端，有可能要面对多个开发人员或多个开发团队：IOS开发、Android开发或是Web开发等等，现在的多终端时代，有可能我们需要开发所有市面的终端设备。 由于Spring Boot能够快速开发、便捷部署等特性，相信有很大一部分Spring Boot的用户会用来构建RESTful API。而我们构建RESTful API的目的通常都是由于多终端的">
@@ -555,6 +555,32 @@ public class ApplicationTests {
     } 
 
 }
+</code></pre><p>测试Console内容：</p>
+<pre><code>2018-03-25 23:25:23.827  INFO 7832 --- [           main] com.didispace.ApplicationTests           : Starting ApplicationTests on DX-20170223SFUP with PID 7832 (F:\SpringBoot-Learning\Chapter3-1-1\target\test-classes started by Administrator in F:\SpringBoot-Learning\Chapter3-1-1)
+2018-03-25 23:25:23.829  INFO 7832 --- [           main] com.didispace.ApplicationTests           : No active profile set, falling back to default profiles: default
+2018-03-25 23:25:24.217  INFO 7832 --- [           main] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@6d2a209c: startup date [Sun Mar 25 23:25:24 CST 2018]; root of context hierarchy
+2018-03-25 23:25:25.640  INFO 7832 --- [           main] com.didispace.ApplicationTests           : Started ApplicationTests in 3.468 seconds (JVM running for 6.448)
+2018-03-25 23:25:26.400  INFO 7832 --- [           main] ilder$StaticRequestMappingHandlerMapping : Mapped &quot;{[/hello]}&quot; onto public java.lang.String com.didispace.web.HelloController.index()
+2018-03-25 23:25:26.431  INFO 7832 --- [           main] ilder$StaticRequestMappingHandlerMapping : Mapped &quot;{[/users/],methods=[GET]}&quot; onto public java.util.List&lt;com.didispace.domain.User&gt; com.didispace.web.UserController.getUserList()
+2018-03-25 23:25:26.432  INFO 7832 --- [           main] ilder$StaticRequestMappingHandlerMapping : Mapped &quot;{[/users/],methods=[POST]}&quot; onto public java.lang.String com.didispace.web.UserController.postUser(com.didispace.domain.User)
+2018-03-25 23:25:26.432  INFO 7832 --- [           main] ilder$StaticRequestMappingHandlerMapping : Mapped &quot;{[/users/{id}],methods=[GET]}&quot; onto public com.didispace.domain.User com.didispace.web.UserController.getUser(java.lang.Long)
+2018-03-25 23:25:26.432  INFO 7832 --- [           main] ilder$StaticRequestMappingHandlerMapping : Mapped &quot;{[/users/{id}],methods=[PUT]}&quot; onto public java.lang.String com.didispace.web.UserController.putUser(java.lang.Long,com.didispace.domain.User)
+2018-03-25 23:25:26.433  INFO 7832 --- [           main] ilder$StaticRequestMappingHandlerMapping : Mapped &quot;{[/users/{id}],methods=[DELETE]}&quot; onto public java.lang.String com.didispace.web.UserController.deleteUser(java.lang.Long)
+2018-03-25 23:25:27.204  INFO 7832 --- [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.test.web.servlet.setup.StubWebApplicationContext@44a7bfbc
+2018-03-25 23:25:27.498  INFO 7832 --- [           main] o.s.mock.web.MockServletContext          : Initializing Spring FrameworkServlet &apos;&apos;
+2018-03-25 23:25:27.499  INFO 7832 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : FrameworkServlet &apos;&apos;: initialization started
+2018-03-25 23:25:27.500  INFO 7832 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : FrameworkServlet &apos;&apos;: initialization completed in 1 ms
+2018-03-25 23:25:27.890  INFO 7832 --- [           main] ilder$StaticRequestMappingHandlerMapping : Mapped &quot;{[/hello]}&quot; onto public java.lang.String com.didispace.web.HelloController.index()
+2018-03-25 23:25:27.896  INFO 7832 --- [           main] ilder$StaticRequestMappingHandlerMapping : Mapped &quot;{[/users/],methods=[GET]}&quot; onto public java.util.List&lt;com.didispace.domain.User&gt; com.didispace.web.UserController.getUserList()
+2018-03-25 23:25:27.896  INFO 7832 --- [           main] ilder$StaticRequestMappingHandlerMapping : Mapped &quot;{[/users/],methods=[POST]}&quot; onto public java.lang.String com.didispace.web.UserController.postUser(com.didispace.domain.User)
+2018-03-25 23:25:27.897  INFO 7832 --- [           main] ilder$StaticRequestMappingHandlerMapping : Mapped &quot;{[/users/{id}],methods=[GET]}&quot; onto public com.didispace.domain.User com.didispace.web.UserController.getUser(java.lang.Long)
+2018-03-25 23:25:27.897  INFO 7832 --- [           main] ilder$StaticRequestMappingHandlerMapping : Mapped &quot;{[/users/{id}],methods=[PUT]}&quot; onto public java.lang.String com.didispace.web.UserController.putUser(java.lang.Long,com.didispace.domain.User)
+2018-03-25 23:25:27.897  INFO 7832 --- [           main] ilder$StaticRequestMappingHandlerMapping : Mapped &quot;{[/users/{id}],methods=[DELETE]}&quot; onto public java.lang.String com.didispace.web.UserController.deleteUser(java.lang.Long)
+2018-03-25 23:25:27.920  INFO 7832 --- [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.test.web.servlet.setup.StubWebApplicationContext@61fe30
+2018-03-25 23:25:27.927  INFO 7832 --- [           main] o.s.mock.web.MockServletContext          : Initializing Spring FrameworkServlet &apos;&apos;
+2018-03-25 23:25:27.927  INFO 7832 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : FrameworkServlet &apos;&apos;: initialization started
+2018-03-25 23:25:27.927  INFO 7832 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : FrameworkServlet &apos;&apos;: initialization completed in 0 ms
+2018-03-25 23:25:27.952  INFO 7832 --- [       Thread-1] o.s.w.c.s.GenericWebApplicationContext   : Closing org.springframework.web.context.support.GenericWebApplicationContext@6d2a209c: startup date [Sun Mar 25 23:25:24 CST 2018]; root of context hierarchy
 </code></pre><p>这个是用MockMVC来做数据分析，当然我们也可以直接用浏览器发送请求来实战测试，这就需要浏览器发送GET请求和POST请求<br>那么按照我们常规的方法是编写一个网站来发送POST请求（因为POST请求是不直接表达在URL上的）<br>所以这就需要借助浏览器的一些插件来实现发送POST请求</p>
 <p>我们开发的工具是Google的Chrome浏览器，我们通过应用市场下载POSTMAN插件就可以实现浏览器发送POST请求<br>做WEB端开发的人员必须要下载这个插件作为调试页面访问请求的数据显示。</p>
 <h2 id="Postman插件概述"><a href="#Postman插件概述" class="headerlink" title="Postman插件概述"></a>Postman插件概述</h2><p>Postman插件是什么？postman插件是一款chrome插件，是谷歌浏览器的网页调试插件，这款插件可以利用Chrome插件的形式把各种模拟用户HTTP请求的数据发送到服务器，以便开发人员能够及时地作出正确的响应，或者是对产品发布之前的错误信息提前处理，进而保证产品上线之后的稳定性和安全性。Postman是一种网页调试与发送网页http请求的chrome插件。我们可以用来很方便的模拟get或者post或者其他方式的请求来调试接口。</p>
@@ -610,9 +636,9 @@ public class ApplicationTests {
       
         <div class="post-tags">
           
-            <a href="/tags/java/" rel="tag"># java</a>
-          
             <a href="/tags/大数据/" rel="tag"># 大数据</a>
+          
+            <a href="/tags/java/" rel="tag"># java</a>
           
             <a href="/tags/spring/" rel="tag"># spring</a>
           
@@ -638,6 +664,10 @@ public class ApplicationTests {
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/26/从无到有搭建01/" rel="prev" title="创业之路--企业技术支持">
+                创业之路--企业技术支持 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -748,7 +778,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -770,7 +800,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -898,7 +928,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共106.7k字</span>
+  <span class="post-count">博客全站共111.3k字</span>
 </div>
 
         

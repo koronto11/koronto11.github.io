@@ -87,7 +87,7 @@
 
 
 
-  <meta name="keywords" content="java,大数据,java类库," />
+  <meta name="keywords" content="大数据,java类库,java," />
 
 
 
@@ -101,14 +101,14 @@
 
 
 <meta name="description" content="测试是开发的一个非常重要的方面，可以在很大程度上决定一个应用程序的命运。良好的测试可以在早期捕获导致应用程序崩溃的问题，但较差的测试往往总是导致故障和停机。 三种主要类型的软件测试：单元测试，功能测试和集成测试">
-<meta name="keywords" content="java,大数据,java类库">
+<meta name="keywords" content="大数据,java类库,java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JAVA开发常用类库--单元测试库">
 <meta property="og:url" content="http://yoursite.com/2018/03/13/java-api02/index.html">
 <meta property="og:site_name" content="刻写未来！">
 <meta property="og:description" content="测试是开发的一个非常重要的方面，可以在很大程度上决定一个应用程序的命运。良好的测试可以在早期捕获导致应用程序崩溃的问题，但较差的测试往往总是导致故障和停机。 三种主要类型的软件测试：单元测试，功能测试和集成测试">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-13T07:49:48.502Z">
+<meta property="og:updated_time" content="2018-03-25T15:24:03.506Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA开发常用类库--单元测试库">
 <meta name="twitter:description" content="测试是开发的一个非常重要的方面，可以在很大程度上决定一个应用程序的命运。良好的测试可以在早期捕获导致应用程序崩溃的问题，但较差的测试往往总是导致故障和停机。 三种主要类型的软件测试：单元测试，功能测试和集成测试">
@@ -547,6 +547,138 @@ public long calculateTime(){
 <p>官方手册： <a href="https://junit.org/junit4/cookbook.html" target="_blank" rel="noopener">https://junit.org/junit4/cookbook.html</a></p>
 <p>API手册： <a href="https://junit.org/junit4/javadoc/latest/" target="_blank" rel="noopener">https://junit.org/junit4/javadoc/latest/</a></p>
 <p>新手指南： <a href="https://github.com/junit-team/junit4/wiki/Getting-started" target="_blank" rel="noopener">https://github.com/junit-team/junit4/wiki/Getting-started</a></p>
+<h1 id="关于JAVA-springMVC开发中的常用测试模块"><a href="#关于JAVA-springMVC开发中的常用测试模块" class="headerlink" title="关于JAVA springMVC开发中的常用测试模块"></a>关于JAVA springMVC开发中的常用测试模块</h1><p>在java开发中，WEB端开发会用到框架来开发，在开发的过程中要不断的通过重启服务器来修改配置及页面访问控制，这给系统造成很大的负担，那么如何通过不启动服务器就可以完成页面访问测试呢？</p>
+<p>在常用的测试框架中Junit就提供了很好的功能API–MockMVC。</p>
+<p>基于RESTful风格的SpringMVC的测试，我们可以测试完整的Spring MVC流程，即从URL请求到控制器处理，再到视图渲染都可以测试。</p>
+<p>目前主流的Web MVC框架除了Struts之外就是SpringMVC，不过要想灵活运用SpringMVC来应对大多说的web开发除了必须掌握其配置和原理外还需要会测试。在Spring3.2版本之前测试一般都是直接new控制器注入依赖进行判断返回，但无法测试基础配置参数如拦截器、数据绑定、类型转换等等。（struts2只需要了解即可，现在市面上基本不用Struts2作为开发框架了，难以维护不过也不排除一些老项目的维护）</p>
+<p>springboot开发中只需要在测试模块写：</p>
+<p>@RunWith(SpringJUnit4ClassRunner.class)<br>//使用 Spring-Test 框架;在使用所有注释前必须使用@RunWith(SpringJUnit4ClassRunner.class),让测试运行于Spring测试环境。</p>
+<p>@WebAppConfiguration()<br>//由于是web项目，Junit需要模拟ServletContext，需要给测试类加上@WebAppConfiguration注解<br>//@WebAppConfiguration是一级注释，用于声明一个ApplicationContext集成测试加载WebApplicationContext。作用是模拟ServletContext</p>
+<p>这两个注解即可使用MockMVC来完成模拟测试。（如果不用Springboot框架只用springMVC的话，那就要麻烦些）<br>具体参考：<a href="https://baijiahao.baidu.com/s?id=1578508515485033349&amp;wfr=spider&amp;for=pc" target="_blank" rel="noopener">https://baijiahao.baidu.com/s?id=1578508515485033349&amp;wfr=spider&amp;for=pc</a><br>         <a href="http://www.cnblogs.com/lyy-2016/p/6122144.html" target="_blank" rel="noopener">http://www.cnblogs.com/lyy-2016/p/6122144.html</a></p>
+<p>如果不是springboot项目的话<br>需要加@ContextConfiguration这个注解，因为springboot的配置文件都在中央配置文件里，而springMVC的配置文件则是分散的，所以这就需要声明要测试的组件的配置文件在哪里。一下我归纳的都是springboot项目的MockMVC测试。</p>
+<p>那么我们该如何使用MockMVC去模拟页面访问控制呢？<br>我们以前的做法是通过前端页面（HTML或JSP的FORM属性指定请求方式和发送什么数据，更高级的话采用浏览器PostMan插件来模拟）<br>有了MockMVC以后我们就可以不用到前端页面和启动服务器的情况下来做测试了。</p>
+<h2 id="如何使用MockMVC"><a href="#如何使用MockMVC" class="headerlink" title="如何使用MockMVC"></a>如何使用MockMVC</h2><p>MockMvcBuilder是用来构造MockMvc的构造器，其主要有两个实现：StandaloneMockMvcBuilder和DefaultMockMvcBuilder，StandaloneMockMvcBuilder继承了DefaultMockMvcBuilder。</p>
+<p>分别对应两种测试方式，即独立安装和集成Web环境测试（此种方式并不会集成真正的web环境，而是通过相应的Mock API进行模拟测试，无须启动服务器）。对于我们来说直接使用静态工厂MockMvcBuilders创建即可。</p>
+<p>StandaloneMockMvcBuilder对应独立安装<br>DefaultMockMvcBuilder（默认的MockMVC工厂）对应WEB集成环境</p>
+<p>关于这两种方式的应用场景嘛，我觉得普通测试的话两者并没区别，以后再总结。。。</p>
+<h3 id="集成Web环境方式"><a href="#集成Web环境方式" class="headerlink" title="集成Web环境方式"></a>集成Web环境方式</h3><p>MockMvcBuilders.webAppContextSetup(new XXXController().build();：指定XXXController，将会从该上下文获取相应的控制器并得到相应的MockMvc；<br>通常我们是在Test案例中注入要测试的Controller来代入的</p>
+<p>比如：</p>
+<pre><code>@RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
+public class HelloControllerTest(){
+
+  //注入要测试的HelloController
+  @Autowired
+  private HelloController helloController;
+  @Autowired
+  private UserController userController;
+
+  private MockMvc mvc;//创建MockMvc以便于在每个测试方法中调用
+  @Before
+  public void setUp() throws Exception{
+    //用webAppContextSetup创建这个Controller的Mock（模拟）,创建一个MockMvc进行测试
+    //如果有多个Controller也可以多次调用webAppContextSetup方法进行多次创建
+    mvc=MockMvcBuilders.webAppContextSetup(helloController,userController).build();
+  }
+
+  //测试案例
+  @Test
+    。。。
+}
+</code></pre><h3 id="独立测试方式"><a href="#独立测试方式" class="headerlink" title="独立测试方式"></a>独立测试方式</h3><p>MockMvcBuilders.standaloneSetup(Object… controllers)：通过参数指定一组控制器，这样就不需要从上下文获取了；</p>
+<p>通过MockMvcBuilders.standaloneSetup模拟一个Mvc测试环境，通过build得到一个MockMvc</p>
+<p>跟上面的集成方法代入参数一样，只是调用的方法不一致</p>
+<h2 id="MockMvc测试"><a href="#MockMvc测试" class="headerlink" title="MockMvc测试"></a>MockMvc测试</h2><p>看一个例子用于测试：</p>
+<pre><code>@Test  
+public void testView() throws Exception {  
+    //MockMvc对象来实现
+    mvc.perform(MockMvcRequestBuilders.get(&quot;/user/1&quot;))  
+            .andExpect(MockMvcResultMatchers.view().name(&quot;user/view&quot;))  
+            .andExpect(MockMvcResultMatchers.model().attributeExists(&quot;user&quot;))  
+            .andDo(MockMvcResultHandlers.print())  
+            .andReturn();  
+
+    Assert.assertNotNull(result.getModelAndView().getModel().get(&quot;user&quot;));  
+}   
+</code></pre><p>perform：执行一个RequestBuilder请求，会自动执行SpringMVC的流程并映射到相应的控制器执行处理；<br>andExpect：添加ResultMatcher验证规则，验证控制器执行完成后结果是否正确；<br>andDo：添加ResultHandler结果处理器，比如调试时打印结果到控制台；<br>andReturn：最后返回相应的MvcResult；然后进行自定义验证/进行下一步的异步处理；</p>
+<pre><code>@Test
+public void testUserController() throws Exception {
+//      测试UserController
+    mvc.perform(RequestBuilder.get(&quot;/users/&quot;))
+            .andExpect(status().isOk())
+            .andExpect(content().string(equalTo(&quot;[]&quot;)));
+}
+</code></pre><p>RequestBuilder/MockMvcRequestBuilders都可以来模拟请求</p>
+<p>从名字可以看出，RequestBuilder用来构建请求的，其提供了一个方法buildRequest(ServletContext servletContext)用于构建MockHttpServletRequest；其主要有两个子类MockHttpServletRequestBuilder和MockMultipartHttpServletRequestBuilder（如文件上传使用），即用来Mock客户端请求需要的所有数据。</p>
+<h3 id="MockMvcRequestBuilders主要API"><a href="#MockMvcRequestBuilders主要API" class="headerlink" title="MockMvcRequestBuilders主要API"></a>MockMvcRequestBuilders主要API</h3><p>MockHttpServletRequestBuilder get(String urlTemplate, Object… urlVariables)：根据uri模板和uri变量值得到一个GET请求方式的MockHttpServletRequestBuilder；如get(/user/{id}, 1L)； </p>
+<p>MockHttpServletRequestBuilder post(String urlTemplate, Object… urlVariables)：同get类似，但是是POST方法；</p>
+<p>MockHttpServletRequestBuilder put(String urlTemplate, Object… urlVariables)：同get类似，但是是PUT方法；</p>
+<p>MockHttpServletRequestBuilder delete(String urlTemplate, Object… urlVariables) ：同get类似，但是是DELETE方法；</p>
+<p>MockHttpServletRequestBuilder options(String urlTemplate, Object… urlVariables)：同get类似，但是是OPTIONS方法；</p>
+<p>MockHttpServletRequestBuilder request(HttpMethod httpMethod, String urlTemplate, Object… urlVariables)： 提供自己的Http请求方法及uri模板和uri变量，如上API都是委托给这个API； </p>
+<p>MockMultipartHttpServletRequestBuilder fileUpload(String urlTemplate, Object… urlVariables)：提供文件上传方式的请求，得到MockMultipartHttpServletRequestBuilder； </p>
+<p>RequestBuilder asyncDispatch(final MvcResult mvcResult)：创建一个从启动异步处理的请求的MvcResult进行异步分派的RequestBuilder；</p>
+<h3 id="MockHttpServletRequestBuilder和MockMultipartHttpServletRequestBuilder-API"><a href="#MockHttpServletRequestBuilder和MockMultipartHttpServletRequestBuilder-API" class="headerlink" title="MockHttpServletRequestBuilder和MockMultipartHttpServletRequestBuilder API"></a>MockHttpServletRequestBuilder和MockMultipartHttpServletRequestBuilder API</h3><p>(1)MockHttpServletRequestBuilder API</p>
+<p>MockHttpServletRequestBuilder header(String name, Object… values)/MockHttpServletRequestBuilder headers(HttpHeaders httpHeaders)：添加头信息；<br>MockHttpServletRequestBuilder contentType(MediaType mediaType)：指定请求的contentType头信息；<br>MockHttpServletRequestBuilder accept(MediaType… mediaTypes)/MockHttpServletRequestBuilder accept(String… mediaTypes)：指定请求的Accept头信息；<br>MockHttpServletRequestBuilder content(byte[] content)/MockHttpServletRequestBuilder content(String content)：指定请求Body体内容；<br>MockHttpServletRequestBuilder cookie(Cookie… cookies)：指定请求的Cookie；<br>MockHttpServletRequestBuilder locale(Locale locale)：指定请求的Locale；<br>MockHttpServletRequestBuilder characterEncoding(String encoding)：指定请求字符编码；<br>MockHttpServletRequestBuilder requestAttr(String name, Object value) ：设置请求属性数据；<br>MockHttpServletRequestBuilder sessionAttr(String name, Object value)/MockHttpServletRequestBuilder sessionAttrs(Map&lt;string, object=””&gt; sessionAttributes)：设置请求session属性数据；<br>MockHttpServletRequestBuilder flashAttr(String name, Object value)/MockHttpServletRequestBuilder flashAttrs(Map&lt;string, object=””&gt; flashAttributes)：指定请求的flash信息，比如重定向后的属性信息；<br>MockHttpServletRequestBuilder session(MockHttpSession session) ：指定请求的Session；<br>MockHttpServletRequestBuilder principal(Principal principal) ：指定请求的Principal；<br>MockHttpServletRequestBuilder contextPath(String contextPath) ：指定请求的上下文路径，必须以“/”开头，且不能以“/”结尾；<br>MockHttpServletRequestBuilder pathInfo(String pathInfo) ：请求的路径信息，必须以“/”开头；<br>MockHttpServletRequestBuilder secure(boolean secure)：请求是否使用安全通道；<br>MockHttpServletRequestBuilder with(RequestPostProcessor postProcessor)：请求的后处理器，用于自定义一些请求处理的扩展点；</p>
+<p>(2)MockMultipartHttpServletRequestBuilder继承自MockHttpServletRequestBuilder，又提供了如下API</p>
+<p>MockMultipartHttpServletRequestBuilder file(String name, byte[] content)/MockMultipartHttpServletRequestBuilder file(MockMultipartFile file)：指定要上传的文件；</p>
+<h3 id="ResultActions"><a href="#ResultActions" class="headerlink" title="ResultActions"></a>ResultActions</h3><p>调用MockMvc.perform(RequestBuilder requestBuilder)后将得到ResultActions，通过ResultActions完成如下三件事：<br>ResultActions andExpect(ResultMatcher matcher) ：添加验证断言来判断执行请求后的结果是否是预期的；<br>ResultActions andDo(ResultHandler handler) ：添加结果处理器，用于对验证成功后执行的动作，如输出下请求/结果信息用于调试；<br>MvcResult andReturn() ：返回验证成功后的MvcResult；用于自定义验证/下一步的异步处理；</p>
+<h3 id="ResultMatcher-MockMvcResultMatchers"><a href="#ResultMatcher-MockMvcResultMatchers" class="headerlink" title="ResultMatcher/MockMvcResultMatchers"></a>ResultMatcher/MockMvcResultMatchers</h3><p>1.ResultMatcher用来匹配执行完请求后的结果验证，其就一个match(MvcResult result)断言方法，如果匹配失败将抛出相应的异常；spring mvc测试框架提供了很多<strong><em>ResultMatchers来满足测试需求。注意这些</em></strong>ResultMatchers并不是ResultMatcher的子类，而是返回ResultMatcher实例的。Spring mvc测试框架为了测试方便提供了MockMvcResultMatchers静态工厂方法方便操作；</p>
+<p>2.具体的API如下：<br>HandlerResultMatchers handler()：请求的Handler验证器，比如验证处理器类型/方法名；此处的Handler其实就是处理请求的控制器；<br>RequestResultMatchers request()：得到RequestResultMatchers验证器；<br>ModelResultMatchers model()：得到模型验证器；<br>ViewResultMatchers view()：得到视图验证器；<br>FlashAttributeResultMatchers flash()：得到Flash属性验证；<br>StatusResultMatchers status()：得到响应状态验证器；<br>HeaderResultMatchers header()：得到响应Header验证器；<br>CookieResultMatchers cookie()：得到响应Cookie验证器；<br>ContentResultMatchers content()：得到响应内容验证器；<br>JsonPathResultMatchers jsonPath(String expression, Object … args)/ResultMatcher jsonPath(String expression, Matcher matcher)：得到Json表达式验证器；<br>XpathResultMatchers xpath(String expression, Object… args)/XpathResultMatchers xpath(String expression, Map&lt;string, string=””&gt; namespaces, Object… args)：得到Xpath表达式验证器；<br>ResultMatcher forwardedUrl(final String expectedUrl)：验证处理完请求后转发的url（绝对匹配）；<br>ResultMatcher forwardedUrlPattern(final String urlPattern)：验证处理完请求后转发的url（Ant风格模式匹配，@since spring4）；<br>ResultMatcher redirectedUrl(final String expectedUrl)：验证处理完请求后重定向的url（绝对匹配）；<br>ResultMatcher redirectedUrlPattern(final String expectedUrl)：验证处理完请求后重定向的url（Ant风格模式匹配，@since spring4）；</p>
+<h2 id="一些常用测试"><a href="#一些常用测试" class="headerlink" title="一些常用测试"></a>一些常用测试</h2><h3 id="测试普通控制器"><a href="#测试普通控制器" class="headerlink" title="测试普通控制器"></a>测试普通控制器</h3><pre><code>mockMvc.perform(get(&quot;/user/{id}&quot;, 1)) //执行请求  
+    .andExpect(model().attributeExists(&quot;user&quot;)) //验证存储模型数据  
+    .andExpect(view().name(&quot;user/view&quot;)) //验证viewName  
+    .andExpect(forwardedUrl(&quot;/WEB-INF/jsp/user/view.jsp&quot;))//验证视图渲染时forward到的jsp  
+    .andExpect(status().isOk())//验证状态码  
+    .andDo(print()); //输出MvcResult到控制台
+</code></pre><h3 id="得到MvcResult自定义验证"><a href="#得到MvcResult自定义验证" class="headerlink" title="得到MvcResult自定义验证"></a>得到MvcResult自定义验证</h3><pre><code>MvcResult result = mockMvc.perform(get(&quot;/user/{id}&quot;, 1))//执行请求  
+        .andReturn(); //返回MvcResult  
+Assert.assertNotNull(result.getModelAndView().getModel().get(&quot;user&quot;)); //自定义断言   
+</code></pre><h3 id="验证请求参数绑定到模型数据及Flash属性"><a href="#验证请求参数绑定到模型数据及Flash属性" class="headerlink" title="验证请求参数绑定到模型数据及Flash属性"></a>验证请求参数绑定到模型数据及Flash属性</h3><pre><code>mockMvc.perform(post(&quot;/user&quot;).param(&quot;name&quot;, &quot;zhang&quot;)) //执行传递参数的POST请求(也可以post(&quot;/user?name=zhang&quot;))  
+    .andExpect(handler().handlerType(UserController.class)) //验证执行的控制器类型  
+    .andExpect(handler().methodName(&quot;create&quot;)) //验证执行的控制器方法名  
+    .andExpect(model().hasNoErrors()) //验证页面没有错误  
+    .andExpect(flash().attributeExists(&quot;success&quot;)) //验证存在flash属性  
+    .andExpect(view().name(&quot;redirect:/user&quot;)); //验证视图
+</code></pre><h3 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h3><pre><code>byte[] bytes = new byte[] {1, 2};  
+mockMvc.perform(fileUpload(&quot;/user/{id}/icon&quot;, 1L).file(&quot;icon&quot;, bytes)) //执行文件上传  
+    .andExpect(model().attribute(&quot;icon&quot;, bytes)) //验证属性相等性  
+    .andExpect(view().name(&quot;success&quot;)); //验证视图
+</code></pre><h3 id="JSON请求-响应验证"><a href="#JSON请求-响应验证" class="headerlink" title="JSON请求/响应验证"></a>JSON请求/响应验证</h3><pre><code>String requestBody = &quot;{\&quot;id\&quot;:1, \&quot;name\&quot;:\&quot;zhang\&quot;}&quot;;  
+mockMvc.perform(post(&quot;/user&quot;)  
+        .contentType(MediaType.APPLICATION_JSON).content(requestBody)  
+        .accept(MediaType.APPLICATION_JSON)) //执行请求  
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON)) //验证响应contentType  
+        .andExpect(jsonPath(&quot;$.id&quot;).value(1)); //使用Json path验证JSON 请参考http://goessner.net/articles/JsonPath/  
+
+String errorBody = &quot;{id:1, name:zhang}&quot;;  
+MvcResult result = mockMvc.perform(post(&quot;/user&quot;)  
+        .contentType(MediaType.APPLICATION_JSON).content(errorBody)  
+        .accept(MediaType.APPLICATION_JSON)) //执行请求  
+        .andExpect(status().isBadRequest()) //400错误请求  
+        .andReturn();  
+
+Assert.assertTrue(HttpMessageNotReadableException.class.isAssignableFrom(result.getResolvedException().getClass()));//错误的请求内容体
+</code></pre><h3 id="异步测试"><a href="#异步测试" class="headerlink" title="异步测试"></a>异步测试</h3><pre><code>//Callable  
+MvcResult result = mockMvc.perform(get(&quot;/user/async1?id=1&amp;name=zhang&quot;)) //执行请求  
+        .andExpect(request().asyncStarted())  
+        .andExpect(request().asyncResult(CoreMatchers.instanceOf(User.class))) //默认会等10秒超时  
+        .andReturn();  
+
+mockMvc.perform(asyncDispatch(result))  
+        .andExpect(status().isOk())  
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))  
+        .andExpect(jsonPath(&quot;$.id&quot;).value(1));  
+</code></pre><h3 id="全局配置"><a href="#全局配置" class="headerlink" title="全局配置"></a>全局配置</h3><pre><code>mockMvc = webAppContextSetup(wac)  
+        .defaultRequest(get(&quot;/user/1&quot;).requestAttr(&quot;default&quot;, true)) //默认请求 如果其是Mergeable类型的，会自动合并的哦mockMvc.perform中的RequestBuilder  
+        .alwaysDo(print())  //默认每次执行请求后都做的动作  
+        .alwaysExpect(request().attribute(&quot;default&quot;, true)) //默认每次执行后进行验证的断言  
+        .build();  
+
+mockMvc.perform(get(&quot;/user/1&quot;))  
+        .andExpect(model().attributeExists(&quot;user&quot;));
+</code></pre><p>整个测试过程非常有规律：<br>1、准备测试环境<br>2、通过MockMvc执行请求<br>3.1、添加验证断言<br>3.2、添加结果处理器<br>3.3、得到MvcResult进行自定义断言/进行下一步的异步请求<br>4、卸载测试环境</p>
+<p>参考实例：<a href="https://www.cnblogs.com/MaxElephant/p/8135322.html" target="_blank" rel="noopener">https://www.cnblogs.com/MaxElephant/p/8135322.html</a></p>
 
       
     </div>
@@ -593,11 +725,11 @@ public long calculateTime(){
       
         <div class="post-tags">
           
-            <a href="/tags/java/" rel="tag"># java</a>
-          
             <a href="/tags/大数据/" rel="tag"># 大数据</a>
           
             <a href="/tags/java类库/" rel="tag"># java类库</a>
+          
+            <a href="/tags/java/" rel="tag"># java</a>
           
         </div>
       
@@ -733,7 +865,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -755,7 +887,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -835,7 +967,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#软件开发测试的类型"><span class="nav-number">1.</span> <span class="nav-text">软件开发测试的类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用框架来用于单元测试"><span class="nav-number">2.</span> <span class="nav-text">使用框架来用于单元测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#谨慎使用测试驱动开发！"><span class="nav-number">3.</span> <span class="nav-text">谨慎使用测试驱动开发！</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测量代码覆盖率"><span class="nav-number">4.</span> <span class="nav-text">测量代码覆盖率</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#尽可能将测试数据外部化"><span class="nav-number">5.</span> <span class="nav-text">尽可能将测试数据外部化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用断言而不是Print语句"><span class="nav-number">6.</span> <span class="nav-text">使用断言而不是Print语句</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#构建具有确定性结果的测试"><span class="nav-number">7.</span> <span class="nav-text">构建具有确定性结果的测试</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#软件开发测试的类型"><span class="nav-number">1.</span> <span class="nav-text">软件开发测试的类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用框架来用于单元测试"><span class="nav-number">2.</span> <span class="nav-text">使用框架来用于单元测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#谨慎使用测试驱动开发！"><span class="nav-number">3.</span> <span class="nav-text">谨慎使用测试驱动开发！</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测量代码覆盖率"><span class="nav-number">4.</span> <span class="nav-text">测量代码覆盖率</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#尽可能将测试数据外部化"><span class="nav-number">5.</span> <span class="nav-text">尽可能将测试数据外部化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用断言而不是Print语句"><span class="nav-number">6.</span> <span class="nav-text">使用断言而不是Print语句</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#构建具有确定性结果的测试"><span class="nav-number">7.</span> <span class="nav-text">构建具有确定性结果的测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于JAVA-springMVC开发中的常用测试模块"><span class="nav-number">8.</span> <span class="nav-text">关于JAVA springMVC开发中的常用测试模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何使用MockMVC"><span class="nav-number">8.1.</span> <span class="nav-text">如何使用MockMVC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#集成Web环境方式"><span class="nav-number">8.1.1.</span> <span class="nav-text">集成Web环境方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#独立测试方式"><span class="nav-number">8.1.2.</span> <span class="nav-text">独立测试方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MockMvc测试"><span class="nav-number">8.2.</span> <span class="nav-text">MockMvc测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MockMvcRequestBuilders主要API"><span class="nav-number">8.2.1.</span> <span class="nav-text">MockMvcRequestBuilders主要API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MockHttpServletRequestBuilder和MockMultipartHttpServletRequestBuilder-API"><span class="nav-number">8.2.2.</span> <span class="nav-text">MockHttpServletRequestBuilder和MockMultipartHttpServletRequestBuilder API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ResultActions"><span class="nav-number">8.2.3.</span> <span class="nav-text">ResultActions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ResultMatcher-MockMvcResultMatchers"><span class="nav-number">8.2.4.</span> <span class="nav-text">ResultMatcher/MockMvcResultMatchers</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些常用测试"><span class="nav-number">8.3.</span> <span class="nav-text">一些常用测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#测试普通控制器"><span class="nav-number">8.3.1.</span> <span class="nav-text">测试普通控制器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#得到MvcResult自定义验证"><span class="nav-number">8.3.2.</span> <span class="nav-text">得到MvcResult自定义验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证请求参数绑定到模型数据及Flash属性"><span class="nav-number">8.3.3.</span> <span class="nav-text">验证请求参数绑定到模型数据及Flash属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件上传"><span class="nav-number">8.3.4.</span> <span class="nav-text">文件上传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON请求-响应验证"><span class="nav-number">8.3.5.</span> <span class="nav-text">JSON请求/响应验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异步测试"><span class="nav-number">8.3.6.</span> <span class="nav-text">异步测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全局配置"><span class="nav-number">8.3.7.</span> <span class="nav-text">全局配置</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -883,7 +1015,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共106.7k字</span>
+  <span class="post-count">博客全站共111.3k字</span>
 </div>
 
         
