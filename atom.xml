@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-26T12:48:23.629Z</updated>
+  <updated>2018-03-28T08:15:32.234Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JAVA I/O流详解</title>
+    <link href="http://yoursite.com/2018/03/28/java-io/"/>
+    <id>http://yoursite.com/2018/03/28/java-io/</id>
+    <published>2018-03-28T04:55:49.000Z</published>
+    <updated>2018-03-28T08:15:32.234Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="流的概念和作用"><a href="#流的概念和作用" class="headerlink" title="流的概念和作用"></a>流的概念和作用</h1><p>流是一组有顺序的，有起点和终点的字节集合，是对数据传输的总称或抽象。即数据在两设备间的传输称为流，流的本质是数据传输，根据数据传输特性将流抽象为各种类，方便更直观的进行数据操作。<br>集合框架相当于数据结构，那么IO框架就相当于数据传输。<br><a id="more"></a></p><h1 id="IO流的分类"><a href="#IO流的分类" class="headerlink" title="IO流的分类"></a>IO流的分类</h1><p>根据处理数据类型的不同分为：字符流和字节流<br>根据数据流向不同分为：输入流和输出流</p><p>对输入流只能进行读操作，对输出流只能进行写操作，程序中需要根据待传输数据的不同特性而使用不同的流。</p><p>java.io包中提供了大量的流类，其中所有的输入流都是InputStream抽象类或抽象类Reader的子类，而所有的输出流都是outputStream抽象类或Writer的抽象类，所有继承自InputStream与outputStream的流都是字节流，而所有继承自Reader与Writer的流都是字符流。</p><p>要知道所有的高级流都需要借助低级流来操作文件，字节流属于低级流，而字符流属于改进只针对于文字的高级流，但是字符流中也有方法可以直接操作文件不需要借助低级流，但是一般的高级流操作都需要以低级流作为基础。</p><p><img src="/2018/03/28/java-io/p1.png" alt="logo"> </p><p>其中IO流具体的类或接口有哪些；<br>File                  文件类<br>RandomAccessFile      随机存取文件类<br>InputStream           字节输入流<br>OutputStream          字节输出流<br>Reader                字符输入流<br>writer                字符输出流</p><p>首先先从文件的路径解释下：</p><p>文件和目录路径名的抽象表示形式。</p><p>用户界面和操作系统使用与系统相关的路径名字符串 来命名文件和目录。此类呈现分层路径名的一个抽象的、与系统无关的视图。抽象路径名 有两个组件：</p><p>一个可选的与系统有关的前缀 字符串，比如盘符，”/“ 表示 UNIX 中的根目录，”\\“ 表示 Microsoft Windows UNC 路径名。<br>零个或更多字符串名称 的序列。<br>抽象路径名中的第一个名称是目录名，对于 Microsoft Windows UNC 路径名则是主机名。抽象路径名中第一个名称之后的每个名称表示一个目录；最后一个名称既可以表示目录，也可以表示文件。空 抽象路径名没有前缀和名称序列。<br>路径名字符串与抽象路径名之间的转换与系统有关。将抽象路径名转换为路径名字符串时，每个名称与下一个名称之间用一个默认分隔符 隔开。默认名称分隔符由系统属性 file.separator 定义，可通过此类的公共静态字段 separator 和 separatorChar 使其可用。将路径名字符串转换为抽象路径名时，可以使用默认名称分隔符或者底层系统支持的任何其他名称分隔符来分隔其中的名称。</p><p>无论是抽象路径名还是路径名字符串，都可以是绝对 路径名或相对 路径名。绝对路径名是完整的路径名，不需要任何其他信息就可以定位它所表示的文件。相反，相对路径名必须使用取自其他路径名的信息进行解释。默认情况下，java.io 包中的类总是根据当前用户目录来解析相对路径名。此目录由系统属性 user.dir 指定，通常是 Java 虚拟机的调用目录。</p><p>调用此类的 getParent() 方法可以获取抽象路径名的父 路径名，它由路径名前缀以及路径名名称序列中的每个名称（最后一个除外）组成。对于任何具有绝对抽象路径名的 File 对象，如果其绝对抽象路径名以某个目录的绝对路径名开头，那么该目录的绝对路径名是该 File 对象的祖先。例如，抽象路径名 “/usr” 表示的目录是路径名 “/usr/local/bin” 所表示目录的一个祖先。</p><p>在处理 UNIX 平台的根目录，以及 Microsoft Windows 平台的盘符、根目录和 UNC 路径名时，将用到前缀这一概念。如下所示：</p><p>对于 UNIX 平台，绝对路径名的前缀始终是 “/“。相对路径名没有前缀。表示根目录的绝对路径名的前缀为 “/“ 且名称序列为空。<br>对于 Microsoft Windows 平台，包含盘符的路径名前缀由驱动器号和一个 “:” 组成。如果路径名是绝对路径名，还可能后跟 “\“。UNC 路径名的前缀是 “\\“；主机名和共享名是名称序列中的前两个名称。没有指定驱动器的相对路径名没有前缀。<br>此类的实例可能表示（也可能不表示）实际文件系统对象，如文件或目录。如果它表示这种对象，那么该对象驻留在一个分区 中。分区是文件系统特定于操作系统的存储分区。一个存储设备（例如，物理磁盘驱动器、闪存、CD-ROM）可以包含多个分区。对象（如果有）将驻留在此路径名（绝对形式）某个祖先指定的分区上。</p><p>文件系统可以实现对实际文件系统对象上的某些操作（比如，读、写、执行）进行限制。这些限制统称为访问权限。文件系统可以对一个对象设置多个访问权限。例如，一个设置可能适用于对象的所有者，另一个设置则可能适用于所有其他用户。对象上的访问权限可能导致此类的某些方法执行失败。</p><h2 id="File"><a href="#File" class="headerlink" title="File"></a>File</h2><p>最基础的文件流，java 处理文件的类 File,java提供了十分详细的文件处理方法<br>主要是创建文件，（不存在则新建，存在则替代），主要是封装了所有文件的属性和元数据。</p><p>File类是对文件系统中文件以及文件夹进行封装的对象，可以通过对象的思想来操作文件和文件夹。 File类保存文件或目录的各种元数据信息，包括文件名、文件长度、最后修改时间、是否可读、获取当前文件的路径名，判断指定文件是否存在、获得当前目录中的文件列表，创建、删除文件和目录等方法。</p><p>File 类的实例是不可变的；也就是说，一旦创建，File 对象表示的抽象路径名将永不改变。 </p><p>这个类中的方法有常用几个：</p><p>boolean    mkdir()<br>创建此抽象路径名指定的目录。<br>boolean    mkdirs()<br>创建此抽象路径名指定的目录，包括所有必需但不存在的父目录。<br>boolean    renameTo(File dest)<br>重新命名此抽象路径名表示的文件。<br>long    length()<br>返回由此抽象路径名表示的文件的长度。<br>boolean    isDirectory()<br>测试此抽象路径名表示的文件是否是一个目录。<br>boolean    isFile()<br>测试此抽象路径名表示的文件是否是一个标准文件。<br>boolean    isHidden()<br>测试此抽象路径名指定的文件是否是一个隐藏文件。<br>long    lastModified()<br>返回此抽象路径名表示的文件最后一次被修改的时间。<br>String    getName()<br>返回由此抽象路径名表示的文件或目录的名称。<br>String    getParent()<br>返回此抽象路径名父目录的路径名字符串；如果此路径名没有指定父目录，则返回 null。<br>File    getParentFile()<br>返回此抽象路径名父目录的抽象路径名；如果此路径名没有指定父目录，则返回 null。<br>boolean    delete()<br>删除此抽象路径名表示的文件或目录。<br>boolean    exists()<br>测试此抽象路径名表示的文件或目录是否存在。<br>boolean    createNewFile()<br>当且仅当不存在具有此抽象路径名指定名称的文件时，不可分地创建一个新的空文件。</p><pre><code>public class FileExample{      public static void main(String[] args) {          createFile();      }    /**    * 文件处理示例    */    public static void createFile() {       File f=new File(&quot;E:/电脑桌面/jar/files/create.txt&quot;);          try{              f.createNewFile();  //当且仅当不存在具有此抽象路径名指定名称的文件时，不可分地创建一个新的空文件。              System.out.println(&quot;该分区大小&quot;+f.getTotalSpace()/(1024*1024*1024)+&quot;G&quot;); //返回由此抽象路径名表示的文件或目录的名称。              f.mkdirs();  //创建此抽象路径名指定的目录，包括所有必需但不存在的父目录。  //            f.delete(); //  删除此抽象路径名表示的文件或目录             System.out.println(&quot;文件名  &quot;+f.getName());  //  返回由此抽象路径名表示的文件或目录的名称。             System.out.println(&quot;文件父目录字符串 &quot;+f.getParent());// 返回此抽象路径名父目录的路径名字符串；如果此路径名没有指定父目录，则返回 null。          }catch (Exception e) {              e.printStackTrace();          }    }  }  </code></pre><h2 id="RamdomAccessFile"><a href="#RamdomAccessFile" class="headerlink" title="RamdomAccessFile"></a>RamdomAccessFile</h2><p>该对象并不是流体系中的一员，其封装了字节流，同时还封装了一个缓冲区（字符数组），通过内部的指针来操作字符数组中的数据。 该对象特点：</p><p>该对象只能操作文件，所以构造函数接收两种类型的参数：a.字符串文件路径；b.File对象。<br>该对象既可以对文件进行读操作，也能进行写操作，在进行对象实例化时可指定操作模式(r,rw)，r是只读不能写，rw是读写模式。<br>注意：该对象在实例化时，如果要操作的文件不存在，会自动创建；如果文件存在，写数据未指定位置，会从头开始写，即覆盖原有的内容。 可以用于多线程下载或多个线程同时写数据到文件。</p><p>此类的实例支持对随机访问文件的读取和写入。随机访问文件的行为类似存储在文件系统中的一个大型 byte 数组。存在指向该隐含数组的光标或索引，称为文件指针；输入操作从文件指针开始读取字节，并随着对字节的读取而前移此文件指针。如果随机访问文件以读取/写入模式创建，则输出操作也可用；输出操作从文件指针开始写入字节，并随着对字节的写入而前移此文件指针。写入隐含数组的当前末尾之后的输出操作导致该数组扩展。该文件指针可以通过 getFilePointer 方法读取，并通过 seek 方法设置。</p><p>通常，如果此类中的所有读取例程在读取所需数量的字节之前已到达文件末尾，则抛出 EOFException（是一种 IOException）。如果由于某些原因无法读取任何字节，而不是在读取所需数量的字节之前已到达文件末尾，则抛出 IOException，而不是 EOFException。需要特别指出的是，如果流已被关闭，则可能抛出 IOException。</p><p>常用方法：</p><p>void    close()<br>关闭此随机访问文件流并释放与该流关联的所有系统资源。<br>long    getFilePointer()<br>返回此文件中的当前偏移量。<br>long    length()<br>返回此文件的长度。<br>int    read()<br>从此文件中读取一个数据字节。<br>int    read(byte[] b)<br>将最多 b.length 个数据字节从此文件读入 byte 数组。<br>int    read(byte[] b, int off, int len)<br>将最多 len 个数据字节从此文件读入 byte 数组。<br>void    seek(long pos)<br>设置到此文件开头测量到的文件指针偏移量，在该位置发生下一个读取或写入操作。<br>void    setLength(long newLength)<br>设置此文件的长度。<br>void    write(int b)<br>向此文件写入指定的字节。</p><h2 id="InputStream"><a href="#InputStream" class="headerlink" title="InputStream"></a>InputStream</h2><p>InputStream 是所有的输入字节流的父类，它是一个抽象类。<br>ByteArrayInputStream、StringBufferInputStream、FileInputStream 是三种基本的介质流，它们分别从Byte 数组、StringBuffer、和本地文件中读取数据。PipedInputStream 是从与其它线程共用的管道中读取数据，与Piped 相关的知识后续单独介绍。<br>ObjectInputStream 和所有FilterInputStream 的子类都是装饰流（装饰器模式的主角）。</p><p>常用方法：<br>void    close()<br>关闭此输入流并释放与该流关联的所有系统资源。<br>void    mark(int readlimit)<br>在此输入流中标记当前的位置。<br>boolean    markSupported()<br>测试此输入流是否支持 mark 和 reset 方法。<br>abstract  int    read()<br>从输入流中读取数据的下一个字节。<br>int    read(byte[] b)<br>从输入流中读取一定数量的字节，并将其存储在缓冲区数组 b 中。<br>int    read(byte[] b, int off, int len)<br>将输入流中最多 len 个数据字节读入 byte 数组。<br>void    reset()<br>将此流重新定位到最后一次对此输入流调用 mark 方法时的位置。<br>long    skip(long n)<br>跳过和丢弃此输入流中数据的 n 个字节。</p><p>有哪些常用的子类：FileInputStream，ObjectInputStream等</p><p>分别实例其用法，方便快速回顾：</p><p>1.FileInputStream（文件字节输入流）</p><pre><code>package io;  import java.io.File;  import java.io.FileInputStream;  import java.io.IOException;  import java.io.InputStream;  public class ByteInput {      public static void main(String[] args) throws IOException {          //1、定义要使用的文件          File file = new File(&quot;F:&quot; + File.separator + &quot;byteInput.txt&quot;);          file.createNewFile();   //文件存在的时候不会执行，不存在的时候会执行          //2、定义字节输入流指定为文件输入流          InputStream input = new FileInputStream(file);          byte[] b = new byte[(int) file.length()]; // file.length()获取文件的长度返回long类型          int len = input.read(b);          input.close();          //3、验证输入结果          System.out.println(&quot;文件的内容长度为 : &quot; + len);          System.out.println(&quot;文件的内容为: &quot; + new String(b));      }  } </code></pre><p>2.ObjectInputStream（对象输入流）本例需要对象实现序列化接口，实现对文件内容的逐个对象处理<br>先定义一个实现Serializable接口的pojo实体类</p><pre><code>package io;    import java.io.Serializable;    public class StudentInfo implements Serializable{      private String stuno;      private String name;      private Integer age;      public StudentInfo() {      }      public StudentInfo(String stuno, String name, Integer age) {          super();          this.stuno = stuno;          this.name = name;          this.age = age;      }    //省略所有get/set方法 } package io;  import java.io.File;  import java.io.FileInputStream;  import java.io.IOException;  import java.io.ObjectInputStream;  public class ObjectInput {      public static void main(String[] args) throws IOException, ClassNotFoundException {          File file=new File(&quot;F:&quot;+File.separator+&quot;object.txt&quot;);          file.createNewFile();          ObjectInputStream in=new ObjectInputStream(new FileInputStream(file));          StudentInfo stu=(StudentInfo)in.readObject();          in.close();          System.out.println(stu);      }  }  </code></pre><h2 id="OutputStream"><a href="#OutputStream" class="headerlink" title="OutputStream"></a>OutputStream</h2><p>OutputStream 是所有的输出字节流的父类，它是一个抽象类。<br>ByteArrayOutputStream、FileOutputStream 是两种基本的介质流，它们分别向Byte 数组、和本地文件中写入数据。PipedOutputStream 是向与其它线程共用的管道中写入数据，<br>ObjectOutputStream 和所有FilterOutputStream 的子类都是装饰流。</p><p>常用方法：<br>void    close()<br>关闭此输出流并释放与此流有关的所有系统资源。<br>void    flush()<br>刷新此输出流并强制写出所有缓冲的输出字节。<br>void    write(byte[] b)<br>将 b.length 个字节从指定的 byte 数组写入此输出流。<br>void    write(byte[] b, int off, int len)<br>将指定 byte 数组中从偏移量 off 开始的 len 个字节写入此输出流。<br>abstract  void    write(int b)<br>将指定的字节写入此输出流。</p><p>有哪些常用的子类呢：FileOutputStream，ObjectOutputStream等</p><p>分别实例其用法，方便快速回顾：</p><p>1.FileOutputStream（文件字节输出流）实现对文件内容的逐字节处理</p><pre><code>package io;  import java.io.File;  import java.io.FileOutputStream;  import java.io.IOException;  import java.io.OutputStream;  public class ByteOutput {      public static void main(String[] args) throws IOException{          //1、获取要操作的文件          File file=new File(&quot;F:&quot;+File.separator+&quot;byteOutput.txt&quot;);          file.createNewFile();          //2、写入指定的内容          String str=&quot;I Like Java!&quot;;          OutputStream output=new FileOutputStream(file);          output.write(str.getBytes(), 0, str.length()); //写入字符串          output.close();      }  }  </code></pre><p>2.ObjectOutputStream（对象输出流）本例需要对象实现序列化接口，实现对文件内容的逐个对象处理<br>pojo对象同5例中的StudentInfo对象，测试类如下（用到ObjectInputStream的那个对象）</p><pre><code>package io;  import java.io.File;  import java.io.FileOutputStream;  import java.io.IOException;  import java.io.ObjectOutputStream;  public class ObjectOutput {      public static void main(String[] args) throws IOException {          File file=new File(&quot;F:&quot;+File.separator+&quot;object.txt&quot;);          file.createNewFile();          StudentInfo student=new StudentInfo(&quot;10001&quot;,&quot;zhangsan&quot;,20);          ObjectOutputStream output=new ObjectOutputStream(new FileOutputStream(file));          output.writeObject(student);          output.close();      }  } </code></pre><h2 id="Reader"><a href="#Reader" class="headerlink" title="Reader"></a>Reader</h2><p>Reader 是所有的输入字符流的父类，它是一个抽象类。<br>CharReader、StringReader 是两种基本的介质流，它们分别将Char 数组、String中读取数据。PipedReader 是从与其它线程共用的管道中读取数据。<br>BufferedReader 很明显就是一个装饰器，它和其子类负责装饰其它Reader 对象。<br>FilterReader 是所有自定义具体装饰流的父类，其子类PushbackReader 对Reader 对象进行装饰，会增加一个行号。<br>InputStreamReader 是一个连接字节流和字符流的桥梁，它将字节流转变为字符流。FileReader 可以说是一个达到此功能、常用的工具类，在其源代码中明显使用了将FileInputStream 转变为Reader 的方法。我们可以从这个类中得到一定的技巧。Reader 中各个类的用途和使用方法基本和InputStream 中的类使用一致。后面会有Reader 与InputStream 的对应关系。</p><p>常用子类：FileReader，BufferedReader等</p><p>分别实例其用法，方便快速回顾：</p><p>1.FileReader（文件字符输入流）实现对文件内容的逐字符处理</p><pre><code>package io;  import java.io.File;  import java.io.FileReader;  import java.io.IOException;  import java.io.Reader;  public class CharInput {      public static void main(String[] args) throws IOException {          //1、指定要操作的文件          File file=new File(&quot;F:&quot;+File.separator+&quot;charInput.txt&quot;);          file.createNewFile();          //2、指定字节输入流          Reader reader=new FileReader(file);          char[] c=new char[(int)file.length()];          int len=reader.read(c);          reader.close();          //3、验证          System.out.println(&quot;字符流读取文件的长度为: &quot;+len);          System.out.println(&quot;字符流读取文件的内容: &quot;+new String(c));      }  } </code></pre><p>2.BufferedReader（缓存文件输入流）实现对文件内容的逐行处理</p><pre><code>package io;  import java.io.BufferedReader;  import java.io.File;  import java.io.FileReader;  import java.io.IOException;  public class BufferReaderDemo {      public static void main(String[] args) throws IOException {          //指定文件          File file = new File(&quot;F:&quot; + File.separator + &quot;buffered.txt&quot;);          file.createNewFile();          //定义需要验证的变量          int i = 1;          String str;          StringBuffer buffer = new StringBuffer();          //定义逐行读入的流          BufferedReader br = new BufferedReader(new FileReader(file));          while ((str = br.readLine()) != null) {    //逐行读取并验证              System.out.println(&quot;读取的行数: &quot; + (i));              buffer.append(str);              System.out.println(&quot;第&quot; + (i++) + &quot;行的内容为: &quot; + str);          }          br.close();          //打印最终结果          System.out.println(&quot;\n文件中的全部内容为: &quot;+buffer.toString());      }  }  </code></pre><h2 id="Writer"><a href="#Writer" class="headerlink" title="Writer"></a>Writer</h2><p>Writer 是所有的输出字符流的父类，它是一个抽象类。<br>CharArrayWriter、StringWriter 是两种基本的介质流，它们分别向Char 数组、String 中写入数据。PipedWriter 是向与其它线程共用的管道中写入数据，<br>BufferedWriter 是一个装饰器为Writer 提供缓冲功能。<br>PrintWriter 和PrintStream 极其类似，功能和使用也非常相似。<br>OutputStreamWriter 是OutputStream 到Writer 转换的桥梁，它的子类FileWriter 其实就是一个实现此功能的具体类（具体可以研究一SourceCode）。功能和使用和OutputStream 极其类似，后面会有它们的对应图。</p><p>常用子类：FileWriter，BufferedWriter等</p><p>分别实例其用法，方便快速回顾：</p><p>1.FileWriter（文件字符输出流）实现对文件内容的逐字符处理</p><pre><code>package io;  import java.io.File;  import java.io.FileWriter;  import java.io.IOException;  import java.io.Writer;  public class CharOutput {      public static void main(String[] args) throws IOException {          File file = new File(&quot;F:&quot; + File.separator + &quot;charOutput.txt&quot;);          file.createNewFile();          Writer writer = new FileWriter(file);          writer.write(&quot;I Love Basketball！&quot;, 0, 18);          writer.close();      }  } </code></pre><p>2.BufferedWriter（缓存文件输出流）实现对文件内容的逐行处理</p><pre><code>package io;  import java.io.BufferedWriter;  import java.io.File;  import java.io.FileWriter;  import java.io.IOException;  import java.io.Writer;  public class BufferedWriterDemo {      public static void main(String[] args) throws IOException{          //指定文件          File file=new File(&quot;F:&quot;+File.separator+&quot;buffered.txt&quot;);          file.createNewFile();          //指定          Writer bw=new BufferedWriter(new FileWriter(file,true));          bw.write(&quot;\r\n&quot;);          bw.write(&quot;XiaoHuangRen like banana!&quot;);          bw.write(&quot;\r\n&quot;);          bw.write(&quot;XiaoHuangRen like bana!&quot;);          bw.close();      }  }</code></pre><p>资料参考：<a href="https://blog.csdn.net/qq_34207422/article/details/76149026" target="_blank" rel="noopener">https://blog.csdn.net/qq_34207422/article/details/76149026</a>  </p><h2 id="那么如何使用这4种类型呢？"><a href="#那么如何使用这4种类型呢？" class="headerlink" title="那么如何使用这4种类型呢？"></a>那么如何使用这4种类型呢？</h2><p>关于字节流和字符流到底用哪个来处理实际的业务需求呢</p><p>字符流的由来： 因为数据编码的不同，而有了对字符进行高效操作的流对象。本质其实就是基于字节流读取时，去查了指定的码表。 字节流和字符流的区别：</p><p>读写单位不同：字节流以字节（8bit）为单位，字符流以字符为单位，根据码表映射字符，一次可能读多个字节。<br>处理对象不同：字节流能处理所有类型的数据（如图片、avi等），而字符流只能处理字符类型的数据。</p><p>结论：只要是处理纯文本数据，就优先考虑使用字符流。 除此之外都使用字节流。字节流可以处理全部数据类型的传输，但是字符流就只适合读写纯文字的数据。</p><h2 id="关于缓冲流（常用）"><a href="#关于缓冲流（常用）" class="headerlink" title="关于缓冲流（常用）"></a>关于缓冲流（常用）</h2><p>java.io提供了四种数据传输的缓冲技术</p><p>BufferedInputStream<br>BufferedOutputStream<br>BufferedReader<br>BufferedWriter </p><p>其常用的构造方法：</p><p>BufferedReader（Reader in）<br>BufferedReader（Reader in,int sz）//sz为自定义缓冲区大小<br>BufferedWriter （Writer out）<br>BufferedWriter （ Writer out, int sz）<br>BufferedInputStream（InputStream in）<br>BufferedInputStream（ InputStream in,int size）<br>BufferedOutputStream （OutputStream out）<br>BufferedOutputStream （OutputStream out,int size）<br>前四个四字符流，后四个是字节流</p><h3 id="BufferedInputStream"><a href="#BufferedInputStream" class="headerlink" title="BufferedInputStream"></a>BufferedInputStream</h3><p>带缓冲的字节输入流：上面我们知道文件字节输入流的读取时，是直接同字节流中读取的。由于字节流是与硬件（存储介质）进行的读取，所以速度较慢。而CPU需要使用数据时通过read()、read(byte[])读取数据时就要受到硬件IO的慢速度限制。我们又知道，CPU与内存发生的读写速度比硬件IO快10倍不止，所以优化读写的思路就有了：在内存中建立缓存区，先把存储介质中的字节读取到缓存区中。CPU需要数据时直接从缓冲区读就行了，缓冲区要足够大，在被读完后又触发fill()函数自动从存储介质的文件字节内容中读取字节存储到缓冲区数组。</p><p>BufferedInputStream 内部有一个缓冲区，默认大小为8M，每次调用read方法的时候，它首先尝试从缓冲区里读取数据，若读取失败（缓冲区无可读数据），则选择从物理数据源 （譬如文件）读取新数据（这里会尝试尽可能读取多的字节）放入到缓冲区中，最后再将缓冲区中的内容返回给用户.由于从缓冲区里读取数据远比直接从存储介质读取速度快，所以BufferedInputStream的效率很高。</p><h2 id="转换流（常用）"><a href="#转换流（常用）" class="headerlink" title="转换流（常用）"></a>转换流（常用）</h2><p>字符流与字节流转换</p><p>转换流的特点：</p><p>其是字符流和字节流之间的桥梁<br>可对读取到的字节数据经过指定编码转换成字符<br>可对读取到的字符数据经过指定编码转换成字节<br>何时使用转换流？</p><p>当字节和字符之间有转换动作时；<br>流操作的数据需要编码或解码时。<br>具体的对象体现：</p><p>InputStreamReader:字节到字符的桥梁<br>OutputStreamWriter:字符到字节的桥梁<br>这两个流对象是字符体系中的成员，它们有转换作用，本身又是字符流，所以在构造的时候需要传入字节流对象进来。</p><blockquote><p>InputStreamReader演示：</p></blockquote><p>InputStreamReader是字节流通向字符流的桥梁，它使用指定的charset读取字节并将其解码为字符。它拥有一个InputStream类型的变量，并继承了Reader，使用了对象的适配器模式</p><p>根据InputStream的实例创建InputStreamReader的方法有4种：</p><p>InputStreamReader(InputStream in);<br>//根据默认字符集创建<br>InputStreamReader(InputStream in, Charset cs);<br>//使用给定字符集创建<br>InputStreamReader(InputStream in, CharsetDecoder dec);<br>//使用给定字符集解码器创建<br>InputStreamReader(InputStream in, String charsetName);<br>//使用指定字符集创建 </p><p>后面的3个构造函数都指定了一个字符集，最后一个是最简单的，可以直接指定字符集的名称来创建，例如GB2312等。</p><p>每次调用InputStreamReader中的一个read()方法都会导致从底层输入流读取一个或多个字节。要启用从字节到字符的有效转换，可以提前从底层流读取更多的字节，使其超过满足当前读取操作所需的字节。共有3个可用的read()方法：</p><p>int read();<br>//读取单个字符<br>int read(char[] cbuf, int offset, int length);<br>//将字符读入数组中的某一部分<br>boolean ready();<br>//判断此流是否已经准备好用于读取 </p><p>InputStreamReader继承自Reader，因此该类的实例可以被各种输入字符流包装。为了达到最高效率，可以考虑在BufferedReader内包装InputStreamReader。我们首先创建了一个FileInputStream类的实例，然后转换为InputStreamReader对象is，最后使用BufferedReader进行包装。这样就可以将字节流转换为带缓冲功能的字符流。</p><pre><code>public class TestInputStreamReader {      public static void main(String[] args) {          try {  // 创建输入流  FileInputStream fis = new FileInputStream(&quot;D:/demo/test.txt&quot;);  InputStreamReader is = new InputStreamReader(fis);  BufferedReader bis = new BufferedReader(is);  // 从输入流读取数据  while (bis.ready()) {      int c = bis.read();      System.out.print((char)c);  }  // 关闭输入流  bis.close();  is.close();  fis.close();          } catch (IOException e) {          }      }  } </code></pre><blockquote><p>OutputStreamWriter演示：</p></blockquote><p>OutputStreamWriter是字符流通向字节流的桥梁，可使用指定的charset将要写入流中的字符编码成字节。因此，它拥有一个OutputStream类型的变量，并继承了Writer，使用了对象的适配器模式</p><p>根据OutputStream的实例创建OutputStreamWriter的方法有4种：</p><p>OutputStreamReader(OutputStream out);<br>//根据默认字符集创建<br>OutputStreamReader(OutputStream out, Charset cs);<br>//使用给定字符集创建<br>OutputStreamReader(OutputStream out, CharsetDecoder dec);<br>//使用给定字符集解码器创建<br>OutputStreamReader(OutputStream out, Stroutg charsetName);<br>//使用指定字符集创建 </p><p>后面的3个构造函数都制定了一个字符集，最后一个是最简单的，可以直接指定字符集的名称来创建，例如GB2312等。</p><p>每次调用write()方法都会导致在给定字符（或字符集）上调用编码转换器。在写入底层输出流之前，得到的这些字节将在缓冲区中累积。可以指定此缓冲区的大小，不过，默认的缓冲区对多数用途来说已足够大。注意，传递给write()方法的字符没有缓冲。共有3个可用的write()方法：</p><p>void write(char[] cbuf, int off, int len);//写入字符数组的某一部分<br>void write(int c);//写入单个字符<br>void write(String str, int off, int len);//写入字符串的某一部分<br>OutputStreamWriter继承自Writer，因此该类的实例可以被各种输出字符流包装。为了达到最高效率，可以考虑在BufferedWriter内包装OutputStreamWriter。我们首先创建了一个FileOutputStream类的实例，然后转换为OutputStreamReader对象os，最后使用BufferedWriter进行包装。这样就可以将字节流转换为带缓冲功能的字符流。</p><pre><code>public class TestOutputStreamWriter {      public static void main(String[] args) {          try {          // 创建输出流              FileOutputStream fos = new FileOutputStream(&quot;D:/demo/test.txt&quot;);              OutputStreamWriter os = new OutputStreamWriter(fos);              BufferedWriter bos = new BufferedWriter(os);              // 写入数组数据              char[] buf = new char[3];              buf[0] = &apos;a&apos;;              buf[1] = &apos;b&apos;;              buf[2] = &apos;中&apos;;              bos.write(buf);              // 关闭输出流              bos.close();              os.close();              fos.close();          } catch (IOException e) {          }      }  } </code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;流的概念和作用&quot;&gt;&lt;a href=&quot;#流的概念和作用&quot; class=&quot;headerlink&quot; title=&quot;流的概念和作用&quot;&gt;&lt;/a&gt;流的概念和作用&lt;/h1&gt;&lt;p&gt;流是一组有顺序的，有起点和终点的字节集合，是对数据传输的总称或抽象。即数据在两设备间的传输称为流，流的本质是数据传输，根据数据传输特性将流抽象为各种类，方便更直观的进行数据操作。&lt;br&gt;集合框架相当于数据结构，那么IO框架就相当于数据传输。&lt;br&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+      <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
+    
+  </entry>
   
   <entry>
     <title>创业之路--企业技术支持</title>
@@ -286,9 +310,9 @@
       <category term="WEB" scheme="http://yoursite.com/categories/WEB/"/>
     
     
-      <category term="软件架构" scheme="http://yoursite.com/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84/"/>
-    
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="软件架构" scheme="http://yoursite.com/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84/"/>
     
       <category term="REST" scheme="http://yoursite.com/tags/REST/"/>
     
@@ -371,9 +395,9 @@
     
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
-      <category term="google" scheme="http://yoursite.com/tags/google/"/>
-    
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
+    
+      <category term="google" scheme="http://yoursite.com/tags/google/"/>
     
       <category term="protocol Buffer" scheme="http://yoursite.com/tags/protocol-Buffer/"/>
     
@@ -404,9 +428,9 @@
     
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
-      <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
-    
       <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+      <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
     
   </entry>
   
@@ -431,9 +455,9 @@
     
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
-      <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
-    
       <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+      <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
     
   </entry>
   
@@ -459,9 +483,9 @@
     
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
-      <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
-    
       <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+      <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
     
   </entry>
   
@@ -489,9 +513,9 @@
     
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
-      <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
-    
       <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+      <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
     
   </entry>
   
@@ -516,9 +540,9 @@
     
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
-      <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
-    
       <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+      <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
     
   </entry>
   
@@ -543,9 +567,9 @@
     
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
-      <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
-    
       <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+      <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
     
   </entry>
   
@@ -570,37 +594,9 @@
     
       <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
-      <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
-    
       <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
-  </entry>
-  
-  <entry>
-    <title>JAVA开发常用类库--常用类库</title>
-    <link href="http://yoursite.com/2018/03/14/java-api06/"/>
-    <id>http://yoursite.com/2018/03/14/java-api06/</id>
-    <published>2018-03-14T04:09:18.000Z</published>
-    <updated>2018-03-14T10:20:06.965Z</updated>
-    
-    <content type="html"><![CDATA[<p><strong>Java 类库概念：</strong><br>Java 的应用程序接口 (API) 以包的形式来组织，每个包提供了大量的相关类、接口和异常处理类，这些包的集合就是 Java 的类库</p><p>包名以 Java 开始的包是 Java 核心包 (Java Core Package) ；</p><p>包名以 Javax 开始的包是 Java 扩展包 (Java Extension Package) ，例如 javax.swing 包；</p><a id="more"></a><p>常用的 Java 核心包 (Java Core Package)</p><ol><li><p><strong>java.lang</strong>      Java 编程语言的基本类库</p></li><li><p>java.applet     创建 applet 需要的所有类</p></li><li><p>java.awt       创建用户界面以及绘制和管理图形、图像的类</p></li><li><p>java.io        通过数据流、对象序列以及文件系统实现的系统输入、输出</p></li><li><p>java.net       用于实现网络通讯应用的所有类</p></li><li><p><strong>java.util</strong>       集合类、时间处理模式、日期时间工具等各类常用工具包</p></li></ol><p>其它还有</p><ol><li><p>java.sql        访问和处理来自于 Java 标准数据源数据的类</p></li><li><p>java.test       以一种独立于自然语言的方式处理文本、日期、数字和消息的类和接口</p></li><li><p>java.security    设计网络安全方案需要的一些类</p></li><li><p>java.beans     开发 Java Beans 需要的所有类</p></li><li><p>java.math      简明的整数算术以及十进制算术的基本函数</p></li><li><p>java.rmi       与远程方法调用相关的所有类，rmi即Remote Method Invoke远程方法调用</p></li></ol><p>常用的 Java 扩展包 (Java Extension Package)</p><ol><li><p>javax.accessibility  定义了用户界面组件之间相互访问的一种机制</p></li><li><p>javax.naming.*     为命名服务提供了一系列类和接口</p></li><li><p>javax.swing.*       提供了一系列轻量级的用户界面组件，是目前 Java 用户界面常用的包</p></li></ol><p>注 1 ：最重要且常用的是 1 和 6 ，已用黑体标出的为，需重点掌握</p><p>注 2 ：在使用 Java 时，除了 java.lang 外，其他的包都需要 import 语句引入之后才能使用。</p><p>重点讲解内容：java.lang和java.util。具体各方法在开发文档里写的很清楚</p><p>java.lang 包</p><p>这个包称为 java 语言包，是由编译器自动引入的。程序中不必用 import 语句就可以使用。它所包含的类和接口对所有实际的 Java 程序都是必要的。</p><ol><li><p>object 类</p></li><li><p>数学类 (Math)</p></li><li><p>数据类型类</p></li><li><p>线程类</p></li><li><p>字符串类 (String 类和 StringBuffer 类 )</p></li><li><p>系统及运行类 (System 类和 Runtime 类 )</p></li><li><p>错误和异常处理类 (Throwable 、 Exception 、 Error)</p></li><li><p>过程类 (process)</p></li></ol><p>java.util 包</p><ol><li><p>日期类、日历类（ Data 、 Calendar 、 GregorianCalendar ）</p></li><li><p>随机数类（ Random ）</p></li><li><p>位运算类（ BitSet ）</p></li><li><p>矢量类（ Vector ）</p></li><li><p>数据结构类（ Stack ）</p></li><li><p>散列表类（ Hashtable ）</p></li><li><p>StringTokenizer类</p></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;strong&gt;Java 类库概念：&lt;/strong&gt;&lt;br&gt;Java 的应用程序接口 (API) 以包的形式来组织，每个包提供了大量的相关类、接口和异常处理类，这些包的集合就是 Java 的类库&lt;/p&gt;
-&lt;p&gt;包名以 Java 开始的包是 Java 核心包 (Java Core Package) ；&lt;/p&gt;
-&lt;p&gt;包名以 Javax 开始的包是 Java 扩展包 (Java Extension Package) ，例如 javax.swing 包；&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
-    
-    
-      <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
       <category term="java类库" scheme="http://yoursite.com/tags/java%E7%B1%BB%E5%BA%93/"/>
-    
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
   </entry>
   
