@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[java书单]]></title>
     <url>%2F2018%2F03%2F30%2Fjava%E4%B9%A6%E5%8D%95%2F</url>
-    <content type="text"><![CDATA[多数都是在知乎和ImportNew上收集的，作为自己的知识储备。 《Effective Java中文版》 人手一本？谷歌出品，必属精品？ 《Effective Java中文版》的作者是Joshua Bloch，这个人就很厉害了，他是谷歌的首席架构师，属于超级技术大牛级别了吧，呵呵。由于没有看过这本书，所以我不好发表评论，但是从这本书的知名度以及其作者的来头来看（多提一句，这本书也是Java之父James Gosling博士推崇的一本书），我相信这一定是一本值得一看的好书。 好的代码是每个Java程序员都应该去追求的，不是说我今天写一段好代码相比写一段烂代码对性能会有多大的提升，更多的应该是提升了代码的可读性以及可以规避许多潜在的、未知的问题，避免代码上线之后出问题而花时间去维护—-无论从时间成本、人力成本还是风险成本来说，这都是非常高的。 《深入分析Java Web技术内幕》，作者许令波，淘宝工程师。 这本书我用一个字概括就是：全。真的非常全，HTTP、DNS、CDN、静态化、Jetty、Tomcat、Servlet、Spring、MyBatis等等，什么都有，涉及知识面非常广，但又不像专门精讲某个知识点的书籍一样讲得非常深入，感觉这本书就是尽量去用短的篇幅讲清楚一些Java Web使用到的技术的内幕，让读者对这些知识点的技术内幕有一个理性的认识。 不过，尽管每个知识点的篇幅都不多，但是重点都基本讲到了，是一本让人真正有收获的书。如果想进一步了解这些技术的技术内幕，就要自己去买相关书籍或者自己上网查资料了，有种抛砖引玉，或者说师傅领进门、修行在个人的感觉。 《大型网站技术架构 核心原理与案例分析》的作者是李智慧，原阿里巴巴技术专家 Java的大多数应用都是用在Web上的，现在只要稍微大型一点的Web应用，都一定是一个分布式系统，那么一个分布式系统用到了哪些技术？一个大型网站是如何从一个小型网站成长起来的？如何保证你的网站安全？分布式系统使用到了缓存，有哪些缓存？缓存的使用有哪些值得注意的事项？ 关于分布式的知识点，都在这本书里面有体现，只有你想不到，没有他写不到，而且写得非常易懂，基本属于看一两遍，再记一些笔记就知道是怎么一回事儿了。多看几遍，对分布式的理解一定会加深不少。而且里面不仅仅是分布式的知识，还非常接地气地写了如何做一个好的架构师，其实我认为这不仅仅是写给想做架构师的读者看的，就是给读者一些建议，如何更好地提出意见、如何更让别人关注你的声音、如何看到他人的优点，入木三分，让人获益匪浅。 《大型网站系统与Java中间件实践》作者曾宪杰，是淘宝的技术总监，算起来应该在阿里有至少P8的级别了吧。 中间件读物，如果产品开发中涉及到中间件，可以一读。 这本书的部分内容和上面一本李智慧的《大型网站技术架构 核心原理与案例分析》有所重合，像分布式系统的演化、CDN、CAP理论和BASE理论等等，这也更说明这些都是分布式系统或者说是一个大型网站重点关注的内容，当作一次再学习也不错。 本书要突出的重点是中间件三个字，中间件是分布式系统中一个非常重要的东西，其最重要的作用应该就是解耦，降低模块与模块之间的强依赖，不同的模块之间的依赖度降低，便可以各自独立地开发自己的功能，这也可以说是软件工程发展的目标和驱动力。 因此，本书有一部分的内容就是基于中间件，详细讲解了中间件与JMS的各种知识，适合对分布式系统比较熟悉并且想要往中间件方面有一定研究的读者。]]></content>
+    <content type="text"><![CDATA[多数都是在知乎和ImportNew上收集的，作为自己的知识储备。作为一个java开发工程师，若想在职业这条道路上走的更远，不仅要学会底层的知识，学习各种虚拟机，明白各种设计模式，web微服务开发框架，半个DBA，大数据方向作知识储备，hadoop和spark集群演变和原理实现，爬虫与反爬，各种最新的框架和API，跟上java版本更新，保持学习动力。 《Effective Java中文版》 人手一本？谷歌出品，必属精品？ 《Effective Java中文版》的作者是Joshua Bloch，这个人就很厉害了，他是谷歌的首席架构师，属于超级技术大牛级别了吧，呵呵。由于没有看过这本书，所以我不好发表评论，但是从这本书的知名度以及其作者的来头来看（多提一句，这本书也是Java之父James Gosling博士推崇的一本书），我相信这一定是一本值得一看的好书。 好的代码是每个Java程序员都应该去追求的，不是说我今天写一段好代码相比写一段烂代码对性能会有多大的提升，更多的应该是提升了代码的可读性以及可以规避许多潜在的、未知的问题，避免代码上线之后出问题而花时间去维护—-无论从时间成本、人力成本还是风险成本来说，这都是非常高的。 《深入分析Java Web技术内幕》，作者许令波，淘宝工程师。 这本书我用一个字概括就是：全。真的非常全，HTTP、DNS、CDN、静态化、Jetty、Tomcat、Servlet、Spring、MyBatis等等，什么都有，涉及知识面非常广，但又不像专门精讲某个知识点的书籍一样讲得非常深入，感觉这本书就是尽量去用短的篇幅讲清楚一些Java Web使用到的技术的内幕，让读者对这些知识点的技术内幕有一个理性的认识。 不过，尽管每个知识点的篇幅都不多，但是重点都基本讲到了，是一本让人真正有收获的书。如果想进一步了解这些技术的技术内幕，就要自己去买相关书籍或者自己上网查资料了，有种抛砖引玉，或者说师傅领进门、修行在个人的感觉。 《大型网站技术架构 核心原理与案例分析》的作者是李智慧，原阿里巴巴技术专家 Java的大多数应用都是用在Web上的，现在只要稍微大型一点的Web应用，都一定是一个分布式系统，那么一个分布式系统用到了哪些技术？一个大型网站是如何从一个小型网站成长起来的？如何保证你的网站安全？分布式系统使用到了缓存，有哪些缓存？缓存的使用有哪些值得注意的事项？ 关于分布式的知识点，都在这本书里面有体现，只有你想不到，没有他写不到，而且写得非常易懂，基本属于看一两遍，再记一些笔记就知道是怎么一回事儿了。多看几遍，对分布式的理解一定会加深不少。而且里面不仅仅是分布式的知识，还非常接地气地写了如何做一个好的架构师，其实我认为这不仅仅是写给想做架构师的读者看的，就是给读者一些建议，如何更好地提出意见、如何更让别人关注你的声音、如何看到他人的优点，入木三分，让人获益匪浅。 《大型网站系统与Java中间件实践》作者曾宪杰，是淘宝的技术总监，算起来应该在阿里有至少P8的级别了吧。 中间件读物，如果产品开发中涉及到中间件，可以一读。 这本书的部分内容和上面一本李智慧的《大型网站技术架构 核心原理与案例分析》有所重合，像分布式系统的演化、CDN、CAP理论和BASE理论等等，这也更说明这些都是分布式系统或者说是一个大型网站重点关注的内容，当作一次再学习也不错。 本书要突出的重点是中间件三个字，中间件是分布式系统中一个非常重要的东西，其最重要的作用应该就是解耦，降低模块与模块之间的强依赖，不同的模块之间的依赖度降低，便可以各自独立地开发自己的功能，这也可以说是软件工程发展的目标和驱动力。 因此，本书有一部分的内容就是基于中间件，详细讲解了中间件与JMS的各种知识，适合对分布式系统比较熟悉并且想要往中间件方面有一定研究的读者。]]></content>
       <categories>
         <category>工具类</category>
       </categories>
@@ -22,9 +22,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
+        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -35,9 +35,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
+        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -61,8 +61,8 @@
         <category>springboot</category>
       </categories>
       <tags>
-        <tag>大数据</tag>
         <tag>java</tag>
+        <tag>大数据</tag>
         <tag>spring</tag>
         <tag>springboot</tag>
       </tags>
@@ -75,8 +75,8 @@
         <category>springboot</category>
       </categories>
       <tags>
-        <tag>大数据</tag>
         <tag>java</tag>
+        <tag>大数据</tag>
         <tag>spring</tag>
         <tag>springboot</tag>
       </tags>
@@ -89,8 +89,8 @@
         <category>springboot</category>
       </categories>
       <tags>
-        <tag>大数据</tag>
         <tag>java</tag>
+        <tag>大数据</tag>
         <tag>spring</tag>
         <tag>springboot</tag>
       </tags>
@@ -103,8 +103,8 @@
         <category>springboot</category>
       </categories>
       <tags>
-        <tag>大数据</tag>
         <tag>java</tag>
+        <tag>大数据</tag>
         <tag>spring</tag>
         <tag>springboot</tag>
       </tags>
@@ -202,8 +202,8 @@
       </categories>
       <tags>
         <tag>大数据</tag>
-        <tag>google</tag>
         <tag>java类库</tag>
+        <tag>google</tag>
         <tag>protocol Buffer</tag>
         <tag>数据交换</tag>
       </tags>
@@ -216,9 +216,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
+        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -229,9 +229,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
+        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -242,9 +242,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
+        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -255,9 +255,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
+        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -268,9 +268,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
+        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -281,9 +281,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
+        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -294,9 +294,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
+        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -307,9 +307,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
+        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -320,9 +320,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
+        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -333,9 +333,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
+        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -346,9 +346,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
+        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -359,9 +359,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
+        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -384,9 +384,9 @@
         <category>JAVA</category>
       </categories>
       <tags>
+        <tag>java</tag>
         <tag>大数据</tag>
         <tag>java类库</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
