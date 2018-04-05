@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+<script>
+    (function(){
+        if(''){
+            if (prompt('宝箱钥匙是啥') !== ''){
+                alert('无资格访问...要获得yellow船长的同意才可以！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "57aec33c"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java,大数据,java类库," />
+
+
+
+
+
+  <link rel="alternate" href="https://koronto11.github.io/" title="Funk Jungle" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="测试是检查应用程序的功能的过程是否按要求工作，在开发人员层面进行单元测试，在采取适当措施来测试每一个实体（类或方法）以确保最终产品符合要求。单元测试是非常必要的，这是软件公司向他们的客户提供高质量的软件产品必要前提。 较常用的测试框架是Junit4，这个是老框架，现在的互联网开发公司常用的新框架有testng和mockito两种。单元测试用例是代码的一部分从而确保代码（方法）的另一部分工作正常。要">
+<meta name="keywords" content="java,大数据,java类库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA新测试框架--testng和mockito">
+<meta property="og:url" content="http://yoursite.com/2018/04/05/java-新测试框架/index.html">
+<meta property="og:site_name" content="Funk Jungle">
+<meta property="og:description" content="测试是检查应用程序的功能的过程是否按要求工作，在开发人员层面进行单元测试，在采取适当措施来测试每一个实体（类或方法）以确保最终产品符合要求。单元测试是非常必要的，这是软件公司向他们的客户提供高质量的软件产品必要前提。 较常用的测试框架是Junit4，这个是老框架，现在的互联网开发公司常用的新框架有testng和mockito两种。单元测试用例是代码的一部分从而确保代码（方法）的另一部分工作正常。要">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2018/04/05/java-新测试框架/p1.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/05/java-新测试框架/p2.png">
+<meta property="og:updated_time" content="2018-04-05T16:14:25.535Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JAVA新测试框架--testng和mockito">
+<meta name="twitter:description" content="测试是检查应用程序的功能的过程是否按要求工作，在开发人员层面进行单元测试，在采取适当措施来测试每一个实体（类或方法）以确保最终产品符合要求。单元测试是非常必要的，这是软件公司向他们的客户提供高质量的软件产品必要前提。 较常用的测试框架是Junit4，这个是老框架，现在的互联网开发公司常用的新框架有testng和mockito两种。单元测试用例是代码的一部分从而确保代码（方法）的另一部分工作正常。要">
+<meta name="twitter:image" content="http://yoursite.com/2018/04/05/java-新测试框架/p1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/05/java-新测试框架/"/>
+
+
+
+
+
+
+
+  <title>JAVA新测试框架--testng和mockito | Funk Jungle</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Funk Jungle</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-main">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Main
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/05/java-新测试框架/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黄上">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/koro.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Funk Jungle">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JAVA新测试框架--testng和mockito</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-05T20:59:13+08:00">
+                2018-04-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JAVA/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>测试是检查应用程序的功能的过程是否按要求工作，在开发人员层面进行单元测试，在采取适当措施来测试每一个实体（类或方法）以确保最终产品符合要求。单元测试是非常必要的，这是软件公司向他们的客户提供高质量的软件产品必要前提。</p>
+<p>较常用的测试框架是Junit4，这个是老框架，现在的互联网开发公司常用的新框架有testng和mockito两种。<br>单元测试用例是代码的一部分从而确保代码（方法）的另一部分工作正常。要快速实现这些理想的效果，测试框架是必需的。JUnit对于Java编程语言是完美的单元测试框架。<br><a id="more"></a><br>单元测试可以通过两种方式来完成：</p>
+<p><strong>手动测试：</strong></p>
+<p>手动执行测试用例，没有任何工具支持称为手动测试。<br>费时和乏味：由于测试案例是由人力的，所以它是非常缓慢而乏味的执行。<br>巨大的人力资源的投入：作为测试用例需要手动执行，所以更多的测试都需要手动测试。<br>较不可靠：手动测试是为测试可能不会被精确地每次执行，因为人为错误导致不可靠。<br>非可编程：无需编程就可以做，获取信息隐藏复杂的测试</p>
+<p><strong>自动测试：</strong></p>
+<p>以工具支持，并通过使用自动化工具则称为自动化测试执行测试用例。<br>快速自动化运行测试用例比人力显著更快。<br>人力资源的投入较少：测试用例是通过使用自动化工具，所以较少测试者都需要在自动化测试执行。<br>更可靠：自动化测试在每次运行的时间进行精确的相同操作。<br>可编程：测试人员可以编写复杂的测试，以带出隐藏的信息。</p>
+<p>JUnit是一个Java编程语言编写的单元测试框架。 重要的是在测试驱动开发中，并且是一个家族的统称为xUnit单元测试框架中的一个。</p>
+<p>JUnit促进“先测试再编码”，它强调建立测试数据的一段代码可以被测试，先测试再编码实现的想法。这种做法就像是“试了一下，码了一点，测试了一下，代码一点点……”这增加了程序员的工作效率和程序代码的稳定性，减少程序员的压力和花在调试的时间。</p>
+<p>而TestNG和mockito是全新的测试体系，在junit4的基础上，很多更加简便的测试框架被开发出来，为什么介绍这两种框架，因为现在的软件开放公司都是利用junit+TestNG+mockito的方式，运用大家的优点来搭建总体的测试体系。不过似乎在功能方面，TestNG可以完全替代Junit的功能，不过Junit作为传统的xunit测试体系，在新出的Junit5测试框架也有很强的性能（在下面会做分析）。</p>
+<h1 id="Testng"><a href="#Testng" class="headerlink" title="Testng"></a>Testng</h1><p>JUnit让开发人员了解测试的实用性，尤其是在单元测试这一模块上比任何其他测试框架都要简单明了。凭借一个相当简单，务实，严谨的架构，JUnit已经能够“感染”了一大批开发人员。</p>
+<p>JUnit缺点：<br>1.最初的设计，使用于单元测试，现在只用于各种测试。<br>2.不能依赖测试<br>3.配置控制欠佳(安装/拆卸)<br>4.侵入性(强制扩展类，并以某种方式命名方法)<br>5.静态编程模型(不必要的重新编译)<br>6.不适合管理复杂项目应用，JUnit复杂项目中测试非常棘手。</p>
+<h2 id="而TetsNG是什么样的框架？"><a href="#而TetsNG是什么样的框架？" class="headerlink" title="而TetsNG是什么样的框架？"></a>而TetsNG是什么样的框架？</h2><p>TestNG是一个测试框架，其灵感来自JUnit和NUnit（也就是xUnit家族的产品），但引入了一些新的功能，使其功能更强大，使用更方便。</p>
+<p>TestNG是一个开源自动化测试框架;TestNG表示下一代(Next Generation的首字母)。 TestNG类似于JUnit(特别是JUnit 4)，但它不是JUnit框架的扩展。它的灵感来源于JUnit。它的目的是优于JUnit，尤其是在用于测试集成多类时。 TestNG的创始人是Cedric Beust(塞德里克·博伊斯特)。</p>
+<p>TestNG消除了大部分的旧框架的限制，使开发人员能够编写更加灵活和强大的测试。 因为它在<strong>很大程度上借鉴了Java注解</strong>(JDK5.0引入的)来定义测试，它也可以显示如何使用这个新功能在真实的Java语言生产环境中。</p>
+<p>TestNG的特点：</p>
+<p>1.注解<br>2.TestNG使用Java和面向对象的功能<br>3.支持综合类测试(例如，默认情况下，不用创建一个新的测试每个测试方法的类的实例)<br>4.独立的编译时测试代码和运行时配置/数据信息<br>5.灵活的运行时配置<br>6.主要介绍“测试组”。当编译测试，只要要求TestNG运行所有的“前端”的测试，或“快”，“慢”，“数据库”等<br>7.支持依赖测试方法，并行测试，负载测试，局部故障<br>8.灵活的插件API<br>9.支持多线程测试</p>
+<p>TestNG(Next Generation)是一个测试框架，它受到JUnit和NUnit的启发，而引入了许多新的创新功能，如依赖测试，分组概念，使测试更强大，更容易做到。 它旨在涵盖所有类别的测试：单元，功能，端到端，集成等…</p>
+<h2 id="如何使用TestNG？"><a href="#如何使用TestNG？" class="headerlink" title="如何使用TestNG？"></a>如何使用TestNG？</h2><p>展示如何开始使用TestNG单元测试框架，使用的开发环境依然是Eclipse m.3+maven3+JDK1.8<br>这里选用TestNG的版本为TestNG 6.10版本</p>
+<p>第一步：先去官网或者是ali的maven库中去复制TestNG 6.10的版本，然后将其放在pom中的dependencies标签下。</p>
+<p>第二步：安装Eclipse的插件支持，在Eclipse Market中搜索“TestNG for Eclipse”，然后install，重启Eclipse。</p>
+<p>第三步：查看是否安装成功，在eclipse的工具栏中，点击file-》new-》other，看到TestNG文件夹，即表示安装插件成功。</p>
+<p>第四步：这就可以使用TestNG用于测试组件或者单元了，在想要测试的项目的src/test/java下新建“TestNG class”，这个类就相当于Junit的测试类，在这个类中，去写测试代码，然后右键run as–》选择“TestNG test”就可以测试了。(其实测试方法有两种，接下来就讲)</p>
+<h3 id="TestNG的测试方式"><a href="#TestNG的测试方式" class="headerlink" title="TestNG的测试方式"></a>TestNG的测试方式</h3><p>第一种直接执行：右键要执行的方法，　　点Run As -&gt;TestNG Test</p>
+<p>第二种:  通过testng.xml文件来执行. 把要执行的case, 放入testng.xml文件中。 右键点击testng.xml,   点Run As<br>这个xml文件放在src/test/java里即可</p>
+<p>在testng.xml中，可以控制测试用例按顺序执行。  当preserve-order=”true”是，可以保证节点下面的方法是按顺序执行的</p>
+<h3 id="断言（ASSERT-的用法"><a href="#断言（ASSERT-的用法" class="headerlink" title="断言（ASSERT)的用法"></a>断言（ASSERT)的用法</h3><p>这里介绍一下载TestNG中同样也支持断言Assert，在实际开发中用于检测错误。<br>如何用断言Assert，断言里面又有什么方法？那个方法较为常用呢？</p>
+<p>在经过对其进行一定了解之后，对其作用及用法有了一定的了解，assert()的用法像是一种“契约式编程”，在我的理解中，其表达的意思就是，程序在我的假设条件下，能够正常良好的运作，其实就相当于一个if语句：其本质就是代替if-else，因为如果要用if-else来测的话，整个测试结构就会变得很复杂，可读性也不好，程序结构比较臃肿，用了Assert就好多了。</p>
+<pre><code>if(假设成立)
+{
+     程序正常运行；
+}
+else
+{
+      报错&amp;&amp;终止程序！（避免由程序运行引起更大的错误）  
+}
+</code></pre><p>如果断言的条件错误，则直接程序报错，可以说是一种保障正确的一种方式，org.testng.Assert 用来校验接口测试的结果，那么它提供哪些方法呢?</p>
+<p>提供了以下这些方法：（根据实际情况需要而去测试）</p>
+<p>assertTrue 判断是否为true。<br>assertFalse 判断是否为false。<br>assertSame 判断引用地址是否相等。<br>assertNotSame 判断引用地址是否不相等。<br>assertNull 判断是否为null<br>assertNotNull 判断是否不为null<br>assertEquals 判断是否相等，Object类型的对象需要实现hashCode及equals方法，集合类型Collection/Set/Map 中的对象也需要实现hashCode及equals方法，3个double参数时比较好玩，前两个double相等，或者前两个double的差值小于传入的第三个double值，即偏移量小于多少时，认为相等。<br>assertNotEquals 判断是否不相等<br>assertEqualsNoOrder 判断忽略顺序是否相等</p>
+<p>例子：</p>
+<p>StringGenerator类<br>    public class StringGenerator {</p>
+<pre><code>    public String generate(){
+        return &quot;testng demo!&quot;;
+    }
+}
+</code></pre><p>Test类</p>
+<pre><code>public class TestNgDemo {
+  @Test
+  public void test1() {
+      StringGenerator sg=new StringGenerator();
+      String content=sg.generate();
+      /*
+       * testng框架中的Assert断言的作用
+       * 
+       */
+      Assert.assertNotNull(content);//判断是否为空
+      Assert.assertEquals(content, &quot;testng demo!&quot;);//判断内容是否相等
+  }
+}
+</code></pre><p>控制台输出内容的部分：</p>
+<pre><code>[RemoteTestNG] detected TestNG version 6.10.0
+[TestNG] Running:
+  C:\Users\Administrator\AppData\Local\Temp\testng-eclipse--46238976\testng-customsuite.xml
+
+PASSED: test1
+
+===============================================
+    Default test
+    Tests run: 1, Failures: 0, Skips: 0
+===============================================
+
+
+===============================================
+Default suite
+Total tests run: 1, Failures: 0, Skips: 0
+===============================================
+</code></pre><p>这样就是TestNG测试框架的使用，当然这个测试框架还可以应用在很多方面，比如：<br>TestNG预期异常测试<br>TestNG忽略测试<br>TestNG超时测试<br>TestNG分组测试<br>TestNG套件测试<br>TestNG依赖测试<br>TestNG参数化测试<br>TestNG参数测试实例<br>TestNG + Selenium负载测试<br>TestNG + Spring集成测试</p>
+<h3 id="介绍TestNG的各种测试案例"><a href="#介绍TestNG的各种测试案例" class="headerlink" title="介绍TestNG的各种测试案例"></a>介绍TestNG的各种测试案例</h3><h3 id="TestNG和Junit4相对比："><a href="#TestNG和Junit4相对比：" class="headerlink" title="TestNG和Junit4相对比："></a>TestNG和Junit4相对比：</h3><p>JUnit 4和TestNG都是Java中非常受欢迎的单元测试框架。两种框架在功能上看起来非常相似。 哪一个更好？ 在Java项目中应该使用哪个单元测试框架？</p>
+<p>下面表中概括了JUnit 4和TestNG之间的功能比较。如下图所示 -</p>
+<p><img src="/2018/04/05/java-新测试框架/p1.png" alt="logo"></p>
+<h3 id="注释支持"><a href="#注释支持" class="headerlink" title="注释支持"></a>注释支持</h3><p>注释/注解支持在JUnit 4和TestNG中是非常类似的。<br><img src="/2018/04/05/java-新测试框架/p2.png" alt="logo"></p>
+<p>JUnit4和TestNG之间的主要注释差异是：</p>
+<p>在JUnit 4中，我们必须声明“@BeforeClass”和“@AfterClass”方法作为静态方法。 TestNG在方法声明中更灵活，它没有这个约束。</p>
+<p>3个额外的setUp / tearDown级别：suite和group(@Before / AfterSuite，@Before / After Test，@Before / After Group)。</p>
+<pre><code>JUnit 4
+
+@BeforeClass
+public static void oneTimeSetUp() {
+    // one-time initialization code
+    System.out.println(&quot;@BeforeClass - oneTimeSetUp&quot;);
+}
+
+TestNG
+
+@BeforeClass
+public void oneTimeSetUp() {
+        // one-time initialization code
+        System.out.println(&quot;@BeforeClass - oneTimeSetUp&quot;);
+}
+</code></pre><p>在JUnit 4中，注释命名约定有点混乱，例如“Before”，“After”和“Expected”，我们并不真正了解“Before”和“After”之前的内容，以及要测试中的“预期” 方法。TestiNG更容易理解，它使用类似“BeforeMethod”，“AfterMethod”和“ExpectedException”就很明了。</p>
+<p><strong>异常测试</strong></p>
+<p>“异常测试”是指从单元测试中抛出的异常，此功能在JUnit 4和TestNG中都可实现。</p>
+<pre><code>JUnit 4
+
+@Test(expected = ArithmeticException.class)
+public void divisionWithException() {
+  int i = 1/0;
+}
+
+TestNG
+
+@Test(expectedExceptions = ArithmeticException.class)
+public void divisionWithException() {
+  int i = 1/0;
+}
+</code></pre><p><strong>忽略测试</strong></p>
+<p>“忽略”表示是否应该忽略单元测试，该功能在JUnit 4和TestNG中均可实现。</p>
+<pre><code>JUnit 4
+
+@Ignore(&quot;Not Ready to Run&quot;)
+@Test
+public void divisionWithException() {
+  System.out.println(&quot;Method is not ready yet&quot;);
+}
+
+TestNG
+
+@Test(enabled=false)
+public void divisionWithException() {
+  System.out.println(&quot;Method is not ready yet&quot;);
+}
+</code></pre><p><strong>时间测试</strong></p>
+<p>“时间测试”表示如果单元测试所花费的时间超过指定的毫秒数，则测试将会终止，并将其标记为失败，此功能在JUnit 4和TestNG中均可实现。</p>
+<pre><code>JUnit 4
+
+@Test(timeout = 1000)
+public void infinity() {
+    while (true);
+}
+
+TestNG
+
+@Test(timeOut = 1000)
+public void infinity() {
+    while (true);
+}
+</code></pre><p><strong>套件测试</strong></p>
+<p>“套件测试”是指捆绑几个单元测试并一起运行。 此功能在JUnit 4和TestNG中都可实现。 然而，两者都使用非常不同的方法来实现它。</p>
+<p>JUnit 4</p>
+<p>“@RunWith”和“@Suite”用于运行套件测试。下面的类代码表示在JunitTest5执行之后，单元测试“JunitTest1”和“JunitTest2”一起运行。 所有的声明都是在类内定义的。</p>
+<pre><code>@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        JunitTest1.class,
+        JunitTest2.class
+})
+public class JunitTest5 {
+}
+</code></pre><p>TestNG</p>
+<p>XML文件用于运行套件测试。以下XML文件表示单元测试“TestNGTest1”和“TestNGTest2”将一起运行。</p>
+<pre><code>&lt;suite name=&quot;My test suite&quot;&gt;
+  &lt;test name=&quot;testing&quot;&gt;
+    &lt;classes&gt;
+       &lt;class name=&quot;com.fsecure.demo.testng.TestNGTest1&quot; /&gt;
+       &lt;class name=&quot;com.fsecure.demo.testng.TestNGTest2&quot; /&gt;
+    &lt;/classes&gt;
+  &lt;/test&gt;
+&lt;/suite&gt;
+</code></pre><p>TestNG可以做捆绑类测试，也可以捆绑方法测试。 凭借TestNG独特的“分组”概念，每种方法都可以与一个组合相结合，可以根据功能对测试进行分类(分组)。 例如，</p>
+<p>下面是一个有四个方法的类，三个组(method1，method2和method3)</p>
+<pre><code>@Test(groups=&quot;method1&quot;)
+public void testingMethod1() {
+  System.out.println(&quot;Method - testingMethod1()&quot;);
+}
+
+@Test(groups=&quot;method2&quot;)
+public void testingMethod2() {
+    System.out.println(&quot;Method - testingMethod2()&quot;);
+}
+
+@Test(groups=&quot;method1&quot;)
+public void testingMethod1_1() {
+    System.out.println(&quot;Method - testingMethod1_1()&quot;);
+}
+
+@Test(groups=&quot;method4&quot;)
+public void testingMethod4() {
+    System.out.println(&quot;Method - testingMethod4()&quot;);
+}
+</code></pre><p>使用以下XML文件，可以仅使用组“method1”执行单元测试。</p>
+<pre><code>&lt;suite name=&quot;My test suite&quot;&gt;
+  &lt;test name=&quot;testing&quot;&gt;
+      &lt;groups&gt;
+      &lt;run&gt;
+        &lt;include name=&quot;method1&quot;/&gt;
+      &lt;/run&gt;
+    &lt;/groups&gt;
+    &lt;classes&gt;
+       &lt;class name=&quot;com.fsecure.demo.testng.TestNGTest5_2_0&quot; /&gt;
+    &lt;/classes&gt;
+  &lt;/test&gt;
+&lt;/suite&gt;
+</code></pre><p>通过“分组”测试概念，集成测试的可能性是无限制的。 例如，我们只能从所有单元测试类中测试“DatabaseFuntion”分组。</p>
+<p><strong>参数化测试</strong></p>
+<p>“参数化测试”是指单位测试参数值的变化。 此功能在JUnit 4和TestNG中都实现。 然而，两者都使用非常不同的方法来实现它。</p>
+<p>JUnit 4</p>
+<p>“@RunWith”和“@Parameter”用于提供单元测试的参数值，@Parameters必须返回List []，参数将作为参数传入类构造函数。</p>
+<pre><code>@RunWith(value = Parameterized.class)
+public class JunitTest6 {
+
+     private int number;
+
+     public JunitTest6(int number) {
+        this.number = number;
+     }
+
+     @Parameters
+     public static Collection&lt;Object[]&gt; data() {
+       Object[][] data = new Object[][] { { 1 }, { 2 }, { 3 }, { 4 } };
+       return Arrays.asList(data);
+     }
+
+     @Test
+     public void pushTest() {
+       System.out.println(&quot;Parameterized Number is : &quot; + number);
+     }
+}
+</code></pre><p>这里有很多限制，我们必须遵循“JUnit”的方式来声明参数，并且必须将参数传递给构造函数才能初始化类成员作为测试的参数值。参数类的返回类型为“List []”，数据已被限制为String或用于测试的原始类型值。</p>
+<p>TestNG</p>
+<p>XML文件或“@DataProvider”用于提供不同参数进行测试。</p>
+<p>用于参数化测试的XML文件 -</p>
+<p>只有“@Parameters”在需要参数测试的方法中声明，参数化数据将在TestNG的XML配置文件中提供。 通过这样做，我们可以使用不同数据集的单个测试用例，甚至获得不同的结果。 另外，即使是最终用户，QA还是QE都可以在XML文件中提供自己的数据进行测试。</p>
+<pre><code>public class TestNGTest6_1_0 {
+
+@Test
+@Parameters(value=&quot;number&quot;)
+public void parameterIntTest(int number) {
+       System.out.println(&quot;Parameterized Number is : &quot; + number);
+    }
+}
+</code></pre><p>XML文件的内容如下 -</p>
+<pre><code>&lt;suite name=&quot;My test suite&quot;&gt;
+  &lt;test name=&quot;testing&quot;&gt;
+
+    &lt;parameter name=&quot;number&quot; value=&quot;2&quot;/&gt;
+
+    &lt;classes&gt;
+       &lt;class name=&quot;com.fsecure.demo.testng.TestNGTest6_0&quot; /&gt;
+    &lt;/classes&gt;
+  &lt;/test&gt;
+&lt;/suite&gt;
+</code></pre><p>@DataProvider用于参数化测试</p>
+<p>将数据值拉入XML文件可能非常方便，但测试偶尔会需要复杂的类型，这些类型不能被表示为一个字符串或一个原始类型值。 TestNG使用@DataProvider注解来处理这种情况，这有助于将复杂参数类型映射到测试方法。</p>
+<p>@DataProvider for Vector，String或Integer作为参数，参考如下代码 -</p>
+<pre><code>@Test(dataProvider = &quot;Data-Provider-Function&quot;)
+    public void parameterIntTest(Class clzz, String[] number) {
+       System.out.println(&quot;Parameterized Number is : &quot; + number[0]);
+       System.out.println(&quot;Parameterized Number is : &quot; + number[1]);
+    }
+
+    //This function will provide the patameter data
+    @DataProvider(name = &quot;Data-Provider-Function&quot;)
+    public Object[][] parameterIntTestProvider() {
+        return new Object[][]{
+                   {Vector.class, new String[] {&quot;java.util.AbstractList&quot;,
+&quot;java.util.AbstractCollection&quot;}},
+                   {String.class, new String[] {&quot;1&quot;, &quot;2&quot;}},
+                   {Integer.class, new String[] {&quot;1&quot;, &quot;2&quot;}}
+                  };
+    }
+</code></pre><p>@DataProvider作为对象的参数</p>
+<p>“TestNGTest6_3_0”是一个简单的对象，只需使用get/set方法进行演示。</p>
+<pre><code>@Test(dataProvider = &quot;Data-Provider-Function&quot;)
+public void parameterIntTest(TestNGTest6_3_0 clzz) {
+   System.out.println(&quot;Parameterized Number is : &quot; + clzz.getMsg());
+   System.out.println(&quot;Parameterized Number is : &quot; + clzz.getNumber());
+}
+
+//This function will provide the patameter data
+@DataProvider(name = &quot;Data-Provider-Function&quot;)
+public Object[][] parameterIntTestProvider() {
+
+    TestNGTest6_3_0 obj = new TestNGTest6_3_0();
+    obj.setMsg(&quot;Hello&quot;);
+    obj.setNumber(123);
+
+    return new Object[][]{
+               {obj}
+    };
+}
+</code></pre><p>TestNG的参数化测试非常用户友好和灵活(在XML文件或类内)。 它可以支持许多复杂的数据类型作为参数值，可能性是无限的。 如上例所示，我们甚至可以传入我们自己的对象(TestNGTest6_3_0)进行参数化测试</p>
+<p><strong>依赖性测试</strong></p>
+<p>“参数化测试”表示方法是依赖性测试，它将在所需方法之前执行。 如果依赖方法失败，则所有后续测试将会被跳过，不会被标记为失败。</p>
+<p>JUnit 4</p>
+<p>JUnit框架着重于测试隔离; 目前它不支持此功能。</p>
+<p>TestNG</p>
+<p>它使用“dependOnMethods”来实现依赖测试如下 -</p>
+<pre><code>@Test
+public void method1() {
+   System.out.println(&quot;This is method 1&quot;);
+}
+
+@Test(dependsOnMethods={&quot;method1&quot;})
+public void method2() {
+    System.out.println(&quot;This is method 2&quot;);
+}
+</code></pre><p>“method2()”只有在“method1()”运行成功的情况下才会执行，否则“method2()”将跳过测试。</p>
+<p><strong>结论</strong></p>
+<p>在考虑所有功能比较之后，建议使用TestNG作为Java项目的核心单元测试框架，因为TestNG在参数化测试，依赖测试和套件测试(分组概念)方面更加突出。 TestNG用于高级测试和复杂集成测试。 它的灵活性对于大型测试套件尤其有用。 此外，TestNG还涵盖了整个核心的JUnit4功能。这样说来，好像也没有理由使用JUnit了。</p>
+<h2 id="TestNG与spring或spring-boot结合"><a href="#TestNG与spring或spring-boot结合" class="headerlink" title="TestNG与spring或spring boot结合"></a>TestNG与spring或spring boot结合</h2><h1 id="mockito"><a href="#mockito" class="headerlink" title="mockito"></a>mockito</h1><p>mockito的官网：<a href="http://site.mockito.org/" target="_blank" rel="noopener">http://site.mockito.org/</a><br>在实际项目中写单元测试的过程中我们会发现需要测试的类有很多依赖，这些依赖项又会有依赖，导致在单元测试代码里几乎无法完成构建，尤其是当依赖项尚未构建完成时会导致单元测试无法进行。为了解决这类问题我们引入了Mock的概念，简单的说就是模拟这些需要构建的类或者资源，提供给需要测试的对象使用。业内的Mock工具有很多，也已经很成熟了，这里我们将直接使用最流行的Mockito进行实战演练，完成mockito教程。</p>
+<p>EasyMock 以及 Mockito 都因为可以极大地简化单元测试的书写过程而被许多人应用在自己的工作中，但是这两种 Mock 工具都不可以实现对静态函数、构造函数、私有函数、Final 函数以及系统函数的模拟，但是这些方法往往是我们在大型系统中需要的功能。</p>
+<h2 id="如何使用Mockito？"><a href="#如何使用Mockito？" class="headerlink" title="如何使用Mockito？"></a>如何使用Mockito？</h2><p>第一步：在项目的pom中添加依赖，我用的阿里库的mockito版本为2.9.0的版本，ali的maven库中找到mockito-core的依赖jar，导入项目pom<br>也可以直接去官网下载相应的jar包，更新到了2.17版本。</p>
+<p>第二步：另外Mockito需要Junit配合使用，在Pom文件中同样引入：junit4的版本。</p>
+<p>第三步：然后为了使代码更简洁，最好在测试类中导入静态资源，还有为了使用常用的junit关键字，也要引入junit的两个类Before和Test：</p>
+<pre><code>import static org.mockito.Mockito.*;
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+</code></pre><p>第四步：然后就可以编写测试代码进行使用了，这里用junit的测试步骤来测试即可，mockito主要的功能就是模拟。。。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/weixin.png" alt="黄上 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/zifubao.png" alt="黄上 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/大数据/" rel="tag"># 大数据</a>
+          
+            <a href="/tags/java类库/" rel="tag"># java类库</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/03/java-se/" rel="next" title="JAVA-理解文章汇总（不断更新）">
+                <i class="fa fa-chevron-left"></i> JAVA-理解文章汇总（不断更新）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_32x32">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNDU1Mi8xMTA5MA=="></div>
+    </div>
+
+  
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/koro.jpg"
+                alt="黄上" />
+            
+              <p class="site-author-name" itemprop="name">黄上</p>
+              <p class="site-description motion-element" itemprop="description">Futrue|Principle|Effort|Luck</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="https://koronto11.github.io/" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/koronto11" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://blog.csdn.net/koronto" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-cube"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/xiang-zi-14-26/activities" target="_blank" title="zhihu">
+                      
+                        <i class="fa fa-fw fa-question-circle"></i>zhihu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://theme-next.iissnan.com/" title="主题文档" target="_blank">主题文档</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://hexo.io/zh-cn/docs/" title="官方文档" target="_blank">官方文档</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Testng"><span class="nav-number">1.</span> <span class="nav-text">Testng</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#而TetsNG是什么样的框架？"><span class="nav-number">1.1.</span> <span class="nav-text">而TetsNG是什么样的框架？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何使用TestNG？"><span class="nav-number">1.2.</span> <span class="nav-text">如何使用TestNG？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TestNG的测试方式"><span class="nav-number">1.2.1.</span> <span class="nav-text">TestNG的测试方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#断言（ASSERT-的用法"><span class="nav-number">1.2.2.</span> <span class="nav-text">断言（ASSERT)的用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#介绍TestNG的各种测试案例"><span class="nav-number">1.2.3.</span> <span class="nav-text">介绍TestNG的各种测试案例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TestNG和Junit4相对比："><span class="nav-number">1.2.4.</span> <span class="nav-text">TestNG和Junit4相对比：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注释支持"><span class="nav-number">1.2.5.</span> <span class="nav-text">注释支持</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TestNG与spring或spring-boot结合"><span class="nav-number">1.3.</span> <span class="nav-text">TestNG与spring或spring boot结合</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mockito"><span class="nav-number">2.</span> <span class="nav-text">mockito</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何使用Mockito？"><span class="nav-number">2.1.</span> <span class="nav-text">如何使用Mockito？</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黄上</span>
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共160.2k字</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      本站总访问量:<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+    <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNDU1Mi8xMTA5MA==">
+  <script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+  </script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+
+
+  
+
+
++ 
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title></title>
+	<link rel="stylesheet" href="/static/css/player.css">
+</head>
+
+<div id="QPlayer">
+	<div id="pContent">
+		<div id="player">
+			<span class="cover"></span>
+			<div class="ctrl">
+				<div class="musicTag marquee">
+					<strong>Title</strong>
+					 <span> - </span>
+					<span class="artist">Artist</span>
+				</div>
+				<div class="progress">
+					<div class="timer left">0:00</div>
+					<div class="contr">
+						<div class="rewind icon"></div>
+						<div class="playback icon"></div>
+						<div class="fastforward icon"></div>
+					</div>
+					<div class="right">
+						<div class="liebiao icon"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ssBtn">
+				<div class="adf"></div>
+		</div>
+	</div>
+	<ol id="playlist"></ol>
+</div>
+<script src="//cdn.bootcss.com/jQuery.Marquee/1.3.94/jquery.marquee.min.js"></script>
+<script>
+  var playlist = [];
+  
+  playlist.push({title:'佛系少女',artist:'timo',mp3:'http://link.hhtjim.com/163/539941039.mp3',cover:'https://p3.music.126.net/MdSa3oZgGXPPry9nthntEQ==/109951163156209240.jpg'})
+  
+  var isRotate = true;
+  var autoplay = false;
+</script>
+<script src="/static/js/player.js"></script>
+<script>
+  function bgChange(){
+	var lis= $('.lib');
+	for(var i=0; i<lis.length; i+=2)
+	lis[i].style.background = 'rgba(246, 246, 246, 0.5)';
+  }
+  window.onload = bgChange;
+</script>
+
+
+
+</body>
+</html>
