@@ -87,7 +87,7 @@
 
 
 
-  <meta name="keywords" content="java,持久层框架,spring," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -100,18 +100,17 @@
 
 
 
-<meta name="description" content="因为这段时间的安排是抽时间学习一波springboot架构，不仅是因为工作需要，而且也是为了学习新的架构知识，因为springcloud微服务就是基于springboot的，只有把springboot摸透了，才好去学习更加强的东西。 今天把原定计划的Redis给撸了一遍，整合springboot，分布式全局共享session，Redis数据结构等等，做了几个小exp（也就是CRUD的操作罢了哈哈）">
-<meta name="keywords" content="java,持久层框架,spring">
+<meta name="description" content="Futrue|Principle|Effort|Luck">
 <meta property="og:type" content="article">
-<meta property="og:title" content="spring-data-jpa持久层框架">
-<meta property="og:url" content="http://yoursite.com/2018/04/07/spring-data-jpa/index.html">
+<meta property="og:title" content="hibernate">
+<meta property="og:url" content="http://yoursite.com/2018/04/09/hibernate/index.html">
 <meta property="og:site_name" content="Funk Jungle">
-<meta property="og:description" content="因为这段时间的安排是抽时间学习一波springboot架构，不仅是因为工作需要，而且也是为了学习新的架构知识，因为springcloud微服务就是基于springboot的，只有把springboot摸透了，才好去学习更加强的东西。 今天把原定计划的Redis给撸了一遍，整合springboot，分布式全局共享session，Redis数据结构等等，做了几个小exp（也就是CRUD的操作罢了哈哈）">
+<meta property="og:description" content="Futrue|Principle|Effort|Luck">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-04-07T17:46:16.096Z">
+<meta property="og:updated_time" content="2018-04-09T11:48:37.289Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="spring-data-jpa持久层框架">
-<meta name="twitter:description" content="因为这段时间的安排是抽时间学习一波springboot架构，不仅是因为工作需要，而且也是为了学习新的架构知识，因为springcloud微服务就是基于springboot的，只有把springboot摸透了，才好去学习更加强的东西。 今天把原定计划的Redis给撸了一遍，整合springboot，分布式全局共享session，Redis数据结构等等，做了几个小exp（也就是CRUD的操作罢了哈哈）">
+<meta name="twitter:title" content="hibernate">
+<meta name="twitter:description" content="Futrue|Principle|Effort|Luck">
 
 
 
@@ -141,7 +140,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/07/spring-data-jpa/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/09/hibernate/"/>
 
 
 
@@ -149,7 +148,7 @@
 
 
 
-  <title>spring-data-jpa持久层框架 | Funk Jungle</title>
+  <title>hibernate | Funk Jungle</title>
   
 
 
@@ -320,7 +319,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/07/spring-data-jpa/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/09/hibernate/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="黄上">
@@ -337,7 +336,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">spring-data-jpa持久层框架</h1>
+          <h1 class="post-title" itemprop="name headline">hibernate</h1>
         
 
         <div class="post-meta">
@@ -349,8 +348,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-07T23:30:44+08:00">
-                2018-04-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-09T19:48:37+08:00">
+                2018-04-09
               </time>
             
 
@@ -359,28 +358,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JAVA/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -414,67 +391,7 @@
       
 
       
-        <p>因为这段时间的安排是抽时间学习一波springboot架构，不仅是因为工作需要，而且也是为了学习新的架构知识，因为springcloud微服务就是基于springboot的，只有把springboot摸透了，才好去学习更加强的东西。</p>
-<p>今天把原定计划的Redis给撸了一遍，整合springboot，分布式全局共享session，Redis数据结构等等，做了几个小exp（也就是CRUD的操作罢了哈哈），剩下的时间去摸了下spring-data-jpa，不摸不要紧，tm的浪费了我半天的时间，不过也算是小有收获吧，不然岂不是亏死，接下来就把这个持久层框架的血泪踩坑经历给总结出来。<br><a id="more"></a></p>
-<p>其实JPA本身并不是一种框架，是一种规范，其全称是Java Persistence API，是是Sun官方提出的Java持久化规范，而他的出现主要是为了简化现有的持久化开发工作和整合ORM技术，并且其是在充分吸收了现有Hibernate，TopLink，JDO等ORM框架的基础上发展而来的，具有易于使用，伸缩性强等优点。</p>
-<p>而官网对spring data jpa是这么介绍的：Spring Data JPA是Spring Data系列的一部分，可以轻松实现基于JPA的存储库。该模块处理对基于JPA的数据访问层的增强的支持。这使得使用数据访问技术构建Spring供电的应用程序变得更加容易。</p>
-<p>其本质就是像mybatis，hibernate那样与数据库进行交互的ORM技术，其原理就是整合了Hibernate的封装库，因为刚开始肯定要在网上找代码来看看具体逻辑到底是什么样的，这里我是以翟永超的springboot教程里面的整合spring-data-jpa这节来学习的，想学的朋友也可以直接到他的blog上去找项目来看，所有的项目的都在github上可以下载到。</p>
-<p>教程链接：<a href="http://blog.didispace.com/springbootdata2/" target="_blank" rel="noopener">http://blog.didispace.com/springbootdata2/</a></p>
-<p>首先我是先看完代码后想自己模仿着完成一个小案例，将数据存入数据库内，再把它取出来（这tm是最简单的操作了把），没想到这个框架极恶心，总之我是困在了NullPointerException上了。。。</p>
-<p>我先从他的开源项目上去分析一下他的代码。</p>
-<p>首先他是将依赖包导入到POM中，看看导入代码：</p>
-<pre><code>&lt;!-- Mysql --&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;mysql&lt;/groupId&gt;
-    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
-    &lt;version&gt;5.1.21&lt;/version&gt;
-&lt;/dependency&gt;
-&lt;!-- spring-data-jpa --&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;
-&lt;/dependency&gt;
-</code></pre><p>以MySQL数据库为例，先引入MySQL连接的依赖包，然后直接在application.properties中配置数据源的参数信息。</p>
-<pre><code>spring.datasource.url=jdbc:mysql://localhost:3306/test
-spring.datasource.username=dbuser
-spring.datasource.password=dbpass
-spring.datasource.driver-class-name=com.mysql.jdbc.Driver
-
-spring.jpa.properties.hibernate.hbm2ddl.auto=create
-</code></pre><p>spring.jpa.properties.hibernate.hbm2ddl.auto是hibernate的配置属性，其主要作用是：自动创建、更新、验证数据库表结构。该参数的几种配置如下：<br>create：每次加载hibernate时都会删除上一次的生成的表，然后根据你的model类再重新来生成新表，哪怕两次没有任何改变也要这样执行，这就是导致数据库表数据丢失的一个重要原因。</p>
-<p>create-drop：每次加载hibernate时根据model类生成表，但是sessionFactory一关闭,表就自动删除。</p>
-<p>update：最常用的属性，第一次加载hibernate时根据model类会自动建立起表的结构（前提是先建立好数据库），以后加载hibernate时根据model类自动更新表结构，即使表结构改变了但表中的行仍然存在不会删除以前的行。要注意的是当部署到服务器后，表结构是不会被马上建立起来的，是要等应用第一次运行起来后才会。</p>
-<p>validate：每次加载hibernate时，验证创建数据库表结构，只会和数据库中的表进行比较，不会创建新表，但是会插入新值。</p>
-<p>我在后面的时候要测试时发现数据在程序中已经执行成功存入数据库了，可是在查看数据库的时候却没有发现生成响应的表，我后来发现我用了create-drop这个参数，因为我用testNG测的，测试模块一结束，sessionFactory就关闭了，所以生成的表也就自动删除了，所以我这里改成create，这样数据导入的时候，我们可以在数据库里面看到相应的表生成。</p>
-<p>如果是在本机上进行调试，则url可以写成jdbc:mysql:///test也可以。。。<br>注意test是你的数据库名字，如果没有这个数据库就会报mysql错误，我刚开始也是以为会自动建库，小失误。<br>事先要把这个test库给建立起来，mysql如何建库这个不说了吧。。</p>
-<p>配置好后，这里先来看看一些jpa的基本注解，我们会用这些注解来写案例：</p>
-<ol>
-<li><p>@Entity ：修饰实体类，指明该类将映射到指定的数据表，例如：Customer 类默认的数据表名为 customer</p>
-</li>
-<li><p>@Table ：当实体类与映射的数据库表名不同名时需要使用 @Table 注解，该注解与 @Entity 注解并列使用，使用其 name 属性指明数据库的表名<br>@Table(name = “JPA_CUSTOMER表名”)</p>
-</li>
-<li><p>@Id ：标识该属性为主键，一般标注在该属性的 getter 方法上</p>
-</li>
-<li><p>@GeneratedValue ：标注主键的生成策略，通过其 strategy 属性。通常与 @Id 注解一起使用。默认情况下 JPA 会自动选择一个最适合底层数据库的主键生成策略，MySQL 默认为 AUTO，常用策略有：<br>–IDENTITY：采用数据库 ID自增长的方式来自增主键字段，Oracle 不支持这种方式；</p>
-</li>
-</ol>
-<p>–AUTO： JPA自动选择合适的策略，是默认选项；</p>
-<p>–SEQUENCE：通过序列产生主键，通过 @SequenceGenerator 注解指定序列名，MySql 不支持这种方式</p>
-<p>–TABLE：通过表产生主键，框架借由表模拟序列产生主键，使用该策略可以使应用更易于数据库移植</p>
-<p>例：@GenerateValue（strategy=GenerationType.AUTO）,写在id属性的上面，主键策略。</p>
-<ol>
-<li><p>@Basic ：用于没有任何标注的 getXxx() 方法，默认即为 @Basic,所以若一个 getter 方法无任何注解，可以使用 @Basic 注解，也可以不使用</p>
-</li>
-<li><p>@Column ：当实体的属性与其映射的数据表的列不同名时使用，一般用于 getter 方法上。其 name 属性用来指明此属性在数据表中对应的列名；unique 属性指明是否为唯一约束；nullable 属性用来指明是否可以为空，false 为不能为空；length 属性指明此列的长度。<br>通常写在普通属性上：@Column（name=”LAST_NAME”,length=50,nullable=false）<br>nullable表示不允许为空。</p>
-</li>
-<li><p>@Transient ：标注此注解后在创建数据表的时候将会忽略该属性  Customer 类并没有 info 这个属性，所以数据库中也不应该有 info 这个字段</p>
-</li>
-<li><p>@Temporal ：向数据库映射日期（Date）属性时用来调整映射的精度。Date 类型的数据有 DATE, TIME, 和 TIMESTAMP 三种精度(即单纯的日期,时间,或者两者兼备).</p>
-</li>
-</ol>
-<p>Birth 属性应该使用 DATE 类型(生日只具体到日即可，如：2015-10-22)，而 CreateTime 应该使用 TIMESTAMP 类型(创建时间应该具体到秒，如：2017-10-11 22:39:13)</p>
-<p>注解讲完后，可以开始进入项目了，</p>
-
+        
       
     </div>
     
@@ -518,16 +435,6 @@ spring.jpa.properties.hibernate.hbm2ddl.auto=create
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/java/" rel="tag"># java</a>
-          
-            <a href="/tags/持久层框架/" rel="tag"># 持久层框架</a>
-          
-            <a href="/tags/spring/" rel="tag"># spring</a>
-          
-        </div>
-      
 
       
       
@@ -537,8 +444,8 @@ spring.jpa.properties.hibernate.hbm2ddl.auto=create
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/05/java-新测试框架/" rel="next" title="JAVA新测试框架--testng和mockito">
-                <i class="fa fa-chevron-left"></i> JAVA新测试框架--testng和mockito
+              <a href="/2018/04/08/mybatis/" rel="next" title="Mybatis在spring和springboot框架中的操作总结">
+                <i class="fa fa-chevron-left"></i> Mybatis在spring和springboot框架中的操作总结
               </a>
             
           </div>
@@ -649,7 +556,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -785,7 +692,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共162.1k字</span>
+  <span class="post-count">博客全站共163.9k字</span>
 </div>
 
         

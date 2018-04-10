@@ -87,7 +87,7 @@
 
 
 
-  <meta name="keywords" content="大数据,java,spring,springboot," />
+  <meta name="keywords" content="spring,springboot,mybatis," />
 
 
 
@@ -100,22 +100,20 @@
 
 
 
-<meta name="description" content="Thymeleaf在实际的公司开发中，传统的JSP技术由于前段后端结合太过紧密，而且后端人员需要随时测试数据能不能渲染在界面上，这就需要前端与后端部门过于紧耦合，不利于实际开发，反而是模板引擎用的较多（当然也不排除一些老的公司需要维护公司以前的动态JSP网页） thymeleaf最大的优势后缀为html,就是只需要浏览器就可以展现页面了,还有就是thymeleaf可以很好的和spring集成. T">
-<meta name="keywords" content="大数据,java,spring,springboot">
+<meta name="description" content="Mybatis在我上个项目中结合spring+springMVC框架的SSM架构中有用到，Mybatis作为一个半自动化的ORM框架，在编程的难度对比上我觉得比Hibernate的性能要好，对简单数据做操作时当然是Hibernate更为方便因为不用写SQL语句，但是在操作的自由性和性能的比较上我觉得mybatis要更好些，但是我最近又系统学习了spring-data-jpa框架，我觉得这个框架用来">
+<meta name="keywords" content="spring,springboot,mybatis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spring Boot之路(三)--Thymeleaf模板引擎">
-<meta property="og:url" content="http://yoursite.com/2018/03/24/springboot03/index.html">
+<meta property="og:title" content="Mybatis在spring和springboot框架中的操作总结">
+<meta property="og:url" content="http://yoursite.com/2018/04/08/mybatis/index.html">
 <meta property="og:site_name" content="Funk Jungle">
-<meta property="og:description" content="Thymeleaf在实际的公司开发中，传统的JSP技术由于前段后端结合太过紧密，而且后端人员需要随时测试数据能不能渲染在界面上，这就需要前端与后端部门过于紧耦合，不利于实际开发，反而是模板引擎用的较多（当然也不排除一些老的公司需要维护公司以前的动态JSP网页） thymeleaf最大的优势后缀为html,就是只需要浏览器就可以展现页面了,还有就是thymeleaf可以很好的和spring集成. T">
+<meta property="og:description" content="Mybatis在我上个项目中结合spring+springMVC框架的SSM架构中有用到，Mybatis作为一个半自动化的ORM框架，在编程的难度对比上我觉得比Hibernate的性能要好，对简单数据做操作时当然是Hibernate更为方便因为不用写SQL语句，但是在操作的自由性和性能的比较上我觉得mybatis要更好些，但是我最近又系统学习了spring-data-jpa框架，我觉得这个框架用来">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2018/03/24/springboot03/p1.png">
-<meta property="og:image" content="http://yoursite.com/2018/03/24/springboot03/p2.png">
-<meta property="og:image" content="http://yoursite.com/2018/03/24/springboot03/p3.png">
-<meta property="og:updated_time" content="2018-03-24T18:35:30.820Z">
+<meta property="og:image" content="http://yoursite.com/2018/04/08/mybatis/p1.png">
+<meta property="og:updated_time" content="2018-04-10T10:54:24.772Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Spring Boot之路(三)--Thymeleaf模板引擎">
-<meta name="twitter:description" content="Thymeleaf在实际的公司开发中，传统的JSP技术由于前段后端结合太过紧密，而且后端人员需要随时测试数据能不能渲染在界面上，这就需要前端与后端部门过于紧耦合，不利于实际开发，反而是模板引擎用的较多（当然也不排除一些老的公司需要维护公司以前的动态JSP网页） thymeleaf最大的优势后缀为html,就是只需要浏览器就可以展现页面了,还有就是thymeleaf可以很好的和spring集成. T">
-<meta name="twitter:image" content="http://yoursite.com/2018/03/24/springboot03/p1.png">
+<meta name="twitter:title" content="Mybatis在spring和springboot框架中的操作总结">
+<meta name="twitter:description" content="Mybatis在我上个项目中结合spring+springMVC框架的SSM架构中有用到，Mybatis作为一个半自动化的ORM框架，在编程的难度对比上我觉得比Hibernate的性能要好，对简单数据做操作时当然是Hibernate更为方便因为不用写SQL语句，但是在操作的自由性和性能的比较上我觉得mybatis要更好些，但是我最近又系统学习了spring-data-jpa框架，我觉得这个框架用来">
+<meta name="twitter:image" content="http://yoursite.com/2018/04/08/mybatis/p1.png">
 
 
 
@@ -145,7 +143,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/03/24/springboot03/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/08/mybatis/"/>
 
 
 
@@ -153,7 +151,7 @@
 
 
 
-  <title>Spring Boot之路(三)--Thymeleaf模板引擎 | Funk Jungle</title>
+  <title>Mybatis在spring和springboot框架中的操作总结 | Funk Jungle</title>
   
 
 
@@ -324,7 +322,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/24/springboot03/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/mybatis/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="黄上">
@@ -341,7 +339,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Spring Boot之路(三)--Thymeleaf模板引擎</h1>
+          <h1 class="post-title" itemprop="name headline">Mybatis在spring和springboot框架中的操作总结</h1>
         
 
         <div class="post-meta">
@@ -353,8 +351,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-24T13:23:22+08:00">
-                2018-03-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T23:53:43+08:00">
+                2018-04-08
               </time>
             
 
@@ -376,8 +374,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/springboot/" itemprop="url" rel="index">
-                    <span itemprop="name">springboot</span>
+                  <a href="/categories/JAVA/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA</span>
                   </a>
                 </span>
 
@@ -418,345 +416,460 @@
       
 
       
-        <h1 id="Thymeleaf"><a href="#Thymeleaf" class="headerlink" title="Thymeleaf"></a>Thymeleaf</h1><p>在实际的公司开发中，传统的JSP技术由于前段后端结合太过紧密，而且后端人员需要随时测试数据能不能渲染在界面上，这就需要前端与后端部门过于紧耦合，不利于实际开发，反而是模板引擎用的较多（当然也不排除一些老的公司需要维护公司以前的动态JSP网页）</p>
-<p>thymeleaf最大的优势后缀为html,就是只需要浏览器就可以展现页面了,还有就是thymeleaf可以很好的和spring集成.</p>
-<p>Thymeleaf是一个XML/XHTML/HTML5模板引擎，可用于Web与非Web环境中的应用开发。它是一个开源的Java库，基于Apache License 2.0许可，由Daniel Fernández创建，该作者还是Java加密库Jasypt的作者。</p>
-<a id="more"></a>
-<p>Thymeleaf提供了一个用于整合Spring MVC的可选模块，在应用开发中，你可以使用Thymeleaf来完全代替JSP或其他模板引擎，如Velocity、FreeMarker等。Thymeleaf的主要目标在于提供一种可被浏览器正确显示的、格式良好的模板创建方式，因此也可以用作静态建模。你可以使用它创建经过验证的XML与HTML模板。相对于编写逻辑或代码，开发者只需将标签属性添加到模板中即可。接下来，这些标签属性就会在DOM（文档对象模型）上执行预先制定好的逻辑。</p>
-<h1 id="静态资源访问"><a href="#静态资源访问" class="headerlink" title="静态资源访问"></a>静态资源访问</h1><p>在我们开发Web应用的时候，需要引用大量的js、css、图片等静态资源。</p>
-<h1 id="默认配置"><a href="#默认配置" class="headerlink" title="默认配置"></a>默认配置</h1><p>Spring Boot默认提供静态资源目录位置需置于classpath下，目录名需符合如下规则：</p>
-<pre><code>/static
-/public
-/resources
-/META-INF/resources
-</code></pre><p>举例：我们可以在src/main/resources/目录下创建static，在该位置放置一个图片文件。启动程序后，尝试访问<a href="http://localhost:8088/D.jpg。如能显示图片，配置成功。" target="_blank" rel="noopener">http://localhost:8088/D.jpg。如能显示图片，配置成功。</a></p>
-<p>在之前的示例中，我们都是通过@RestController来处理请求，所以返回的内容为json对象。那么如果需要渲染html页面的时候，要如何实现呢？</p>
-<p>在动态HTML实现上Spring Boot依然可以完美胜任，并且提供了多种模板引擎的默认配置支持，所以在推荐的模板引擎下，我们可以很快的上手开发动态网站。</p>
-<p>Spring Boot提供了默认配置的模板引擎（抛弃传统的JSP动态网页）主要有以下几种：</p>
-<p>Thymeleaf<br>FreeMarker<br>Velocity<br>Groovy<br>Mustache</p>
-<p>Spring Boot建议使用这些模板引擎，避免使用<strong>JSP</strong>，若一定要使用JSP将无法实现Spring Boot的多种特性，具体可见后文：支持JSP的配置</p>
-<p>当你使用上述模板引擎中的任何一个，它们默认的模板配置路径为：src/main/resources/templates。当然也可以修改这个路径，具体如何修改，可在后续各模板引擎的配置属性中查询并修改。</p>
-<p>示例：</p>
-<pre><code>&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th th:text=&quot;#{msgs.headers.name}&quot;&gt;Name&lt;/td&gt;
-      &lt;th th:text=&quot;#{msgs.headers.price}&quot;&gt;Price&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr th:each=&quot;prod : ${allProducts}&quot;&gt;
-      &lt;td th:text=&quot;${prod.name}&quot;&gt;Oranges&lt;/td&gt;
-      &lt;td th:text=&quot;${#numbers.formatDecimal(prod.price,1,2)}&quot;&gt;0.99&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-</code></pre><p>可以看到Thymeleaf主要以<strong>属性</strong>的方式加入到html标签中，浏览器在解析html时，当检查到没有的属性时候会忽略，所以Thymeleaf的模板可以通过浏览器直接打开展现，这样非常有利于前后端的分离。</p>
-<p>在Spring Boot中使用Thymeleaf，只需要引入下面依赖，并在默认的模板路径src/main/resources/templates下编写模板文件即可完成。</p>
-<pre><code>&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;
-&lt;/dependency&gt;
-</code></pre><p>在完成配置之后，举一个简单的例子，在快速入门工程的基础上，举一个简单的示例来通过Thymeleaf渲染一个页面。</p>
-<pre><code>package com.example.springboot.controller;
+        <p>Mybatis在我上个项目中结合spring+springMVC框架的SSM架构中有用到，Mybatis作为一个半自动化的ORM框架，在编程的难度对比上我觉得比Hibernate的性能要好，对简单数据做操作时当然是Hibernate更为方便因为不用写SQL语句，但是在操作的自由性和性能的比较上我觉得mybatis要更好些，但是我最近又系统学习了spring-data-jpa框架，我觉得这个框架用来写数据交互真的要比Mybatis或者Hibernate爽太多了。。。（个人意见，可能有一部分是因为结合了Springboot）<br><a id="more"></a></p>
+<p>mybatis是一个半自动化的orm框架，所谓半自动化就是mybaitis只支持数据库查出的数据映射到pojo类上，而实体到数据库的映射需要自己编写sql语句实现，相较于hibernate这种完全自动化的框架我更喜欢mybatis，mybatis非常灵活，可以随心所欲的编写自己的sql语句来实现复杂的数据库操作，还会有一种畅酣淋漓的编写sql语句的潇洒感，但是以前的mybaits需要一大堆的配置文件，以及各种mapper和dao和实体的关联，导致使用mybatis还是不够简洁，后来mybatis也发现了这个弊端，开发了mybatis generator工具来自动化生成实体类、mapper配置文件、dao层代码来减轻开发工作量，在后期也是实现了抛弃mapper配置文件基于注解的开发模式，直到现在，mybatis看spring boot这么火热，也开发了一套基于spring boot的模式：<strong>mybatis-spring-boot-starter</strong>。<br>spring boot简约轻巧的风格正在逐渐被越来越多的厂商及开发者所认可，包括阿里的开源RPC框架dubbo也准备开发一套对spring boot应用的支持（dubbo-spring-boot-starter启动配置模块）</p>
+<p>在springboot框架下开发项目很爽，因为需要集成的基本单元已经帮你集成好了，因为使用了java配置的原因，所以零XML配置使得整个开发过程很放松，让工程师能够更好的将精力集中在编写实际的业务逻辑上。</p>
+<p>Mybatis+Spring+SpringMVC的SSM架构使用mybatis generator工具来简化开发。<br>Mybatis+Springboot+SpringMVC的新架构就采用mybatis-spring-boot-starter。</p>
+<h1 id="spring-mybatis"><a href="#spring-mybatis" class="headerlink" title="spring+mybatis"></a>spring+mybatis</h1><p>我这里从最传统的spring+Mybatis项目开始讲起，因为要产生对比才能更好的理解新架构对开发的改变！</p>
+<h2 id="传统模式"><a href="#传统模式" class="headerlink" title="传统模式"></a>传统模式</h2><p>在原先的项目中简单分析下mybatis与数据库在DAO层进行交互的一般流程：</p>
+<p>第一步：首先先编写实体类，满足javaBean规范（有包，实现序列化接口，有无参数构造器，各个属性有相应的get/set方法），实体类对应数据库中的表，这里我用的是mysql数据库来做项目。</p>
+<p>第二步：编写DAO接口，里面有一些对这个表所做的操作，具体的实现在mapper文件中写sql语句。</p>
+<p>第三步：写mapper.xml映射文件，主要是映射实体类，和实现DAO接口的逻辑<br>并且在配置文件中要进行org.mybatis.spring.SqlSessionFactoryBean的配置，指定所有mapper文件所存在的包名<br>mapper文件的xml头格式也有要求：<br>&lt;?xml version=”1.0” encoding=”UTF-8” ?&gt;<br>&lt;!DOCTYPE mapper PUBLIC “-//ibatis.apache.org//DTD Mapper 3.0//EN”<br> “<a href="http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd&quot;&gt;" target="_blank" rel="noopener">http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd&quot;&gt;</a><br>…</p>
+<p>这是传统的模式与数据库进行交互，因为要编写大量的实体类entity，Dao接口，mapper文件，很难管理且开发太过恶心。</p>
+<p>后来出现了mybatis generator工具来自动来自动生成这些东西，居然还有基于注解的去mapper化开发模式，这也是我今天总结的时候才发现的，这不是学jpa吗？</p>
+<p>先来看看这个mybatis generator工具到底是啥玩意。。</p>
+<h2 id="mybatis-generator工具模式-’"><a href="#mybatis-generator工具模式-’" class="headerlink" title="mybatis generator工具模式 ##’"></a>mybatis generator工具模式 ##’</h2><p>mybatis generator工具官网:<a href="http://mbg.cndocs.ml/" target="_blank" rel="noopener">http://mbg.cndocs.ml/</a><br>mybatis-generator 是一个代码自动生成工具，手动写入一个个实体类和mapper还有xml配置文件感觉会很麻烦，使用mybatis generator只需要简单的配置就能完成我们的工作，这里简述一下开发步骤。</p>
+<p>MyBatis Generator (MBG) 是一个Mybatis的代码生成器 MyBatis 和 iBATIS. 他可以生成Mybatis各个版本的代码，和iBATIS 2.2.0版本以后的代码。 他可以内省数据库的表（或多个表）然后生成可以用来访问（多个）表的基础对象。 这样和数据库表进行交互时不需要创建对象和配置文件。 MBG的解决了对数据库操作有最大影响的一些简单的CRUD（插入，查询，更新，删除）操作。 您仍然需要对联合查询和存储过程手写SQL和对象。</p>
+<p>mybatis generator的原理就是根据你数据库中已有的表自动生成对应的实体类，mapper以及DAO接口，我们先来操作一下(表已经事先在数据库中创建好了)</p>
+<p>第一步：导入相关的jar包</p>
+<pre><code>&lt;properties&gt;
+    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+  &lt;/properties&gt;
+  &lt;dependencies&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
+      &lt;artifactId&gt;jstl&lt;/artifactId&gt;
+      &lt;version&gt;1.2&lt;/version&gt;
+      &lt;scope&gt;provided&lt;/scope&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;javax.servlet.jsp&lt;/groupId&gt;
+      &lt;artifactId&gt;jsp-api&lt;/artifactId&gt;
+      &lt;version&gt;2.1&lt;/version&gt;
+      &lt;scope&gt;provided&lt;/scope&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.glassfish&lt;/groupId&gt;
+      &lt;artifactId&gt;javax.annotation&lt;/artifactId&gt;
+      &lt;version&gt;3.0.1&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.glassfish&lt;/groupId&gt;
+      &lt;artifactId&gt;javax.ejb&lt;/artifactId&gt;
+      &lt;version&gt;3.0.1&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.jboss.weld&lt;/groupId&gt;
+      &lt;artifactId&gt;weld-osgi-bundle&lt;/artifactId&gt;
+      &lt;version&gt;1.0.1-SP3&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.glassfish&lt;/groupId&gt;
+      &lt;artifactId&gt;javax.servlet&lt;/artifactId&gt;
+      &lt;version&gt;3.0.1&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;!--测试框架  --&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;junit&lt;/groupId&gt;
+      &lt;artifactId&gt;junit&lt;/artifactId&gt;
+      &lt;version&gt;4.12&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;!-- Mysql --&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.mybatis&lt;/groupId&gt;
+      &lt;artifactId&gt;mybatis&lt;/artifactId&gt;
+      &lt;version&gt;3.2.7&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;!-- Mysql 依赖 --&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;mysql&lt;/groupId&gt;
+      &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+      &lt;version&gt;5.1.6&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;!--生成代码插件--&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.mybatis.generator&lt;/groupId&gt;
+        &lt;artifactId&gt;mybatis-generator-core&lt;/artifactId&gt;
+        &lt;version&gt;1.3.2&lt;/version&gt;
+        &lt;type&gt;jar&lt;/type&gt;
+    &lt;/dependency&gt;
+  &lt;/dependencies&gt;
+  &lt;build&gt;
+    &lt;plugins&gt;
+      &lt;plugin&gt;
+        &lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;
+      &lt;/plugin&gt;
+      &lt;plugin&gt;
+        &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+        &lt;configuration&gt;
+          &lt;source&gt;1.6&lt;/source&gt;
+          &lt;target&gt;1.6&lt;/target&gt;
+        &lt;/configuration&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+  &lt;/build&gt;
+</code></pre><p>第二步:新建生成代码的配置文件mybatis-generator-config.xml<br>具体更详细的各参数配置在这里：<a href="https://www.jianshu.com/p/e09d2370b796" target="_blank" rel="noopener">https://www.jianshu.com/p/e09d2370b796</a><br>注意这个文件是最坑的，一定不要设置错了，不然很尴尬。。。自动生成虽然好用，但是也要多做才能完全掌握其中奥义。</p>
+<pre><code>&lt;generatorConfiguration&gt;
+    &lt;context id=&quot;prod&quot;&gt;
+        &lt;!-- RowBounds pagination --&gt;
+        &lt;plugin type=&quot;org.mybatis.generator.plugins.RowBoundsPlugin&quot; /&gt;
+        &lt;plugin type=&quot;org.mybatis.generator.plugins.CaseInsensitiveLikePlugin&quot; /&gt;
+        &lt;plugin type=&quot;org.mybatis.generator.plugins.SerializablePlugin&quot; /&gt;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
+        &lt;commentGenerator&gt;
+            &lt;property name=&quot;suppressDate&quot; value=&quot;true&quot; /&gt;
+            &lt;property name=&quot;suppressAllComments&quot; value=&quot;true&quot; /&gt;
+        &lt;/commentGenerator&gt;
 
-@Controller
-public class IndexController {
+        &lt;!-- jdbc连接 --&gt;
+        &lt;jdbcConnection driverClass=&quot;com.mysql.jdbc.Driver&quot;
+                        connectionURL=&quot;jdbc:mysql:///test&quot; 
+                        userId=&quot;root&quot;
+                        password=&quot;294823013&quot; /&gt;
 
-    @RequestMapping(&quot;/index&quot;)
-    public String index(ModelMap map){
+        &lt;!-- 在javaModelGenerator标签下配置你需要生成的数据库实体的地址  --&gt;
+        &lt;javaModelGenerator targetPackage=&quot;com.mybatis.entity&quot;
+            targetProject=&quot;src/main/java&quot;&gt;
+            &lt;!-- 是否针对string类型的字段在set的时候进行trim调用 --&gt;
+            &lt;property name=&quot;trimStrings&quot; value=&quot;true&quot; /&gt;
+        &lt;/javaModelGenerator&gt;
 
-        map.addAttribute(&quot;hello&quot;, &quot;i love you@com&quot;);
-        return &quot;index&quot;;
+        &lt;!-- 在sqlMapGenerator标签下配置mysql的xml配置文件 --&gt;
+        &lt;sqlMapGenerator targetPackage=&quot;mappers&quot; targetProject=&quot;src/main/java&quot; /&gt;
+
+        &lt;!-- 在javaClientGenerator标签下配置mapper方法，相当于DAO接口，业务层调用里面的方法对数据库进行操作  --&gt;
+        &lt;javaClientGenerator targetPackage=&quot;com.mybatis.mapper&quot;
+            targetProject=&quot;src/main/java&quot; type=&quot;XMLMAPPER&quot; /&gt;
+
+        &lt;!-- 在table标签下配置数据库的表名和生成实体的表名，表名是koro_table，所生成的实体类是KoroTable --&gt;
+        &lt;table tableName=&quot;koro_table&quot; domainObjectName=&quot;KoroTable&quot;&gt;
+
+        &lt;/table&gt;
+
+    &lt;/context&gt;
+&lt;/generatorConfiguration&gt;
+</code></pre><p>第三步：新建批处理类main方法<br>利用mybatis generator来进行自动生成，编写</p>
+<pre><code>public class App {
+    public static void main(String[] args) {
+        args = new String[] { &quot;-configfile&quot;, &quot;src\\main\\resources\\mybatis-generator-config.xml&quot;, &quot;-overwrite&quot; };
+        ShellRunner.main(args);
     }
 }
-</code></pre><p>相应的index.html界面代码为</p>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;/meta&gt;
-&lt;title&gt;Insert title here&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;h1 th:text=&quot;${hello}&quot;&gt;Hello World&lt;/h1&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><p>启动程序后，页面输入<a href="http://localhost:8088/index，所出现的显示数据是：i" target="_blank" rel="noopener">http://localhost:8088/index，所出现的显示数据是：i</a> love you@com，并没有出现Hello World<br>展现的是IndexController中的hello的属性值，做到了不破坏HTML自身内容的数据逻辑分离。</p>
-<p>注意：我们建立模板测试或者是实际开发中，我们都需要严格遵守thymeleaf的HTML5页面规范，不然会报错<br>包括我上面写的<meta>标签则需要双标签来自正常结束才可以，否则页面将出现错误，你可以使用严格的标签，也就是每个标签都有结束标签，这种可能比较麻烦。</p>
-<p>那么如何在thymeleaf中声明使用非严格的html5规范呢？</p>
-<p>maven添加依赖</p>
+</code></pre><p>执行这个类就可以自动生成了，生成后的目录结构是这样的：<br><img src="/2018/04/08/mybatis/p1.png" alt="logo"></p>
+<p>我们会发现我们生成了两个实体对象，一个是数据库映射对象，一个是Example对象。Example对象就是为了方便我们执行sql操作的类，可以使用Example类进行数据库的条件查询。同时mybatis-generator还帮助我们生成了sql的CRUD等操作。<br>com.mybatis.mapper下的KoroTableMapper.java就是DAO接口，里面是一些crud操作</p>
+<pre><code>public interface KoroTableMapper {
+    int countByExample(KoroTableExample example);
+
+    int deleteByExample(KoroTableExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(KoroTable record);
+
+    int insertSelective(KoroTable record);
+
+    List&lt;KoroTable&gt; selectByExampleWithRowbounds(KoroTableExample example, RowBounds rowBounds);
+
+    List&lt;KoroTable&gt; selectByExample(KoroTableExample example);
+
+    KoroTable selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param(&quot;record&quot;) KoroTable record, @Param(&quot;example&quot;) KoroTableExample example);
+
+    int updateByExample(@Param(&quot;record&quot;) KoroTable record, @Param(&quot;example&quot;) KoroTableExample example);
+
+    int updateByPrimaryKeySelective(KoroTable record);
+
+    int updateByPrimaryKey(KoroTable record);
+}
+</code></pre><p>mappers目录下的是自动生成的mapper.xml文件，对应DAO接口的各个方法的实现</p>
+<pre><code>&lt;mapper namespace=&quot;com.mybatis.mapper.KoroTableMapper&quot; &gt;
+  &lt;resultMap id=&quot;BaseResultMap&quot; type=&quot;com.mybatis.entity.KoroTable&quot; &gt;
+    &lt;id column=&quot;id&quot; property=&quot;id&quot; jdbcType=&quot;INTEGER&quot; /&gt;
+    &lt;result column=&quot;NAME&quot; property=&quot;name&quot; jdbcType=&quot;VARCHAR&quot; /&gt;
+    &lt;result column=&quot;age&quot; property=&quot;age&quot; jdbcType=&quot;INTEGER&quot; /&gt;
+  &lt;/resultMap&gt;
+  &lt;sql id=&quot;Example_Where_Clause&quot; &gt;
+    &lt;where &gt;
+      &lt;foreach collection=&quot;oredCriteria&quot; item=&quot;criteria&quot; separator=&quot;or&quot; &gt;
+        &lt;if test=&quot;criteria.valid&quot; &gt;
+          &lt;trim prefix=&quot;(&quot; suffix=&quot;)&quot; prefixOverrides=&quot;and&quot; &gt;
+            &lt;foreach collection=&quot;criteria.criteria&quot; item=&quot;criterion&quot; &gt;
+              &lt;choose &gt;
+                &lt;when test=&quot;criterion.noValue&quot; &gt;
+                  and ${criterion.condition}
+                &lt;/when&gt;
+                &lt;when test=&quot;criterion.singleValue&quot; &gt;
+                  and ${criterion.condition} #{criterion.value}
+                &lt;/when&gt;
+                &lt;when test=&quot;criterion.betweenValue&quot; &gt;
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                &lt;/when&gt;
+                &lt;when test=&quot;criterion.listValue&quot; &gt;
+                  and ${criterion.condition}
+                  &lt;foreach collection=&quot;criterion.value&quot; item=&quot;listItem&quot; open=&quot;(&quot; close=&quot;)&quot; separator=&quot;,&quot; &gt;
+                    `#{listItem}`
+                  &lt;/foreach&gt;
+                &lt;/when&gt;
+              &lt;/choose&gt;
+            &lt;/foreach&gt;
+          &lt;/trim&gt;
+        &lt;/if&gt;
+      &lt;/foreach&gt;
+    &lt;/where&gt;
+  &lt;/sql&gt;
+  &lt;sql id=&quot;Update_By_Example_Where_Clause&quot; &gt;
+    &lt;where &gt;
+      &lt;foreach collection=&quot;example.oredCriteria&quot; item=&quot;criteria&quot; separator=&quot;or&quot; &gt;
+        &lt;if test=&quot;criteria.valid&quot; &gt;
+          &lt;trim prefix=&quot;(&quot; suffix=&quot;)&quot; prefixOverrides=&quot;and&quot; &gt;
+            &lt;foreach collection=&quot;criteria.criteria&quot; item=&quot;criterion&quot; &gt;
+              &lt;choose &gt;
+                &lt;when test=&quot;criterion.noValue&quot; &gt;
+                  and ${criterion.condition}
+                &lt;/when&gt;
+                &lt;when test=&quot;criterion.singleValue&quot; &gt;
+                  and ${criterion.condition} #{criterion.value}
+                &lt;/when&gt;
+                &lt;when test=&quot;criterion.betweenValue&quot; &gt;
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                &lt;/when&gt;
+                &lt;when test=&quot;criterion.listValue&quot; &gt;
+                  and ${criterion.condition}
+                  &lt;foreach collection=&quot;criterion.value&quot; item=&quot;listItem&quot; open=&quot;(&quot; close=&quot;)&quot; separator=&quot;,&quot; &gt;
+                    `#{listItem}`
+                  &lt;/foreach&gt;
+                &lt;/when&gt;
+              &lt;/choose&gt;
+            &lt;/foreach&gt;
+          &lt;/trim&gt;
+        &lt;/if&gt;
+      &lt;/foreach&gt;
+    &lt;/where&gt;
+  &lt;/sql&gt;
+  &lt;sql id=&quot;Base_Column_List&quot; &gt;
+    id, NAME, age
+  &lt;/sql&gt;
+  &lt;select id=&quot;selectByExample&quot; resultMap=&quot;BaseResultMap&quot; parameterType=&quot;com.mybatis.entity.KoroTableExample&quot; &gt;
+    select
+    &lt;if test=&quot;distinct&quot; &gt;
+      distinct
+    &lt;/if&gt;
+    &lt;include refid=&quot;Base_Column_List&quot; /&gt;
+    from koro_table
+    &lt;if test=&quot;_parameter != null&quot; &gt;
+      &lt;include refid=&quot;Example_Where_Clause&quot; /&gt;
+    &lt;/if&gt;
+    &lt;if test=&quot;orderByClause != null&quot; &gt;
+      order by ${orderByClause}
+    &lt;/if&gt;
+  &lt;/select&gt;
+  &lt;select id=&quot;selectByPrimaryKey&quot; resultMap=&quot;BaseResultMap&quot; parameterType=&quot;java.lang.Integer&quot; &gt;
+    select 
+    &lt;include refid=&quot;Base_Column_List&quot; /&gt;
+    from koro_table
+    where id = #{id,jdbcType=INTEGER}
+  &lt;/select&gt;
+  &lt;delete id=&quot;deleteByPrimaryKey&quot; parameterType=&quot;java.lang.Integer&quot; &gt;
+    delete from koro_table
+    where id = #{id,jdbcType=INTEGER}
+  &lt;/delete&gt;
+  &lt;delete id=&quot;deleteByExample&quot; parameterType=&quot;com.mybatis.entity.KoroTableExample&quot; &gt;
+    delete from koro_table
+    &lt;if test=&quot;_parameter != null&quot; &gt;
+      &lt;include refid=&quot;Example_Where_Clause&quot; /&gt;
+    &lt;/if&gt;
+  &lt;/delete&gt;
+  &lt;insert id=&quot;insert&quot; parameterType=&quot;com.mybatis.entity.KoroTable&quot; &gt;
+    insert into koro_table (id, NAME, age
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}
+      )
+  &lt;/insert&gt;
+  &lt;insert id=&quot;insertSelective&quot; parameterType=&quot;com.mybatis.entity.KoroTable&quot; &gt;
+    insert into koro_table
+    &lt;trim prefix=&quot;(&quot; suffix=&quot;)&quot; suffixOverrides=&quot;,&quot; &gt;
+      &lt;if test=&quot;id != null&quot; &gt;
+        id,
+      &lt;/if&gt;
+      &lt;if test=&quot;name != null&quot; &gt;
+        NAME,
+      &lt;/if&gt;
+      &lt;if test=&quot;age != null&quot; &gt;
+        age,
+      &lt;/if&gt;
+    &lt;/trim&gt;
+    &lt;trim prefix=&quot;values (&quot; suffix=&quot;)&quot; suffixOverrides=&quot;,&quot; &gt;
+      &lt;if test=&quot;id != null&quot; &gt;
+        `#{id,jdbcType=INTEGER},`
+      &lt;/if&gt;
+      &lt;if test=&quot;name != null&quot; &gt;
+        `#{name,jdbcType=VARCHAR},`
+      &lt;/if&gt;
+      &lt;if test=&quot;age != null&quot; &gt;
+        `#{age,jdbcType=INTEGER},`
+      &lt;/if&gt;
+    &lt;/trim&gt;
+  &lt;/insert&gt;
+  &lt;select id=&quot;countByExample&quot; parameterType=&quot;com.mybatis.entity.KoroTableExample&quot; resultType=&quot;java.lang.Integer&quot; &gt;
+    select count(*) from koro_table
+    &lt;if test=&quot;_parameter != null&quot; &gt;
+      &lt;include refid=&quot;Example_Where_Clause&quot; /&gt;
+    &lt;/if&gt;
+  &lt;/select&gt;
+  &lt;update id=&quot;updateByExampleSelective&quot; parameterType=&quot;map&quot; &gt;
+    update koro_table
+    &lt;set &gt;
+      &lt;if test=&quot;record.id != null&quot; &gt;
+        id = #{record.id,jdbcType=INTEGER},
+      &lt;/if&gt;
+      &lt;if test=&quot;record.name != null&quot; &gt;
+        NAME = #{record.name,jdbcType=VARCHAR},
+      &lt;/if&gt;
+      &lt;if test=&quot;record.age != null&quot; &gt;
+        age = #{record.age,jdbcType=INTEGER},
+      &lt;/if&gt;
+    &lt;/set&gt;
+    &lt;if test=&quot;_parameter != null&quot; &gt;
+      &lt;include refid=&quot;Update_By_Example_Where_Clause&quot; /&gt;
+    &lt;/if&gt;
+  &lt;/update&gt;
+  &lt;update id=&quot;updateByExample&quot; parameterType=&quot;map&quot; &gt;
+    update koro_table
+    set id = #{record.id,jdbcType=INTEGER},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      age = #{record.age,jdbcType=INTEGER}
+    &lt;if test=&quot;_parameter != null&quot; &gt;
+      &lt;include refid=&quot;Update_By_Example_Where_Clause&quot; /&gt;
+    &lt;/if&gt;
+  &lt;/update&gt;
+  &lt;update id=&quot;updateByPrimaryKeySelective&quot; parameterType=&quot;com.mybatis.entity.KoroTable&quot; &gt;
+    update koro_table
+    &lt;set &gt;
+      &lt;if test=&quot;name != null&quot; &gt;
+        NAME = #{name,jdbcType=VARCHAR},
+      &lt;/if&gt;
+      &lt;if test=&quot;age != null&quot; &gt;
+        age = #{age,jdbcType=INTEGER},
+      &lt;/if&gt;
+    &lt;/set&gt;
+    where id = #{id,jdbcType=INTEGER}
+  &lt;/update&gt;
+  &lt;update id=&quot;updateByPrimaryKey&quot; parameterType=&quot;com.mybatis.entity.KoroTable&quot; &gt;
+    update koro_table
+    set NAME = #{name,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  &lt;/update&gt;
+  &lt;select resultMap=&quot;BaseResultMap&quot; parameterType=&quot;com.mybatis.entity.KoroTableExample&quot; id=&quot;selectByExampleWithRowbounds&quot; &gt;
+    select
+    &lt;if test=&quot;distinct&quot; &gt;
+      distinct
+    &lt;/if&gt;
+    &lt;include refid=&quot;Base_Column_List&quot; /&gt;
+    from koro_table
+    &lt;if test=&quot;_parameter != null&quot; &gt;
+      &lt;include refid=&quot;Example_Where_Clause&quot; /&gt;
+    &lt;/if&gt;
+    &lt;if test=&quot;orderByClause != null&quot; &gt;
+      order by ${orderByClause}
+    &lt;/if&gt;
+  &lt;/select&gt;
+&lt;/mapper&gt;
+</code></pre><p><resultmap>标签中是对应数据库表的所有字段的映射等等，mybatis-generator为我们全自动化的根据数据库表结构生成实体类，DAO接口以及mapper映射，可以说是很方便。</resultmap></p>
+<h2 id="springboot与mybatis整合"><a href="#springboot与mybatis整合" class="headerlink" title="springboot与mybatis整合"></a>springboot与mybatis整合</h2><p>第一步：springboot与mybatis整合的导包：mysql连接与mybatis-spring-boot-starter即可</p>
 <pre><code>&lt;dependency&gt;
-        &lt;groupId&gt;net.sourceforge.nekohtml&lt;/groupId&gt;
-        &lt;artifactId&gt;nekohtml&lt;/artifactId&gt;
-        &lt;version&gt;1.9.22&lt;/version&gt;
+    &lt;groupId&gt;mysql&lt;/groupId&gt;
+    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
 &lt;/dependency&gt;
-</code></pre><p>application.properties属性文件中添加</p>
-<p>spring.thymeleaf.mode = LEGACYHTML5</p>
-<p>声明thymeleaf使用非严格的html即可。最后更新下maven仓库即可生效。</p>
-<h1 id="关于Thymeleaf的默认参数配置"><a href="#关于Thymeleaf的默认参数配置" class="headerlink" title="关于Thymeleaf的默认参数配置"></a>关于Thymeleaf的默认参数配置</h1><p>如有需要修改默认配置的时候，只需复制下面要修改的属性到application.properties中，并修改成需要的值，如修改模板文件的扩展名，修改默认的模板路径等。</p>
-<p>-Enable template caching.<br>spring.thymeleaf.cache=true<br>-Check that the templates location exists.<br>spring.thymeleaf.check-template-location=true<br>-Content-Type value.<br>spring.thymeleaf.content-type=text/html<br>-Enable MVC Thymeleaf view resolution.<br>spring.thymeleaf.enabled=true<br>-Template encoding.<br>spring.thymeleaf.encoding=UTF-8<br>-Comma-separated list of view names that should be excluded from resolution.<br>spring.thymeleaf.excluded-view-names=<br>-Template mode to be applied to templates. See also StandardTemplateModeHandlers.<br>spring.thymeleaf.mode=HTML5<br>-Prefix that gets prepended to view names when building a URL.<br>spring.thymeleaf.prefix=classpath:/templates/<br>-Suffix that gets appended to view names when building a URL.<br>spring.thymeleaf.suffix=.html  spring.thymeleaf.template-resolver-order= # Order of the template resolver in the chain. spring.thymeleaf.view-names= # Comma-separated list of view names that can be resolved.</p>
-<h1 id="关于Thymeleaf语法"><a href="#关于Thymeleaf语法" class="headerlink" title="关于Thymeleaf语法"></a>关于Thymeleaf语法</h1><h2 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h2><p>对于Thymeleaf语法来说，很多资料中会写应用Thymeleaf语法需要先在<html>标签中引入<br>在html中引入此命名空间，可避免编辑器出现html验证错误，虽然加不加命名空间对Thymeleaf的功能没有任何影响。</html></p>
-<pre><code>&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;
-</code></pre><p>才可以使用Thymeleaf语法，但是我在上面的案例中并没有声明html标签的属性也可以用，也让我很费解。（不过为了一些不必要的麻烦还是把这个声明加上）</p>
-<h2 id="输出内容"><a href="#输出内容" class="headerlink" title="输出内容"></a>输出内容</h2><p>例如:</p>
-<pre><code>Controller:
-    map.addAttribute(&quot;hello&quot;, &quot;i love you@com&quot;);
-HTML:
-    &lt;h1 th:text=&quot;${hello}&quot;&gt;Hello World&lt;/h1&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;
+    &lt;version&gt;1.3.1&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre><p>第二步：在application.properties文件中配置mybatis的相关项</p>
+<p>#mybatis.config-location=classpath:mybatis-config.xml</p>
+<p>#mybatis mapper文件的位置<br>mybatis.mapper-locations=classpath<em>:mapper/</em>.xml</p>
+<p>#扫描pojo类的位置,在此处指明扫描实体类的包，在mapper中就可以不用写pojo类的全路径名了<br>mybatis.type-aliases-package=com.domain</p>
+<p>jdbc.type=mysql<br>spring.datasource.url=jdbc:mysql://localhost:3306/test<br>spring.datasource.username=root<br>spring.datasource.password=294823013<br>spring.datasource.driver-class-name=com.mysql.jdbc.Driver</p>
+<p>第三步：在数据库中建立表meaage并给些数据（准备好数据库）</p>
+<p>第四步：编写实体类Message，名称与表名对应</p>
+<pre><code>public class Message {
 
-1. th:text  用来将内容输出到所在标签的body中。
-2. ${hello} 用来引用hello属性值
-3. 可以用th:utext 用来显示“unescaped ” 的html内容。(unescaped即非转义字符)
-</code></pre><p>例如：</p>
-<pre><code>&lt;p th:text=&quot;#{home.welcome}&quot;&gt;Welcome to our grocery store!&lt;/p&gt;
+    private int id;
+    private String content;
+    private String name;
+//省略get/set方法
+//添加无参构造器
 
-`#{home.welcome} 用来引入数据home对象中的 welcome属性。`
-</code></pre><h2 id="标准表达式语法"><a href="#标准表达式语法" class="headerlink" title="标准表达式语法"></a>标准表达式语法</h2><p>它们分为四类：</p>
-<p>1.变量表达式<br>2.选择或星号表达式<br>3.文字国际化表达式<br>4.URL表达式</p>
-<h3 id="变量表达式"><a href="#变量表达式" class="headerlink" title="变量表达式"></a>变量表达式</h3><p>变量表达式即OGNL表达式或Spring EL表达式(在Spring术语中也叫model attributes)。如下所示：</p>
-<p>${session.user.name}<br>${hello}</p>
-<p>它们将以HTML标签的一个属性来表示：</p>
-<pre><code>&lt;span th:text=&quot;${book.author.name}&quot;&gt;  
-&lt;li th:each=&quot;book : ${books}&quot;&gt;  
-</code></pre><h3 id="选择-星号-表达式"><a href="#选择-星号-表达式" class="headerlink" title="选择(星号)表达式"></a>选择(星号)表达式</h3><p>选择表达式很像变量表达式，不过它们用一个预先选择的对象来代替上下文变量容器(map)来执行，如下：</p>
-<p>*{customer.name}</p>
-<p>被指定的object由th:object属性定义：</p>
-<pre><code>&lt;div th:object=&quot;${book}&quot;&gt;  
-  ...  
-  &lt;span th:text=&quot;*{title}&quot;&gt;...&lt;/span&gt;  
-  ...  
-&lt;/div&gt;  
-</code></pre><h3 id="文字国际化表达式"><a href="#文字国际化表达式" class="headerlink" title="文字国际化表达式"></a>文字国际化表达式</h3><p>文字国际化表达式允许我们从一个外部文件获取区域文字信息(.properties)，用Key索引Value，还可以提供一组参数(可选).</p>
-<pre><code>`#{main.title} `
-`#{message.entrycreated(${entryId})} `
-</code></pre><p>可以在模板文件中找到这样的表达式代码：</p>
-<pre><code>&lt;table&gt;  
-  ...  
-  &lt;th th:text=&quot;#{header.address.city}&quot;&gt;...&lt;/th&gt;  
-  &lt;th th:text=&quot;#{header.address.country}&quot;&gt;...&lt;/th&gt;  
-  ...  
-&lt;/table&gt; 
-</code></pre><h3 id="URL表达式"><a href="#URL表达式" class="headerlink" title="URL表达式"></a>URL表达式</h3><p>URL表达式指的是把一个有用的上下文或回话信息添加到URL，这个过程经常被叫做URL重写。<br>@{/order/list}</p>
-<p>URL还可以设置参数：<br>@{/order/details(id=${orderId})}</p>
-<p>相对路径：<br>@{../documents/report}</p>
-<p>让我们看这些表达式：</p>
-<pre><code>&lt;form th:action=&quot;@{/createOrder}&quot;&gt;  
-&lt;a href=&quot;main.html&quot; th:href=&quot;@{/main}&quot;&gt;
-</code></pre><p>变量表达式和星号表达有什么区别吗？</p>
-<p>如果不考虑上下文的情况下，两者没有区别；星号语法评估在选定对象上表达，而不是整个上下文<br>什么是选定对象？就是父标签的值，如下：（相当于星号表达式会去全局中找这个属性，如果找不到则默认不显示）</p>
-<pre><code>&lt;div th:object=&quot;${session.user}&quot;&gt;
-   &lt;p&gt;Name: &lt;span th:text=&quot;*{firstName}&quot;&gt;Sebastian&lt;/span&gt;.&lt;/p&gt;
-   &lt;p&gt;Surname: &lt;span th:text=&quot;*{lastName}&quot;&gt;Pepper&lt;/span&gt;.&lt;/p&gt;
-   &lt;p&gt;Nationality: &lt;span th:text=&quot;*{nationality}&quot;&gt;Saturn&lt;/span&gt;.&lt;/p&gt;
-&lt;/div&gt;
-</code></pre><p>完全等价于</p>
-<pre><code>&lt;div th:object=&quot;${session.user}&quot;&gt;
-     &lt;p&gt;Name: &lt;span th:text=&quot;${session.user.firstName}&quot;&gt;Sebastian&lt;/span&gt;.&lt;/p&gt;
-     &lt;p&gt;Surname: &lt;span th:text=&quot;${session.user.lastName}&quot;&gt;Pepper&lt;/span&gt;.&lt;/p&gt;
-     &lt;p&gt;Nationality: &lt;span th:text=&quot;${session.user.nationality}&quot;&gt;Saturn&lt;/span&gt;.&lt;/p&gt;
-&lt;/div&gt;
-</code></pre><p>当然，美元符号和星号语法可以混合使用：</p>
-<pre><code>&lt;div th:object=&quot;${session.user}&quot;&gt;
-      &lt;p&gt;Name: &lt;span th:text=&quot;*{firstName}&quot;&gt;Sebastian&lt;/span&gt;.&lt;/p&gt;
-      &lt;p&gt;Surname: &lt;span th:text=&quot;${session.user.lastName}&quot;&gt;Pepper&lt;/span&gt;.&lt;/p&gt;
-      &lt;p&gt;Nationality: &lt;span th:text=&quot;*{nationality}&quot;&gt;Saturn&lt;/span&gt;.&lt;/p&gt;
-&lt;/div&gt;
-</code></pre><h2 id="表达式支持的语法"><a href="#表达式支持的语法" class="headerlink" title="表达式支持的语法"></a>表达式支持的语法</h2><ul>
-<li>字面（Literals）</li>
-</ul>
-<p>文本文字（Text literals）: ‘one text’, ‘Another one!’,…<br>数字文本（Number literals）: 0, 34, 3.0, 12.3,…<br>布尔文本（Boolean literals）: true, false<br>空（Null literal）: null<br>文字标记（Literal tokens）: one, sometext, main,…</p>
-<ul>
-<li>文本操作（Text operations）</li>
-</ul>
-<p>字符串连接(String concatenation): +<br>文本替换（Literal substitutions）: |The name is ${name}|</p>
-<ul>
-<li>算术运算（Arithmetic operations）</li>
-</ul>
-<p>二元运算符（Binary operators）: +, -, *, /, %<br>减号（单目运算符）Minus sign (unary operator): -</p>
-<ul>
-<li>布尔操作（Boolean operations）</li>
-</ul>
-<p>二元运算符（Binary operators）:and, or<br>布尔否定（一元运算符）Boolean negation (unary operator):!, not</p>
-<ul>
-<li>比较和等价(Comparisons and equality)</li>
-</ul>
-<p>比较（Comparators）: &gt;, &lt;, &gt;=, &lt;= (gt, lt, ge, le)<br>等值运算符（Equality operators）:==, != (eq, ne)</p>
-<ul>
-<li>条件运算符（Conditional operators）</li>
-</ul>
-<p>If-then: (if) ? (then)<br>If-then-else: (if) ? (then) : (else)<br>Default: (value) ?: (defaultvalue)</p>
-<p>所有这些特征可以被组合并嵌套：</p>
-<pre><code>&apos;User is of type &apos; + (${user.isAdmin()} ? &apos;Administrator&apos; : (${user.type} ?: &apos;Unknown&apos;))
-</code></pre><h2 id="常用th标签都有那些？"><a href="#常用th标签都有那些？" class="headerlink" title="常用th标签都有那些？"></a>常用th标签都有那些？</h2><p><img src="/2018/03/24/springboot03/p1.png" alt="logo"><br><img src="/2018/03/24/springboot03/p2.png" alt="logo"><br><img src="/2018/03/24/springboot03/p3.png" alt="logo"></p>
-<h2 id="几种常用的使用方法"><a href="#几种常用的使用方法" class="headerlink" title="几种常用的使用方法"></a>几种常用的使用方法</h2><p>几种Thymeleaf在实际开发中的应用（需要掌握的）</p>
-<ul>
-<li><p>赋值、字符串拼接</p>
-<p>  </p><p th:text="${collect.description}">description</p><br>  <span th:text="'Welcome to our application, ' + ${user.name} + '!'"><p></p>
-</span></li>
-</ul>
-<p>注意：th:text=””,双引号里面才是正确输出的内容，拼接的字符串要用‘’单引号，<br>也有更加简易的拼接字符串的方法，用||符号</p>
-<pre><code>&lt;h1 th:text=&quot;|hello,*{hello}|&quot;&gt;Hello World&lt;/h1&gt;
-</code></pre><ul>
-<li>条件判断 If/Unless</li>
-</ul>
-<p>Thymeleaf中使用th:if和th:unless属性进行条件判断，下面的例子中，<a>标签只有在th:if中条件成立时才显示：</a></p>
-<pre><code>&lt;a th:if=&quot;${myself==&apos;yes&apos;}&quot; &gt;&lt;/a&gt;
-&lt;a th:unless=${session.user != null} th:href=&quot;@{/login}&quot; &gt;Login&lt;/a&gt;
-</code></pre><p>th:unless于th:if恰好相反，只有表达式中的条件不成立，才会显示其内容。</p>
-<p>也可以使用 (if) ? (then) : (else) 这种语法来判断显示的内容</p>
-<ul>
-<li><p>for 循环</p>
-<pre><code>&lt;tr  th:each=&quot;collect,iterStat : ${collects}&quot;&gt; 
-   &lt;th scope=&quot;row&quot; th:text=&quot;${collect.id}&quot;&gt;1&lt;/th&gt;
-   &lt;td &gt;
-      &lt;img th:src=&quot;${collect.webLogo}&quot;/&gt;
-   &lt;/td&gt;
-   &lt;td th:text=&quot;${collect.url}&quot;&gt;Mark&lt;/td&gt;
-   &lt;td th:text=&quot;${collect.title}&quot;&gt;Otto&lt;/td&gt;
-   &lt;td th:text=&quot;${collect.description}&quot;&gt;@mdo&lt;/td&gt;
-   &lt;td th:text=&quot;${terStat.index}&quot;&gt;index&lt;/td&gt;
-&lt;/tr&gt;
-</code></pre></li>
-</ul>
-<p>iterStat称作状态变量，属性有：</p>
-<p>index:当前迭代对象的index（从0开始计算）<br>count: 当前迭代对象的index(从1开始计算)<br>size:被迭代对象的大小<br>current:当前迭代变量<br>even/odd:布尔值，当前循环是否是偶数/奇数（从0开始计算）<br>first:布尔值，当前循环是否是第一个<br>last:布尔值，当前循环是否是最后一个</p>
-<ul>
-<li>URL</li>
-</ul>
-<p>URL在Web应用模板中占据着十分重要的地位，需要特别注意的是Thymeleaf对于URL的处理是通过语法@{…}来处理的。<br>如果需要Thymeleaf对URL进行渲染，那么务必使用th:href，th:src等属性，下面是一个例子</p>
-<pre><code>&lt;!-- Will produce &apos;http://localhost:8080/standard/unread&apos; (plus rewriting) --&gt;
- &lt;a  th:href=&quot;@{/standard/{type}(type=${type})}&quot;&gt;view&lt;/a&gt;
+}
+</code></pre><p>第五步：编写Dao接口</p>
+<pre><code>//加上该注解才能使用@MapperScan扫描到
+@Mapper
+public interface MessageDao {
 
-&lt;!-- Will produce &apos;/gtvg/order/3/details&apos; (plus rewriting) --&gt;
-&lt;a href=&quot;details.html&quot; th:href=&quot;@{/order/{orderId}/details(orderId=${o.id})}&quot;&gt;view&lt;/a&gt;
-</code></pre><p>设置背景</p>
-<pre><code>&lt;div th:style=&quot;&apos;background:url(&apos; + @{/&lt;path-to-image&gt;} + &apos;);&apos;&quot;&gt;&lt;/div&gt;
-</code></pre><p>根据属性值改变背景</p>
-<pre><code>&lt;div class=&quot;media-object resource-card-image&quot;  th:style=&quot;&apos;background:url(&apos; + @{(${collect.webLogo}==&apos;&apos; ? &apos;img/favicon.png&apos; : ${collect.webLogo})} + &apos;)&apos;&quot; &gt;&lt;/div&gt;
-</code></pre><p>几点说明：</p>
-<p>上例中URL最后的(orderId=${o.id}) 表示将括号内的内容作为URL参数处理，该语法避免使用字符串拼接，大大提高了可读性<br>@{…}表达式中可以通过{orderId}访问Context中的orderId变量<br>@{/order}是Context相关的相对路径，在渲染时会自动添加上当前Web应用的Context名字，假设context名字为app，那么结果应该是/app/order</p>
-<ul>
-<li>内联js</li>
-</ul>
-<p>内联文本：[[…]]内联文本的表示方式，使用时，必须先用th:inline=”text/javascript/none”激活，th:inline可以在父级标签内使用，甚至作为body的标签。内联文本尽管比th:text的代码少，不利于原型显示。</p>
-<pre><code>&lt;script th:inline=&quot;javascript&quot;&gt;
-/*&lt;![CDATA[*/
-...
-var username = /*[[${sesion.user.name}]]*/ &apos;Sebastian&apos;;
-var size = /*[[${size}]]*/ 0;
-...
-/*]]&gt;*/
-&lt;/script&gt;
-</code></pre><p>js附加代码：</p>
-<pre><code>/*[+
-var msg = &apos;This is a working application&apos;;
- +]*/
-</code></pre><p>js移除代码：</p>
-<pre><code>/*[- */
-var msg = &apos;This is a non-working template&apos;;
-/* -]*/
-</code></pre><ul>
-<li>内嵌变量</li>
-</ul>
-<p>为了模板更加易用，Thymeleaf还提供了一系列Utility对象（内置于Context中），可以通过#直接访问：</p>
-<p>dates ： java.util.Date的功能方法类。<br>calendars : 类似#dates，面向java.util.Calendar<br>numbers : 格式化数字的功能方法类<br>strings : 字符串对象的功能类，contains,startWiths,prepending/appending等等。<br>objects: 对objects的功能类操作。<br>bools: 对布尔值求值的功能方法。<br>arrays：对数组的功能类方法。<br>lists: 对lists功能类方法<br>sets<br>maps<br>…<br>下面用一段代码来举例一些常用的方法：</p>
-<p>1.dates</p>
-<pre><code>/*
- * Format date with the specified pattern
- * Also works with arrays, lists or sets
- */
-${#dates.format(date, &apos;dd/MMM/yyyy HH:mm&apos;)}
-${#dates.arrayFormat(datesArray, &apos;dd/MMM/yyyy HH:mm&apos;)}
-${#dates.listFormat(datesList, &apos;dd/MMM/yyyy HH:mm&apos;)}
-${#dates.setFormat(datesSet, &apos;dd/MMM/yyyy HH:mm&apos;)}
+    Message findById(@Param(&quot;id&quot;)int id);
 
-/*
- * Create a date (java.util.Date) object for the current date and time
- */
-${#dates.createNow()}
+}
+</code></pre><p>第六步：编写Dao对应的mapper文件</p>
+<pre><code>&lt;mapper namespace=&quot;com.mybatis.domain.MessageDao&quot;&gt;
 
-/*
- * Create a date (java.util.Date) object for the current date (time set to 00:00)
- */
-${#dates.createToday()}
-</code></pre><p>2.strings</p>
-<pre><code>/*
- * Check whether a String is empty (or null). Performs a trim() operation before check
- * Also works with arrays, lists or sets
- */
-${#strings.isEmpty(name)}
-${#strings.arrayIsEmpty(nameArr)}
-${#strings.listIsEmpty(nameList)}
-${#strings.setIsEmpty(nameSet)}
+&lt;select id=&quot;findById&quot; parameterType=&quot;int&quot; 
+   resultType=&quot;com.mybatis.domain.Message&quot;&gt;
+   SELECT * FROM message WHERE id=#{id}
+&lt;/select&gt;
 
-/*
- * Check whether a String starts or ends with a fragment
- * Also works with arrays, lists or sets
- */
-${#strings.startsWith(name,&apos;Don&apos;)}                  // also array*, list* and set*
-${#strings.endsWith(name,endingFragment)}           // also array*, list* and set*
+&lt;/mapper&gt;
+</code></pre><p>第七步：启动类</p>
+<pre><code>@SpringBootApplication
+@MapperScan(&quot;mapper&quot;)
+public class Application {
 
-/*
- * Compute length
- * Also works with arrays, lists or sets
- */
-${#strings.length(str)}
+    public static void main(String[] args) {
 
-/*
- * Null-safe comparison and concatenation
- */
-${#strings.equals(str)}
-${#strings.equalsIgnoreCase(str)}
-${#strings.concat(str)}
-${#strings.concatReplaceNulls(str)}
+        SpringApplication.run(Application.class, args);
 
-/*
- * Random
- */
-${#strings.randomAlphanumeric(count)}
-</code></pre><ul>
-<li>使用thymeleaf布局</li>
-</ul>
-<p>使用thymeleaf布局非常的方便</p>
-<p>定义代码片段</p>
-<pre><code>&lt;footer th:fragment=&quot;copy&quot;&gt; 
-&amp;copy; 2016
-&lt;/footer&gt;
-</code></pre><p>在页面任何地方引入：</p>
-<pre><code>&lt;body&gt; 
-  &lt;div th:include=&quot;footer :: copy&quot;&gt;&lt;/div&gt;
-  &lt;div th:replace=&quot;footer :: copy&quot;&gt;&lt;/div&gt;
- &lt;/body&gt;‘
-</code></pre><p>th:include 和 th:replace区别，include只是加载，replace是替换</p>
-<p>返回的HTML如下：</p>
-<pre><code>&lt;body&gt; 
-   &lt;div&gt; &amp;copy; 2016 &lt;/div&gt; 
-  &lt;footer&gt;&amp;copy; 2016 &lt;/footer&gt; 
-&lt;/body&gt;
-</code></pre><p>下面是一个常用的后台页面布局，将整个页面分为头部，尾部、菜单栏、隐藏栏，点击菜单只改变content区域的页面</p>
-<pre><code>&lt;body class=&quot;layout-fixed&quot;&gt;
-  &lt;div th:fragment=&quot;navbar&quot;  class=&quot;wrapper&quot;  role=&quot;navigation&quot;&gt;
-    &lt;div th:replace=&quot;fragments/header :: header&quot;&gt;Header&lt;/div&gt;
-    &lt;div th:replace=&quot;fragments/left :: left&quot;&gt;left&lt;/div&gt;
-    &lt;div th:replace=&quot;fragments/sidebar :: sidebar&quot;&gt;sidebar&lt;/div&gt;
-    &lt;div layout:fragment=&quot;content&quot; id=&quot;content&quot; &gt;&lt;/div&gt;
-    &lt;div th:replace=&quot;fragments/footer :: footer&quot;&gt;footer&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/body&gt;
-</code></pre><p>任何页面想使用这样的布局值只需要替换中见的 content模块即可</p>
-<pre><code>&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot; layout:decorator=&quot;layout&quot;&gt;
-  &lt;body&gt;
-     &lt;section layout:fragment=&quot;content&quot;&gt;
-   ...
-</code></pre><p>也可以在引用模版的时候传参</p>
-<pre><code>&lt;head th:include=&quot;layout :: htmlhead&quot; th:with=&quot;title=&apos;Hello&apos;&quot;&gt;&lt;/head&gt;
-</code></pre><p>layout 是文件地址，如果有文件夹可以这样写 fileName/layout:htmlhead<br>htmlhead 是指定义的代码片段 如 th:fragment=”copy”</p>
-<p>开源云收藏项目的github源码：<a href="https://github.com/cloudfavorites/favorites-web" target="_blank" rel="noopener">https://github.com/cloudfavorites/favorites-web</a><br>里面用的技术包括springboot集成了tomcat和thymeleaf，源码测试里都是详细的项目功能介绍。</p>
-<p>还有就是Springboot虽然不建议使用JSP技术，但是若有相应的要求也可以使用。具体自查。</p>
+    }
+
+}
+</code></pre><p>添加@MapperScan(“mapper”)，以扫描mapper文件夹下的那些mapper文件</p>
+<p>第八步：添加Controller类来简单测试</p>
+<pre><code>@RestController
+public class MessageController {
+
+    @Autowired
+    private MessageDao messageDao;
+
+    @RequestMapping(&quot;/msg&quot;)
+    public Message msg(){
+        Message msg=messageDao.findById(1);
+        System.out.println(msg);
+        return msg;
+    }
+}
+</code></pre><p>第九步：测试，浏览器输入：<a href="http://localhost:8088/msg" target="_blank" rel="noopener">http://localhost:8088/msg</a></p>
+<p>得到结果：{“id”:1,”content”:”aaaaaaaaaa”,”name”:”o1”}</p>
+<p>测试成功！！</p>
+<p>springboot+mybatis的操作就是这些。。。（总之我觉得改变的话就是springboot将一对的xml配置信息全部简化放在application.properties中去进行配置，我们只需要去完成逻辑即可）</p>
+<p>当我们需要一个很简单的DML功能时，如果去创建mapper文件并编写一堆语句的时候也许会显得很麻烦，这个时候就可以通过注解的方式简化配置，新建一个UserAnnotationDao通过注解的方式来实现增删改查:</p>
+<p>接下来介绍不需要mapper文件来对应Dao接口的方法（其实本质就是用java配置取代xml配置的意思）</p>
+<p>新建MessageAnnotationDao，但是这次不用mapper文件来实现Dao中的方法，用@Select和@Results注解来配置<br>在使用简单的DML操作时，为了不用mapper那么麻烦，我们可以采用注解方式直接配置。<br>控制层直接调用即可。</p>
+<pre><code>@Mapper
+public interface MessageAnnotationDao {
+
+    @Select(&quot;SELECT * FROM message where id=#{id}&quot;)
+    @Results({
+        @Result(property=&quot;id&quot;,column=&quot;id&quot;),
+        @Result(property=&quot;content&quot;,column=&quot;content&quot;),
+        @Result(property=&quot;name&quot;,column=&quot;name&quot;)
+    })
+    public Message findById(int id);
+
+}
+</code></pre><p>使用注解自后就不需要mapper文件了，分别测试这几个方法均能正确执行，使用注解和使用xml的方式都差不多，通常情况下，如果没有复杂的连接查询，我们可以使用注解的方式，当设计到复杂的sql还是使用xml的方式更好掌控一些，所以通常情况下两种方式都会使用，根据sql的复杂程度选择不同的方式来提高开发效率。</p>
+<h2 id="springboot-mybatis结合mybatis-generator工具"><a href="#springboot-mybatis结合mybatis-generator工具" class="headerlink" title="springboot+mybatis结合mybatis-generator工具"></a>springboot+mybatis结合mybatis-generator工具</h2><p>为了能最大程度的简化开发，我们如果在项目中使用springboot+mybatis的组合，那么在生成对应的文件上可以采用mybatis-generator工具。</p>
+<p>在前言中说到，mybatis也发现了我们需要重复的去创建pojo类、mapper文件以及dao类并且需要配置它们之间的依赖关系可能会很麻烦，所以mybtis提供了一个mybatis generator工具来帮我们自动创建pojo类、mapper文件以及dao类并且会帮我们配置好它们的依赖关系，而我们只需要关系我们的业务逻辑直接使用就行了。<br>要使用mybatis generator工具需要在pom.xml文件中添加一个generator的maven工具：</p>
+<p>接下来就以一个项目来讲，这个generatorConfig的xml文件是最容易出错的，但是只要自己独立完成了以后就可以完美掌握了，挽歌互勉。。。</p>
 
       
     </div>
@@ -803,13 +916,11 @@ ${#strings.randomAlphanumeric(count)}
       
         <div class="post-tags">
           
-            <a href="/tags/大数据/" rel="tag"># 大数据</a>
-          
-            <a href="/tags/java/" rel="tag"># java</a>
-          
             <a href="/tags/spring/" rel="tag"># spring</a>
           
             <a href="/tags/springboot/" rel="tag"># springboot</a>
+          
+            <a href="/tags/mybatis/" rel="tag"># mybatis</a>
           
         </div>
       
@@ -822,8 +933,8 @@ ${#strings.randomAlphanumeric(count)}
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/23/springboot02/" rel="next" title="Spring Boot之路(二)--Nosql支持">
-                <i class="fa fa-chevron-left"></i> Spring Boot之路(二)--Nosql支持
+              <a href="/2018/04/05/java-新测试框架/" rel="next" title="JAVA新测试框架--testng和mockito">
+                <i class="fa fa-chevron-left"></i> JAVA新测试框架--testng和mockito
               </a>
             
           </div>
@@ -832,8 +943,8 @@ ${#strings.randomAlphanumeric(count)}
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/03/24/springboot04/" rel="prev" title="Spring Boot之路(四)--Swagger2（RESTful API统一文档）">
-                Spring Boot之路(四)--Swagger2（RESTful API统一文档） <i class="fa fa-chevron-right"></i>
+              <a href="/2018/04/09/hibernate/" rel="prev" title="hibernate">
+                hibernate <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -1049,7 +1160,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Thymeleaf"><span class="nav-number">1.</span> <span class="nav-text">Thymeleaf</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态资源访问"><span class="nav-number">2.</span> <span class="nav-text">静态资源访问</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#默认配置"><span class="nav-number">3.</span> <span class="nav-text">默认配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于Thymeleaf的默认参数配置"><span class="nav-number">4.</span> <span class="nav-text">关于Thymeleaf的默认参数配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于Thymeleaf语法"><span class="nav-number">5.</span> <span class="nav-text">关于Thymeleaf语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#命名空间"><span class="nav-number">5.1.</span> <span class="nav-text">命名空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出内容"><span class="nav-number">5.2.</span> <span class="nav-text">输出内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标准表达式语法"><span class="nav-number">5.3.</span> <span class="nav-text">标准表达式语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量表达式"><span class="nav-number">5.3.1.</span> <span class="nav-text">变量表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选择-星号-表达式"><span class="nav-number">5.3.2.</span> <span class="nav-text">选择(星号)表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文字国际化表达式"><span class="nav-number">5.3.3.</span> <span class="nav-text">文字国际化表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#URL表达式"><span class="nav-number">5.3.4.</span> <span class="nav-text">URL表达式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表达式支持的语法"><span class="nav-number">5.4.</span> <span class="nav-text">表达式支持的语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用th标签都有那些？"><span class="nav-number">5.5.</span> <span class="nav-text">常用th标签都有那些？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#几种常用的使用方法"><span class="nav-number">5.6.</span> <span class="nav-text">几种常用的使用方法</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#spring-mybatis"><span class="nav-number">1.</span> <span class="nav-text">spring+mybatis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#传统模式"><span class="nav-number">1.1.</span> <span class="nav-text">传统模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mybatis-generator工具模式-’"><span class="nav-number">1.2.</span> <span class="nav-text">mybatis generator工具模式 ##’</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#springboot与mybatis整合"><span class="nav-number">1.3.</span> <span class="nav-text">springboot与mybatis整合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#springboot-mybatis结合mybatis-generator工具"><span class="nav-number">1.4.</span> <span class="nav-text">springboot+mybatis结合mybatis-generator工具</span></a></li></ol></li></ol></div>
             
 
           </div>
