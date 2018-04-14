@@ -108,7 +108,7 @@
 <meta property="og:site_name" content="Funk Jungle">
 <meta property="og:description" content="主要区别Gradle和Maven都是项目自动构建工具，编译源代码只是整个过程的一个方面，更重要的是，你要把你的软件发布到生产环境中来产生商业价值，所以，你要运行测试，构建分布、分析代码质量、甚至为不同目标环境提供不同版本，然后部署。整个过程进行自动化操作是很有必要的。整个过程可以分成以下几个步骤：  编译源代码 运行单元测试和集成测试 执行静态代码分析、生成分析报告 创建发布版本 部署到目标环境">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-23T08:30:46.110Z">
+<meta property="og:updated_time" content="2018-04-14T06:26:39.439Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="项目自动构建工具--maven和Gradle">
 <meta name="twitter:description" content="主要区别Gradle和Maven都是项目自动构建工具，编译源代码只是整个过程的一个方面，更重要的是，你要把你的软件发布到生产环境中来产生商业价值，所以，你要运行测试，构建分布、分析代码质量、甚至为不同目标环境提供不同版本，然后部署。整个过程进行自动化操作是很有必要的。整个过程可以分成以下几个步骤：  编译源代码 运行单元测试和集成测试 执行静态代码分析、生成分析报告 创建发布版本 部署到目标环境">
@@ -425,8 +425,35 @@
 <li>执行冒烟测试和自动功能测试</li>
 </ul>
 <a id="more"></a>
-<p>如果你手工去执行每一个步骤无疑效率比较低而且容易出错，有了自动化构建你只需要自定义你的构建逻辑，剩下的事情交给工具去完成。虽然两者都是项目工具，但是maven现在已经是行业标准，Gradle是后起之秀，很多人对他的了解都是从android studio中得到的，Gradle抛弃了Maven的基于XML的繁琐配置，众所周知XML的阅读体验比较差，对于机器来说虽然容易识别，但毕竟是由人去维护的。取而代之的是Gradle采用了领域特定语言Groovy的配置，大大简化了构建代码的行数，比如在Maven中你要引入一个依赖：<br>    <properties><br>        &lt;kaptcha.version&gt;2.3&lt;/kaptcha.version&gt;<br>    </properties><br>    <dependencies><br>        <dependency><br>            <groupid>com.google.code.kaptcha</groupid><br>            <artifactid>kaptcha</artifactid><br>            <version>${kaptcha.version}</version><br>            <classifier>jdk15</classifier><br>        </dependency><br>        <dependency><br>            <groupid>org.springframework</groupid><br>            <artifactid>spring-core</artifactid><br>        </dependency><br>        <dependency><br>            <groupid>org.springframework</groupid><br>            <artifactid>spring-beans</artifactid><br>        </dependency><br>        <dependency><br>            <groupid>org.springframework</groupid><br>            <artifactid>spring-context</artifactid><br>        </dependency><br>        <dependency><br>            <groupid>junit</groupid><br>            <artifactid>junit</artifactid><br>        </dependency><br>    </dependencies></p>
-<p>然后我将其转换成Gradle脚本，结果是惊人的：<br>    dependencies {<br>        compile(‘org.springframework:spring-core:2.5.6’)<br>        compile(‘org.springframework:spring-beans:2.5.6’)<br>        compile(‘org.springframework:spring-context:2.5.6’)<br>        compile(‘com.google.code.kaptcha:kaptcha:2.3:jdk15’)<br>        testCompile(‘junit:junit:4.7’)<br>    }<br>注意配置从原来的28行缩减至7行！这还不算我省略的一些父POM配置。依赖的groupId、artifactId、 version，scope甚至是classfier，一点都不少。较之于Maven或者Ant的XML配置脚本，Gradle使用的Grovvy脚本杀伤力太大了，爱美之心，人皆有之，相比于七旬老妇松松垮垮的皱纹，大家肯定都喜欢少女紧致的脸蛋，XML就是那老妇的皱纹。Gradle给我最大的有点是两点。其一是简洁，基于Groovy的紧凑脚本实在让人爱不释手，在表述意图方面也没有什么不清晰的地方。其二是灵活，各种在Maven中难以下手的事情，在Gradle就是小菜一碟，比如修改现有的构建生命周期，几行配置就完成了，同样的事情，在Maven中你必须编写一个插件，那对于一个刚入门的用户来说，没个一两天几乎是不可能完成的任务。</p>
+<p>如果你手工去执行每一个步骤无疑效率比较低而且容易出错，有了自动化构建你只需要自定义你的构建逻辑，剩下的事情交给工具去完成。虽然两者都是项目工具，但是maven现在已经是行业标准，Gradle是后起之秀，很多人对他的了解都是从android studio中得到的，Gradle抛弃了Maven的基于XML的繁琐配置，众所周知XML的阅读体验比较差，对于机器来说虽然容易识别，但毕竟是由人去维护的。取而代之的是Gradle采用了领域特定语言Groovy的配置，大大简化了构建代码的行数，比如在Maven中你要引入一个依赖：</p>
+<pre><code>&lt;properties&gt;
+    &lt;kaptcha.version&gt;2.3&lt;/kaptcha.version&gt;
+&lt;/properties&gt;
+&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;com.google.code.kaptcha&lt;/groupId&gt;
+        &lt;artifactId&gt;kaptcha&lt;/artifactId&gt;
+        &lt;version&gt;${kaptcha.version}&lt;/version&gt;
+        &lt;classifier&gt;jdk15&lt;/classifier&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-core&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-beans&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-context&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;junit&lt;/groupId&gt;
+        &lt;artifactId&gt;junit&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre><p>然后我将其转换成Gradle脚本，结果是惊人的：<br>    dependencies {<br>        compile(‘org.springframework:spring-core:2.5.6’)<br>        compile(‘org.springframework:spring-beans:2.5.6’)<br>        compile(‘org.springframework:spring-context:2.5.6’)<br>        compile(‘com.google.code.kaptcha:kaptcha:2.3:jdk15’)<br>        testCompile(‘junit:junit:4.7’)<br>    }<br>注意配置从原来的28行缩减至7行！这还不算我省略的一些父POM配置。依赖的groupId、artifactId、 version，scope甚至是classfier，一点都不少。较之于Maven或者Ant的XML配置脚本，Gradle使用的Grovvy脚本杀伤力太大了，爱美之心，人皆有之，相比于七旬老妇松松垮垮的皱纹，大家肯定都喜欢少女紧致的脸蛋，XML就是那老妇的皱纹。Gradle给我最大的有点是两点。其一是简洁，基于Groovy的紧凑脚本实在让人爱不释手，在表述意图方面也没有什么不清晰的地方。其二是灵活，各种在Maven中难以下手的事情，在Gradle就是小菜一碟，比如修改现有的构建生命周期，几行配置就完成了，同样的事情，在Maven中你必须编写一个插件，那对于一个刚入门的用户来说，没个一两天几乎是不可能完成的任务。</p>
 <p>gradle基于groovy领域特定语言，而maven通过xml来配置，比较繁琐</p>
 <p>Gradle和Maven作为自动构建工具，在项目的构建中有着广泛的应用。他们之间有各自的优缺点，这里我们讨论下他们在项目构建中的一些区别并进行比较。</p>
 <p>首先简单介绍下Gradle和Maven。Maven主要服务于基于java平台的项目构建、依赖管理和项目信息管理。无论是小型的开源类库项目，还是大型的企业级应用；无论是传统的瀑布式开发还是流行的敏捷模式，Maven都能大显身手。Gradle是以groovy语言为基础，面向java应用为主，基于DSL语法的自动化构建工具。</p>
@@ -491,7 +518,11 @@ dependencies {   // 各种 依赖的jar包
 bootRun {
     addResources = true
 }
-</code></pre>
+</code></pre><h1 id="maven"><a href="#maven" class="headerlink" title="maven"></a>maven</h1><p>maven是目前java项目中比较流行的构建工具，特别是它提供的插件，如果使用得当，整个项目研发流程都将会受益，从而提高研发、测试和部署的效率。</p>
+<p>Maven工程标准架构 </p>
+<p>目录                                                备注</p>
+<p>${basedir}                                          存放 pom.xml和所有的子目录<br>${basedir}/src/main/resources                    项目的资源，如spring配置文件，properties资源文件等<br>${basedir}/src/main/webapps                        web项目特有<br>${basedir}/src/test/java                        项目的测试类，比如说 JUnit代码、TestNg代码<br>${basedir}/src/test/resources                    测试代码使用的资源</p>
+
       
     </div>
     
@@ -681,7 +712,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">47</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -703,7 +734,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -783,7 +814,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主要区别"><span class="nav-number">1.</span> <span class="nav-text">主要区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#加载构建系统的组件"><span class="nav-number">1.1.</span> <span class="nav-text">加载构建系统的组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建生命周期"><span class="nav-number">1.2.</span> <span class="nav-text">构建生命周期</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于groovy语言"><span class="nav-number">2.</span> <span class="nav-text">关于groovy语言</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主要区别"><span class="nav-number">1.</span> <span class="nav-text">主要区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#加载构建系统的组件"><span class="nav-number">1.1.</span> <span class="nav-text">加载构建系统的组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建生命周期"><span class="nav-number">1.2.</span> <span class="nav-text">构建生命周期</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于groovy语言"><span class="nav-number">2.</span> <span class="nav-text">关于groovy语言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#maven"><span class="nav-number">3.</span> <span class="nav-text">maven</span></a></li></ol></div>
             
 
           </div>
@@ -833,7 +864,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共163.9k字</span>
+  <span class="post-count">博客全站共167.8k字</span>
 </div>
 
         

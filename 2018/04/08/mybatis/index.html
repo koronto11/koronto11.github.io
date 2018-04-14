@@ -109,7 +109,12 @@
 <meta property="og:description" content="Mybatis在我上个项目中结合spring+springMVC框架的SSM架构中有用到，Mybatis作为一个半自动化的ORM框架，在编程的难度对比上我觉得比Hibernate的性能要好，对简单数据做操作时当然是Hibernate更为方便因为不用写SQL语句，但是在操作的自由性和性能的比较上我觉得mybatis要更好些，但是我最近又系统学习了spring-data-jpa框架，我觉得这个框架用来">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2018/04/08/mybatis/p1.png">
-<meta property="og:updated_time" content="2018-04-10T10:54:24.772Z">
+<meta property="og:image" content="http://yoursite.com/2018/04/08/mybatis/p2.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/08/mybatis/p3.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/08/mybatis/p4.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/08/mybatis/p5.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/08/mybatis/p6.png">
+<meta property="og:updated_time" content="2018-04-14T16:12:09.343Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mybatis在spring和springboot框架中的操作总结">
 <meta name="twitter:description" content="Mybatis在我上个项目中结合spring+springMVC框架的SSM架构中有用到，Mybatis作为一个半自动化的ORM框架，在编程的难度对比上我觉得比Hibernate的性能要好，对简单数据做操作时当然是Hibernate更为方便因为不用写SQL语句，但是在操作的自由性和性能的比较上我觉得mybatis要更好些，但是我最近又系统学习了spring-data-jpa框架，我觉得这个框架用来">
@@ -867,10 +872,317 @@ public interface MessageAnnotationDao {
 
 }
 </code></pre><p>使用注解自后就不需要mapper文件了，分别测试这几个方法均能正确执行，使用注解和使用xml的方式都差不多，通常情况下，如果没有复杂的连接查询，我们可以使用注解的方式，当设计到复杂的sql还是使用xml的方式更好掌控一些，所以通常情况下两种方式都会使用，根据sql的复杂程度选择不同的方式来提高开发效率。</p>
+<p>关于不用mapper文件配置sql语句的注解有哪些？<br>1.传参方式<br>下面通过几种不同传参方式来实现前文中实现的插入操作。</p>
+<p>-使用@Param<br>这个注解在控制层也会用到，用于声明html文件中form表单提交时的key与传参的参数名对应，这样就可以更加保险的传递参数。</p>
+<p>Insert(“INSERT INTO USER(NAME, AGE) VALUES(#{name}, #{age})”)<br>int insert(@Param(“name”) String name, @Param(“age”) Integer age);</p>
+<p>这种方式很好理解，@Param中定义的name对应了SQL中的#{name}，age对应了SQL中的#{age}。</p>
+<p>-使用Map<br>如下代码，通过Map对象来作为传递参数的容器：</p>
+<p>@Insert(“INSERT INTO USER(NAME, AGE) VALUES(#{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER})”)<br>int insertByMap(Map&lt;String, Object&gt; map);</p>
+<p>对于Insert语句中需要的参数，我们只需要在map中填入同名的内容即可，具体如下面代码所示：</p>
+<p>Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();<br>map.put(“name”, “CCC”);<br>map.put(“age”, 40);<br>userMapper.insertByMap(map);</p>
+<p>系统会自动识别，从map中找相同的key</p>
+<p>-使用对象<br>除了Map对象，我们也可直接使用普通的Java对象来作为查询条件的传参，比如我们可以直接使用User对象:</p>
+<p>@Insert(“INSERT INTO USER(NAME, AGE) VALUES(#{name}, #{age})”)<br>int insertByUser(User user);</p>
+<p>这样语句中的#{name}、#{age}就分别对应了User对象中的name和age属性。</p>
+<p>2.增删改查（CRUD）<br>MyBatis针对不同的数据库操作分别提供了不同的注解来进行配置，在之前的示例中演示了@Insert，下面针对User表做一组最基本的增删改查作为示例：</p>
+<pre><code>public interface UserMapper {
+
+    @Select(&quot;SELECT * FROM user WHERE name = #{name}&quot;)
+    User findByName(@Param(&quot;name&quot;) String name);
+
+    @Insert(&quot;INSERT INTO user(name, age) VALUES(#{name}, #{age})&quot;)
+    int insert(@Param(&quot;name&quot;) String name, @Param(&quot;age&quot;) Integer age);
+
+    @Update(&quot;UPDATE user SET age=#{age} WHERE name=#{name}&quot;)
+    void update(User user);
+
+    @Delete(&quot;DELETE FROM user WHERE id =#{id}&quot;)
+    void delete(Long id);
+}
+</code></pre><p>在完成了一套增删改查后，不妨我们试试下面的单元测试来验证上面操作的正确性：</p>
+<pre><code>@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = Application.class)
+@Transactional
+public class ApplicationTests {
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @Test
+    @Rollback
+    public void testUserMapper() throws Exception {
+        // insert一条数据，并select出来验证
+        userMapper.insert(&quot;AAA&quot;, 20);
+        User u = userMapper.findByName(&quot;AAA&quot;);
+        Assert.assertEquals(20, u.getAge().intValue());
+        // update一条数据，并select出来验证
+        u.setAge(30);
+        userMapper.update(u);
+        u = userMapper.findByName(&quot;AAA&quot;);
+        Assert.assertEquals(30, u.getAge().intValue());
+        // 删除这条数据，并select验证
+        userMapper.delete(u.getId());
+        u = userMapper.findByName(&quot;AAA&quot;);
+        Assert.assertEquals(null, u);
+    }
+}
+</code></pre><p>3.返回结果的绑定</p>
+<p>对于增、删、改操作相对变化较小。而对于“查”操作，我们往往需要进行多表关联，汇总计算等操作，那么对于查询的结果往往就不再是简单的实体对象了，往往需要返回一个与数据库实体不同的包装类，那么对于这类情况，就可以通过@Results和@Result注解来进行绑定，具体如下：</p>
+<pre><code>@Results({
+    @Result(property = &quot;name&quot;, column = &quot;name&quot;),
+    @Result(property = &quot;age&quot;, column = &quot;age&quot;)
+})
+@Select(&quot;SELECT name, age FROM user&quot;)
+List&lt;User&gt; findAll();
+</code></pre><p>在上面代码中，@Result中的property属性对应User对象中的成员名，column对应SELECT出的字段名。在该配置中故意没有查出id属性，只对User对应中的name和age对象做了映射配置，这样可以通过下面的单元测试来验证查出的id为null，而其他属性不为null：</p>
+<pre><code>@Test
+@Rollback
+public void testUserMapper() throws Exception {
+    List&lt;User&gt; userList = userMapper.findAll();
+    for(User user : userList) {
+        Assert.assertEquals(null, user.getId());
+        Assert.assertNotEquals(null, user.getName());
+    }
+}
+</code></pre><p>具体的更多注解配置在mybatis开发文档中：<a href="http://www.mybatis.org/mybatis-3/zh/java-api.html" target="_blank" rel="noopener">http://www.mybatis.org/mybatis-3/zh/java-api.html</a></p>
 <h2 id="springboot-mybatis结合mybatis-generator工具"><a href="#springboot-mybatis结合mybatis-generator工具" class="headerlink" title="springboot+mybatis结合mybatis-generator工具"></a>springboot+mybatis结合mybatis-generator工具</h2><p>为了能最大程度的简化开发，我们如果在项目中使用springboot+mybatis的组合，那么在生成对应的文件上可以采用mybatis-generator工具。</p>
 <p>在前言中说到，mybatis也发现了我们需要重复的去创建pojo类、mapper文件以及dao类并且需要配置它们之间的依赖关系可能会很麻烦，所以mybtis提供了一个mybatis generator工具来帮我们自动创建pojo类、mapper文件以及dao类并且会帮我们配置好它们的依赖关系，而我们只需要关系我们的业务逻辑直接使用就行了。<br>要使用mybatis generator工具需要在pom.xml文件中添加一个generator的maven工具：</p>
 <p>接下来就以一个项目来讲，这个generatorConfig的xml文件是最容易出错的，但是只要自己独立完成了以后就可以完美掌握了，挽歌互勉。。。</p>
+<p>参考文章：<a href="https://blog.csdn.net/pucao_cug/article/details/64499355" target="_blank" rel="noopener">https://blog.csdn.net/pucao_cug/article/details/64499355</a> （这篇是配置maven generator插件的，很有借鉴意义）<br><a href="https://blog.csdn.net/w410589502/article/details/70756764" target="_blank" rel="noopener">https://blog.csdn.net/w410589502/article/details/70756764</a></p>
+<p>第一步：我还是先把自己的POM包给你们看下</p>
+<pre><code>  &lt;parent&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
+    &lt;version&gt;1.5.2.RELEASE&lt;/version&gt;
+  &lt;/parent&gt;
+  &lt;groupId&gt;myself.my&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-annotation&lt;/artifactId&gt;
+  &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+  &lt;packaging&gt;war&lt;/packaging&gt;
 
+  &lt;properties&gt;
+        &lt;tomcat.version&gt;7.0.69&lt;/tomcat.version&gt;
+        &lt;java.version&gt;1.8&lt;/java.version&gt;
+    &lt;/properties&gt;
+
+  &lt;dependencies&gt;
+
+    &lt;!-- springBoot的web支持 --&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+    &lt;groupId&gt;org.apache.tomcat.embed&lt;/groupId&gt;
+    &lt;artifactId&gt;tomcat-embed-logging-juli&lt;/artifactId&gt;
+    &lt;version&gt;8.0.23&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+        &lt;groupId&gt;mysql&lt;/groupId&gt;
+        &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;
+        &lt;version&gt;1.3.1&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+        &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+     &lt;dependency&gt;
+        &lt;groupId&gt;org.mybatis.generator&lt;/groupId&gt;
+        &lt;artifactId&gt;mybatis-generator-core&lt;/artifactId&gt;
+        &lt;version&gt;1.3.2&lt;/version&gt;
+     &lt;/dependency&gt;
+  &lt;/dependencies&gt;
+  &lt;build&gt;
+    &lt;finalName&gt;${project.artifactId}&lt;/finalName&gt;
+    &lt;!-- plugin配置用于指定使用插件 --&gt;
+    &lt;plugins&gt;
+     &lt;!-- 这个plugin里面又使用dependencies引入了mysql 的驱动和mybatis的相关jar包，
+     这个不能省略。 --&gt;
+     &lt;plugin&gt;
+           &lt;groupId&gt;org.mybatis.generator&lt;/groupId&gt;
+           &lt;artifactId&gt;mybatis-generator-maven-plugin&lt;/artifactId&gt;
+           &lt;version&gt;1.3.2&lt;/version&gt;
+           &lt;executions&gt;
+              &lt;execution&gt;
+                 &lt;id&gt;Generate MyBatis Files&lt;/id&gt;
+                 &lt;goals&gt;
+                    &lt;goal&gt;generate&lt;/goal&gt;
+                 &lt;/goals&gt;
+                 &lt;phase&gt;generate&lt;/phase&gt;
+                 &lt;configuration&gt;
+                    &lt;verbose&gt;true&lt;/verbose&gt;
+                    &lt;overwrite&gt;true&lt;/overwrite&gt;
+                 &lt;/configuration&gt;
+              &lt;/execution&gt;
+           &lt;/executions&gt;
+           &lt;dependencies&gt;
+              &lt;dependency&gt;
+                 &lt;groupId&gt;mysql&lt;/groupId&gt;
+                 &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+                 &lt;version&gt;5.1.38&lt;/version&gt;
+              &lt;/dependency&gt;
+              &lt;dependency&gt;
+                 &lt;groupId&gt;org.mybatis.generator&lt;/groupId&gt;
+                  &lt;artifactId&gt;mybatis-generator-core&lt;/artifactId&gt;
+                  &lt;version&gt;1.3.5&lt;/version&gt;
+              &lt;/dependency&gt;
+              &lt;dependency&gt;
+                 &lt;groupId&gt;org.mybatis&lt;/groupId&gt;
+                 &lt;artifactId&gt;mybatis&lt;/artifactId&gt;
+                 &lt;version&gt;3.4.2&lt;/version&gt;
+              &lt;/dependency&gt;
+           &lt;/dependencies&gt;
+        &lt;/plugin&gt;
+      &lt;!-- 资源文件拷贝插件 --&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+        &lt;artifactId&gt;maven-resources-plugin&lt;/artifactId&gt;
+        &lt;configuration&gt;
+          &lt;encoding&gt;UTF-8&lt;/encoding&gt;
+        &lt;/configuration&gt;
+      &lt;/plugin&gt;
+      &lt;!-- java编译插件 --&gt;
+      &lt;plugin&gt;
+       &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+       &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+       &lt;configuration&gt;
+        &lt;source&gt;1.7&lt;/source&gt;
+        &lt;target&gt;1.7&lt;/target&gt;
+        &lt;encoding&gt;UTF-8&lt;/encoding&gt;
+       &lt;/configuration&gt;
+      &lt;/plugin&gt;
+      &lt;!-- spring-boot-maven-plugin插件 在SpringBoot项目中开启的方式有两种
+      一种是run java.application 还有一种就是这个插件开启--&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+
+    &lt;!-- 用于在子Pom中使用,继承中使用 --&gt;
+    &lt;pluginManagement&gt;
+      &lt;plugins&gt;
+        &lt;!-- Tomcat配置 用于远程部署java web项目--&gt;
+        &lt;plugin&gt;
+          &lt;groupId&gt;org.apache.tomcat.maven&lt;/groupId&gt;
+          &lt;artifactId&gt;tomcat7-maven-plugin&lt;/artifactId&gt;
+          &lt;version&gt;2.2&lt;/version&gt;
+        &lt;/plugin&gt;
+      &lt;/plugins&gt;
+    &lt;/pluginManagement&gt;
+  &lt;/build&gt;
+&lt;/project&gt;
+</code></pre><p>首先注意的:<br>这里用到spring-boot-starter基础和spring-boot-starter-test用来做单元测试验证数据访问<br>引入连接mysql的必要依赖mysql-connector-java<br>引入整合MyBatis的核心依赖mybatis-spring-boot-starter<br>这里不引入spring-boot-starter-jdbc依赖，是由于mybatis-spring-boot-starter中已经包含了此依赖</p>
+<p>这是application.properties文件中的配置参数</p>
+<pre><code>`#Mybatis Generator configuration`
+`#dao类和实体类的位置`
+project =src/main/java
+`#mapper文件的位置`
+resources=src/main/java
+`#根据数据库中的表生成对应的pojo类、dao、mapper`
+jdbc_driver =com.mysql.jdbc.Driver
+jdbc_url=jdbc:mysql:///test
+jdbc_user=root
+jdbc_password=294823013
+</code></pre><p>注意这个配置文件，跟之前的generator配置是一样的，格式千万注意，project是注明实体类生成的位置，resource是注明mapper文件生成的位置。</p>
+<p>最容易出错的地方就在于配置这个generator的文件时，数据的格式不要写错！！！</p>
+<pre><code>&lt;!-- 配置生成器 --&gt;
+&lt;generatorConfiguration&gt;
+    &lt;!--执行generator插件生成文件的命令： call mvn mybatis-generator:generate -e --&gt;
+    &lt;!-- 引入配置文件 --&gt;
+    &lt;properties resource=&quot;application.properties&quot;/&gt;
+    &lt;!--classPathEntry:数据库的JDBC驱动,换成你自己的驱动位置 可选 --&gt;
+
+    &lt;!-- 一个数据库一个context --&gt;
+    &lt;!--defaultModelType=&quot;flat&quot; 大数据字段，不分表 --&gt;
+    &lt;context id=&quot;MysqlTables&quot; targetRuntime=&quot;MyBatis3Simple&quot; defaultModelType=&quot;flat&quot;&gt;
+        &lt;!-- 自动识别数据库关键字，默认false，如果设置为true，根据SqlReservedWords中定义的关键字列表；
+        一般保留默认值，遇到数据库关键字（Java关键字），使用columnOverride覆盖 --&gt;
+        &lt;property name=&quot;autoDelimitKeywords&quot; value=&quot;true&quot; /&gt;
+        &lt;!-- 生成的Java文件的编码 --&gt;
+        &lt;property name=&quot;javaFileEncoding&quot; value=&quot;utf-8&quot; /&gt;
+        &lt;!-- beginningDelimiter和endingDelimiter：指明数据库的用于标记数据库对象名的符号，比如ORACLE就是双引号，MYSQL默认是`反引号； --&gt;
+        &lt;property name=&quot;beginningDelimiter&quot; value=&quot;`&quot; /&gt;
+        &lt;property name=&quot;endingDelimiter&quot; value=&quot;`&quot; /&gt;
+
+        &lt;!-- 格式化java代码 --&gt;
+        &lt;property name=&quot;javaFormatter&quot; value=&quot;org.mybatis.generator.api.dom.DefaultJavaFormatter&quot;/&gt;
+        &lt;!-- 格式化XML代码 --&gt;
+        &lt;property name=&quot;xmlFormatter&quot; value=&quot;org.mybatis.generator.api.dom.DefaultXmlFormatter&quot;/&gt;
+        &lt;plugin type=&quot;org.mybatis.generator.plugins.SerializablePlugin&quot; /&gt;
+
+        &lt;plugin type=&quot;org.mybatis.generator.plugins.ToStringPlugin&quot; /&gt;
+
+        &lt;!-- 注释 --&gt;
+        &lt;commentGenerator &gt;
+            &lt;property name=&quot;suppressAllComments&quot; value=&quot;false&quot;/&gt;&lt;!-- 是否取消注释 --&gt;
+            &lt;property name=&quot;suppressDate&quot; value=&quot;true&quot; /&gt; &lt;!-- 是否生成注释代时间戳--&gt;
+        &lt;/commentGenerator&gt;
+
+        &lt;!-- jdbc连接参数，用application.properties文件的参数，SPEL表达式取值即可
+         因为这用到了mybatis generator技术来将数据库中的表自动生成mapper文件和实体类，所以直接用参数
+         配置数据库连接就不起作用了，必须要在这里手动配置 --&gt;
+        &lt;jdbcConnection driverClass=&quot;${jdbc_driver}&quot; connectionURL=&quot;${jdbc_url}&quot; userId=&quot;${jdbc_user}&quot; password=&quot;${jdbc_password}&quot; /&gt;
+
+        &lt;!-- 类型转换 --&gt;
+        &lt;javaTypeResolver&gt;
+            &lt;!-- 是否使用bigDecimal， false可自动转化以下类型（Long, Integer, Short, etc.） --&gt;
+            &lt;property name=&quot;forceBigDecimals&quot; value=&quot;false&quot;/&gt;
+        &lt;/javaTypeResolver&gt;
+
+        &lt;!-- 最主要的4个generator配置，这很容易写错 --&gt;
+        &lt;!-- 生成实体类地址 --&gt;
+        &lt;javaModelGenerator targetPackage=&quot;com.mybatis.domain&quot; targetProject=&quot;${project}&quot; &gt;
+            &lt;property name=&quot;enableSubPackages&quot; value=&quot;false&quot;/&gt;
+            &lt;property name=&quot;trimStrings&quot; value=&quot;true&quot;/&gt;
+        &lt;/javaModelGenerator&gt;
+
+        &lt;!-- 生成mapxml文件 --&gt;
+        &lt;sqlMapGenerator targetPackage=&quot;mapper&quot; targetProject=&quot;${resources}&quot; &gt;
+            &lt;property name=&quot;enableSubPackages&quot; value=&quot;false&quot; /&gt;
+        &lt;/sqlMapGenerator&gt;
+
+        &lt;!-- 生成mapxml对应client，也就是接口dao --&gt;
+        &lt;javaClientGenerator targetPackage=&quot;com.mybatis.domain&quot; targetProject=&quot;${project}&quot; type=&quot;XMLMAPPER&quot; &gt;
+            &lt;property name=&quot;enableSubPackages&quot; value=&quot;false&quot; /&gt;
+        &lt;/javaClientGenerator&gt;
+
+        &lt;!-- table可以有多个,每个数据库中的表都可以写一个table，tableName表示要匹配的数据库表,也可以在tableName属性中通过使用%通配符来匹配所有数据库表,只有匹配的表才会自动生成文件 --&gt;
+        &lt;table tableName=&quot;user&quot; enableCountByExample=&quot;true&quot; enableUpdateByExample=&quot;true&quot; enableDeleteByExample=&quot;true&quot; enableSelectByExample=&quot;true&quot; selectByExampleQueryId=&quot;true&quot;&gt;
+            &lt;property name=&quot;useActualColumnNames&quot; value=&quot;false&quot; /&gt;
+            &lt;!-- 数据库表主键 --&gt;
+            &lt;generatedKey column=&quot;id&quot; sqlStatement=&quot;Mysql&quot; identity=&quot;true&quot; /&gt;
+        &lt;/table&gt;
+    &lt;/context&gt;
+&lt;/generatorConfiguration&gt;
+</code></pre><p>这些都配置完后，我们要用插件启动测试能否自动生成</p>
+<p>如何使用插件呢？</p>
+<p>我们配置好POM中的插件后，在项目上右键–》run as–》run configrations<br><img src="/2018/04/08/mybatis/p2.png" alt="logo"></p>
+<p>在点击Run Configurations以后，会弹出对话框，在对话框上找到Maven Build，然后右键并且点击new，如下图:<br><img src="/2018/04/08/mybatis/p3.png" alt="logo"></p>
+<p> 在新出现的界面上填写Name，Base directory，Goals这三个地方，其中Name可以随便写，Base directory是你的工程的路径，例如我的是E:\eclipse_workspace_2015\springmybatis，Goals这个地方不用变，照着图写，这个是maven插件的命令。至于Maven  Runtime下拉框可以不选，也可以选择自己安装在eclipse外面的那个。<br><img src="/2018/04/08/mybatis/p4.png" alt="logo"></p>
+<p>执行mybatis-generator:generate命令</p>
+<p>点击Apply,在点击 Run，稍等一会，你可以看到generator执行成功了，如图：<br><img src="/2018/04/08/mybatis/p5.png" alt="logo"></p>
+<p>生成文件：<br><img src="/2018/04/08/mybatis/p6.png" alt="logo"></p>
+<p>注意配置不要错了即可，这就是spring或者springboot环境下与mybatis的整合。。。</p>
+<h1 id="使用数据库版本控制器"><a href="#使用数据库版本控制器" class="headerlink" title="使用数据库版本控制器"></a>使用数据库版本控制器</h1><p>创建表的过程我们在实际开发系统的时候会经常使用，但是一直有一个问题存在，由于一个系统的程序版本通过git得到了很好的版本控制，而数据库结构并没有，即使我们通过Git进行了语句的版本化，那么在各个环境的数据库中如何做好版本管理呢？下面我们就通过本文来学习一下在Spring Boot中如何使用Flyway来管理数据库的版本。</p>
+<p>Flyway简介</p>
+<p>Flyway是一个简单开源数据库版本控制器（约定大于配置），主要提供migrate、clean、info、validate、baseline、repair等命令。它支持SQL（PL/SQL、T-SQL）方式和Java方式，支持命令行客户端等，还提供一系列的插件支持（Maven、Gradle、SBT、ANT等）。</p>
+<p>Flyway是一款开源的数据库版本管理工具，它更倾向于规约优于配置的方式。Flyway可以独立于应用实现管理并跟踪数据库变更，支持数据库版本自动升级，并且有一套默认的规约，不需要复杂的配置，Migrations可以写成SQL脚本，也可以写在Java代码中，不仅支持Command Line和Java API，还支持Build构建工具和Spring Boot等，同时在分布式环境下能够安全可靠地升级数据库，同时也支持失败恢复等。</p>
+<p>避免不正当的操作损坏数据库的结构导致严重事故，目前支持的数据库主要有：Oracle, SQL Server, SQL Azure, DB2, DB2 z/OS, MySQL(including Amazon RDS), MariaDB, Google Cloud SQL, PostgreSQL(including Amazon RDS and Heroku), Redshift, Vertica, H2, Hsql, Derby, SQLite, SAP HANA, solidDB, Sybase ASE and Phoenix.</p>
+<h2 id="为什么使用Flyway"><a href="#为什么使用Flyway" class="headerlink" title="为什么使用Flyway?"></a>为什么使用Flyway?</h2><p>通常在项目开始时会针对数据库进行全局设计，但在开发产品新特性过程中，难免会遇到需要更新数据库Schema的情况，比如：添加新表，添加新字段和约束等，这种情况在实际项目中也经常发生。那么，当开发人员完成了对数据库更的SQL脚本后，如何快速地在其他开发者机器上同步？并且如何在测试服务器上快速同步？以及如何保证集成测试能够顺利执行并通过呢？<br>假设以Spring Boot技术栈项目为例，可能有人会说，本地使用Hibernate自动更新数据库Schema模式，然后让QA或DEV到测试服务器上手动执行SQL脚本，同时可以写一个Gradle任务自动执行更新。<br>个人觉得，对于Hibernate自动更新数据库，感觉不靠谱，不透明，控制自由度不高，而且有时很容易就会犯错，比如：用SQL创建的某个字段为VARCHAR类型，而在Entity中配置的为CHAR类型，那么在运行集成测试时，自动创建的数据库表中的字段为CHAR类型，而实际SQL脚本期望的是VARCHAR类型，虽然测试通过了，但不是期望的行为，并且在本地bootRun或服务器上运行Service时都会失败。另外，到各测试服务器上手动执行SQL脚本费时费神费力的，干嘛不自动化呢，当然，对于高级别和PROD环境，还是需要DBA手动执行的。最后，写一段自动化程序来自动执行更新，想法是很好的，那如果已经有了一些插件或库可以帮助你更好地实现这样的功能，为何不好好利用一下呢，当然，如果是为了学习目的，重复造轮子是无可厚非的。<br>其实，以上问题可以通过Flyway工具来解决，Flyway可以实现自动化的数据库版本管理，并且能够记录数据库版本更新记录，Flyway官网对Why database migrations结合示例进行了详细的阐述，有兴趣可以参阅一下。</p>
+<p><a href="https://flywaydb.org/" target="_blank" rel="noopener">https://flywaydb.org/</a> （官方网站）</p>
+<p>第一步：首先先加入依赖</p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.flywaydb&lt;/groupId&gt;
+    &lt;artifactId&gt;flyway-core&lt;/artifactId&gt;
+    &lt;version&gt;5.0.3&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
       
     </div>
     
@@ -943,8 +1255,8 @@ public interface MessageAnnotationDao {
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04/09/hibernate/" rel="prev" title="hibernate">
-                hibernate <i class="fa fa-chevron-right"></i>
+              <a href="/2018/04/09/hibernate/" rel="prev" title="ORM框架--Hibernate">
+                ORM框架--Hibernate <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -1058,7 +1370,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">47</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1080,7 +1392,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1160,7 +1472,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#spring-mybatis"><span class="nav-number">1.</span> <span class="nav-text">spring+mybatis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#传统模式"><span class="nav-number">1.1.</span> <span class="nav-text">传统模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mybatis-generator工具模式-’"><span class="nav-number">1.2.</span> <span class="nav-text">mybatis generator工具模式 ##’</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#springboot与mybatis整合"><span class="nav-number">1.3.</span> <span class="nav-text">springboot与mybatis整合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#springboot-mybatis结合mybatis-generator工具"><span class="nav-number">1.4.</span> <span class="nav-text">springboot+mybatis结合mybatis-generator工具</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#spring-mybatis"><span class="nav-number">1.</span> <span class="nav-text">spring+mybatis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#传统模式"><span class="nav-number">1.1.</span> <span class="nav-text">传统模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mybatis-generator工具模式-’"><span class="nav-number">1.2.</span> <span class="nav-text">mybatis generator工具模式 ##’</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#springboot与mybatis整合"><span class="nav-number">1.3.</span> <span class="nav-text">springboot与mybatis整合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#springboot-mybatis结合mybatis-generator工具"><span class="nav-number">1.4.</span> <span class="nav-text">springboot+mybatis结合mybatis-generator工具</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用数据库版本控制器"><span class="nav-number">2.</span> <span class="nav-text">使用数据库版本控制器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么使用Flyway"><span class="nav-number">2.1.</span> <span class="nav-text">为什么使用Flyway?</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1210,7 +1522,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共163.9k字</span>
+  <span class="post-count">博客全站共167.8k字</span>
 </div>
 
         
