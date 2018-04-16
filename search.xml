@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[SpringBoot+logback日志管理]]></title>
+    <url>%2F2018%2F04%2F16%2Fspring-logback%2F</url>
+    <content type="text"><![CDATA[关于日志Spring Boot在所有内部日志中使用Commons Logging，但是默认配置也提供了对常用日志的支持，如：Java Util Logging，Log4J, Log4J2和Logback。每种Logger都可以通过配置使用控制台或者文件输出日志内容。Springboot帮我们整合了这些最常用的日志框架，只需要简单的按照约定配置即可在项目中很快的配置日志相关。 常用的日志框架有apache commons logging和slf4j，常用的日志系统有log4j,log4j2,JUL,logback等。日志框作为门面，日志系统要搭配日志框架来使用，日志框架调用日志系统，在分布式中，还会有专门的分布式日志收集系统，在集群的多个分布式机器中将日志收集并整理的框架有：apache flume，facebook scribe等。 关于layout日志格式化在日志系统中，主要分为三个配置，appenders，layouts和loggers，一般我们做项目时日志记录的历程是这样的，loggers负责记录事假，将事件记录到后转发给合适的appenders，然后appenders使用layouts将事件记录进行格式化，并将其发送给控制台，文件或其他目录位置。 1.appenders负责输出到目标位置2.layouts负责日志信息的格式化3.loggers负责捕抓事件给相应的appenders 默认的日志输出如下：2016-04-13 08:23:50.120 INFO 37397 — [ main] org.hibernate.Version : HHH000412: Hibernate Core {4.3.11.Final} 输出内容元素具体如下：（包括这些） 时间日期 — 精确到毫秒日志级别 — ERROR, WARN, INFO, DEBUG or TRACE进程ID分隔符 — — 标识实际日志的开始线程名 — 方括号括起来（可能会截断控制台输出）Logger名 — 通常使用源代码的类名日志内容 控制台输出在Spring Boot中默认配置了ERROR、WARN和INFO级别的日志输出到控制台。 这里要说明一下日志的级别：（共分为5级），级别也就是反映出一种status的意思，我们根据关键字可以看出程序运行后记录的状态，看这个级别参数，知道是错误，警告还是正确运行。 【level】日志输出级别 FATAL 0 ERROR 1 严重错误 WARN 2 一般警告 INFO 3 一般显示信息 DEBUG 4 程序调试信息（default） 如果我们不指定appenders输出到哪个文件，那么springboot是默认将信息输入到控制台的，ERROR是产生严重错误的级别，这个在我们产生错误导致程序不运行时显示的，WARN则是警告的情况，INFO则是正常信息的输出，程序正常运行。我们可以通过两种方式切换至DEBUG级别： 在运行命令后加入–debug标志，如：$ java -jar myapp.jar –debug在application.properties中配置debug=true，该属性置为true的时候，核心Logger（包含嵌入式容器、hibernate、spring）会输出更多内容，但是你自己应用的日志并不会输出为DEBUG级别。 这是springboot启动的三种方式：第一种是cmd到项目目录然后命令行mvn spring-boot:run启动项目， 第二种是运行Application.java入口类方法， 第三种是使用mvn install 生成jar后运行，先到项目根目录mvn installcd targetjava -jar xxxx.jar 上诉改debug也是通过在项目目录下输入指令来设置debug开启。。。 文件输出我们日常工作中经常要进行日志记录，并输出到响应位置的文件夹，甚至是mongoDB数据库（文件储存数据库）中，用于存放数据，我们要怎么用springboot内集成的框架来完成日志记录呢？]]></content>
+      <categories>
+        <category>springboot</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>大数据</tag>
+        <tag>spring</tag>
+        <tag>springboot</tag>
+        <tag>logback</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LDAP服务器结合Springboot]]></title>
+    <url>%2F2018%2F04%2F15%2FLDAP%2F</url>
+    <content type="text"><![CDATA[LDAP（轻量级目录访问协议，Lightweight Directory Access Protocol)是实现提供被称为目录服务的信息服务。目录服务是一种特殊的数据库系统，其专门针对读取，浏览和搜索操作进行了特定的优化。目录一般用来包含描述性的，基于属性的信息并支持精细复杂的过滤能力。目录一般不支持通用数据库针对大量更新操作操作需要的复杂的事务管理或回卷策略。就是说LDAP精于读取和查询，在写入功能上表现较差，不支持事务和回滚操作，而目录服务的更新则一般都非常简单。这种目录可以存储包括个人信息、web链结、jpeg图像等各种信息。为了访问存储在目录中的信息，就需要使用运行在TCP/IP 之上的访问协议—LDAP。 目录简单来说就是一种树状结构的数据库。 而目录服务是一种以树状结构的目录数据库为基础，外加各种访问协议的信息查询服务。 顾名思义，目录天生就是用来查询的。 目录服务是由目录数据库和一套访问协议组成的系统。类似以下的信息适合储存在目录中： 企业员工信息，如姓名、电话、邮箱等；公用证书和安全密钥；公司的物理设备信息，如服务器，它的IP地址、存放位置、厂商、购买时间等；LDAP是轻量目录访问协议(Lightweight Directory Access Protocol)的缩写，LDAP是从X.500目录访问协议的基础上发展过来的，目前的版本是v3.0。与LDAP一样提供类似的目录服务软件还有ApacheDS、Active Directory、Red Hat Directory Service 。 LDAP特点LDAP的结构用树来表示，而不是用表格。正因为这样，就不能用SQL语句了LDAP可以很快地得到查询结果，不过在写方面，就慢得多LDAP提供了静态数据的快速查询方式Client/server模型，Server 用于存储数据，Client提供操作目录信息树的工具这些工具可以将数据库的内容以文本格式（LDAP 数据交换格式，LDIF）呈现在您的面前LDAP是一种开放Internet标准，LDAP协议是跨平台的Interent协议 LDAP组织数据的方式 Entry条目，也叫记录项，是LDAP中最基本的颗粒，就像字典中的词条，或者是数据库中的记录。通常对LDAP的添加、删除、更改、检索都是以条目为基本对象的。 dn：每一个条目都有一个唯一的标识名（distinguished Name ，DN），如上图中一个 dn：”cn=baby,ou=marketing,ou=people,dc=mydomain,dc=org” 。通过DN的层次型语法结构，可以方便地表示出条目在LDAP树中的位置，通常用于检索。 rdn：一般指dn逗号最左边的部分，如cn=baby。它与RootDN不同，RootDN通常与RootPW同时出现，特指管理LDAP中信息的最高权限用户。 Base DN：LDAP目录树的最顶部就是根，也就是所谓的“Base DN”，如”dc=mydomain,dc=org”。 Attribute每个条目都可以有很多属性（Attribute），比如常见的人都有姓名、地址、电话等属性。每个属性都有名称及对应的值，属性值可以有单个、多个，比如你有多个邮箱。 属性不是随便定义的，需要符合一定的规则，而这个规则可以通过schema制定。比如，如果一个entry没有包含在 inetorgperson 这个 schema 中的objectClass: inetOrgPerson，那么就不能为它指定employeeNumber属性，因为employeeNumber是在inetOrgPerson中定义的。 LDAP为人员组织机构中常见的对象都设计了属性(比如commonName，surname)。下面有一些常用的别名： ObjectClass对象类是属性的集合，LDAP预想了很多人员组织机构中常见的对象，并将其封装成对象类。比如人员（person）含有姓（sn）、名（cn）、电话(telephoneNumber)、密码(userPassword)等属性，单位职工(organizationalPerson)是人员(person)的继承类，除了上述属性之外还含有职务（title）、邮政编码（postalCode）、通信地址(postalAddress)等属性。 通过对象类可以方便的定义条目类型。每个条目可以直接继承多个对象类，这样就继承了各种属性。如果2个对象类中有相同的属性，则条目继承后只会保留1个属性。对象类同时也规定了哪些属性是基本信息，必须含有(Must或Required，必要属性)：哪些属性是扩展信息，可以含有（May或Optional，可选属性）。 对象类有三种类型：结构类型（Structural）、抽象类型(Abstract)和辅助类型（Auxiliary）。结构类型是最基本的类型，它规定了对象实体的基本属性，每个条目属于且仅属于一个结构型对象类。抽象类型可以是结构类型或其他抽象类型父类，它将对象属性中共性的部分组织在一起，称为其他类的模板，条目不能直接集成抽象型对象类。辅助类型规定了对象实体的扩展属性。每个条目至少有一个结构性对象类。 对象类本身是可以相互继承的，所以对象类的根类是top抽象型对象类。以常用的人员类型为例，他们的继承关系： 下面是inetOrgPerson对象类的在schema中的定义，可以清楚的看到它的父类SUB和可选属性MAY、必要属性MUST(继承自organizationalPerson)，关于各属性的语法则在schema中的attributetype定义。 `# inetOrgPerson` `# The inetOrgPerson represents people who are associated with an` `# organization in some way. It is a structural class and is derived` `# from the organizationalPerson which is defined in X.521 [X521].` objectclass ( 2.16.840.1.113730.3.2.2 NAME &apos;inetOrgPerson&apos; DESC &apos;RFC2798: Internet Organizational Person&apos; SUP organizationalPerson STRUCTURAL MAY ( audio $ businessCategory $ carLicense $ departmentNumber $ displayName $ employeeNumber $ employeeType $ givenName $ homePhone $ homePostalAddress $ initials $ jpegPhoto $ labeledURI $ mail $ manager $ mobile $ o $ pager $ photo $ roomNumber $ secretary $ uid $ userCertificate $ x500uniqueIdentifier $ preferredLanguage $ userSMIMECertificate $ userPKCS12 ) ) Schema对象类（ObjectClass）、属性类型（AttributeType）、语法（Syntax）分别约定了条目、属性、值，他们之间的关系如下图所示。所以这些构成了模式(Schema)——对象类的集合。条目数据在导入时通常需要接受模式检查，它确保了目录中所有的条目数据结构都是一致的。 schema（一般在/etc/ldap/schema/目录）在导入时要注意前后顺序。 backend &amp; databaseldap的后台进程slapd接收、响应请求，但实际存储数据、获取数据的操作是由Backends做的，而数据是存放在database中，所以你可以看到往往你可以看到backend和database指令是一样的值如 bdb 。一个 backend 可以有多个 database instance，但每个 database 的 suffix 和 rootdn 不一样。openldap 2.4版本的模块是动态加载的，所以在使用backend时需要moduleload back_bdb指令。 bdb是一个高性能的支持事务和故障恢复的数据库后端，可以满足绝大部分需求。许多旧文档里（包括官方）说建议将bdb作为首选后端服务（primary backend），但2.4版文档明确说hdb才是被首先推荐使用的，这从 2.4.40 版默认安装后的配置文件里也可以看出。hdb是基于bdb的，但是它通过扩展的索引和缓存技术可以加快数据访问，修改entries会更有效率，有兴趣可以访问上的链接或slapd.backends。 另外config是特殊的backend，用来在运行时管理slapd的配置，它只能有一个实例，甚至无需显式在slapd.conf中配置。 TLS &amp; SASL分布式LDAP 是以明文的格式通过网络来发送信息的，包括client访问ldap的密码（当然一般密码已然是二进制的），SSL/TLS 的加密协议就是来保证数据传送的保密性和完整性。 SASL （Simple Authenticaion and Security Layer）简单身份验证安全框架，它能够实现openldap客户端到服务端的用户验证，也是ldapsearch、ldapmodify这些标准客户端工具默认尝试与LDAP服务端认证用户的方式（前提是已经安装好 Cyrus SASL）。SASL有几大工业实现标准：Kerveros V5、DIGEST-MD5、EXTERNAL、PLAIN、LOGIN。 Kerveros V5是里面最复杂的一种，使用GSSAPI机制，必须配置完整的Kerberos V5安全系统，密码不再存放在目录服务器中，每一个dn与Kerberos数据库的主体对应。DIGEST-MD5稍微简单一点，密码通过saslpasswd2生成放在sasldb数据库中，或者将明文hash存到LDAP dn的userPassword中，每一个authid映射成目录服务器的dn，常和SSL配合使用。参考 https://docs.oracle.com/cd/E19957-01/820-0293/6nc1tbp0h/index.html EXTERNAL一般用于初始化添加schema时使用，如ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/core.ldif。 LDIFLDIF 是一种普遍使用的文件格式，用来描述目录信息或可对目录执行的修改操作。LDIF（LDAP Data Interchange Format，数据交换格式）是LDAP数据库信息的一种文本格式，用于数据的导入导出，每行都是“属性: 值”对。 结构参考：https://blog.csdn.net/daily11/article/details/51030464https://zhuanlan.zhihu.com/p/32732045 openLDAP服务器安装参考：http://seanlook.com/2015/01/21/openldap-install-guide-ssl/ SpringBoot整合LDAP很多时候，我们在构建系统的时候都会自己创建用户管理体系，这对于开发人员来说并不是什么难事，但是当我们需要维护多个不同系统并且相同用户跨系统使用的情况下，如果每个系统维护自己的用户信息，那么此时用户信息的同步就会变的比较麻烦，对于用户自身来说也会非常困扰，很容易出现不同系统密码不一致啊等情况出现。如果此时我们引入LDAP来集中存储用户的基本信息并提供统一的读写接口和校验机制，那么这样的问题就比较容易解决了。下面就来说说当我们使用Spring Boot开发的时候，如何来访问LDAP服务端。 LDAP目录中的信息是是按照树型结构组织，具体信息存储在条目(entry)的数据结构中。条目相当于关系数据库中表的记录；条目是具有区别名DN （Distinguished Name）的属性（Attribute），DN是用来引用条目的，DN相当于关系数据库表中的关键字（Primary Key）。属性由类型（Type）和一个或多个值（Values）组成，相当于关系数据库中的字段（Field）由字段名和数据类型组成，只是为了方便检索的需要，LDAP中的Type可以有多个Value，而不是关系数据库中为降低数据的冗余性要求实现的各个域必须是不相关的。LDAP中条目的组织一般按照地理位置和组织关系进行组织，非常的直观。LDAP把数据存放在文件中，为提高效率可以使用基于索引的文件数据库，而不是关系数据库。类型的一个例子就是mail，其值将是一个电子邮件地址。]]></content>
+      <categories>
+        <category>springboot</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>大数据</tag>
+        <tag>spring</tag>
+        <tag>springboot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[数据分析与挖掘--POWER BI]]></title>
     <url>%2F2018%2F04%2F14%2Fpower-bi%2F</url>
     <content type="text"><![CDATA[大数据已经成为互联网时代的进程之一，海量数据的处理可以通过hadoop+spark和分布式架构系统进行实现，所有数据的可视化需求显得更加迫切，如何将大数据更加直观的展现给非技术人员去理解，这就是power BI。]]></content>
@@ -263,8 +292,8 @@
         <category>WEB</category>
       </categories>
       <tags>
-        <tag>软件架构</tag>
         <tag>大数据</tag>
+        <tag>软件架构</tag>
         <tag>REST</tag>
       </tags>
   </entry>
