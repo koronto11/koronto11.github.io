@@ -113,7 +113,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/03/22/springboot/p3.png">
 <meta property="og:image" content="http://yoursite.com/2018/03/22/springboot/p4.png">
 <meta property="og:image" content="http://yoursite.com/2018/03/22/springboot/p5.png">
-<meta property="og:updated_time" content="2018-03-23T18:25:07.680Z">
+<meta property="og:updated_time" content="2018-04-17T15:48:12.025Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Boot之路(一)--概念介绍及注解配置">
 <meta name="twitter:description" content="Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。也被称为spring的脚手架。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。 spring boot 致力于简洁，让开发者写更少的配置，程序能够更快的运行和启动。它是下一代javaweb框架，并且它是spring cloud（微服务）的基础。(spr">
@@ -674,13 +674,14 @@ public class WebConfiguration {
         }
     }
 }
-</code></pre><h2 id="自定义Property"><a href="#自定义Property" class="headerlink" title="自定义Property"></a>自定义Property</h2><p>在web开发的过程中，我经常需要自定义一些配置文件，如何使用呢</p>
-<p>配置在application.properties中，例如：</p>
+</code></pre><h2 id="自定义Property"><a href="#自定义Property" class="headerlink" title="自定义Property"></a>自定义Property</h2><p>相信很多人选择Spring Boot主要是考虑到它既能兼顾Spring的强大功能，还能实现快速开发的便捷。我们在Spring Boot使用过程中，最直观的感受就是没有了原来自己整合Spring应用时繁多的XML配置内容，替代它的是在pom.xml中引入模块化的Starter POMs，其中各个模块都有自己的默认配置，所以如果不是特殊应用场景，就只需要在application.properties中完成一些属性配置就能开启各模块的应用。</p>
+<p>在web开发的过程中，我经常需要自定义一些配置文件，如何使用呢?让我们来体会参数配置文件的强大！！</p>
+<p>-自定义普通参数<br>配置在application.properties中，例如：</p>
 <pre><code>com.neo.title=路飞
 com.neo.description=海贼王
 
 @Component
-//配置好后，直接在类中用EL表达式引用即可，所有的参数配置都是写在这里，都是为了避免将程序写死
+//配置好后，直接在类中用SPEL表达式引用即可，所有的参数配置都是写在这里，都是为了避免将程序写死
 public class NeoProperties {
     @Value(&quot;${com.neo.title}&quot;)
     private String title;
@@ -690,7 +691,27 @@ public class NeoProperties {
     //省略getter settet方法
 
     }
-</code></pre><h2 id="log配置"><a href="#log配置" class="headerlink" title="log配置"></a>log配置</h2><p>配置输出的地址和输出级别，同样也是在application.properties里面设置参数即可</p>
+</code></pre><p>-参数间引用<br>另外，在application.properties中，各参数也可以通过SPEL表达式来调用彼此(参数间引用)，比如：</p>
+<pre><code>com.neo.title=路飞
+com.neo.description=海贼王
+com.neo.onepiece=${com.neo.title}是${com.neo.description}
+</code></pre><p>-使用随机数</p>
+<p>在一些情况下，有些参数我们需要希望它不是一个固定的值，比如密钥、服务端口等。Spring Boot的属性配置文件中可以通过${random}来产生int值、long值或者string字符串，来支持属性的随机值。</p>
+<pre><code>// 随机字符串
+com.didispace.blog.value=${random.value}
+// 随机int
+com.didispace.blog.number=${random.int}
+// 随机long
+com.didispace.blog.bignumber=${random.long}
+// 10以内的随机数
+com.didispace.blog.test1=${random.int(10)}
+// 10-20的随机数
+com.didispace.blog.test2=${random.int[10,20]}
+</code></pre><p>-通过命令行设置属性值<br>不仅可以通过applecation.properties文件来配置参数，还可以用命令行的方式</p>
+<p>相信使用过一段时间Spring Boot的用户，一定知道这条命令：java -jar xxx.jar –server.port=8888，通过使用–server.port属性来设置xxx.jar应用的端口为8888。</p>
+<p>在命令行运行时，连续的两个减号–就是对application.properties中的属性值进行赋值的标识。所以，java -jar xxx.jar –server.port=8888命令，等价于我们在application.properties中添加属性server.port=8888，该设置在样例工程中可见，读者可通过删除该值或使用命令行来设置该值来验证。</p>
+<p>通过命令行来修改属性值固然提供了不错的便利性，但是通过命令行就能更改应用运行的参数，那岂不是很不安全？是的，所以Spring Boot也贴心的提供了屏蔽命令行访问属性的设置，只需要这句设置就能屏蔽：SpringApplication.setAddCommandLineProperties(false)。</p>
+<h2 id="log配置"><a href="#log配置" class="headerlink" title="log配置"></a>log配置</h2><p>配置输出的地址和输出级别，同样也是在application.properties里面设置参数即可</p>
 <pre><code>logging.path=/user/local/log
 logging.level.com.favorites=DEBUG
 logging.level.org.springframework.web=INFO
@@ -855,6 +876,20 @@ Thymeleaf: &lt;p th:text=&quot;${message}&quot;&gt;Hello World!&lt;/p&gt;
 <p>什么是WebJars？WebJars是将客户端（浏览器）资源（JavaScript，Css等）打成jar包文件，以对资源进行统一依赖管理。WebJars的jar包部署在Maven中央仓库上。</p>
 <p>我们在开发Java web项目的时候会使用像Maven，Gradle等构建工具以实现对jar包版本依赖管理，以及项目的自动化管理，但是对于JavaScript，Css等前端资源包，我们只能采用拷贝到webapp下的方式，这样做就无法对这些资源进行依赖管理。那么WebJars就提供给我们这些前端资源的jar包形势，我们就可以进行依赖管理。</p>
 <p>WebJars官网：<a href="http://www.webjars.org/" target="_blank" rel="noopener">http://www.webjars.org/</a><br>WebJars教程整理：<a href="https://www.cnblogs.com/liaojie970/p/7852576.html" target="_blank" rel="noopener">https://www.cnblogs.com/liaojie970/p/7852576.html</a></p>
+<h1 id="关于SpringBoot的多环境配置（实际开发）"><a href="#关于SpringBoot的多环境配置（实际开发）" class="headerlink" title="关于SpringBoot的多环境配置（实际开发）"></a>关于SpringBoot的多环境配置（实际开发）</h1><p>我们在开发Spring Boot应用时，通常同一套程序会被应用和安装到几个不同的环境，比如：开发、测试、生产等。其中每个环境的数据库地址、服务器端口等等配置都会不同，如果在为不同环境打包时都要频繁修改配置文件的话，那必将是个非常繁琐且容易发生错误的事。</p>
+<p>对于多环境的配置，各种项目构建工具或是框架的基本思路是一致的，通过配置多份不同环境的配置文件，再通过打包命令指定需要打包的内容之后进行区分打包，Spring Boot也不例外，或者说更加简单。</p>
+<p>1、开发环境是指开发时所运行的环境，比较随意，只是为了方便开发调试的，是对程序员开放的；<br>而生产环境就不一样了，<br>2、生产环境是系统开发的最后一个环节了，也就是上线，是要提供对外服务的，是要关闭错误报告的，然后把日志打印出来；<br>还有一个测试环境对吧，那就顾名思义，<br>3、测试环境就是上线前的测试，测试环境都不通过的话，肯定是不能上线的啊，也就是不能发布到生产环境上。<br>系统开发流程及对应环境：</p>
+<p>开发（开发环境，随意，重运行）—&gt;测试（测试环境，重功能）—&gt;上线（生产环境，重实现）</p>
+<p>在Spring Boot中多环境配置文件名需要满足application-{profile}.properties的格式，其中{profile}对应你的环境标识，比如：</p>
+<p>application-dev.properties：开发环境<br>application-test.properties：测试环境<br>application-prod.properties：生产环境</p>
+<p>至于哪个具体的配置文件会被加载，需要在application.properties文件中通过spring.profiles.active属性来设置，其值对应{profile}值。</p>
+<p>如：spring.profiles.active=test就会加载application-test.properties配置文件内容</p>
+<p>下面，以不同环境配置不同的服务端口为例，进行样例实验。<br>针对各环境新建不同的配置文件application-dev.properties、application-test.properties、application-prod.properties</p>
+<p>在这三个文件均都设置不同的server.port属性，如：dev环境设置为1111，test环境设置为2222，prod环境设置为3333</p>
+<p>application.properties中设置spring.profiles.active=dev，就是说默认以dev环境设置</p>
+<p>测试不同配置的加载</p>
+<p>执行java -jar xxx.jar，可以观察到服务端口被设置为1111，也就是默认的开发环境（dev）<br>执行java -jar xxx.jar –spring.profiles.active=test，可以观察到服务端口被设置为2222，也就是测试环境的配置（test）<br>执行java -jar xxx.jar –spring.profiles.active=prod，可以观察到服务端口被设置为3333，也就是生产环境的配置（prod）<br>按照上面的实验，可以如下总结多环境的配置思路：</p>
+<p>application.properties中配置通用内容，并设置spring.profiles.active=dev，以开发环境为默认配置<br>application-{profile}.properties中配置各个环境不同的内容<br>通过命令行方式去激活不同环境的配置</p>
 <p>如何学习Spring Boot：<a href="https://www.zhihu.com/question/53729800/answer/255785661" target="_blank" rel="noopener">https://www.zhihu.com/question/53729800/answer/255785661</a></p>
 
       
@@ -1148,7 +1183,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#如何spring-boot快速开发"><span class="nav-number">1.</span> <span class="nav-text">如何spring boot快速开发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Test项目下载"><span class="nav-number">1.1.</span> <span class="nav-text">Test项目下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目目录结构分析"><span class="nav-number">1.2.</span> <span class="nav-text">项目目录结构分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目POM-XML"><span class="nav-number">1.3.</span> <span class="nav-text">项目POM.XML</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#出现的问题及解决方案"><span class="nav-number">1.4.</span> <span class="nav-text">出现的问题及解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何做单元测试"><span class="nav-number">1.5.</span> <span class="nav-text">如何做单元测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于Eclipse的热启动及热部署"><span class="nav-number">1.6.</span> <span class="nav-text">关于Eclipse的热启动及热部署</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于SpringBootApplication的各项注解配置"><span class="nav-number">2.</span> <span class="nav-text">关于SpringBootApplication的各项注解配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义Filter"><span class="nav-number">2.1.</span> <span class="nav-text">自定义Filter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义Property"><span class="nav-number">2.2.</span> <span class="nav-text">自定义Property</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#log配置"><span class="nav-number">2.3.</span> <span class="nav-text">log配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库操作"><span class="nav-number">2.4.</span> <span class="nav-text">数据库操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#thymeleaf模板"><span class="nav-number">2.5.</span> <span class="nav-text">thymeleaf模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WebJars"><span class="nav-number">2.6.</span> <span class="nav-text">WebJars</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#如何spring-boot快速开发"><span class="nav-number">1.</span> <span class="nav-text">如何spring boot快速开发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Test项目下载"><span class="nav-number">1.1.</span> <span class="nav-text">Test项目下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目目录结构分析"><span class="nav-number">1.2.</span> <span class="nav-text">项目目录结构分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目POM-XML"><span class="nav-number">1.3.</span> <span class="nav-text">项目POM.XML</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#出现的问题及解决方案"><span class="nav-number">1.4.</span> <span class="nav-text">出现的问题及解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何做单元测试"><span class="nav-number">1.5.</span> <span class="nav-text">如何做单元测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于Eclipse的热启动及热部署"><span class="nav-number">1.6.</span> <span class="nav-text">关于Eclipse的热启动及热部署</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于SpringBootApplication的各项注解配置"><span class="nav-number">2.</span> <span class="nav-text">关于SpringBootApplication的各项注解配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义Filter"><span class="nav-number">2.1.</span> <span class="nav-text">自定义Filter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义Property"><span class="nav-number">2.2.</span> <span class="nav-text">自定义Property</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#log配置"><span class="nav-number">2.3.</span> <span class="nav-text">log配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库操作"><span class="nav-number">2.4.</span> <span class="nav-text">数据库操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#thymeleaf模板"><span class="nav-number">2.5.</span> <span class="nav-text">thymeleaf模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WebJars"><span class="nav-number">2.6.</span> <span class="nav-text">WebJars</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于SpringBoot的多环境配置（实际开发）"><span class="nav-number">3.</span> <span class="nav-text">关于SpringBoot的多环境配置（实际开发）</span></a></li></ol></div>
             
 
           </div>
@@ -1198,7 +1233,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共171.6k字</span>
+  <span class="post-count">博客全站共177.8k字</span>
 </div>
 
         
