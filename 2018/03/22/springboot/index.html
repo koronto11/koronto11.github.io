@@ -113,7 +113,8 @@
 <meta property="og:image" content="http://yoursite.com/2018/03/22/springboot/p3.png">
 <meta property="og:image" content="http://yoursite.com/2018/03/22/springboot/p4.png">
 <meta property="og:image" content="http://yoursite.com/2018/03/22/springboot/p5.png">
-<meta property="og:updated_time" content="2018-04-17T15:48:12.025Z">
+<meta property="og:image" content="http://yoursite.com/2018/03/22/springboot/aop.png">
+<meta property="og:updated_time" content="2018-04-18T16:18:25.395Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Boot之路(一)--概念介绍及注解配置">
 <meta name="twitter:description" content="Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。也被称为spring的脚手架。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。 spring boot 致力于简洁，让开发者写更少的配置，程序能够更快的运行和启动。它是下一代javaweb框架，并且它是spring cloud（微服务）的基础。(spr">
@@ -890,6 +891,191 @@ Thymeleaf: &lt;p th:text=&quot;${message}&quot;&gt;Hello World!&lt;/p&gt;
 <p>测试不同配置的加载</p>
 <p>执行java -jar xxx.jar，可以观察到服务端口被设置为1111，也就是默认的开发环境（dev）<br>执行java -jar xxx.jar –spring.profiles.active=test，可以观察到服务端口被设置为2222，也就是测试环境的配置（test）<br>执行java -jar xxx.jar –spring.profiles.active=prod，可以观察到服务端口被设置为3333，也就是生产环境的配置（prod）<br>按照上面的实验，可以如下总结多环境的配置思路：</p>
 <p>application.properties中配置通用内容，并设置spring.profiles.active=dev，以开发环境为默认配置<br>application-{profile}.properties中配置各个环境不同的内容<br>通过命令行方式去激活不同环境的配置</p>
+<h1 id="关于springboot的AOP"><a href="#关于springboot的AOP" class="headerlink" title="关于springboot的AOP"></a>关于springboot的AOP</h1><p>AOP即aspect oriented programming面向切面编程，不需要修改原本代码便可将独立功能切入某个层面。通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术。AOP是Spring框架中的一个重要内容，它通过对既有程序定义一个切入点，然后在其前后切入不同的执行内容，比如常见的有：打开数据库连接/关闭数据库连接、打开事务/关闭事务、记录日志等。基于AOP不会破坏原来程序逻辑，因此它可以很好的对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提高了开发的效率。<br>aop的理解：我们传统的编程方式是垂直化的编程，即A–&gt;B–&gt;C–&gt;D这么下去，一个逻辑完毕之后执行另外一段逻辑。但是AOP提供了另外一种思路，它的作用是在业务逻辑不知情（即业务逻辑不需要做任何的改动）的情况下对业务代码的功能进行增强，这种编程思想的使用场景有很多，例如事务提交、方法执行之前的权限检测、日志打印、方法调用事件等等</p>
+<p>其用到的动态代理技术为：本身集成的JDK动态代理和第三方cglib动态代理<br>两者本身各有优缺（不过JDK的原理要满足sun规范，cglib就没有那么多的限制）<br>JDK基于java反射机制，而cglib则是基于asm（java字节码）来动态增加既有类功能的<br>JDK是在生成切面上足够高效，而cglib则是在生成切面后的功能上比较高效，根据实际需求去选择使用哪种动态代理技术。</p>
+<p>AOP在实际开发中能做到很多事，比如在原框架上新追加的切面功能实现，流量审计，WEB日志等等。。</p>
+<p>下面主要讲两个内容，一个是如何在Spring Boot中引入Aop功能，二是如何使用Aop做切面去统一处理Web请求的日志。</p>
+<p>第一步：确保自己的springboot所属工程存在spring-boot-starter-web模块，导入jar包即可</p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre><p>第二步：引入AOP依赖</p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-aop&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre><p>在完成了引入AOP依赖包后，一般来说并不需要去做其他配置。也许在Spring中使用过注解配置方式的人会问是否需要在程序主类中增加@EnableAspectJAutoProxy来启用，实际并不需要。</p>
+<p>可以看下面关于AOP的默认配置属性，其中spring.aop.auto属性默认是开启的，也就是说只要引入了AOP依赖后，默认已经增加了@EnableAspectJAutoProxy。</p>
+<p>第三步：在applicaton.properties文件中配置AOP的各项属性配置</p>
+<p>spring.aop.auto=true  //就相当于在在驱动主类上配置了@EnableAspectAutoProxy注解，切面自动代理<br>spring.aop.proxy-target-class=false  //若是不用JDK自动代理，也可以通过这个开启Cglib的自动代理</p>
+<p>而当我们需要使用CGLIB来实现AOP的时候，需要配置spring.aop.proxy-target-class=true，不然默认使用的是标准Java的实现。</p>
+<p>第四步：确认切点位置</p>
+<p>假设切点为：com.didispace.controller包下的控制器，我们需要以这个切点为基础</p>
+<pre><code>@RestController
+public class HelloController {
+
+    @RequestMapping(&quot;/hello&quot;)
+    public String hello(@RequestParam String name){
+        return &quot;HelloKoro&quot;;
+    }
+}
+</code></pre><p>第五步：可以编写切面了，自由度超高，基本可以在任何想要的层级上切入逻辑</p>
+<p>实现AOP的切面主要有以下几个要素：（主要是切面和切点）</p>
+<p>使用@Aspect注解将一个java类定义为切面类<br>使用@Pointcut定义一个切入点，可以是一个规则表达式，比如下例中某个package下的所有函数，也可以是一个注解等。<br>根据需要在切入点不同位置的切入内容</p>
+<p><img src="/2018/03/22/springboot/aop.png" alt="logo"></p>
+<p>-使用@Before在切入点开始处切入内容<br>-使用@After在切入点结尾处切入内容<br>-使用@AfterReturning在切入点return内容之后切入内容（可以用来对处理返回值做一些加工处理）<br>-使用@Around在切入点前后切入内容，并自己控制何时执行切入点自身的内容<br>-使用@AfterThrowing用来处理当切入内容部分抛出异常之后的处理逻辑</p>
+<p>例如：</p>
+<pre><code>@Aspect
+@Component
+public class WebLogAspect {
+    //声明Logger对象
+    private Logger logger = Logger.getLogger(getClass());
+
+    //通过@Pointcut定义的切入点为com.didispace.web包下的所有函数
+    //（对web层所有请求处理做切入点）
+    //public *（表示对访问限定符也可以规定）com.didispace.web（web包下）..*.*(..)所有方法，而且参数随意
+    //声明一个切入点，webLog为切入点名称
+    @Pointcut(&quot;execution(public * com.didispace.controller..*.*(..))&quot;)
+    public void webLog(){}
+
+    //用来具体实现webLog()方法
+    //JoinPoint对象封装了SpringAop中切面方法的信息,在切面方法中添加JoinPoint参数,
+    //就可以获取到封装了该方法信息的JoinPoint对象.
+    //JoinPoint其实就具象化为这个切面类
+    @Before(&quot;webLog()&quot;)
+    public void doBefore(JoinPoint joinPoint) throws Throwable {
+        // 接收到请求，记录请求内容
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+
+        // 记录下请求内容
+
+        //获取URL
+        logger.info(&quot;URL : &quot; + request.getRequestURL().toString());
+        //获取请求方式
+        logger.info(&quot;HTTP_METHOD : &quot; + request.getMethod());
+        //获取请求IP
+        logger.info(&quot;IP : &quot; + request.getRemoteAddr());
+        //Signature getSignature();方法
+        //获取封装了署名信息的对象,在该对象中可以获取到目标方法名,所属类的Class等信息
+        //哪个方法触发了就输出哪个方法的方法名
+        logger.info(&quot;CLASS_METHOD : &quot; + joinPoint.getSignature().getDeclaringTypeName() + &quot;.&quot; + joinPoint.getSignature().getName());
+        //Object[] getArgs();
+        //获取传入目标方法的参数对象,也就是请求参数值
+        logger.info(&quot;ARGS : &quot; + Arrays.toString(joinPoint.getArgs()));
+
+    }
+
+    //在切入点return内容之后切入内容（可以用来对处理返回值做一些加工处理）
+    //一旦切点有ruturn函数，则触发这个切面
+    @AfterReturning(returning = &quot;ret&quot;, pointcut = &quot;webLog()&quot;)
+    public void doAfterReturning(Object ret) throws Throwable {
+        // 处理完请求，返回内容
+        logger.info(&quot;RESPONSE : &quot; + ret);
+    }
+
+    //后置异常通知
+    //有异常则输出这个
+    @AfterThrowing(&quot;webLog()&quot;)
+    public void throwss(JoinPoint joinPoint){
+        logger.error(&quot;Exception : &quot;+joinPoint.getTarget());
+    }
+
+  //后置最终通知,final增强，不管是抛出异常或者正常退出都会执行
+    //最后一定执行，属于final级别
+    @After(&quot;webLog()&quot;)  
+    public void after(JoinPoint jp){  
+        System.out.println(&quot;方法最后执行.....&quot;);  
+    }  
+
+    //环绕通知,环绕增强，相当于MethodInterceptor 
+    //其实我们仅使用环绕通知就可以实现前置通知、后置通知、异常通知、最终通知等的效果。 
+    //ProceedingJoinPoint继承JoinPoint子接口，它新增了两个用于执行连接点方法的方法： 
+    //1.Object proceed()通过反射执行目标对象的连接点处的方法
+    //2.Object proceed(java.lang.Object[] args)通过反射执行目标对象连接点处的方法，不过使用新的参数替换原来的参数。
+    @Around(&quot;webLog()&quot;)  
+    public Object arround(ProceedingJoinPoint pjp) {  
+        System.out.println(&quot;方法环绕start.....&quot;);  
+        try {  
+            //proceed()方法输出的是切入点的方法名
+            Object o =  pjp.proceed();  
+            System.out.println(&quot;方法环绕proceed，结果是 :&quot; + o);  
+            return o;  
+        } catch (Throwable e) {  
+            e.printStackTrace();  
+            return null;  
+        }  
+    } 
+}
+</code></pre><p>第六步：配置相关日志输出配置</p>
+<pre><code>// LOG4J配置
+log4j.rootLogger=INFO, stdout, file, errorfile
+// 动态识别多环境下的日志级别
+log4j.category.com.didispace=${logging.level.com.didispace}, didifile
+log4j.logger.error=errorfile
+
+// 控制台输出
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss,SSS} %5p %c{1}:%L - %m%n
+
+// root日志输出
+log4j.appender.file=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.file.file=logs/all.log
+log4j.appender.file.DatePattern=&apos;.&apos;yyyy-MM-dd
+log4j.appender.file.layout=org.apache.log4j.PatternLayout
+log4j.appender.file.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss,SSS} %5p %c{1}:%L - %m%n
+
+// error日志输出
+log4j.appender.errorfile=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.errorfile.file=logs/error.log
+log4j.appender.errorfile.DatePattern=&apos;.&apos;yyyy-MM-dd
+log4j.appender.errorfile.Threshold = ERROR
+log4j.appender.errorfile.layout=org.apache.log4j.PatternLayout
+log4j.appender.errorfile.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss,SSS} %5p %c{1}:%L - %m%n
+
+// com.didispace下的日志输出
+log4j.appender.didifile=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.didifile.file=logs/my.log
+log4j.appender.didifile.DatePattern=&apos;.&apos;yyyy-MM-dd
+log4j.appender.didifile.layout=org.apache.log4j.PatternLayout
+log4j.appender.didifile.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss,SSS} %5p %c{1}:%L ---- %m%n
+</code></pre><p>这样就将aop的信息打印到文件中了，我们可以结合springboot+log4j，实现aop的日志记录功能切入到业务逻辑中</p>
+<h1 id="关于AOP优化问题"><a href="#关于AOP优化问题" class="headerlink" title="关于AOP优化问题"></a>关于AOP优化问题</h1><p>AOP切面中的同步问题，也就是有关于性能审计的相关功能，若是我们想记录某个组件运行的时间，我们应该如何设计？<br>传统方式是在WebLogAspect切面中，分别通过doBefore和doAfterReturning两个独立函数实现了切点头部和切点返回后执行的内容，若我们想统计请求的处理时间，就需要在doBefore处记录时间，并在doAfterReturning处通过当前时间与开始处记录的时间计算得到请求处理的消耗时间。</p>
+<p>那么我们是否可以在WebLogAspect切面中定义一个成员变量来给doBefore和doAfterReturning一起访问呢？是否会有同步问题呢？</p>
+<p>的确，直接在这里定义基本类型会有同步问题，所以我们可以引入ThreadLocal对象，像下面这样进行记录：</p>
+<pre><code>@Aspect
+@Component
+public class WebLogAspect {
+
+    private Logger logger = Logger.getLogger(getClass());
+
+    ThreadLocal&lt;Long&gt; startTime = new ThreadLocal&lt;&gt;();
+
+    @Pointcut(&quot;execution(public * com.didispace.web..*.*(..))&quot;)
+    public void webLog(){}
+
+    @Before(&quot;webLog()&quot;)
+    public void doBefore(JoinPoint joinPoint) throws Throwable {
+        startTime.set(System.currentTimeMillis());
+
+        // 省略日志记录内容
+    }
+
+    @AfterReturning(returning = &quot;ret&quot;, pointcut = &quot;webLog()&quot;)
+    public void doAfterReturning(Object ret) throws Throwable {
+        // 处理完请求，返回内容
+        logger.info(&quot;RESPONSE : &quot; + ret);
+        logger.info(&quot;SPEND TIME : &quot; + (System.currentTimeMillis() - startTime.get()));
+    }
+}
+</code></pre><p>还有AOP切面的优先级，我们也可以进行控制，若是我们的业务中存在很多的AOP组件，那么如何管理他们的优先级呢？</p>
+<p>由于通过AOP实现，程序得到了很好的解耦，但是也会带来一些问题，比如：我们可能会对Web层做多个切面，校验用户，校验头信息等等，这个时候经常会碰到切面的处理顺序问题。</p>
+<p>所以，我们需要定义每个切面的优先级，我们需要@Order(i)注解来标识切面的优先级。i的值越小，优先级越高。假设我们还有一个切面是CheckNameAspect用来校验name必须为didi，我们为其设置@Order(10)，而上文中WebLogAspect设置为@Order(5)，所以WebLogAspect有更高的优先级，这个时候执行顺序是这样的：</p>
+<p>在@Before中优先执行@Order(5)的内容，再执行@Order(10)的内容<br>在@After和@AfterReturning中优先执行@Order(10)的内容，再执行@Order(5)的内容<br>所以我们可以这样子总结：</p>
+<p>在切入点前的操作，按order的值由小到大执行<br>在切入点后的操作，按order的值由大到小执行</p>
+<p>就是一种像洋葱一样的aop结构，order越小就越外层。。。</p>
 <p>如何学习Spring Boot：<a href="https://www.zhihu.com/question/53729800/answer/255785661" target="_blank" rel="noopener">https://www.zhihu.com/question/53729800/answer/255785661</a></p>
 
       
@@ -1183,7 +1369,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#如何spring-boot快速开发"><span class="nav-number">1.</span> <span class="nav-text">如何spring boot快速开发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Test项目下载"><span class="nav-number">1.1.</span> <span class="nav-text">Test项目下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目目录结构分析"><span class="nav-number">1.2.</span> <span class="nav-text">项目目录结构分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目POM-XML"><span class="nav-number">1.3.</span> <span class="nav-text">项目POM.XML</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#出现的问题及解决方案"><span class="nav-number">1.4.</span> <span class="nav-text">出现的问题及解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何做单元测试"><span class="nav-number">1.5.</span> <span class="nav-text">如何做单元测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于Eclipse的热启动及热部署"><span class="nav-number">1.6.</span> <span class="nav-text">关于Eclipse的热启动及热部署</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于SpringBootApplication的各项注解配置"><span class="nav-number">2.</span> <span class="nav-text">关于SpringBootApplication的各项注解配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义Filter"><span class="nav-number">2.1.</span> <span class="nav-text">自定义Filter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义Property"><span class="nav-number">2.2.</span> <span class="nav-text">自定义Property</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#log配置"><span class="nav-number">2.3.</span> <span class="nav-text">log配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库操作"><span class="nav-number">2.4.</span> <span class="nav-text">数据库操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#thymeleaf模板"><span class="nav-number">2.5.</span> <span class="nav-text">thymeleaf模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WebJars"><span class="nav-number">2.6.</span> <span class="nav-text">WebJars</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于SpringBoot的多环境配置（实际开发）"><span class="nav-number">3.</span> <span class="nav-text">关于SpringBoot的多环境配置（实际开发）</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#如何spring-boot快速开发"><span class="nav-number">1.</span> <span class="nav-text">如何spring boot快速开发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Test项目下载"><span class="nav-number">1.1.</span> <span class="nav-text">Test项目下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目目录结构分析"><span class="nav-number">1.2.</span> <span class="nav-text">项目目录结构分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目POM-XML"><span class="nav-number">1.3.</span> <span class="nav-text">项目POM.XML</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#出现的问题及解决方案"><span class="nav-number">1.4.</span> <span class="nav-text">出现的问题及解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何做单元测试"><span class="nav-number">1.5.</span> <span class="nav-text">如何做单元测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于Eclipse的热启动及热部署"><span class="nav-number">1.6.</span> <span class="nav-text">关于Eclipse的热启动及热部署</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于SpringBootApplication的各项注解配置"><span class="nav-number">2.</span> <span class="nav-text">关于SpringBootApplication的各项注解配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义Filter"><span class="nav-number">2.1.</span> <span class="nav-text">自定义Filter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义Property"><span class="nav-number">2.2.</span> <span class="nav-text">自定义Property</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#log配置"><span class="nav-number">2.3.</span> <span class="nav-text">log配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库操作"><span class="nav-number">2.4.</span> <span class="nav-text">数据库操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#thymeleaf模板"><span class="nav-number">2.5.</span> <span class="nav-text">thymeleaf模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WebJars"><span class="nav-number">2.6.</span> <span class="nav-text">WebJars</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于SpringBoot的多环境配置（实际开发）"><span class="nav-number">3.</span> <span class="nav-text">关于SpringBoot的多环境配置（实际开发）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于springboot的AOP"><span class="nav-number">4.</span> <span class="nav-text">关于springboot的AOP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于AOP优化问题"><span class="nav-number">5.</span> <span class="nav-text">关于AOP优化问题</span></a></li></ol></div>
             
 
           </div>
@@ -1233,7 +1419,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共177.8k字</span>
+  <span class="post-count">博客全站共180.5k字</span>
 </div>
 
         
