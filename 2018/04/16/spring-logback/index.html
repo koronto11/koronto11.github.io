@@ -100,20 +100,24 @@
 
 
 
-<meta name="description" content="关于日志Spring Boot在所有内部日志中使用Commons Logging，但是默认配置也提供了对常用日志的支持，如：Java Util Logging，Log4J, Log4J2和Logback。每种Logger都可以通过配置使用控制台或者文件输出日志内容。Springboot帮我们整合了这些最常用的日志框架，只需要简单的按照约定配置即可在项目中很快的配置日志相关。 常用的日志框架有apa">
+<meta name="description" content="关于日志Spring Boot在所有内部日志中使用Commons Logging，但是默认配置也提供了对常用日志的支持，如：Java Util Logging，Log4J, Log4J2和Logback。每种Logger都可以通过配置使用控制台或者文件输出日志内容。Springboot帮我们整合了这些最常用的日志框架，只需要简单的按照约定配置即可在项目中很快的配置日志相关。 常用的日志框架(也称为">
 <meta name="keywords" content="java,大数据,spring,springboot,logback">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringBoot+log4j日志管理">
 <meta property="og:url" content="http://yoursite.com/2018/04/16/spring-logback/index.html">
 <meta property="og:site_name" content="Funk Jungle">
-<meta property="og:description" content="关于日志Spring Boot在所有内部日志中使用Commons Logging，但是默认配置也提供了对常用日志的支持，如：Java Util Logging，Log4J, Log4J2和Logback。每种Logger都可以通过配置使用控制台或者文件输出日志内容。Springboot帮我们整合了这些最常用的日志框架，只需要简单的按照约定配置即可在项目中很快的配置日志相关。 常用的日志框架有apa">
+<meta property="og:description" content="关于日志Spring Boot在所有内部日志中使用Commons Logging，但是默认配置也提供了对常用日志的支持，如：Java Util Logging，Log4J, Log4J2和Logback。每种Logger都可以通过配置使用控制台或者文件输出日志内容。Springboot帮我们整合了这些最常用的日志框架，只需要简单的按照约定配置即可在项目中很快的配置日志相关。 常用的日志框架(也称为">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2018/04/16/spring-logback/redis-install1.png">
-<meta property="og:updated_time" content="2018-04-17T16:36:24.871Z">
+<meta property="og:image" content="http://yoursite.com/2018/04/16/spring-logback/main.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/16/spring-logback/p1.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/16/spring-logback/p2.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/16/spring-logback/p3.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/16/spring-logback/p4.png">
+<meta property="og:updated_time" content="2018-04-19T16:34:04.322Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringBoot+log4j日志管理">
-<meta name="twitter:description" content="关于日志Spring Boot在所有内部日志中使用Commons Logging，但是默认配置也提供了对常用日志的支持，如：Java Util Logging，Log4J, Log4J2和Logback。每种Logger都可以通过配置使用控制台或者文件输出日志内容。Springboot帮我们整合了这些最常用的日志框架，只需要简单的按照约定配置即可在项目中很快的配置日志相关。 常用的日志框架有apa">
-<meta name="twitter:image" content="http://yoursite.com/2018/04/16/spring-logback/redis-install1.png">
+<meta name="twitter:description" content="关于日志Spring Boot在所有内部日志中使用Commons Logging，但是默认配置也提供了对常用日志的支持，如：Java Util Logging，Log4J, Log4J2和Logback。每种Logger都可以通过配置使用控制台或者文件输出日志内容。Springboot帮我们整合了这些最常用的日志框架，只需要简单的按照约定配置即可在项目中很快的配置日志相关。 常用的日志框架(也称为">
+<meta name="twitter:image" content="http://yoursite.com/2018/04/16/spring-logback/main.png">
 
 
 
@@ -417,9 +421,33 @@
 
       
         <h1 id="关于日志"><a href="#关于日志" class="headerlink" title="关于日志"></a>关于日志</h1><p>Spring Boot在所有内部日志中使用Commons Logging，但是默认配置也提供了对常用日志的支持，如：Java Util Logging，Log4J, Log4J2和Logback。每种Logger都可以通过配置使用控制台或者文件输出日志内容。Springboot帮我们整合了这些最常用的日志框架，只需要简单的按照约定配置即可在项目中很快的配置日志相关。</p>
-<p>常用的日志框架有apache commons logging和slf4j，常用的日志系统有log4j,log4j2,JUL,logback等。<br>日志框作为门面，日志系统要搭配日志框架来使用，日志框架调用日志系统，在分布式中，还会有专门的分布式日志收集系统，在集群的多个分布式机器中将日志收集并整理的框架有：apache flume，facebook scribe等。<br><a id="more"></a><br>在日志系统中，主要分为三个配置，appenders，layouts和loggers，一般我们做项目时日志记录的历程是这样的，loggers负责记录事假，将事件记录到后转发给合适的appenders，然后appenders使用layouts将事件记录进行格式化，并将其发送给控制台，文件或其他目录位置。</p>
+<p>常用的日志框架(也称为日志门面库)有apache commons logging和slf4j，常用的日志系统(也称为日志实现库)有log4j,log4j2,JUL,logback等。<br>日志框作为门面，日志系统要搭配日志框架来使用，日志框架调用日志系统，在分布式中，还会有专门的分布式日志收集系统，在集群的多个分布式机器中将日志收集并整理的框架有：apache flume，facebook scribe等。<br><a id="more"></a><br>早期Java项目使用最多的日志门面是commons-logging，log4j是推荐的日志实现库，需要的jar包为commons-logging.jar、log4j.jar。</p>
+<p>springboot中默认使用的也是commons logging+logback的组合，我们需要排除并且导入log4j的jar包</p>
+<p>现今java项目推荐的日志门面是slf4j，log4j仍是推荐的日志实现库，需要的jar包为slf4j-api.jar、slf4j-log4j12.jar、log4j.jar，其中绑定包slf4j-log4j12.jar指定了要使用的实现库。</p>
+<p>commons-logging存在osgi问题，但早期项目多使用其作为日志门面，为保证兼容仍使用其作为日志门面，但通过slf4j的静态绑定技术来加载具体的日志库log4j，需要的jar包为commons-logging.jar、jcl-over-slf4j.jar、slf4j-api.jar、slf4j-log4j12.jar、log4j.jar，其中jcl-over-slf4j.jar将日志的接口重定向到slf4j。</p>
+<p>slf4j+log4j组合使用模式：</p>
+<ol>
+<li>slf4j-api-1.5.11.jar</li>
+<li>slf4j-log4j12-1.5.11.jar</li>
+<li>log4j-1.2.15.jar</li>
+<li>log4j.properties(也可以是 log4j.xml)</li>
+</ol>
+<p>JCL+Log4J组合使用模式（即commons-logging+log4j）：</p>
+<ol>
+<li>commons-logging-1.1.jar</li>
+<li>log4j-1.2.15.jar</li>
+<li>log4j.properties</li>
+</ol>
+<p>不同的获取logger的方式</p>
+<p>log4j：（单独使用）<br>import org.apache.log4j.Logger;<br>Logger logger= Logger.getLogger(xx.class);</p>
+<p>slf4j+log4j：（借助LogFactory）<br>import  org.slf4j.Logger;<br>import  org.slf4j.LoggerFactory;<br>Logger logger = LoggerFactory.getLogger(xx.class);</p>
+<p>jcl+log4j:（借助LogFactory）<br>import org.apache.commons.logging.Log;<br>import org.apache.commons.logging.LogFactory;<br>private static Log log = LogFactory.getLog(xx.class);</p>
+<p>可以参考：<a href="https://blog.csdn.net/xydds/article/details/51606010" target="_blank" rel="noopener">https://blog.csdn.net/xydds/article/details/51606010</a>  根据使用场景的不同我们采用不同的日志框架+日志系统。</p>
+<p>总的来说，slf4j与commons-logging只是一个日志门面，实际还是要依赖真正的日志库log4j，虽然slf4j和commons-loggins自带了日志库，但是毕竟log4j才是日志系统（主要功能）。</p>
+<p>现今java项目推荐的日志门面是slf4j，log4j仍是推荐的日志实现库，需要的jar包为slf4j-api.jar、slf4j-log4j12.jar、log4j.jar，其中绑定包slf4j-log4j12.jar指定了要使用的实现库。<br>commons-logging存在osgi问题，但早期项目多使用其作为日志门面，为保证兼容仍使用其作为日志门面，但通过slf4j的静态绑定技术来加载具体的日志库log4j，需要的jar包为commons-logging.jar、jcl-over-slf4j.jar、slf4j-api.jar、slf4j-log4j12.jar、log4j.jar，其中jcl-over-slf4j.jar将日志的接口重定向到slf4j。</p>
+<p>在日志系统中，主要分为三个配置，appenders，layouts和loggers，一般我们做项目时日志记录的历程是这样的，loggers负责记录事假，将事件记录到后转发给合适的appenders，然后appenders使用layouts将事件记录进行格式化，并将其发送给控制台，文件或其他目录位置。</p>
 <p>在强调可重用组件开发的今天，除了自己从头到尾开发一个可重用的日志操作类外， Apache 为我们提供了一个强有力的日志操作包 -Log4j 。　　<br>Log4j 是 Apache 的一个开放源代码项目，通过使用 Log4j ，我们可以控制日志信息输送的目的地是控制台、文件、 GUI 组件、甚至是套接口(socket)服务器、 NT 的事件记录器、 UNIX Syslog 守护进程等；我们也可以控制每一条日志的输出格式；通过定义每一条日志信息的级别，我们能够更加细致地控制日志的生成过程。最令人感兴趣的就 是，这些可以通过一个配置文件来灵活地进行配置，而不需要修改应用的代码。　　<br>此外，通过 Log4j 其他语言接口，您可以在 C 、 C+ + 、 .Net 、 PL/SQL 程序中使用 Log4j ，其语法和用法与在 Java 程序中一样，使得多语言分布式系统得到一个统一一致的日志组件模块。而且，通 过使用各种第三方扩展，您可以很方便地将 Log4j 集成到 J2EE 、 JINI 甚至是 SNMP 应用中。</p>
-<p><img src="/2018/04/16/spring-logback/redis-install1.png" alt="logo"></p>
+<p><img src="/2018/04/16/spring-logback/main.png" alt="logo"></p>
 <p>核心理解为：一个logger可以对应多个appender，一个appender只能对应一个layout。<br>因为logger捕抓到消息后，可以在各种地方输出（控制台，文件，硬盘甚至数据库），一个输出只能对应一种输出格式。</p>
 <p>1.appenders负责输出到目标位置，日志输出目的地，负责日志的输出  （输出到什么 地方）<br>2.layouts负责日志信息的格式化，以什么形式展现<br>3.loggers负责捕抓事件给相应的appenders，如何处理日志</p>
 <p>Log4j提供的layout有以下几种（一般在工作中常用）<br>org.apache.log4j.HTMLLayout（以HTML表格形式布局），<br>org.apache.log4j.PatternLayout（可以灵活地指定布局模式），<br>org.apache.log4j.SimpleLayout（包含日志信息的级别和信息字符串），<br>org.apache.log4j.TTCCLayout（包含日志产生的时间、线程、类别等等信息）</p>
@@ -461,7 +489,7 @@
 <p>具体规范参考：<a href="https://blog.csdn.net/reserved_person/article/details/52849505" target="_blank" rel="noopener">https://blog.csdn.net/reserved_person/article/details/52849505</a><br>             <a href="http://logging.apache.org/" target="_blank" rel="noopener">http://logging.apache.org/</a></p>
 <h1 id="自定义日志文件配置"><a href="#自定义日志文件配置" class="headerlink" title="自定义日志文件配置"></a>自定义日志文件配置</h1><p>由于日志服务一般都在ApplicationContext创建前就初始化了，它并不是必须通过Spring的配置文件控制。因此通过系统属性和传统的Spring Boot外部配置文件依然可以很好的支持日志控制和管理。</p>
 <p>根据不同的日志系统，你可以按如下规则组织配置文件名，就能被正确加载：</p>
-<p>Logback：logback-spring.xml, logback-spring.groovy, logback.xml, logback.groovy<br>Log4j：log4j-spring.properties, log4j-spring.xml, log4j.properties, log4j.xml<br>Log4j2：log4j2-spring.xml, log4j2.xml<br>JDK (Java Util Logging)：logging.properties</p>
+<p>Logback：logback-spring.xml, logback-spring.groovy, logback.xml, logback.groovy<br>Log4j：log4j-spring.properties, log4j-spring.xml, log4j.properties, log4j.xml<br>Log4j2：log4j2-spring.xml, log4j2.xml<br>JUL (Java Util Logging)：logging.properties</p>
 <p>Spring Boot官方推荐优先使用带有-spring的文件名作为你的日志配置（如使用logback-spring.xml，而不是logback.xml）</p>
 <h1 id="讲讲springboot-log4j"><a href="#讲讲springboot-log4j" class="headerlink" title="讲讲springboot+log4j"></a>讲讲springboot+log4j</h1><p>在POM中引入：</p>
 <pre><code>&lt;!-- 如果要使用Log4j来记录，要先把springboot默认的logback给排除掉
@@ -563,8 +591,18 @@ log4j.appender.errorfile.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss,SSS} %5
 <p> log4j.appender.im.layout=org.apache.log4j.PatternLayout<br> log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n</p>
 <h1 id="在代码中使用Logger"><a href="#在代码中使用Logger" class="headerlink" title="在代码中使用Logger"></a>在代码中使用Logger</h1><p>以上说了那么多的日志配置，那么当我们配置好后，如何去使用呢？</p>
 <ol>
-<li>得到记录器<br>使用 Log4j ，第一步就是获取日志记录器，这个记录器将负责控制日志信息。其语法为：<br>public static Logger getLogger( String name)<br>通过指定的名字获得记录器，如果必要的话，则为这个名字创建一个新的记录器。 Name 一般取本类的名字，比如：<br>static Logger logger = Logger.getLogger ( ServerWithLog4j.class.getName () ) 
-　　 </li>
+<li>得到记录器<br>使用 Log4j ，第一步就是获取日志记录器，这个记录器将负责控制日志信息。其语法为：<br>public static Logger getLogger( String name)<br>通过指定的名字获得记录器，如果必要的话，则为这个名字创建一个新的记录器。 Name 一般取本类的名字，比如：<br>static Logger logger = Logger.getLogger ( ServerWithLog4j.class.getName () ) </li>
+</ol>
+<p>这里注意，看你需要的日志框架是什么来确定你获取Logger对象的方式：</p>
+<pre><code>// slf4j接口使用
+// getLogger内调用slf4j-log4j.jar的StaticLoggerBinder类的getLogger，获取对应的log4j
+private static final Logger logger = LoggerFactory.getLogger(LogTest.class);
+
+// commons-logging接口使用
+// 与slf4j基本一样，一个用Logger，一个用Log
+private static final Log logger = LoggerFactory.getLogger(LogTest.class);
+</code></pre><p>　　 </p>
+<ol>
 <li>读取配置文件<br>当获得了日志记录器之后，第二步将配置 Log4j 环境，其语法为：<br>BasicConfigurator.configure () ： 自动快速地使用缺省 Log4j 环境。<br>PropertyConfigurator.configure ( String configFilename) ：读取使用 Java 的特性文件编写的配置文件。<br>DOMConfigurator.configure ( String filename ) ：读取 XML 形式的配置文件。 
 　 　 </li>
 <li>插入记录信息（格式化日志信息）<br>当上两个必要步骤执行完毕，您就可以轻松地使用不同优先级别的日志记录语句插入到您想记录日志的任何地方，其语法如下：<br>Logger.debug ( Object message ) ;<br>Logger.info ( Object message ) ;<br>Logger.warn ( Object message ) ;<br>Logger.error ( Object message ) ;  </li>
@@ -597,7 +635,314 @@ if (logger.isInfoEnabled()) {
 logger.error(&quot;This is error message from Dao.&quot;);  
 </code></pre><p>具体完整的配置可以参考：<a href="https://blog.csdn.net/anlina_1984/article/details/5313023" target="_blank" rel="noopener">https://blog.csdn.net/anlina_1984/article/details/5313023</a><br>                      <a href="http://www.iteye.com/topic/378077" target="_blank" rel="noopener">http://www.iteye.com/topic/378077</a></p>
 <h1 id="Spring-Boot中对log4j进行多环境不同日志级别的控制"><a href="#Spring-Boot中对log4j进行多环境不同日志级别的控制" class="headerlink" title="Spring Boot中对log4j进行多环境不同日志级别的控制"></a>Spring Boot中对log4j进行多环境不同日志级别的控制</h1><p>根据开发-测试-生产阶段的多环境log配置，SpringBoot也为此量身打造了基于多环境的级别控制</p>
+<p>开发-测试-生产环境的级别控制</p>
+<p>创建多环境配置文件<br>application-dev.properties：开发环境<br>application-test.properties：测试环境<br>application-prod.properties：生产环境<br>application.properties中添加属性：spring.profiles.active=dev（默认激活application-dev.properties配置）<br>application-dev.properties和application-test.properties配置文件中添加日志级别定义：logging.level.com.didispace=DEBUG<br>application-prod.properties配置文件中添加日志级别定义：logging.level.com.didispace=INFO</p>
+<p>通过上面的定义，根据logging.level.com.didispace在不同环境的配置文件中定义了不同的级别，但是我们已经把日志交给了log4j管理，看看我们log4j.properties中对com.didispace包下的日志定义是这样的，固定定义了DEBUG级别，并输出到名为didifile定义的appender中。</p>
+<pre><code>// LOG4J配置
+log4j.category.com.didispace=DEBUG, didifile   
+</code></pre><p>那么，要如何动态的改变这个DEBUG级别呢？用到参数调用，用SPEL表达式来实现动态替换</p>
+<pre><code>// 动态LOG4J配置
+log4j.category.com.didispace=${logging.level.com.didispace}, didifile 
+</code></pre><p>对于不同环境的使用人员也不需要改变代码或打包文件，只需要通过执行命令中参加参数即可，比如我想采用生产环境的级别，那么我可以这样运行应用：更改对应环境配置文件即可，而不是去大费周章的修改代码了。</p>
+<pre><code>java -jar xxx.jar --spring.profiles.active=prod
+</code></pre><h1 id="Springboot使用slf4j-logback"><a href="#Springboot使用slf4j-logback" class="headerlink" title="Springboot使用slf4j+logback"></a>Springboot使用slf4j+logback</h1><p>我们添加spring-boot-starter-web这个包后，spring-boot-starter-web依赖spring-boot-starter，而spring-boot-starter其内部有一个jar包是spring-boot-starter-logging包含的就是slf4j-api.jar和logback-core.jar。</p>
+<p>所以说我们若决定用slf4j+logback的组合，那么就添加这个spring-boot-starter-web包即可。</p>
+<p><img src="/2018/04/16/spring-logback/p1.png" alt="logo"></p>
+<p>我们在日志冲突中若决定使用其他日志框架或其他日志系统的时候，只需要更改jar包即可，若是我们想采用log4j的话，那我们就需要把这个spring-boot-starter-logging给exclusion掉才能使用。<br>比如我们要使用slf4j+log4j的组合的话，那么要去掉spring-boot-starter-logging，添加spring-boot-starter-log4j，里面包含了slf4j-api+log4j的相关jar包。</p>
+<p>无论从设计上还是实现上，Logback相对log4j而言有了相对多的改进。不过尽管难以一一细数，这里还是列举部分理由为什么选择logback而不是log4j。牢记logback与log4j在概念上面是很相似的，它们都是有同一群开发者建立。所以如果你已经对log4j很熟悉，你也可以很快上手logback。如果你喜欢使用log4j,你也许会迷上使用logback。</p>
+<p>基于我们先前在log4j上的工作，logback 重写了内部的实现，在某些特定的场景上面，甚至可以比之前的速度快上10倍。在保证logback的组件更加快速的同时，同时所需的内存更加少。</p>
+<p>Logback 历经了几年，数不清小时数的测试。尽管log4j也是测试过的，但是Logback的测试更加充分，跟log4j不在同一个级别。我们认为，这正是人们选择Logback而不是log4j的最重要的原因。人们都希望即使在恶劣的条件下，你的日记框架依然稳定而可靠。</p>
+<p>所以这才是我们考虑用springboot原生集成的WEB开发包spring-boot-starter-web，里面就天然集成了slf4j+logback</p>
+<p>日志记录相关依赖，首选Spring-Boot”原生态”的logback，也就是说我们在实际开发中，现在直接使用spring-boot-starter-web自带的slf4j+logback即可。</p>
+<p>Logback是由 log4j创始人设计的又一个开源日志组件</p>
+<p>logback当前分成三个模块：<br>logback-core<br>logback- classic<br>logback-access</p>
+<p>logback-core是其它两个模块的基础模块</p>
+<p>logback-classic 非常自然的实现了SLF4J，logback-classic 包下包括了logback-core+slf4j，我们不用额外导入。</p>
+<p>logback-classic中的登陆类自然的实现了SLF4J。当你使用 logback-classic作为底层实现时，涉及到LF4J日记系统的问题你完全不需要考虑。更进一步来说，由于 logback-classic强烈建议使用SLF4J作为客户端日记系统实现，如果需要切换到log4j或者其他，你只需要替换一个jar包即可，不需要去改变那些通过SLF4J API 实现的代码。这可以大大减少更换日记系统的工作量。</p>
+<h2 id="关于logback的配置"><a href="#关于logback的配置" class="headerlink" title="关于logback的配置"></a>关于logback的配置</h2><p>使用XML配置文件或者Groovy（Gradle区别于maven所建工程，Gradle基于Groovy语言，而maven基于xml）</p>
+<p>配置logback的传统方法是通过XML文件。在文档中，大部分例子都是是用XML语法。但是，对于logback版本0.9.22，通过Groovy编写的配置文件也得到支持。相比于XML，Groovy风格的配置文件更加直观，连贯和简短的语法。</p>
+<p>现在， 已经有一个工具自动把logback.xml文件迁移至logback.groovy。</p>
+<p>若是我们要使用groovy构造工程的话，要在eclipse对应版本上安装groovy的集成开发环境，以为这是和maven类似的第三方集成库工程系统。</p>
+<p>这些就不明说了，关于如何构建groovy工程，在专门的文章中有阐述。</p>
+<p>不过这里不能像log4j那样直接使用properties文件来配置，我觉得有点麻烦。。。</p>
+<p>先来看看logback中的日志配置与log4j又有那些不一样</p>
+<p>如果配置文件 logback-test.xml 和 logback.xml 都不存在，那么 logback 默认地会调用BasicConfigurator ，创建一个最小化配置。最小化配置由一个关联到根 logger 的ConsoleAppender 组成。输出用模式为%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n 的 PatternLayoutEncoder 进行格式化。root logger 默认级别是 DEBUG。</p>
+<p>在springboot中默认查找logback.xml和logback-spring.xml文件。</p>
+<p>logback.xml配置如下：</p>
+<pre><code>&lt;configuration&gt;      
+    &lt;!-- %m输出的信息,%p日志级别,%t线程名,%d日期,%c类的全名,%i索引【从数字0开始递增】,,, --&gt;      
+    &lt;!-- appender是configuration的子节点，是负责写日志的组件。 --&gt;  
+    &lt;!-- ConsoleAppender：把日志输出到控制台 --&gt;  
+    &lt;appender name=&quot;STDOUT&quot; class=&quot;ch.qos.logback.core.ConsoleAppender&quot;&gt;      
+        &lt;encoder&gt;      
+            &lt;pattern&gt;%d %p (%file:%line\)- %m%n&lt;/pattern&gt;    
+            &lt;!-- 控制台也要使用UTF-8，不要使用GBK，否则会中文乱码 --&gt;  
+            &lt;charset&gt;UTF-8&lt;/charset&gt;     
+        &lt;/encoder&gt;      
+    &lt;/appender&gt;      
+    &lt;!-- RollingFileAppender：滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件 --&gt;  
+    &lt;!-- 以下的大概意思是：1.先按日期存日志，日期变了，将前一天的日志文件名重命名为XXX%日期%索引，新的日志仍然是sys.log --&gt;  
+    &lt;!--             2.如果日期没有发生变化，但是当前日志的文件大小超过1KB时，对当前日志进行分割 重命名--&gt;  
+    &lt;appender name=&quot;syslog&quot;      
+        class=&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;&gt;      
+        &lt;File&gt;log/sys.log&lt;/File&gt;      
+        &lt;!-- rollingPolicy:当发生滚动时，决定 RollingFileAppender 的行为，涉及文件移动和重命名。 --&gt;  
+        &lt;!-- TimeBasedRollingPolicy： 最常用的滚动策略，它根据时间来制定滚动策略，既负责滚动也负责出发滚动 --&gt;  
+        &lt;rollingPolicy class=&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;&gt;      
+            &lt;!-- 活动文件的名字会根据fileNamePattern的值，每隔一段时间改变一次 --&gt;  
+            &lt;!-- 文件名：log/sys.2017-12-05.0.log --&gt;  
+            &lt;fileNamePattern&gt;log/sys.%d.%i.log&lt;/fileNamePattern&gt;   
+            &lt;!-- 每产生一个日志文件，该日志文件的保存期限为30天 --&gt;   
+            &lt;maxHistory&gt;30&lt;/maxHistory&gt;     
+            &lt;timeBasedFileNamingAndTriggeringPolicy  class=&quot;ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP&quot;&gt;      
+                &lt;!-- maxFileSize:这是活动文件的大小，默认值是10MB,本篇设置为1KB，只是为了演示 --&gt;    
+                &lt;maxFileSize&gt;1KB&lt;/maxFileSize&gt;      
+            &lt;/timeBasedFileNamingAndTriggeringPolicy&gt;      
+        &lt;/rollingPolicy&gt;      
+        &lt;encoder&gt;      
+            &lt;!-- pattern节点，用来设置日志的输入格式 --&gt;  
+            &lt;pattern&gt;      
+                %d %p (%file:%line\)- %m%n    
+            &lt;/pattern&gt;      
+            &lt;!-- 记录日志的编码 --&gt;  
+            &lt;charset&gt;UTF-8&lt;/charset&gt; &lt;!-- 此处设置字符集 --&gt;     
+        &lt;/encoder&gt;      
+    &lt;/appender&gt;      
+    &lt;!-- 控制台输出日志级别 --&gt;  
+    &lt;root level=&quot;info&quot;&gt;      
+        &lt;appender-ref ref=&quot;STDOUT&quot; /&gt;      
+    &lt;/root&gt;      
+    &lt;!-- 指定项目中某个包，当有日志操作行为时的日志记录级别 --&gt;  
+    &lt;!-- com.appley为根包，也就是只要是发生在这个根包下面的所有日志操作行为的权限都是DEBUG --&gt;  
+    &lt;!-- 级别依次为【从高到低】：FATAL &gt; ERROR &gt; WARN &gt; INFO &gt; DEBUG &gt; TRACE  --&gt;  
+    &lt;logger name=&quot;com.appleyk&quot; level=&quot;DEBUG&quot;&gt;      
+        &lt;appender-ref ref=&quot;syslog&quot; /&gt;      
+    &lt;/logger&gt;      
+&lt;/configuration&gt; 
+</code></pre><p>可以看出，logback在configuration标签中进行配置，包含3个最主要的子标签appender，logger和root<br>可以这样描述配置文件的基本结构：以<configuration>开头，后面有零个或多个<appender>元素，有零个或多个<logger>元素，有最多一个<root>元素。</root></logger></appender></configuration></p>
+<p>1.根节点<configuration>，包含下面三个属性：<br>-scan: 当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true。<br>-scanPeriod: 设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。当scan为true时，此属性生效。默认的时间间隔为1分钟。<br>-debug: 当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。</configuration></p>
+<p>例如：</p>
+<pre><code>&lt;configuration scan=&quot;true&quot; scanPeriod=&quot;60 seconds&quot; debug=&quot;false&quot;&gt; 
+　　&lt;!--其他配置省略--&gt; 
+&lt;/configuration&gt;
+</code></pre><p>2.子节点</p>
+<p>-<contextname>：用来设置上下文名称，每个logger都关联到logger上下文，默认上下文名称为default。但可以使用<contextname>设置成其他名字，用于区分不同应用程序的记录。一旦设置，不能修改。<br>其实就是用于标记这个logback配置文件，作为一个全局名称来使用</contextname></contextname></p>
+<contextname>myAppName</contextname> 
 
+<p>-子节点<property>：用来定义变量值，它有两个属性name和value，通过<property>定义的值会被插入到logger上下文中，可以使“${}”来使用变量。<br>就是自定义配置参数的意思，用户可以通过这个xml文件来修改参数。<br>name: 变量的名称<br>value: 的值时变量定义的值</property></property></p>
+<p>例如：</p>
+<pre><code>&lt;configuration scan=&quot;true&quot; scanPeriod=&quot;60 seconds&quot; debug=&quot;false&quot;&gt; 
+　&lt;property name=&quot;APP_Name&quot; value=&quot;myAppName&quot; /&gt; 
+　&lt;contextName&gt;${APP_Name}&lt;/contextName&gt; 
+　&lt;!--其他配置省略--&gt; 
+&lt;/configuration&gt;
+</code></pre><p>-子节点<timestamp>：获取时间戳字符串，他有两个属性key和datePattern<br>key: 标识此<timestamp> 的名字；<br>datePattern: 设置将当前时间（解析配置文件的时间）转换为字符串的模式，遵循java.txt.SimpleDateFormat的格式。<br>例如：</timestamp></timestamp></p>
+<pre><code>&lt;configuration scan=&quot;true&quot; scanPeriod=&quot;60 seconds&quot; debug=&quot;false&quot;&gt; 
+　&lt;timestamp key=&quot;bySecond&quot; datePattern=&quot;yyyyMMdd&apos;T&apos;HHmmss&quot;/&gt; 
+　&lt;contextName&gt;${bySecond}&lt;/contextName&gt; 
+　&lt;!-- 其他配置省略--&gt; 
+&lt;/configuration&gt;
+</code></pre><p>-主要子节点<appender>：负责写日志的组件，它有两个必要属性name和class。name指定appender名称，class指定appender的全限定名</appender></p>
+<p>（1）ConsoleAppender 把日志输出到控制台，有以下子节点：</p>
+<p><encoder>：对日志进行格式化。（具体参数稍后讲解 ）</encoder></p>
+<p><target>：字符串System.out(默认)或者System.err（区别不多说了）</target></p>
+<pre><code>　&lt;configuration&gt; 
+　　　　　　&lt;appender name=&quot;STDOUT&quot; class=&quot;ch.qos.logback.core.ConsoleAppender&quot;&gt; 
+　　　　　　&lt;encoder&gt; 
+　　　　　　　　&lt;pattern&gt;%-4relative [%thread] %-5level %logger{35} - %msg %n&lt;/pattern&gt; 
+　　　　　　&lt;/encoder&gt; 
+　　　　　　&lt;/appender&gt; 
+&lt;!--root用于指定级别 ref指向对应的appender的name属性值--&gt;
+　　　　　　&lt;root level=&quot;DEBUG&quot;&gt; 
+　　　　　　　　&lt;appender-ref ref=&quot;STDOUT&quot; /&gt; 
+　　　　　　&lt;/root&gt; 
+　&lt;/configuration&gt;
+</code></pre><p>上述配置表示把&gt;=DEBUG级别的日志都输出到控制台</p>
+<p>（2）FileAppender：把日志添加到文件，有以下子节点：<br>　<file>：被写入的文件名，可以是相对目录，也可以是绝对目录，如果上级目录不存在会自动创建，没有默认值。<br>　　　　　　<append>：如果是 true，日志被追加到文件结尾，如果是 false，清空现存文件，默认是true。<br>　　　　　　<encoder>：对记录事件进行格式化。（具体参数稍后讲解 ）<br>　　　　　　<prudent>：如果是 true，日志会被安全的写入文件，即使其他的FileAppender也在向此文件做写入操作，效率低，默认是 false。<br>例如：</prudent></encoder></append></file></p>
+<pre><code>&lt;configuration&gt; 
+　　&lt;appender name=&quot;FILE&quot; class=&quot;ch.qos.logback.core.FileAppender&quot;&gt; 
+　　　　　&lt;file&gt;testFile.log&lt;/file&gt; 
+　　　　　&lt;append&gt;true&lt;/append&gt; 
+　　　　　&lt;encoder&gt; 
+　　　　　　　&lt;pattern&gt;%-4relative [%thread] %-5level %logger{35} - %msg%n&lt;/pattern&gt; 
+　　　　　&lt;/encoder&gt; 
+　　&lt;/appender&gt; 
+    &lt;!-- DEBUG以上的级别都会被输出 ref指向对应的appender的name属性值--&gt;
+　　&lt;root level=&quot;DEBUG&quot;&gt; 
+　　　　  &lt;appender-ref ref=&quot;FILE&quot; /&gt; 
+　　&lt;/root&gt; 
+&lt;/configuration&gt;
+</code></pre><p>上述配置表示把&gt;=DEBUG级别的日志都输出到testFile.log</p>
+<p>（3）RollingFileAppender：滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件。有以下子节点：</p>
+<p><file>：被写入的文件名，可以是相对目录，也可以是绝对目录，如果上级目录不存在会自动创建，没有默认值。</file></p>
+<p><append>：如果是 true，日志被追加到文件结尾，如果是 false，清空现存文件，默认是true。    </append></p>
+<rollingpolicy>:当发生滚动时，决定RollingFileAppender的行为，涉及文件移动和重命名。属性class定义具体的滚动策略类<br>class=”ch.qos.logback.core.rolling.TimeBasedRollingPolicy”： 最常用的滚动策略，它根据时间来制定滚动策略，既负责滚动也负责出发滚动。有以下子节点：<br><filenamepattern>：必要节点，包含文件名及“%d”转换符，“%d”可以包含一个java.text.SimpleDateFormat指定的时间格式，如：%d{yyyy-MM}。<br>如果直接使用 %d，默认格式是 yyyy-MM-dd。RollingFileAppender的file字节点可有可无，通过设置file，可以为活动文件和归档文件指定不同位置，当前日志总是记录到file指定的文件（活动文件），活动文件的名字不会改变；<br>如果没设置file，活动文件的名字会根据fileNamePattern 的值，每隔一段时间改变一次。“/”或者“\”会被当做目录分隔符。<br><maxhistory>:<br>可选节点，控制保留的归档文件的最大数量，超出数量就删除旧文件。假设设置每个月滚动，且<maxhistory>是6，则只保存最近6个月的文件，删除之前的旧文件。注意，删除旧文件是，那些为了归档而创建的目录也会被删除。<br><br>class=”ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy”： 查看当前活动文件的大小，如果超过指定大小会告知RollingFileAppender 触发当前活动文件滚动。只有一个节点:<br><maxfilesize>:这是活动文件的大小，默认值是10MB。<br><prudent>：当为true时，不支持FixedWindowRollingPolicy。支持TimeBasedRollingPolicy，但是有两个限制，1不支持也不允许文件压缩，2不能设置file属性，必须留空。<br><br><triggeringpolicy>: 告知 RollingFileAppender 合适激活滚动。<br>class=”ch.qos.logback.core.rolling.FixedWindowRollingPolicy” 根据固定窗口算法重命名文件的滚动策略。有以下子节点：<br><minindex>:窗口索引最小值<br><maxindex>:窗口索引最大值，当用户指定的窗口过大时，会自动将窗口设置为12。<br><filenamepattern>:必须包含“%i”例如，假设最小值和最大值分别为1和2，命名模式为 mylog%i.log,会产生归档文件mylog1.log和mylog2.log。还可以指定文件压缩选项，例如，mylog%i.log.gz 或者 没有log%i.log.zip<br><br>例如：<br><br>    <configuration><br>    　　<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender"><br>    　　　　　<rollingpolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"><br>    　　　　　　　<filenamepattern>logFile.%d{yyyy-MM-dd}.log</filenamepattern><br>    　　　　　　　<maxhistory>30</maxhistory><br>    　　　　　</rollingpolicy><br>    　　　　　<encoder><br>    　　　　　　　<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern><br>    　　　　　</encoder><br>    　　</appender><br><br>    　　<root level="DEBUG"><br>    　　　　　<appender-ref ref="FILE"><br>    　　</appender-ref></root><br>    </configuration><br><br>上述配置表示每天生成一个日志文件，保存30天的日志文件。<br>　　　　　　　　<br>    <configuration><br>    　　<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender"><br>    　　　　　<file>test.log</file><br>             <rollingpolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy"><br>    　　　　　　　<filenamepattern>tests.%i.log.zip</filenamepattern><br>    　　　　　　　<minindex>1</minindex><br>    　　　　　　　<maxindex>3</maxindex><br>    　　　　　</rollingpolicy> 
+
+<pre><code>　　　　　&lt;triggeringPolicy class=&quot;ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy&quot;&gt; 
+　　　　　　　&lt;maxFileSize&gt;5MB&lt;/maxFileSize&gt; 
+　　　　　&lt;/triggeringPolicy&gt; 
+　　　　　&lt;encoder&gt; 
+　　　　　　　&lt;pattern&gt;%-4relative [%thread] %-5level %logger{35} - %msg%n&lt;/pattern&gt; 
+　　　　　&lt;/encoder&gt; 
+　　&lt;/appender&gt; 
+
+　　&lt;root level=&quot;DEBUG&quot;&gt; 
+　　　　　&lt;appender-ref ref=&quot;FILE&quot; /&gt; 
+　　&lt;/root&gt; 
+&lt;/configuration&gt;
+</code></pre><p>上述配置表示按照固定窗口模式生成日志文件，当文件大于20MB时，生成新的日志文件。窗口大小是1到3，当保存了3个归档文件后，将覆盖最早的日志。</p>
+<p>　　　　　　<encoder>：对记录事件进行格式化。负责两件事，一是把日志信息转换成字节数组，二是把字节数组写入到输出流。<br>PatternLayoutEncoder 是唯一有用的且默认的encoder ，有一个<pattern>节点，用来设置日志的输入格式。使用“%”加“转换符”方式，如果要输出“%”，则必须用“\”对“\%”进行转义。</pattern></encoder></p>
+<p>(4) 还有SocketAppender、SMTPAppender、DBAppender、SyslogAppender、SiftingAppender，并不常用，这里就不详解了。<br>大家可以参考官方文档（<a href="http://logback.qos.ch/documentation.html），还可以编写自己的Appender。" target="_blank" rel="noopener">http://logback.qos.ch/documentation.html），还可以编写自己的Appender。</a></p>
+<p>-子节点<loger>：用来设置某一个包或具体的某一个类的日志打印级别、以及指定<appender>。<loger>仅有一个name属性，一个可选的level和一个可选的addtivity属性。</loger></appender></loger></p>
+<p>可以包含零个或多个<appender-ref>元素，标识这个appender将会添加到这个loger<br>name: 用来指定受此loger约束的某一个包或者具体的某一个类。<br>level: 用来设置打印级别，大小写无关：TRACE, DEBUG, INFO, WARN, ERROR, ALL和OFF，还有一个特俗值INHERITED或者同义词NULL，代表强制执行上级的级别。 如果未设置此属性，那么当前loger将会继承上级的级别。<br>addtivity: 是否向上级loger传递打印信息。默认是true。同<loger>一样，可以包含零个或多个<appender-ref>元素，标识这个appender将会添加到这个loger。</appender-ref></loger></appender-ref></p>
+<p>常用loger配置有：</p>
+<pre><code>&lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt;
+&lt;logger name=&quot;org.hibernate.type.descriptor.sql.BasicBinder&quot; level=&quot;TRACE&quot; /&gt;
+&lt;logger name=&quot;org.hibernate.type.descriptor.sql.BasicExtractor&quot; level=&quot;DEBUG&quot; /&gt;
+&lt;logger name=&quot;org.hibernate.SQL&quot; level=&quot;DEBUG&quot; /&gt;
+&lt;logger name=&quot;org.hibernate.engine.QueryParameters&quot; level=&quot;DEBUG&quot; /&gt;
+&lt;logger name=&quot;org.hibernate.engine.query.HQLQueryPlan&quot; level=&quot;DEBUG&quot; /&gt;
+
+&lt;!--myibatis log configure--&gt;
+&lt;logger name=&quot;com.apache.ibatis&quot; level=&quot;TRACE&quot;/&gt;
+&lt;logger name=&quot;java.sql.Connection&quot; level=&quot;DEBUG&quot;/&gt;
+&lt;logger name=&quot;java.sql.Statement&quot; level=&quot;DEBUG&quot;/&gt;
+&lt;logger name=&quot;java.sql.PreparedStatement&quot; level=&quot;DEBUG&quot;/&gt;
+</code></pre><p>-子节点<root>:它也是<loger>元素，但是它是根loger,是所有<loger>的上级。只有一个level属性，因为name已经被命名为”root”,且已经是最上级了。<br>level: 用来设置打印级别，大小写无关：TRACE, DEBUG, INFO, WARN, ERROR, ALL和OFF，不能设置为INHERITED或者同义词NULL。 默认是DEBUG。</loger></loger></root></p>
+<p>基本上常用的子节点已经介绍完了，再给个常用的DEMO吧：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;configuration debug=&quot;false&quot;&gt;
+&lt;!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径--&gt;
+&lt;property name=&quot;LOG_HOME&quot; value=&quot;/home&quot; /&gt;
+&lt;!-- 控制台输出 --&gt;
+&lt;appender name=&quot;STDOUT&quot; class=&quot;ch.qos.logback.core.ConsoleAppender&quot;&gt;
+&lt;encoder class=&quot;ch.qos.logback.classic.encoder.PatternLayoutEncoder&quot;&gt;
+&lt;!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符--&gt;
+&lt;pattern&gt;%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n&lt;/pattern&gt;
+&lt;/encoder&gt;
+&lt;/appender&gt;
+&lt;!-- 按照每天生成日志文件 --&gt;
+&lt;appender name=&quot;FILE&quot; class=&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;&gt;
+&lt;rollingPolicy class=&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;&gt;
+&lt;!--日志文件输出的文件名--&gt;
+&lt;FileNamePattern&gt;${LOG_HOME}/TestWeb.log.%d{yyyy-MM-dd}.log&lt;/FileNamePattern&gt;
+&lt;!--日志文件保留天数--&gt;
+&lt;MaxHistory&gt;30&lt;/MaxHistory&gt;
+&lt;/rollingPolicy&gt;
+&lt;encoder class=&quot;ch.qos.logback.classic.encoder.PatternLayoutEncoder&quot;&gt;
+&lt;!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符--&gt;
+&lt;pattern&gt;%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n&lt;/pattern&gt;
+&lt;/encoder&gt;
+&lt;!--日志文件最大的大小--&gt;
+&lt;triggeringPolicy class=&quot;ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy&quot;&gt;
+&lt;MaxFileSize&gt;10MB&lt;/MaxFileSize&gt;
+&lt;/triggeringPolicy&gt;
+&lt;/appender&gt;
+
+&lt;!-- 日志输出级别 --&gt;
+&lt;root level=&quot;INFO&quot;&gt;
+&lt;appender-ref ref=&quot;STDOUT&quot; /&gt;
+&lt;/root&gt;
+&lt;/configuration&gt;
+</code></pre><p>对应的JAVA代码应该怎么记录呢？</p>
+<pre><code>import org.slf4j.Logger;  
+import org.slf4j.LoggerFactory;
+public class App {
+
+　　private final static Logger logger = LoggerFactory.getLogger(App.class);
+
+　　　　public static void main(String[] args) {
+　　　　　　logger.info(&quot;logback-info 成功了&quot;);
+　　　　　　logger.error(&quot;logback-error 成功了&quot;);
+　　　　　　logger.debug(&quot;logback-debug 成功了&quot;);
+　　　　}
+}
+</code></pre><p>与Log4j的不同，是用LoggerFactory的getLogger(getClass())来获取Logger对象的，这里要注意，若是用logback则用这种方式。</p>
+<p>参考: <a href="https://blog.csdn.net/haidage/article/details/6794509/" target="_blank" rel="noopener">https://blog.csdn.net/haidage/article/details/6794509/</a><br>      <a href="https://www.cnblogs.com/warking/p/5710303.html" target="_blank" rel="noopener">https://www.cnblogs.com/warking/p/5710303.html</a><br>      <a href="https://blog.csdn.net/liuweixiao520/article/details/78900779" target="_blank" rel="noopener">https://blog.csdn.net/liuweixiao520/article/details/78900779</a></p>
+<h1 id="springboot整合slf4j-log4j2"><a href="#springboot整合slf4j-log4j2" class="headerlink" title="springboot整合slf4j+log4j2"></a>springboot整合slf4j+log4j2</h1><p>相当于又把logback的缺点重新改进，过程可以说是很有意思的，又log4j在性能上的缺失–》演变到使用性能更好的logback–》又演变到更好的log4j2框架上，可以说，选择很多种。。。</p>
+<p>Log4j 升级Log4j 2 后的性能简单比较：</p>
+<p><img src="/2018/04/16/spring-logback/p2.png" alt="logo"></p>
+<p>可见在同步日志模式下, Logback的性能是最糟糕的.<br>而log4j2的性能无论在同步日志模式还是异步日志模式下都是最佳的.</p>
+<p>其根本原因在于log4j2使用了LMAX, 一个无锁的线程间通信库代替了, logback和log4j之前的队列. 并发性能大大提升。关于LMAX，可以单独总结。</p>
+<h2 id="关于log4j2的新特性"><a href="#关于log4j2的新特性" class="headerlink" title="关于log4j2的新特性"></a>关于log4j2的新特性</h2><p>-丢数据这种情况少，可以用来做审计功能。而且自身内部报的exception会被发现，但是logback和log4j不会。<br>-log4j2使用了disruptor技术，在多线程环境下，性能高于logback等10倍以上。<br>-(garbage free）之前的版本会产生非常多的临时对象，会造成GC频繁，log4j2则在这方面上做了优化，减少产生临时对象。尽可能少的GC<br>-利用插件系统，使得扩展新的appender,filter,layout等变得容易，log4j不可以扩展 插件？？？？<br>-因为插件系统的简单性，所以在配置的时候，可以不用具体指定所要处理的类型。class<br>-可以自定义level<br>-Java 8 lambda support for lazy logging<br>-Support for Message objects<br>-对filter的功能支持的更强大<br>-系统日志(Syslog)协议supports both TCP and UDP<br>-利用jdk1.5并发的特性，减少了死锁的发生。<br>-Socket LogEvent SerializedLayout<br>-支持kafka queue</p>
+<p>第一步：按照上面所说的，springboot本身默认集成的是logback，我们若是想用其他的，需要修改pom</p>
+<p>去掉spring-boot-starter-logging</p>
+<pre><code>&lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter&lt;/artifactId&gt;
+            &lt;exclusions&gt;
+                &lt;exclusion&gt;
+                    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+                    &lt;artifactId&gt;spring-boot-starter-logging&lt;/artifactId&gt;
+                &lt;/exclusion&gt;
+            &lt;/exclusions&gt;
+&lt;/dependency&gt;
+</code></pre><p>添加Log4j2</p>
+<pre><code>&lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-log4j2&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre><p>第二步：由于本身的properties默认配置对log4j不太友好，所以依然采用XML的外部文件配置形式<br>然后需要在resource下面添加log4j2.xml配置文件，当然了如果你不添加，springboo会提示你没有对应文件，并使用默认的配置文件，这个时候级别可以在application.properties中配置。</p>
+<p>logging.level.root=error </p>
+<p>当然了，使用配置文件，配置可以多样化,下面是默认的log4j2配置,log4j2支持xml、json、yml格式的配置<br><img src="/2018/04/16/spring-logback/p3.png" alt="logo"></p>
+<p>例如：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;  
+&lt;configuration status=&quot;OFF&quot;&gt;  
+  &lt;appenders&gt;  
+    &lt;Console name=&quot;Console&quot; target=&quot;SYSTEM_OUT&quot;&gt;  
+      &lt;PatternLayout pattern=&quot;%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n&quot;/&gt;  
+    &lt;/Console&gt;  
+  &lt;/appenders&gt;  
+  &lt;loggers&gt;  
+    &lt;root level=&quot;error&quot;&gt;  
+      &lt;appender-ref ref=&quot;Console&quot;/&gt;  
+    &lt;/root&gt;  
+  &lt;/loggers&gt;  
+&lt;/configuration&gt;
+</code></pre><p>大体上与log4j没什么区别。</p>
+<p>appenders里设置日志的输出方式、级别和格式<br>loggers里设置全局的级别和绑定appenders里的name</p>
+<p>File 日志输出到文件，可配置覆盖还是追加<br>RollingFile “滚动文件”可作为按日输出日志的方式<br>Console 控制台日志</p>
+<p>PatternLayout 格式化输出日志</p>
+<p>ThresholdFilter“阈值筛选器” 可单独设置appender的输出级别</p>
+<p>loggers里需要匹配每个appender的名称 name</p>
+<p>我的服务一般放在linux服务器上跑，可能要实时查看日志，现有这个需求“我要打印到控制台的日志级别为Error，日志文件里保存的是INFO级别的日志”这样在产生错误的时候，就不会被大量无用的代码干扰。<br>要使用ThresholdFilter，配置如下：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;Configuration status=&quot;OFF&quot;&gt;
+    &lt;Appenders&gt;
+        &lt;Console name=&quot;Console&quot; target=&quot;SYSTEM_OUT&quot;&gt;
+            &lt;!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）--&gt;
+            &lt;ThresholdFilter level=&quot;ERROR&quot; onMatch=&quot;ACCEPT&quot; onMismatch=&quot;DENY&quot;/&gt;
+            &lt;PatternLayout pattern=&quot;%d{yyyy.MM.dd &apos;at&apos; HH:mm:ss z} %-5level %class{36} %M() @%L - %msg%n&quot;/&gt;
+        &lt;/Console&gt;
+        &lt;File name=&quot;ERROR&quot; fileName=&quot;logs/error.log&quot; append=&quot;false&quot;&gt;
+            &lt;ThresholdFilter level=&quot;error&quot; onMatch=&quot;ACCEPT&quot; onMismatch=&quot;DENY&quot;/&gt;
+            &lt;PatternLayout pattern=&quot;%d{yyyy.MM.dd &apos;at&apos; HH:mm:ss z} %-5level %class{36} %M() @%L - %msg%n&quot;/&gt;
+        &lt;/File&gt;
+        &lt;!--这个会打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档--&gt;
+        &lt;RollingFile name=&quot;RollingFile&quot; fileName=&quot;logs/app.log&quot;
+                     filePattern=&quot;log/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz&quot;&gt;
+            &lt;PatternLayout pattern=&quot;%d{yyyy.MM.dd &apos;at&apos; HH:mm:ss z} %-5level %class{36} %M() @%L - %msg%n&quot;/&gt;
+            &lt;SizeBasedTriggeringPolicy size=&quot;5MB&quot;/&gt;
+        &lt;/RollingFile&gt;
+    &lt;/Appenders&gt;
+    &lt;Loggers&gt;
+        &lt;Root level=&quot;INFO&quot;&gt;
+            &lt;appender-ref ref=&quot;ERROR&quot; /&gt;
+            &lt;appender-ref ref=&quot;RollingFile&quot;/&gt;
+            &lt;appender-ref ref=&quot;Console&quot;/&gt;
+        &lt;/Root&gt;
+    &lt;/Loggers&gt;
+&lt;/Configuration&gt; 
+</code></pre><p>三个appender：Console、File、RollingFile </p>
+<ul>
+<li>Console 通过ThresholdFilter过滤规则只输出ERROR级别的错误(onMatch=”ACCEPT” onMismatch=”DENY” 匹配到的接受，没有匹配的走人) </li>
+<li>File 也通过ThresholdFilter的方式输出到日志，当然了append=”false” 会在服务每次启动的时候清空日志(覆盖) </li>
+<li>RollingFile 因为日志全局设置的为INFO，所以不需要ThresholdFilter,这里只需要指定filePattern和SizeBasedTriggeringPolicy就行了</li>
+</ul>
+<h2 id="多环境分别使用不同的log4j2的配置文件"><a href="#多环境分别使用不同的log4j2的配置文件" class="headerlink" title="多环境分别使用不同的log4j2的配置文件"></a>多环境分别使用不同的log4j2的配置文件</h2><p>在多环境中（开发-测试-生产），有不同的properties文件，每个文件对应的日志配置不一样，那么我们如何均衡这种关系。<br><img src="/2018/04/16/spring-logback/p4.png" alt="logo"></p>
+<p>主properties配置文件中激活指定的properties配置文件，如激活 dev的properties文件只需添加“spring.profiles.active=dev ”即可，这是进入”application-dev.properties”配置文件，在该文件中添加“logging.config=classpath:log4j2-dev.xml”，这时候dev开发环境将使用“log4j2-dev.xml”配置信息来输出日志。<br>这样就对应了每个环境下的配置文件能够对应不同的日志系统</p>
+<p>参考：<a href="https://www.oschina.net/translate/reasons-to-prefer-logbak-over-log4j" target="_blank" rel="noopener">https://www.oschina.net/translate/reasons-to-prefer-logbak-over-log4j</a><br>      <a href="https://blog.csdn.net/liuweixiao520/article/details/78900779" target="_blank" rel="noopener">https://blog.csdn.net/liuweixiao520/article/details/78900779</a><br>      <a href="https://logging.apache.org/log4j/2.x/manual/configuration.html#AutomaticConfiguration" target="_blank" rel="noopener">https://logging.apache.org/log4j/2.x/manual/configuration.html#AutomaticConfiguration</a>           </p>
+</appender></configuration></filenamepattern></maxindex></minindex></triggeringpolicy></prudent></maxfilesize></maxhistory></maxhistory></filenamepattern></rollingpolicy>
       
     </div>
     
@@ -673,6 +1018,10 @@ logger.error(&quot;This is error message from Dao.&quot;);
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/19/return-springboot/" rel="prev" title="重返SpringBoot">
+                重返SpringBoot <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -785,7 +1134,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -807,7 +1156,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -887,7 +1236,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#关于日志"><span class="nav-number">1.</span> <span class="nav-text">关于日志</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#级别"><span class="nav-number">2.</span> <span class="nav-text">级别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#控制台输出"><span class="nav-number">3.</span> <span class="nav-text">控制台输出</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件输出"><span class="nav-number">4.</span> <span class="nav-text">文件输出</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义输出日志的格式"><span class="nav-number">5.</span> <span class="nav-text">自定义输出日志的格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义日志文件配置"><span class="nav-number">6.</span> <span class="nav-text">自定义日志文件配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#讲讲springboot-log4j"><span class="nav-number">7.</span> <span class="nav-text">讲讲springboot+log4j</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在代码中使用Logger"><span class="nav-number">8.</span> <span class="nav-text">在代码中使用Logger</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-Boot中对log4j进行多环境不同日志级别的控制"><span class="nav-number">9.</span> <span class="nav-text">Spring Boot中对log4j进行多环境不同日志级别的控制</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#关于日志"><span class="nav-number">1.</span> <span class="nav-text">关于日志</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#级别"><span class="nav-number">2.</span> <span class="nav-text">级别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#控制台输出"><span class="nav-number">3.</span> <span class="nav-text">控制台输出</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件输出"><span class="nav-number">4.</span> <span class="nav-text">文件输出</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义输出日志的格式"><span class="nav-number">5.</span> <span class="nav-text">自定义输出日志的格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义日志文件配置"><span class="nav-number">6.</span> <span class="nav-text">自定义日志文件配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#讲讲springboot-log4j"><span class="nav-number">7.</span> <span class="nav-text">讲讲springboot+log4j</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在代码中使用Logger"><span class="nav-number">8.</span> <span class="nav-text">在代码中使用Logger</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-Boot中对log4j进行多环境不同日志级别的控制"><span class="nav-number">9.</span> <span class="nav-text">Spring Boot中对log4j进行多环境不同日志级别的控制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Springboot使用slf4j-logback"><span class="nav-number">10.</span> <span class="nav-text">Springboot使用slf4j+logback</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于logback的配置"><span class="nav-number">10.1.</span> <span class="nav-text">关于logback的配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#springboot整合slf4j-log4j2"><span class="nav-number">11.</span> <span class="nav-text">springboot整合slf4j+log4j2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于log4j2的新特性"><span class="nav-number">11.1.</span> <span class="nav-text">关于log4j2的新特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多环境分别使用不同的log4j2的配置文件"><span class="nav-number">11.2.</span> <span class="nav-text">多环境分别使用不同的log4j2的配置文件</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -937,7 +1286,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共180.5k字</span>
+  <span class="post-count">博客全站共188.6k字</span>
 </div>
 
         

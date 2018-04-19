@@ -108,10 +108,12 @@
 <meta property="og:site_name" content="Funk Jungle">
 <meta property="og:description" content="主要区别Gradle和Maven都是项目自动构建工具，编译源代码只是整个过程的一个方面，更重要的是，你要把你的软件发布到生产环境中来产生商业价值，所以，你要运行测试，构建分布、分析代码质量、甚至为不同目标环境提供不同版本，然后部署。整个过程进行自动化操作是很有必要的。整个过程可以分成以下几个步骤：  编译源代码 运行单元测试和集成测试 执行静态代码分析、生成分析报告 创建发布版本 部署到目标环境">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-04-14T06:26:39.439Z">
+<meta property="og:image" content="http://yoursite.com/2018/03/22/maven01/p1.png">
+<meta property="og:updated_time" content="2018-04-19T08:09:58.572Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="项目自动构建工具--maven和Gradle">
 <meta name="twitter:description" content="主要区别Gradle和Maven都是项目自动构建工具，编译源代码只是整个过程的一个方面，更重要的是，你要把你的软件发布到生产环境中来产生商业价值，所以，你要运行测试，构建分布、分析代码质量、甚至为不同目标环境提供不同版本，然后部署。整个过程进行自动化操作是很有必要的。整个过程可以分成以下几个步骤：  编译源代码 运行单元测试和集成测试 执行静态代码分析、生成分析报告 创建发布版本 部署到目标环境">
+<meta name="twitter:image" content="http://yoursite.com/2018/03/22/maven01/p1.png">
 
 
 
@@ -455,6 +457,7 @@
 &lt;/dependencies&gt;
 </code></pre><p>然后我将其转换成Gradle脚本，结果是惊人的：<br>    dependencies {<br>        compile(‘org.springframework:spring-core:2.5.6’)<br>        compile(‘org.springframework:spring-beans:2.5.6’)<br>        compile(‘org.springframework:spring-context:2.5.6’)<br>        compile(‘com.google.code.kaptcha:kaptcha:2.3:jdk15’)<br>        testCompile(‘junit:junit:4.7’)<br>    }<br>注意配置从原来的28行缩减至7行！这还不算我省略的一些父POM配置。依赖的groupId、artifactId、 version，scope甚至是classfier，一点都不少。较之于Maven或者Ant的XML配置脚本，Gradle使用的Grovvy脚本杀伤力太大了，爱美之心，人皆有之，相比于七旬老妇松松垮垮的皱纹，大家肯定都喜欢少女紧致的脸蛋，XML就是那老妇的皱纹。Gradle给我最大的有点是两点。其一是简洁，基于Groovy的紧凑脚本实在让人爱不释手，在表述意图方面也没有什么不清晰的地方。其二是灵活，各种在Maven中难以下手的事情，在Gradle就是小菜一碟，比如修改现有的构建生命周期，几行配置就完成了，同样的事情，在Maven中你必须编写一个插件，那对于一个刚入门的用户来说，没个一两天几乎是不可能完成的任务。</p>
 <p>gradle基于groovy领域特定语言，而maven通过xml来配置，比较繁琐</p>
+<p><img src="/2018/03/22/maven01/p1.png" alt="logo"></p>
 <p>Gradle和Maven作为自动构建工具，在项目的构建中有着广泛的应用。他们之间有各自的优缺点，这里我们讨论下他们在项目构建中的一些区别并进行比较。</p>
 <p>首先简单介绍下Gradle和Maven。Maven主要服务于基于java平台的项目构建、依赖管理和项目信息管理。无论是小型的开源类库项目，还是大型的企业级应用；无论是传统的瀑布式开发还是流行的敏捷模式，Maven都能大显身手。Gradle是以groovy语言为基础，面向java应用为主，基于DSL语法的自动化构建工具。</p>
 <p>虽然两种构建工具有着很多相似处，但是在依赖管理、构建生命周期、加载构建系统组件等许多方面两者有着许多区别。Maven使用XML来定义生成脚本，而 Gradle构建脚本是用Groovy。 用XML的优势在于它可以更方便地定义构建逻辑，但这是比较复杂的步骤。 用Groovy的好处是写起来比XML标签要简洁许多。 不过熟悉的XML的开发人员比groovy的多，并且复杂的逻辑必须由自己编写。类似于Maven的pom.xml文件，每个Gradle项目都需要有一个对应的build.gradle文件，该文件定义一些任务（task）来完成构建工作，当然，每个任务是可配置的，任务之间也可以依赖，用户亦能配置缺省任务。</p>
@@ -464,6 +467,7 @@
 <p>除了以上几个Maven核心内容与Gradle的区别，在面向对象输出模式，GUI操作界面、声明元素等方面Gradle也有良好表现。构建输出是构建用户体验的重要部分。在其他大多数构建工具中默认输出对于一个构建作者试图调试一个问题来说是有关联的。这通常会导致一个非常详细的输出会隐藏重要的警告和消息实际上是相关的开发人员运行构建。Gradle的默认输出是针对开发人员运行构建和只显示消息相关的情况下而不是滥用日志输出作为一种进度，例如在执行测试的时候。构建输出为构建用户体验是非常重要的。如果你与外部工具和库集成他们的控制台输出可能非常冗长。Gradle系统中你可以定义每个外部工具结合的日志级别的输出应该被路由。Gradle提供GUI操作界面，这是一个独立的用户界面，可以启动GUI选项，通过自定义日志模式你可以替换它的日志与自己的UI。Gradle有许多细粒度的声明性元素,如SourceSets或Android Product Flavors。它们的核心Gradle DSL然后让Gradle构建语言更加丰富。他们不断构建简洁、易于使用、维护和理解即使你有复杂的需求。Maven没有细粒声明元素，这是Maven极端顽固的主要原因。在Gradle,每个插件都可以提供自己的粗或细粒声明元素。这使你可以提供一个声明性方法甚至定制域。它还允许其他技术集成在Gradle中,让它被更多人使用。</p>
 <p>整体来讲，Gradle给人一种简洁灵活的体验，然而必须掌握groovy也是他的问题，而且由于其灵活性，导致人们更容易破坏约定以至于让构建变得难以理解。但是Gradle确实是Maven理念的优秀实现。如果足够了解Groovy，也理解Maven的配置和构建，Gradle会是绝佳选择，尤其是它几乎能和现有的Maven系统无缝集成，而且你也能享受到简洁带来的极大乐趣，相信Gradle作为后起之秀在今后能够被完善的更好。</p>
 <h1 id="关于groovy语言"><a href="#关于groovy语言" class="headerlink" title="关于groovy语言"></a>关于groovy语言</h1><p>Groovy 是 用于Java虚拟机的一种敏捷的动态语言，它是一种成熟的面向对象编程语言，既可以用于面向对象编程，又可以用作纯粹的脚本语言。使用该种语言不必编写过多的代码，同时又具有闭包和动态语言中的其他特性。</p>
+<p>Groovy 是一个基于 JVM 的语言，代码最终编译成字节码（bytecode）,并在 JVM 上运行。它具有类似于 Java 的语法风格，但是语法又比 Java 要灵活和方便，同时具有动态语言（如 ruby 和 Python）的一些特性。</p>
 <p>Groovy是JVM的一个替代语言（替代是指可以用 Groovy 在Java平台上进行 Java 编程），使用方式基本与使用 Java代码的方式相同，该语言特别适合与Spring的动态语言支持一起使用，设计时充分考虑了Java集成，这使 Groovy 与 Java 代码的互操作很容易。（注意：不是指Groovy替代java，而是指Groovy和java很好的结合编程。</p>
 <p>Groovy 语法与Java 语言的语法很相似，虽然 Groovy 的语法源于Smalltalk和Ruby这类语言的理念，但是可以将它想像成 Java 语言的一种更加简单、表达能力更强的变体。（在这点上，Ruby与 Groovy 不同，因为它的语法与 Java 语法差异很大。）</p>
 <p>许多 Java 开发人员喜欢 Groovy 代码和 Java 代码的相似性。从学习的角度看，如果知道如何编写 Java 代码，那就已经了解 Groovy 了。Groovy 和 Java 语言的主要区别是：完成同样的任务所需的 Groovy 代码比 Java 代码更少。</p>
@@ -518,7 +522,15 @@ dependencies {   // 各种 依赖的jar包
 bootRun {
     addResources = true
 }
-</code></pre><h1 id="maven"><a href="#maven" class="headerlink" title="maven"></a>maven</h1><p>maven是目前java项目中比较流行的构建工具，特别是它提供的插件，如果使用得当，整个项目研发流程都将会受益，从而提高研发、测试和部署的效率。</p>
+</code></pre><h2 id="如何构建eclipse的groovy插件版本集合"><a href="#如何构建eclipse的groovy插件版本集合" class="headerlink" title="如何构建eclipse的groovy插件版本集合"></a>如何构建eclipse的groovy插件版本集合</h2><p>根据Groovy在github上的开源：<a href="https://github.com/groovy/groovy-eclipse/wiki" target="_blank" rel="noopener">https://github.com/groovy/groovy-eclipse/wiki</a></p>
+<p>我们若是想要构建Groovy工程和文件，必须要导入groovy插件</p>
+<p>Groovy-Eclipse provides Eclipse and Maven support for the Apache Groovy programming language.</p>
+<p>Releases</p>
+<p>The latest Groovy-Eclipse release is available from the following Eclipse update sites. To install, point your Eclipse update manager to the update site appropriate for your Eclipse version.</p>
+<p>Eclipse Level    Release Update Site<br>4.7 (Oxygen)    <a href="http://dist.springsource.org/release/GRECLIPSE/e4.7" target="_blank" rel="noopener">http://dist.springsource.org/release/GRECLIPSE/e4.7</a><br>4.6 (Neon)    <a href="http://dist.springsource.org/release/GRECLIPSE/e4.6" target="_blank" rel="noopener">http://dist.springsource.org/release/GRECLIPSE/e4.6</a><br>4.5 (Mars)    <a href="http://dist.springsource.org/release/GRECLIPSE/e4.5" target="_blank" rel="noopener">http://dist.springsource.org/release/GRECLIPSE/e4.5</a><br>4.4 (Luna)    <a href="http://dist.springsource.org/release/GRECLIPSE/e4.4" target="_blank" rel="noopener">http://dist.springsource.org/release/GRECLIPSE/e4.4</a><br>4.3 (Kepler)    <a href="http://dist.springsource.org/release/GRECLIPSE/e4.3" target="_blank" rel="noopener">http://dist.springsource.org/release/GRECLIPSE/e4.3</a><br>4.3j8 (Kepler with Java 8)    <a href="http://dist.springsource.org/release/GRECLIPSE/e4.3-j8" target="_blank" rel="noopener">http://dist.springsource.org/release/GRECLIPSE/e4.3-j8</a><br>4.2 and 3.8 (Juno)    <a href="http://dist.springsource.org/release/GRECLIPSE/e4.2" target="_blank" rel="noopener">http://dist.springsource.org/release/GRECLIPSE/e4.2</a><br>3.7 (Indigo)    <a href="http://dist.springsource.org/release/GRECLIPSE/e3.7" target="_blank" rel="noopener">http://dist.springsource.org/release/GRECLIPSE/e3.7</a></p>
+<p>根据你的Eclipse版本来选择对应的Groovy版本，如何查看自己的Eclipse版本，help–》about Eclipse</p>
+<p>第一步：help–》install new SoftWare<br>第二步：在avaliable software选择add–》填写name和URL，name随意，URL要写成对应的版本URL<br>第三步：pending。。（加载）以后全部勾选，然后默认完成即可<br>第四步：重启机器即可创建Groovy工程</p>
+<h1 id="maven"><a href="#maven" class="headerlink" title="maven"></a>maven</h1><p>maven是目前java项目中比较流行的构建工具，特别是它提供的插件，如果使用得当，整个项目研发流程都将会受益，从而提高研发、测试和部署的效率。</p>
 <p>Maven工程标准架构 </p>
 <p>目录                                                备注</p>
 <p>${basedir}                                          存放 pom.xml和所有的子目录<br>${basedir}/src/main/resources                    项目的资源，如spring配置文件，properties资源文件等<br>${basedir}/src/main/webapps                        web项目特有<br>${basedir}/src/test/java                        项目的测试类，比如说 JUnit代码、TestNg代码<br>${basedir}/src/test/resources                    测试代码使用的资源</p>
@@ -712,7 +724,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -734,7 +746,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -814,7 +826,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主要区别"><span class="nav-number">1.</span> <span class="nav-text">主要区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#加载构建系统的组件"><span class="nav-number">1.1.</span> <span class="nav-text">加载构建系统的组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建生命周期"><span class="nav-number">1.2.</span> <span class="nav-text">构建生命周期</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于groovy语言"><span class="nav-number">2.</span> <span class="nav-text">关于groovy语言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#maven"><span class="nav-number">3.</span> <span class="nav-text">maven</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主要区别"><span class="nav-number">1.</span> <span class="nav-text">主要区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#加载构建系统的组件"><span class="nav-number">1.1.</span> <span class="nav-text">加载构建系统的组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建生命周期"><span class="nav-number">1.2.</span> <span class="nav-text">构建生命周期</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于groovy语言"><span class="nav-number">2.</span> <span class="nav-text">关于groovy语言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何构建eclipse的groovy插件版本集合"><span class="nav-number">2.1.</span> <span class="nav-text">如何构建eclipse的groovy插件版本集合</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#maven"><span class="nav-number">3.</span> <span class="nav-text">maven</span></a></li></ol></div>
             
 
           </div>
@@ -864,7 +876,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共180.5k字</span>
+  <span class="post-count">博客全站共188.6k字</span>
 </div>
 
         
