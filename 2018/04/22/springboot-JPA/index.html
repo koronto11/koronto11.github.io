@@ -108,7 +108,7 @@
 <meta property="og:site_name" content="Funk Jungle">
 <meta property="og:description" content="spring-data-jpa其实JPA本身并不是一种框架，是一种规范，其全称是Java Persistence API，是是Sun官方提出的Java持久化规范，而他的出现主要是为了简化现有的持久化开发工作和整合ORM技术，并且其是在充分吸收了现有Hibernate，TopLink，JDO等ORM框架的基础上发展而来的，具有易于使用，伸缩性强等优点。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-04-22T06:33:57.746Z">
+<meta property="og:updated_time" content="2018-04-22T06:38:25.582Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="springboot-JPA">
 <meta name="twitter:description" content="spring-data-jpa其实JPA本身并不是一种框架，是一种规范，其全称是Java Persistence API，是是Sun官方提出的Java持久化规范，而他的出现主要是为了简化现有的持久化开发工作和整合ORM技术，并且其是在充分吸收了现有Hibernate，TopLink，JDO等ORM框架的基础上发展而来的，具有易于使用，伸缩性强等优点。">
@@ -537,8 +537,14 @@ public List&lt;UserModel&gt; findByUuidOrAge(String name);
 <p>4.还有个很有意思的，就是这个例子：</p>
 <pre><code>@Query(value = &quot;select * from Book b where b.name=?1&quot;, nativeQuery = true)   
 List&lt;Book&gt; findByName(String name);
-此方法sql将会报错(java.lang.IllegalArgumentException)，看出原因了吗,若没看出来，请看下一个例子  
+//此方法sql将会报错(java.lang.IllegalArgumentException)，看出原因了吗,若没看出来，请看下一个例子  
 </code></pre><p>因为指定了nativeQuery = true，即使用原生的sql语句查询。使用java对象’Book’作为表名来查自然是不对的。只需将Book替换为表名book。因为若按数据库方法去查就找不到这张表了。</p>
+<p>5.用SPEL表达式</p>
+<pre><code>public interface BookQueryRepositoryExample extends Repository&lt;Book, Long&gt;{  
+       @Query(value = &quot;select * from #{#entityName} b where b.name=?1&quot;, nativeQuery = true)  
+       List&lt;Book&gt; findByName(String name);  
+}  
+</code></pre><p>　</p>
 
       
     </div>
