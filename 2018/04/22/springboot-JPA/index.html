@@ -108,7 +108,7 @@
 <meta property="og:site_name" content="Funk Jungle">
 <meta property="og:description" content="spring-data-jpa其实JPA本身并不是一种框架，是一种规范，其全称是Java Persistence API，是是Sun官方提出的Java持久化规范，而他的出现主要是为了简化现有的持久化开发工作和整合ORM技术，并且其是在充分吸收了现有Hibernate，TopLink，JDO等ORM框架的基础上发展而来的，具有易于使用，伸缩性强等优点。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-04-22T06:38:25.582Z">
+<meta property="og:updated_time" content="2018-04-22T06:44:07.394Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="springboot-JPA">
 <meta name="twitter:description" content="spring-data-jpa其实JPA本身并不是一种框架，是一种规范，其全称是Java Persistence API，是是Sun官方提出的Java持久化规范，而他的出现主要是为了简化现有的持久化开发工作和整合ORM技术，并且其是在充分吸收了现有Hibernate，TopLink，JDO等ORM框架的基础上发展而来的，具有易于使用，伸缩性强等优点。">
@@ -544,7 +544,10 @@ List&lt;Book&gt; findByName(String name);
        @Query(value = &quot;select * from #{#entityName} b where b.name=?1&quot;, nativeQuery = true)  
        List&lt;Book&gt; findByName(String name);  
 }  
-</code></pre><p>　</p>
+</code></pre><p>@Query的方法都讲完了，仔细看看多做几个案例就可以完全熟悉这些操作。</p>
+<p>接下来我们总结一下，如果不用@Query的话，jpa是怎么通过方法名来解析出对应sql的。</p>
+<p> 预先生成方法（默认自带方法） </p>
+<p>spring data jpa 默认预先生成了一些基本的CURD的方法，例如：增、删、改等等</p>
 
       
     </div>
@@ -860,7 +863,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共198.5k字</span>
+  <span class="post-count">博客全站共198.6k字</span>
 </div>
 
         
