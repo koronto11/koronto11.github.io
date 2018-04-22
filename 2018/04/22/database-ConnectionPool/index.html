@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+<script>
+    (function(){
+        if(''){
+            if (prompt('宝箱钥匙是啥') !== ''){
+                alert('无资格访问...要获得yellow船长的同意才可以！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "57aec33c"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="https://koronto11.github.io/" title="Funk Jungle" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="多为总结网上分析对比的经验，以统一的Mysql数据库为例，分析各种流行的数据库连接池技术的使用场景及优劣。对现有的数据库连接池做调研对比，综合性能，可靠性，稳定性，扩展性等因素选出推荐出最优的数据库连接池 。 数据库连接池负责分配、管理和释放数据库连接，它允许应用程序重复使用一个现有的数据库连接，而不是再重新建立一个；释放空闲时间超过最大空闲时间的数据库连接来避免因为没有释放数据库连接而引起的数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库连接池性能对比">
+<meta property="og:url" content="http://yoursite.com/2018/04/22/database-ConnectionPool/index.html">
+<meta property="og:site_name" content="Funk Jungle">
+<meta property="og:description" content="多为总结网上分析对比的经验，以统一的Mysql数据库为例，分析各种流行的数据库连接池技术的使用场景及优劣。对现有的数据库连接池做调研对比，综合性能，可靠性，稳定性，扩展性等因素选出推荐出最优的数据库连接池 。 数据库连接池负责分配、管理和释放数据库连接，它允许应用程序重复使用一个现有的数据库连接，而不是再重新建立一个；释放空闲时间超过最大空闲时间的数据库连接来避免因为没有释放数据库连接而引起的数据">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2018/04/22/database-ConnectionPool/p1.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/22/database-ConnectionPool/p2.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/22/database-ConnectionPool/p3.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/22/database-ConnectionPool/p4.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/22/database-ConnectionPool/p5.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/22/database-ConnectionPool/p6.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/22/database-ConnectionPool/p7.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/22/database-ConnectionPool/p8.png">
+<meta property="og:updated_time" content="2018-04-22T14:35:02.328Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据库连接池性能对比">
+<meta name="twitter:description" content="多为总结网上分析对比的经验，以统一的Mysql数据库为例，分析各种流行的数据库连接池技术的使用场景及优劣。对现有的数据库连接池做调研对比，综合性能，可靠性，稳定性，扩展性等因素选出推荐出最优的数据库连接池 。 数据库连接池负责分配、管理和释放数据库连接，它允许应用程序重复使用一个现有的数据库连接，而不是再重新建立一个；释放空闲时间超过最大空闲时间的数据库连接来避免因为没有释放数据库连接而引起的数据">
+<meta name="twitter:image" content="http://yoursite.com/2018/04/22/database-ConnectionPool/p1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/22/database-ConnectionPool/"/>
+
+
+
+
+
+
+
+  <title>数据库连接池性能对比 | Funk Jungle</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Funk Jungle</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-main">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Main
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/22/database-ConnectionPool/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黄上">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/koro.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Funk Jungle">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据库连接池性能对比</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-22T17:44:52+08:00">
+                2018-04-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>多为总结网上分析对比的经验，以统一的Mysql数据库为例，分析各种流行的数据库连接池技术的使用场景及优劣。<br>对现有的数据库连接池做调研对比，综合性能，可靠性，稳定性，扩展性等因素选出推荐出最优的数据库连接池 。</p>
+<p>数据库连接池负责分配、管理和释放数据库连接，它允许应用程序重复使用一个现有的数据库连接，而不是再重新建立一个；释放空闲时间超过最大空闲时间的数据库连接来避免因为没有释放数据库连接而引起的数据库连接遗漏。这项技术能明显提高对数据库操作的性能。使用数据库连接池后就不是服务器直接和数据库进行直接交互，而是由连接池管理服务器的连接请求，各个数据库连接池有不同的原理和连接策略。<br><a id="more"></a></p>
+<h1 id="数据库连接池"><a href="#数据库连接池" class="headerlink" title="数据库连接池"></a>数据库连接池</h1><p>1、C3P0：是一个开放源代码的JDBC连接池，它在lib目录中与Hibernate [2]  一起发布，包括了实现jdbc3和jdbc2扩展规范说明的Connection 和Statement 池的DataSources 对象。</p>
+<p>2、BoneCP：是一个快速、开源的数据库连接池。帮用户管理数据连接，让应用程序能更快速地访问数据库。比C3P0/DBCP连接池速度快25倍。这已经足够快了。</p>
+<p>3、Druid：Druid不仅是一个数据库连接池，还包含一个ProxyDriver、一系列内置的JDBC组件库、一个SQL Parser。<br>支持所有JDBC兼容的数据库，包括Oracle、MySql、Derby、Postgresql、SQL Server、H2等。<br>Druid针对Oracle和MySql做了特别优化，比如：<br>Oracle的PS Cache内存占用优化<br>MySql的ping检测优化<br>Druid提供了MySql、Oracle、Postgresql、SQL-92的SQL的完整支持，这是一个手写的高性能SQL Parser，支持Visitor模式，使得分析SQL的抽象语法树很方便。简单SQL语句用时10微秒以内，复杂SQL用时30微秒。通过Druid提供的SQL Parser可以在JDBC层拦截SQL做相应处理，比如说分库分表、审计等。Druid防御SQL注入攻击的WallFilter，就是通过Druid的SQL Parser分析语义实现的。</p>
+<p>4、HiKariCP是数据库连接池的一个后起之秀，号称性能最好，可以完美地PK掉其他连接池。Hikari来自日文，是“光”（阳光的光，不是光秃秃的光）的意思。作者估计是为了借助这个词来暗示这个CP速度飞快。</p>
+<p>参考比较：<a href="https://blog.csdn.net/fly_boss/article/details/60965849" target="_blank" rel="noopener">https://blog.csdn.net/fly_boss/article/details/60965849</a><br>        <a href="https://blog.csdn.net/jiesa/article/details/73849243" target="_blank" rel="noopener">https://blog.csdn.net/jiesa/article/details/73849243</a></p>
+<p>测试结论：<br>1：性能方面 hikariCP&gt;druid&gt;tomcat-jdbc&gt;dbcp&gt;c3p0 。hikariCP的高性能得益于最大限度的避免锁竞争。<br>2：druid功能最为全面，sql拦截等功能，统计数据较为全面，具有良好的扩展性。<br>3：综合性能，扩展性等方面，可考虑使用druid或者hikariCP连接池。<br>4：可开启prepareStatement缓存，对性能会有大概20%的提升。</p>
+<p><img src="/2018/04/22/database-ConnectionPool/p1.png" alt="logo"><br><img src="/2018/04/22/database-ConnectionPool/p2.png" alt="logo"><br><img src="/2018/04/22/database-ConnectionPool/p3.png" alt="logo"><br><img src="/2018/04/22/database-ConnectionPool/p4.png" alt="logo"><br><img src="/2018/04/22/database-ConnectionPool/p5.png" alt="logo"><br><img src="/2018/04/22/database-ConnectionPool/p6.png" alt="logo"><br><img src="/2018/04/22/database-ConnectionPool/p7.png" alt="logo"></p>
+<p> 由于boneCP被hikariCP替代，并且已经不再更新，boneCP没有进行调研。<br>proxool网上有评测说在并发较高的情况下会出错，proxool便没有进行调研。（问题之一在并发获取连接时会有问题 <a href="http://blog.csdn.net/jiesa/article/details/73823621）" target="_blank" rel="noopener">http://blog.csdn.net/jiesa/article/details/73823621）</a><br> druid的功能比较全面，且扩展性较好，比较方便对jdbc接口进行监控跟踪等。<br>c3p0历史悠久，代码及其复杂，不利于维护。并且存在deadlock的潜在风险。</p>
+<p>（1）测试一：获取关闭连接性能测试<br>测试说明：<br>初始连接和最小连接均为5，最大连接为20。在borrow和return均不心跳检测<br>其中打开关闭次数为: 100w次<br>测试用例和mysql在同一台机器上面，尽量避免io的影响<br>使用mock和连接mysql在不同线程并发下的响应时间</p>
+<p>测试结果：<br>mock和mysql连接性能表现差不多，主要是由于初始化的时候建立了连接后期不再建立连接，和使用mock连接逻辑一致。<br>性能表现：hikariCP&gt;druid&gt;tomcat-jdbc&gt;dbcp&gt;c3p0。<br>hikariCP 的性能及其优异。hikariCP号称java平台最快的数据库连接池。<br>hikariCP在并发较高的情况下，性能基本上没有下降。<br>c3p0连接池的性能很差，不建议使用该数据库连接池。</p>
+<p>hikariCP性能分析：<br>hikariCP通过优化(concurrentBag，fastStatementList )集合来提高并发的读写效率。<br>hikariCP使用threadlocal缓存连接及大量使用CAS的机制，最大限度的避免lock。单可能带来cpu使用率的上升。<br>从字节码的维度优化代码。 (default inline threshold for a JVM running the server Hotspot compiler is 35 bytecodes ）让方法尽量在35个字节码一下，来提升jvm的处理效率。</p>
+<p>（2）测试二：查询一条语句性能测试<br>测试说明：<br>初始连接和最小连接均为8，最大连接为8。在borrow和return均不心跳检测<br>查询的次数为10w次，查询的语句为 1：打开连接 2：执行 ：select 1 3：关闭连接<br>测试用例和mysql在同一台机器上面，尽量避免io的影响</p>
+<p>测试结果：<br>在并发比较少的情况下，每个连接池的响应时间差不多。是由于并发少，基本上没有资源竞争。<br>在并发较高的情况下，随着并发的升高，hikariCP响应时间基本上没有变动。<br>c3p0随着并发的提高，性能急剧下降。</p>
+<p>（3）测试三：pscache性能对比<br> 测试说明：<br>通过druid进行设置pscache和不设置pscache的性能对比<br>初始连接和最小连接均为8，最大连接为8。在borrow和return均不心跳检测。并且执行的并发数为8.<br>查询10w次。查询流程为：1：建立连接，2：循环查询preparestatement语句 3：close连接<br>测试用例和mysql在同一台机器上面，尽量避免io的影响。</p>
+<p>试数据：<br>cache        1,927<br>not cache    2,134</p>
+<p>测试结果：<br>开启psCache缓存,性能大概有20%幅度的提升。可考虑开启pscache.<br>测试说明：<br>psCache是connection私有的，所以不存在线程竞争的问题，开启pscache不会存在竞争的性能损耗。<br>psCache的key为prepare执行的sql和catalog等，value对应的为prepareStatement对象。开启缓存主要是减少了解析sql的开销。</p>
+<p>HikariCP在Github上的开源：<a href="https://github.com/brettwooldridge/HikariCP" target="_blank" rel="noopener">https://github.com/brettwooldridge/HikariCP</a></p>
+<h1 id="Springboot与hakariCP"><a href="#Springboot与hakariCP" class="headerlink" title="Springboot与hakariCP"></a>Springboot与hakariCP</h1><p>官网详细地说明了HikariCP所做的一些优化，总结如下：<br>字节码精简：优化代码，直到编译后的字节码最少，这样，CPU缓存可以加载更多的程序代码；<br>优化代理和拦截器：减少代码，例如HikariCP的Statement proxy只有100行代码，只有BoneCP的十分之一；<br>自定义数组类型（FastStatementList）代替ArrayList：避免每次get()调用都要进行range check，避免调用remove()时的从头到尾的扫描；<br>自定义集合类型（ConcurrentBag）：提高并发读写的效率；<br>其他针对BoneCP缺陷的优化，比如对于耗时超过一个CPU时间片的方法调用的研究（但没说具体怎么优化）。<br>很多优化的对比都是针对BoneCP的……哈哈。<br>（参考文章：<a href="https://github.com/brettwooldridge/HikariCP/wiki/Down-the-Rabbit-Hole）" target="_blank" rel="noopener">https://github.com/brettwooldridge/HikariCP/wiki/Down-the-Rabbit-Hole）</a></p>
+<p>几个连接池的代码量对比（代码量越少，一般意味着执行效率越高、发生bug的可能性越低）：<br>hikari的代码量最少，文件最小</p>
+<p>另外，关于可靠性方面，也是有实验和数据支持的。对于数据库连接中断的情况，通过测试getConnection()，各种CP的不相同处理方法如下：<br>（所有CP都配置了跟connectionTimeout类似的参数为5秒钟）<br>HikariCP：等待5秒钟后，如果连接还是没有恢复，则抛出一个SQLExceptions 异常；后续的getConnection()也是一样处理；<br>C3P0：完全没有反应，没有提示，也不会在“CheckoutTimeout”配置的时长超时后有任何通知给调用者；然后等待2分钟后终于醒来了，返回一个error；<br>Tomcat：返回一个connection，然后……调用者如果利用这个无效的connection执行SQL语句……结果可想而知；大约55秒之后终于醒来了，这时候的getConnection()终于可以返回一个error，但没有等待参数配置的5秒钟，而是立即返回error；<br>BoneCP：跟Tomcat的处理方法一样；也是大约55秒之后才醒来，有了正常的反应，并且终于会等待5秒钟之后返回error了；</p>
+<p>可见，HikariCP的处理方式是最合理的。根据这个测试结果，对于各个CP处理数据库中断的情况，评分如下：<br><img src="/2018/04/22/database-ConnectionPool/p8.png" alt="logo"></p>
+<p>HiKariCP的数据源配置：</p>
+<pre><code>&lt;!-- Hikari Datasource --&gt;  
+&lt;bean id=&quot;dataSourceHikari&quot; class=&quot;com.zaxxer.hikari.HikariDataSource&quot;  destroy-method=&quot;shutdown&quot;&gt;  
+ &lt;!-- &lt;property name=&quot;driverClassName&quot; value=&quot;${db.driverClass}&quot; /&gt; --&gt; &lt;!-- 无需指定，除非系统无法自动识别 --&gt;  
+ &lt;property name=&quot;jdbcUrl&quot; value=&quot;jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=UTF-8&quot; /&gt;  
+ &lt;property name=&quot;username&quot; value=&quot;${db.username}&quot; /&gt;  
+ &lt;property name=&quot;password&quot; value=&quot;${db.password}&quot; /&gt;  
+  &lt;!-- 连接只读数据库时配置为true， 保证安全 --&gt;  
+ &lt;property name=&quot;readOnly&quot; value=&quot;false&quot; /&gt;  
+ &lt;!-- 等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 缺省:30秒 --&gt;  
+ &lt;property name=&quot;connectionTimeout&quot; value=&quot;30000&quot; /&gt;  
+ &lt;!-- 一个连接idle状态的最大时长（毫秒），超时则被释放（retired），缺省:10分钟 --&gt;  
+ &lt;property name=&quot;idleTimeout&quot; value=&quot;600000&quot; /&gt;  
+ &lt;!-- 一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒，参考MySQL wait_timeout参数（show variables like &apos;%timeout%&apos;;） --&gt;  
+ &lt;property name=&quot;maxLifetime&quot; value=&quot;1800000&quot; /&gt;  
+ &lt;!-- 连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count) --&gt;  
+ &lt;property name=&quot;maximumPoolSize&quot; value=&quot;15&quot; /&gt;  
+&lt;/bean&gt;
+</code></pre><p>其中，很多配置都使用缺省值就行了，除了maxLifetime和maximumPoolSize要注意自己计算一下。<br>其他的配置（sqlSessionFactory、MyBatis MapperScannerConfigurer、transactionManager等）统统不用变。</p>
+<p>其他关于Datasource配置参数的建议：<br>Configure your HikariCP idleTimeout and maxLifeTime settings to be one minute less than the wait_timeout of MySQL.<br>对于有Java连接池的系统，建议MySQL的wait_timeout使用缺省的8小时（<a href="http://www.rackspace.com/knowledge_center/article/how-to-change-the-mysql-timeout-on-a-server）。" target="_blank" rel="noopener">http://www.rackspace.com/knowledge_center/article/how-to-change-the-mysql-timeout-on-a-server）。</a></p>
+<p>另外：对于web项目，记得要配置：destroy-method=”shutdown” ，关闭连接池的时候释放连接资源。</p>
+<p>HiKariCP数据库连接池号称目前是最快的， HikariCP VS druid VS c3p0 VS dbcp VS jdbc 数据库连接池性能比对<br>性能方面 hikariCP&gt;druid&gt;tomcat-jdbc&gt;dbcp&gt;c3p0，hikariCP的高性能得益于最大限度的避免锁竞争。<br>druid功能最为全面，sql拦截等功能，统计数据较为全面，具有良好的扩展性。<br>综合性能，扩展性等方面，可考虑使用druid或者hikariCP连接池。<br>可开启prepareStatement缓存，对性能会有大概20%的提升 </p>
+<p>现在来用Spring Cloud 配置HikariCP数据库连接池：<br>我们用实际开发中比较常见的项目技术架构：springboot+hikariCP+mybatis+mysql来说明DEMO。</p>
+<p>第一步：导包，首先我们使用mybatis-spring-boot-starter时，这个包内自动配置了tomcat-jdbc连接池，所以我们要想用hikariCP，需要把原来的连接池给去掉，不然会冲突。</p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;
+    &lt;version&gt;1.3.1&lt;/version&gt;
+    &lt;!-- 排除tomcat jdbc 原有的--&gt;
+    &lt;exclusions&gt;
+        &lt;exclusion&gt;
+            &lt;groupId&gt;org.apache.tomcat&lt;/groupId&gt;
+            &lt;artifactId&gt;tomcat-jdbc&lt;/artifactId&gt;
+        &lt;/exclusion&gt;
+    &lt;/exclusions&gt;
+&lt;/dependency&gt;
+&lt;!-- HikariCP --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;com.zaxxer&lt;/groupId&gt;
+    &lt;artifactId&gt;HikariCP&lt;/artifactId&gt;
+    &lt;version&gt;2.7.4&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;!-- Mysql连接支持 --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;mysql&lt;/groupId&gt;
+    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+    &lt;version&gt;5.1.39&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre><p>第二步：在HiKariCP数据库连接池配置如下：（自然有java配置和xml配置，properties文件配置三种）</p>
+<p> 在spring框架中，经常将连接池的设置参数独立成一个.properties文件，它可以根据客户需求，自定义一些相关的参数。我们这里推荐用.properties来定义数据库连接池的参数，然后在配置文件中取properties文件中的参数即可，一是这样也统一了参数配置数据，二是多环境配置中我们可以很好的切换参数列表，不用直接修改代码。</p>
+<p>一般都会有application.properties为主要文件，在里面通过设置spring.profiles.active属性对应到application-dev.properties，application-test.properties，application-prod.properties文件上，根据场景的不同直接在命令行进行切换，不管是开发人员，测试人员还是运维人员都可以通过简单的命令去设置哪个文件。</p>
+<p>在properties文件中配置参数：</p>
+<pre><code>`#HikariDataSource config`
+hikaricp.jdbc.driverClassName=com.mysql.jdbc.Driver
+hikaricp.url= jdbc:mysql://127.0.0.1:3306/dcserver38useUnicode=true&amp;amp;characterEncoding=UTF-8
+hikaricp.quratz_jdbc.url=jdbc:mysql://127.0.0.1:3306/quartz?useUnicode=true&amp;amp;characterEncoding=UTF-8
+hikaricp.username=root
+hikaricp.password=123456
+hikaricp.connectionTestQuery= SELECT 1
+//等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 缺省:30秒
+hikaricp.connectionTimeout =    30000
+//一个连接idle状态的最大时长（毫秒），超时则被释放（retired），缺省:10分钟
+hikaricp.idleTimeout =  600000
+// 一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒，参考MySQL wait_timeout参数（show variables like &apos;%timeout%&apos;;）
+hikaricp.maxLifetime =  1800000
+//池连接数量
+//连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count)
+hikaricp.maximumPoolSize  =100
+hikaricp.minimumIdle =100
+</code></pre><p>XML配置（取这个.properties文件中的值）,完成配置HikariCPConfig.xml</p>
+<pre><code>&lt;bean id=&quot;hikariDataSource&quot;
+      class=&quot;com.zaxxer.hikari.HikariDataSource&quot; destroy-method=&quot;shutdown&quot;&gt;
+    &lt;constructor-arg&gt;
+        &lt;bean class=&quot;com.zaxxer.hikari.HikariConfig&quot;&gt;
+            &lt;property name=&quot;driverClassName&quot; value=&quot;${hikaricp.jdbc.driverClassName}&quot;/&gt;
+            &lt;property name=&quot;jdbcUrl&quot; value=&quot;${hikaricp.url}&quot;/&gt;
+            &lt;property name=&quot;username&quot; value=&quot;${hikaricp.username}&quot;/&gt;
+            &lt;property name=&quot;password&quot; value=&quot;${hikaricp.password}&quot;/&gt;
+            &lt;property name=&quot;connectionTestQuery&quot; value=&quot;${hikaricp.connectionTestQuery}&quot;/&gt;
+            &lt;property name=&quot;connectionTimeout&quot; value=&quot;${hikaricp.connectionTimeout}&quot;/&gt;
+            &lt;property name=&quot;idleTimeout&quot; value=&quot;${hikaricp.idleTimeout}&quot;/&gt;
+            &lt;property name=&quot;maxLifetime&quot; value=&quot;${hikaricp.maxLifetime}&quot;/&gt;
+            &lt;property name=&quot;maximumPoolSize&quot; value=&quot;${hikaricp.maximumPoolSize}&quot;/&gt;
+            &lt;property name=&quot;minimumIdle&quot; value=&quot;${hikaricp.minimumIdle}&quot;/&gt;
+        &lt;/bean&gt;
+    &lt;/constructor-arg&gt;
+&lt;/bean&gt;
+</code></pre><p>第三步：完成这个配置后，在application.properties中配置好这个bean即可，声明给springboot管理。</p>
+<p>因为新版的springboot支持三种数据库连接池的直接配置：DBCP（DBCP2），tomcat-JDBC（就是mybatis自带哪个），HikariCP。</p>
+<p>Spring-Boot配置文件数据源配置项常见如下：</p>
+<p>参数                                                            介绍<br>spring.datasource.continue-on-error = false                    初始化数据库时发生错误时，请勿停止<br>spring.datasource.data =                                    Data（DML）脚本资源引用<br>spring.datasource.data-username =                            执行DML脚本（如果不同）的数据库用户<br>spring.datasource.data-password =                            执行DML脚本的数据库密码（如果不同）<br>spring.datasource.dbcp2.<em> =                                    Commons DBCP2具体设置（DBCP）<br>spring.datasource.driver-class-name                            JDBC驱动程序的完全限定名称默认情况下，根据                                                            URL自动检测<br>spring.datasource.generate-unique-name = false                生成随机数据源名称<br>spring.datasource.hikari.</em> =                                Hikari具体设置（HikariCP）<br>spring.datasource.initialize = true                            使用’data.sql’填充数据库<br>spring.datasource.jmx-enabled = false                        启用JMX支持（如果基础池提供）<br>spring.datasource.jndi-name =                                数据源的JNDI位置。设置时，类，网址，用户名                                                            和密码将被忽略<br>spring.datasource.name = testdb                                数据源的名称<br>spring.datasource.password                                    登录数据库的密码<br>spring.datasource.platform =所有                                在架构资源中使用的平台（schema - $                                                                 {platform} .sql）<br>spring.datasource.schema =                                    Schema（DDL）脚本资源引用<br>spring.datasource.schema-username =                            数据库用户执行DDL脚本（如果不同）<br>spring.datasource.schema-password =                            执行DDL脚本的数据库密码（如果不同）<br>spring.datasource.separator =;                                语句分隔符在SQL初始化脚本中<br>spring.datasource.sql-script-encoding =                        SQL脚本编码<br>spring.datasource.tomcat.* =                                Tomcat数据源特定设置（tomcat-jdbc）<br>spring.datasource.type =                                    要使用的连接池实现的完全限定名称。默认情况                                                            下，它是从类路径自动检测的<br>spring.datasource.url                                        数据库的JDBC url<br>spring.datasource.username                                    登录数据库的用户<br>spring.datasource.xa.data-source-class-name =                XA datasource全限定名<br>spring.datasource.xa.properties =                            传递给XA数据源的属性。</p>
+<p>我们只需要按照要求配置spring.datasource.hikari.* =即可</p>
+<p>把刚刚我们配置好的bean的id写进来，大功告成，可以使用HikariCP了！！性能将大大提升！</p>
+<pre><code>spring.datasource.hikari.* =hikariDataSource
+</code></pre><p>好像除了这个方法，在网上还看到了用.yml文件直接配置HikariCP的案例：</p>
+<p>代码配置如下：（application.yml文件）</p>
+<pre><code>spring:  
+  profiles:  
+    active: dev  
+
+  datasource:  
+    driver-class-name: com.mysql.jdbc.Driver  
+    username: root  
+    password: 123456  
+    hikari:  
+      maxLifetime: 1765000 #一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒以上  
+      maximumPoolSize: 15 #连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count)  
+mybatis:  
+  mapperLocations: classpath:mapper/*.xml  
+
+---  
+// 开发环境配置  
+spring:  
+  profiles: dev  
+  datasource:  
+    url: jdbc:mysql://localhost:3306/  
+
+---  
+// 测试环境配置  
+spring:  
+  profiles: test  
+  datasource:  
+    url: jdbc:mysql://192.168.0.12:3306/  
+
+---  
+// 生产环境配置  
+spring:  
+  profiles: prod  
+  datasource:  
+    url: jdbc:mysql://192.168.0.13:3306/  
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/weixin.png" alt="黄上 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/zifubao.png" alt="黄上 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/22/springboot-JPA/" rel="next" title="springboot-JPA">
+                <i class="fa fa-chevron-left"></i> springboot-JPA
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_32x32">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNDU1Mi8xMTA5MA=="></div>
+    </div>
+
+  
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/koro.jpg"
+                alt="黄上" />
+            
+              <p class="site-author-name" itemprop="name">黄上</p>
+              <p class="site-description motion-element" itemprop="description">Futrue|Principle|Effort|Luck</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">47</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="https://koronto11.github.io/" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/koronto11" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://blog.csdn.net/koronto" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-cube"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/xiang-zi-14-26/activities" target="_blank" title="zhihu">
+                      
+                        <i class="fa fa-fw fa-question-circle"></i>zhihu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://theme-next.iissnan.com/" title="主题文档" target="_blank">主题文档</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://hexo.io/zh-cn/docs/" title="官方文档" target="_blank">官方文档</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据库连接池"><span class="nav-number">1.</span> <span class="nav-text">数据库连接池</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Springboot与hakariCP"><span class="nav-number">2.</span> <span class="nav-text">Springboot与hakariCP</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黄上</span>
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共209.1k字</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      本站总访问量:<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+    <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNDU1Mi8xMTA5MA==">
+  <script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+  </script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+
+
+  
+
+
++ 
+
+
+</body>
+</html>

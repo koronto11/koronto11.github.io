@@ -100,19 +100,19 @@
 
 
 
-<meta name="description" content="spring-data-jpa其实JPA本身并不是一种框架，是一种规范，其全称是Java Persistence API，是是Sun官方提出的Java持久化规范，而他的出现主要是为了简化现有的持久化开发工作和整合ORM技术，并且其是在充分吸收了现有Hibernate，TopLink，JDO等ORM框架的基础上发展而来的，具有易于使用，伸缩性强等优点。">
+<meta name="description" content="因为这段时间的安排是抽时间学习一波springboot架构，不仅是因为工作需要，而且也是为了学习新的架构知识，因为springcloud微服务就是基于springboot的，只有把springboot摸透了，才好去学习更加强的东西。 今天把原定计划的Redis给撸了一遍，整合springboot，分布式全局共享session，Redis数据结构等等，做了几个小exp（也就是CRUD的操作罢了哈哈）">
 <meta name="keywords" content="java,大数据,spring,springboot,spring-data-jpa">
 <meta property="og:type" content="article">
 <meta property="og:title" content="springboot-JPA">
 <meta property="og:url" content="http://yoursite.com/2018/04/22/springboot-JPA/index.html">
 <meta property="og:site_name" content="Funk Jungle">
-<meta property="og:description" content="spring-data-jpa其实JPA本身并不是一种框架，是一种规范，其全称是Java Persistence API，是是Sun官方提出的Java持久化规范，而他的出现主要是为了简化现有的持久化开发工作和整合ORM技术，并且其是在充分吸收了现有Hibernate，TopLink，JDO等ORM框架的基础上发展而来的，具有易于使用，伸缩性强等优点。">
+<meta property="og:description" content="因为这段时间的安排是抽时间学习一波springboot架构，不仅是因为工作需要，而且也是为了学习新的架构知识，因为springcloud微服务就是基于springboot的，只有把springboot摸透了，才好去学习更加强的东西。 今天把原定计划的Redis给撸了一遍，整合springboot，分布式全局共享session，Redis数据结构等等，做了几个小exp（也就是CRUD的操作罢了哈哈）">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2018/04/22/springboot-JPA/main.png">
-<meta property="og:updated_time" content="2018-04-22T06:59:44.312Z">
+<meta property="og:updated_time" content="2018-04-22T14:40:50.815Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="springboot-JPA">
-<meta name="twitter:description" content="spring-data-jpa其实JPA本身并不是一种框架，是一种规范，其全称是Java Persistence API，是是Sun官方提出的Java持久化规范，而他的出现主要是为了简化现有的持久化开发工作和整合ORM技术，并且其是在充分吸收了现有Hibernate，TopLink，JDO等ORM框架的基础上发展而来的，具有易于使用，伸缩性强等优点。">
+<meta name="twitter:description" content="因为这段时间的安排是抽时间学习一波springboot架构，不仅是因为工作需要，而且也是为了学习新的架构知识，因为springcloud微服务就是基于springboot的，只有把springboot摸透了，才好去学习更加强的东西。 今天把原定计划的Redis给撸了一遍，整合springboot，分布式全局共享session，Redis数据结构等等，做了几个小exp（也就是CRUD的操作罢了哈哈）">
 <meta name="twitter:image" content="http://yoursite.com/2018/04/22/springboot-JPA/main.png">
 
 
@@ -416,7 +416,10 @@
       
 
       
-        <p> spring-data-jpa<br>其实JPA本身并不是一种框架，是一种规范，其全称是Java Persistence API，是是Sun官方提出的Java持久化规范，而他的出现主要是为了简化现有的持久化开发工作和整合ORM技术，并且其是在充分吸收了现有Hibernate，TopLink，JDO等ORM框架的基础上发展而来的，具有易于使用，伸缩性强等优点。<br><a id="more"></a><br>而官网对spring data jpa是这么介绍的：Spring Data JPA是Spring Data系列的一部分，可以轻松实现基于JPA的存储库。该模块处理对基于JPA的数据访问层的增强的支持。这使得使用数据访问技术构建Spring供电的应用程序变得更加容易。</p>
+        <p>因为这段时间的安排是抽时间学习一波springboot架构，不仅是因为工作需要，而且也是为了学习新的架构知识，因为springcloud微服务就是基于springboot的，只有把springboot摸透了，才好去学习更加强的东西。</p>
+<p>今天把原定计划的Redis给撸了一遍，整合springboot，分布式全局共享session，Redis数据结构等等，做了几个小exp（也就是CRUD的操作罢了哈哈），剩下的时间去摸了下spring-data-jpa，不摸不要紧，tm的浪费了我半天的时间，不过也算是小有收获吧，不然岂不是亏死，接下来就把这个持久层框架的血泪踩坑经历给总结出来。<br><a id="more"></a></p>
+<h1 id="spring-data-jpa"><a href="#spring-data-jpa" class="headerlink" title="spring-data-jpa"></a>spring-data-jpa</h1><p>其实JPA本身并不是一种框架，是一种规范，其全称是Java Persistence API，是是Sun官方提出的Java持久化规范，而他的出现主要是为了简化现有的持久化开发工作和整合ORM技术，并且其是在充分吸收了现有Hibernate，TopLink，JDO等ORM框架的基础上发展而来的，具有易于使用，伸缩性强等优点。</p>
+<p>而官网对spring data jpa是这么介绍的：Spring Data JPA是Spring Data系列的一部分，可以轻松实现基于JPA的存储库。该模块处理对基于JPA的数据访问层的增强的支持。这使得使用数据访问技术构建Spring供电的应用程序变得更加容易。</p>
 <p>其本质就是像mybatis，hibernate那样与数据库进行交互的ORM技术，其原理就是整合了Hibernate的封装库，因为刚开始肯定要在网上找代码来看看具体逻辑到底是什么样的，这里我是以翟永超的springboot教程里面的整合spring-data-jpa这节来学习的，想学的朋友也可以直接到他的blog上去找项目来看，所有的项目的都在github上可以下载到。</p>
 <p>教程链接：<a href="http://blog.didispace.com/springbootdata2/" target="_blank" rel="noopener">http://blog.didispace.com/springbootdata2/</a></p>
 <p>首先我是先看完代码后想自己模仿着完成一个小案例，将数据存入数据库内，再把它取出来（这tm是最简单的操作了把），没想到这个框架极恶心，总之我是困在了NullPointerException上了。。。</p>
@@ -446,19 +449,33 @@ spring.jpa.properties.hibernate.hbm2ddl.auto=create
 <p>-validate：每次加载hibernate时，验证创建数据库表结构，只会和数据库中的表进行比较，不会创建新表，但是会插入新值。 启动时验证现有schema与你配置的hibernate是否一致，如果不一致就抛出异常，并不做更新。</p>
 <p>我在后面的时候要测试时发现数据在程序中已经执行成功存入数据库了，可是在查看数据库的时候却没有发现生成响应的表，我后来发现我用了create-drop这个参数，因为我用testNG测的，测试模块一结束，sessionFactory就关闭了，所以生成的表也就自动删除了，所以我这里改成create，这样数据导入的时候，我们可以在数据库里面看到相应的表生成。</p>
 <p>如果是在本机上进行调试，则url可以写成jdbc:mysql:///test也可以。。。<br>注意test是你的数据库名字，如果没有这个数据库就会报mysql错误，我刚开始也是以为会自动建库，小失误。<br>事先要把这个test库给建立起来，mysql如何建库这个不说了吧。。</p>
-<p>配置好后，这里先来看看一些jpa的基本注解，我们会用这些注解来写案例：<br>1.@Entity ：修饰实体类，指明该类将映射到指定的数据表，例如：Customer 类默认的数据表名为 customer</p>
-<p>2.@Table ：当实体类与映射的数据库表名不同名时需要使用 @Table 注解，该注解与 @Entity 注解并列使用，使用其 name 属性指明数据库的表名<br>@Table(name = “JPA_CUSTOMER表名”)</p>
-<p>3.@Id ：标识该属性为主键，一般标注在该属性的 getter 方法上</p>
-<p>4.@GeneratedValue ：标注主键的生成策略，通过其 strategy 属性。通常与 @Id 注解一起使用。默认情况下 JPA 会自动选择一个最适合底层数据库的主键生成策略，MyS</p>
-<p>5.默认为 AUTO，常用策略有：<br>–IDENTITY：采用数据库 ID自增长的方式来自增主键字段，Oracle 不支持这种方式；</p>
+<p>配置好后，这里先来看看一些jpa的基本注解，我们会用这些注解来写案例：</p>
+<ol>
+<li><p>@Entity ：修饰实体类，指明该类将映射到指定的数据表，例如：Customer 类默认的数据表名为 customer</p>
+</li>
+<li><p>@Table ：当实体类与映射的数据库表名不同名时需要使用 @Table 注解，该注解与 @Entity 注解并列使用，使用其 name 属性指明数据库的表名<br>@Table(name = “JPA_CUSTOMER表名”)</p>
+</li>
+<li><p>@Id ：标识该属性为主键，一般标注在该属性的 getter 方法上</p>
+</li>
+<li><p>@GeneratedValue ：标注主键的生成策略，通过其 strategy 属性。通常与 @Id 注解一起使用。默认情况下 JPA 会自动选择一个最适合底层数据库的主键生成策略，MyS</p>
+</li>
+<li><p>默认为 AUTO，常用策略有：<br>–IDENTITY：采用数据库 ID自增长的方式来自增主键字段，Oracle 不支持这种方式；</p>
+</li>
+</ol>
 <p>–AUTO： JPA自动选择合适的策略，是默认选项；</p>
 <p>–SEQUENCE：通过序列产生主键，通过 @SequenceGenerator 注解指定序列名，MySql 不支持这种方式</p>
 <p>–TABLE：通过表产生主键，框架借由表模拟序列产生主键，使用该策略可以使应用更易于数据库移植</p>
 <p>例：@GenerateValue（strategy=GenerationType.AUTO）,写在id属性的上面，主键策略。</p>
-<p>6.@Basic ：用于没有任何标注的 getXxx() 方法，默认即为 @Basic,所以若一个 getter 方法无任何注解，可以使用 @Basic 注解，也可以不使用</p>
-<p>7.@Column ：当实体的属性与其映射的数据表的列不同名时使用，一般用于 getter 方法上。其 name 属性用来指明此属性在数据表中对应的列名；unique 属性指明是否为唯一约束；nullable 属性用来指明是否可以为空，false 为不能为空；length 属性指明此列的长度。<br>通常写在普通属性上：@Column（name=”LAST_NAME”,length=50,nullable=false）<br>nullable表示不允许为空。</p>
-<p>8.@Transient ：标注此注解后在创建数据表的时候将会忽略该属性  Customer 类并没有 info 这个属性，所以数据库中也不应该有 info 这个字段</p>
-<p>9.@Temporal ：向数据库映射日期（Date）属性时用来调整映射的精度。Date 类型的数据有 DATE, TIME, 和 TIMESTAMP 三种精度(即单纯的日期,时间,或者两者兼备).</p>
+<ol>
+<li><p>@Basic ：用于没有任何标注的 getXxx() 方法，默认即为 @Basic,所以若一个 getter 方法无任何注解，可以使用 @Basic 注解，也可以不使用</p>
+</li>
+<li><p>@Column ：当实体的属性与其映射的数据表的列不同名时使用，一般用于 getter 方法上。其 name 属性用来指明此属性在数据表中对应的列名；unique 属性指明是否为唯一约束；nullable 属性用来指明是否可以为空，false 为不能为空；length 属性指明此列的长度。<br>通常写在普通属性上：@Column（name=”LAST_NAME”,length=50,nullable=false）<br>nullable表示不允许为空。</p>
+</li>
+<li><p>@Transient ：标注此注解后在创建数据表的时候将会忽略该属性  Customer 类并没有 info 这个属性，所以数据库中也不应该有 info 这个字段</p>
+</li>
+<li><p>@Temporal ：向数据库映射日期（Date）属性时用来调整映射的精度。Date 类型的数据有 DATE, TIME, 和 TIMESTAMP 三种精度(即单纯的日期,时间,或者两者兼备).</p>
+</li>
+</ol>
 <p>Birth 属性应该使用 DATE 类型(生日只具体到日即可，如：2015-10-22)，而 CreateTime 应该使用 TIMESTAMP 类型(创建时间应该具体到秒，如：2017-10-11 22:39:13)</p>
 <p>注解讲完后，可以开始进入项目了，项目中我们需要建立实体类。（以User为例）<br>实体类需要建立@Entity注解以标记为实体类，映射到数据库中，自动生成的表名与这个实体类的类名一致<br>主键id需要加@Id和@GeneratedValue(strategy = GenerationType.IDENTITY)</p>
 <p>原项目中的@GeneratedValue注解没有加后面的参数，所以为了保证不出错，加上参数，<br>JPA为开发人员提供了四种主键生成策略，被定义在枚举类GenerationType中，包含（TABLE , SEQUENCE , IDENTITY , AUTO）.<br>先介绍下这四种策略：</p>
@@ -492,7 +509,24 @@ public class User {
         this.name = name;
         this.age = age;
     }
-    //省略get/set
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public Integer getAge() {
+        return age;
+    }
+    public void setAge(Integer age) {
+        this.age = age;
+    }
 }
 </code></pre><p>接下来是DAO：<br>spring data jpa让我们解脱了DAO层的操作，基本上所有CRUD都可以依赖于它来实现，在里面就集成了一种方法就是自动编写SQL，但是如果我们要复杂SQL的时候，jpa也给我们提供了@Query用于我们自己编写sql语句，当然这是jpa特有的编写规范。<br>它们分别实现了按name查询User实体和按name和age查询User实体，可以看到我们这里没有任何类SQL语句就完成了两个条件查询方法。这就是Spring-data-jpa的一大特性：通过解析方法名创建查询。<br>除了通过解析方法名来创建查询外，它也提供通过使用@Query 注解来创建查询，您只需要编写JPQL语句，并通过类似“:name”来映射@Param指定的参数，就像例子中的第三个findUser函数一样。</p>
 <pre><code>public interface UserRepository extends JpaRepository&lt;User, Long&gt; {
@@ -513,8 +547,7 @@ public class User {
 
 } 
 </code></pre><p>JPQL主要用于JPA查询数据，和SQL语句的语法大同小异；<br>JPQL语言，即 Java Persistence Query Language 的简称。JPQL 是一种和 SQL 非常类似的中间性和对象化查询语言，它最终会被编译成针对不同底层数据库的 SQL 查询，从而屏蔽不同数据库的差异。 JPQL语言的语句可以是 select 语句、update 语句或delete语句，它们都通过 Query 接口封装执行。</p>
-<p> Query注解自定义SQL查询 </p>
-<p>1.我们可以直接使用@Query来使用这个类的方法。</p>
+<h2 id="Query注解自定义SQL查询"><a href="#Query注解自定义SQL查询" class="headerlink" title="Query注解自定义SQL查询"></a>Query注解自定义SQL查询</h2><p>1.我们可以直接使用@Query来使用这个类的方法。</p>
 <p>默认配置下， 使用了@Query注解后就不会再使用方法名解析的方式了…注意</p>
 <p>@Query有几大属性，分别是：<br>方法的参数个数必须和@Query里面需要的参数个数一致<br>value里面的参数也可以用SPEL表达式来写，也就是#{…}语句，用于更灵活的配置参数，不用把sql语句写死。</p>
 <p>-String value() default “”;//默认是空，value=sql语句，<br>比如@Query(“from User u where u.name=:name”)就可以写成<br>@Query(value=”from User u where u.name=:name”)</p>
@@ -526,7 +559,7 @@ UserDto findByUserId(@Param(&quot;userId&quot;) userId);
 <pre><code>@Query(value=&quot;update User set userId = :userId&quot;)
 @Modify
 User findByUserId(@Param(&quot;userId&quot;) userId);
-</code></pre><p>3.如果是like（模糊查询），后面的参数需要前面或者后面加”%”，比如下面都对：</p>
+</code></pre><p>3.如果是like（模糊查询），后面的参数需要前面或者后面加“%”，比如下面都对：</p>
 <pre><code>@Query(&quot;select o from UserModel o where o.name like ?1%&quot;)
 public List&lt;UserModel&gt; findByUuidOrAge(String name);
 
@@ -535,27 +568,20 @@ public List&lt;UserModel&gt; findByUuidOrAge(String name);
 
 @Query(&quot;select o from UserModel o where o.name like %?1%&quot;)
 public List&lt;UserModel&gt; findByUuidOrAge(String name);
-</code></pre><p>当然，这样在传递参数值的时候就可以不加’%’了，当然加了也不会错</p>
+</code></pre><p>当然，这样在传递参数值的时候就可以不加‘%’了，当然加了也不会错</p>
 <p>4.还有个很有意思的，就是这个例子：</p>
 <pre><code>@Query(value = &quot;select * from Book b where b.name=?1&quot;, nativeQuery = true)   
 List&lt;Book&gt; findByName(String name);
-//此方法sql将会报错(java.lang.IllegalArgumentException)，看出原因了吗,若没看出来，请看下一个例子  
+// 此方法sql将会报错(java.lang.IllegalArgumentException)，看出原因了吗,若没看出来，请看下一个例子  
 </code></pre><p>因为指定了nativeQuery = true，即使用原生的sql语句查询。使用java对象’Book’作为表名来查自然是不对的。只需将Book替换为表名book。因为若按数据库方法去查就找不到这张表了。</p>
 <p>5.用SPEL表达式</p>
 <pre><code>public interface BookQueryRepositoryExample extends Repository&lt;Book, Long&gt;{  
        @Query(value = &quot;select * from #{#entityName} b where b.name=?1&quot;, nativeQuery = true)  
        List&lt;Book&gt; findByName(String name);  
-}  
-
-先来说一说&apos;#{#entityName}&apos;到底是个啥。从字面来看，&apos;#{#entityName}&apos;不就是实体类的名称么，对，他就是。
-实体类Book,使用@Entity注解后，spring会将实体类Book纳入管理。默认&apos;#{#entityName}&apos;的值就是&apos;Book&apos;。&apos;#{#entityName}&apos;值为&apos;Book&apos;对象对应的数据表名称(book)。
-但是如果使用了@Entity(name = &quot;book&quot;)来注解实体类Book,此时&apos;#{#entityName}&apos;的值就变成了&apos;book&apos;。
-name值就是实体类对应的表名。。。
-到此，事情就明了了，只需要在用@Entity来注解实体类时指定name为此实体类对应的表名。在原生sql语句中，就可以把&apos;#{#entityName}&apos;来作为数据表名使用。
+}
 </code></pre><p>@Query的方法都讲完了，仔细看看多做几个案例就可以完全熟悉这些操作。</p>
 <p>接下来我们总结一下，如果不用@Query的话，jpa是怎么通过方法名来解析出对应sql的。</p>
-<p> 预先生成方法（默认自带方法） </p>
-<p>spring data jpa 默认预先生成了一些基本的CURD的方法，例如：增、删、改等等</p>
+<h2 id="预先生成方法（默认自带方法）"><a href="#预先生成方法（默认自带方法）" class="headerlink" title="预先生成方法（默认自带方法）"></a>预先生成方法（默认自带方法）</h2><p>spring data jpa 默认预先生成了一些基本的CURD的方法，例如：增、删、改等等</p>
 <p>1 继承JpaRepository</p>
 <pre><code>public interface UserRepository extends JpaRepository&lt;User, Long&gt; {
 }
@@ -578,8 +604,7 @@ public void testBaseQuery() throws Exception {
     userRepository.exists(1l);
     // ...
 }
-</code></pre><p> 自定义简单查询 </p>
-<p>自定义的简单查询就是根据方法名来自动生成SQL，主要的语法是findXXBy,readAXXBy,queryXXBy,countXXBy, getXXBy后面跟属性名称：</p>
+</code></pre><h2 id="自定义简单查询"><a href="#自定义简单查询" class="headerlink" title="自定义简单查询"></a>自定义简单查询</h2><p>自定义的简单查询就是根据方法名来自动生成SQL，主要的语法是findXXBy,readAXXBy,queryXXBy,countXXBy, getXXBy后面跟属性名称：</p>
 <pre><code>User findByUserName(String userName);
 </code></pre><p>也使用一些加一些关键字And、 Or</p>
 <pre><code>User findByUserNameOrEmail(String username, String email);
@@ -595,10 +620,8 @@ User findByUserNameIgnoreCase(String userName);
 List&lt;User&gt; findByUserNameOrderByEmailDesc(String email);
 </code></pre><p>具体的关键字，使用方法和生产成SQL如下表所示：</p>
 <p><img src="/2018/04/22/springboot-JPA/main.png" alt="logo"></p>
-<p> 复杂查询 </p>
-<p>在实际的开发中我们需要用到分页、删选、连表等查询的时候就需要特殊的方法或者自定义SQL</p>
-<p> 分页查询 </p>
-<p>分页查询在实际使用中非常普遍了，spring data jpa已经帮我们实现了分页的功能，在查询的方法中，需要传入参数Pageable<br>,当查询中有多个参数的时候Pageable建议做为最后一个参数传入</p>
+<h2 id="复杂查询"><a href="#复杂查询" class="headerlink" title="复杂查询"></a>复杂查询</h2><p>在实际的开发中我们需要用到分页、删选、连表等查询的时候就需要特殊的方法或者自定义SQL</p>
+<h3 id="分页查询"><a href="#分页查询" class="headerlink" title="分页查询"></a>分页查询</h3><p>分页查询在实际使用中非常普遍了，spring data jpa已经帮我们实现了分页的功能，在查询的方法中，需要传入参数Pageable<br>,当查询中有多个参数的时候Pageable建议做为最后一个参数传入</p>
 <pre><code>Page&lt;User&gt; findALL(Pageable pageable);
 
 Page&lt;User&gt; findByUserName(String userName,Pageable pageable);
@@ -611,8 +634,7 @@ public void testPageQuery() throws Exception {
     userRepository.findALL(pageable);
     userRepository.findByUserName(&quot;testName&quot;, pageable);
 }
-</code></pre><p> 限制查询 </p>
-<p>有时候我们只需要查询前N个元素，或者支取前一个实体。</p>
+</code></pre><h3 id="限制查询"><a href="#限制查询" class="headerlink" title="限制查询"></a>限制查询</h3><p>有时候我们只需要查询前N个元素，或者支取前一个实体。</p>
 <pre><code>User findFirstByOrderByLastnameAsc();
 
 User findTopByOrderByAgeDesc();
@@ -622,8 +644,7 @@ Page&lt;User&gt; queryFirst10ByLastname(String lastname, Pageable pageable);
 List&lt;User&gt; findFirst10ByLastname(String lastname, Sort sort);
 
 List&lt;User&gt; findTop10ByLastname(String lastname, Pageable pageable);
-</code></pre><p> 多表查询 </p>
-<p>多表查询在spring data jpa中有两种实现方式，第一种是利用hibernate的级联查询来实现，第二种是创建一个结果集的接口来接收连表查询后的结果，这里主要第二种方式。</p>
+</code></pre><h3 id="多表查询"><a href="#多表查询" class="headerlink" title="多表查询"></a>多表查询</h3><p>多表查询在spring data jpa中有两种实现方式，第一种是利用hibernate的级联查询来实现，第二种是创建一个结果集的接口来接收连表查询后的结果，这里主要第二种方式。</p>
 <p>首先需要定义一个结果集的接口类。</p>
 <pre><code>public interface HotelSummary {
 
@@ -652,13 +673,297 @@ for(HotelSummary summay:hotels){
         System.out.println(&quot;Name&quot; +summay.getName());
 }
 </code></pre><p>在运行中Spring会给接口（HotelSummary）自动生产一个代理类来接收返回的结果，代码汇总使用getXX的形式来获取。</p>
-<p> 多数据源的支持 </p>
-<p> 同源数据库的多源支持 </p>
-<p>日常项目中因为使用的分布式开发模式，不同的服务有不同的数据源，常常需要在一个项目中使用多个数据源，因此需要配置sping data jpa对多数据源的使用，一般分一下为三步：</p>
+<h1 id="多数据源的支持"><a href="#多数据源的支持" class="headerlink" title="多数据源的支持"></a>多数据源的支持</h1><p>多数据源即指的是多个数据库来源，实际开发中往往根据储存内容进行分库，专门储存用户信息，上传文件甚至是小数据（评论计数和密码等等），这就是多数据源的情况。</p>
+<p>如何实现多数据源的配置呢？</p>
+<p>创建一个Spring配置类，定义两个DataSource用来读取application.properties中的不同配置。如下例子中，主数据源配置为spring.datasource.primary开头的配置，第二数据源配置为spring.datasource.secondary开头的配置。</p>
+<p>@Primary和@Qualifier这两个注解的意思：@Primary的意思是在众多相同的bean中，优先使用用@Primary注解的bean.而@Qualifier这个注解则指定某个bean有没有资格进行注入。</p>
+<pre><code>@Configuration
+public class DataSourceConfig {
+
+    @Bean(name = &quot;primaryDataSource&quot;)
+    @Qualifier(&quot;primaryDataSource&quot;)
+    @ConfigurationProperties(prefix=&quot;spring.datasource.primary&quot;)
+    public DataSource primaryDataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Bean(name = &quot;secondaryDataSource&quot;)
+    @Qualifier(&quot;secondaryDataSource&quot;)
+    @Primary
+    @ConfigurationProperties(prefix=&quot;spring.datasource.secondary&quot;)
+    public DataSource secondaryDataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+}
+</code></pre><p>对应的application.properties配置如下：（指向了test1和test2数据库）</p>
+<pre><code>spring.datasource.primary.url=jdbc:mysql://localhost:3306/test1
+spring.datasource.primary.username=root
+spring.datasource.primary.password=root
+spring.datasource.primary.driver-class-name=com.mysql.jdbc.Driver
+
+spring.datasource.secondary.url=jdbc:mysql://localhost:3306/test2
+spring.datasource.secondary.username=root
+spring.datasource.secondary.password=root
+spring.datasource.secondary.driver-class-name=com.mysql.jdbc.Driver
+</code></pre><p>但是根据不同的持久化组件来说其注入方式也算不同的，接下来就是比较JdbcTemplate和Spring-data-jpa的注入方式的不同。</p>
+<p>-JdbcTemplate支持</p>
+<p>对JdbcTemplate的支持比较简单，只需要为其注入对应的datasource即可，如下例子，在创建JdbcTemplate的时候分别注入名为primaryDataSource和secondaryDataSource的数据源来区分不同的JdbcTemplate。</p>
+<pre><code>@Bean(name = &quot;primaryJdbcTemplate&quot;)
+public JdbcTemplate primaryJdbcTemplate(
+        @Qualifier(&quot;primaryDataSource&quot;) DataSource dataSource) {
+    return new JdbcTemplate(dataSource);
+}
+
+@Bean(name = &quot;secondaryJdbcTemplate&quot;)
+public JdbcTemplate secondaryJdbcTemplate(
+        @Qualifier(&quot;secondaryDataSource&quot;) DataSource dataSource) {
+    return new JdbcTemplate(dataSource);
+}
+</code></pre><p>接下来通过测试用例来演示如何使用这两个针对不同数据源的JdbcTemplate。</p>
+<pre><code>@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(Application.class)
+public class ApplicationTests {
+
+    @Autowired
+    @Qualifier(&quot;primaryJdbcTemplate&quot;)
+    protected JdbcTemplate jdbcTemplate1;
+
+    @Autowired
+    @Qualifier(&quot;secondaryJdbcTemplate&quot;)
+    protected JdbcTemplate jdbcTemplate2;
+
+    @Before
+    public void setUp() {
+        jdbcTemplate1.update(&quot;DELETE  FROM  USER &quot;);
+        jdbcTemplate2.update(&quot;DELETE  FROM  USER &quot;);
+    }
+
+    @Test
+    public void test() throws Exception {
+
+        // 往第一个数据源中插入两条数据
+        jdbcTemplate1.update(&quot;insert into user(id,name,age) values(?, ?, ?)&quot;, 1, &quot;aaa&quot;, 20);
+        jdbcTemplate1.update(&quot;insert into user(id,name,age) values(?, ?, ?)&quot;, 2, &quot;bbb&quot;, 30);
+
+        // 往第二个数据源中插入一条数据，若插入的是第一个数据源，则会主键冲突报错
+        jdbcTemplate2.update(&quot;insert into user(id,name,age) values(?, ?, ?)&quot;, 1, &quot;aaa&quot;, 20);
+
+        // 查一下第一个数据源中是否有两条数据，验证插入是否成功
+        Assert.assertEquals(&quot;2&quot;, jdbcTemplate1.queryForObject(&quot;select count(1) from user&quot;, String.class));
+
+        // 查一下第一个数据源中是否有两条数据，验证插入是否成功
+        Assert.assertEquals(&quot;1&quot;, jdbcTemplate2.queryForObject(&quot;select count(1) from user&quot;, String.class));
+    }
+}
+</code></pre><p>-Spring-data-jpa支持</p>
+<p>对于数据源的配置可以沿用上例中DataSourceConfig的实现。</p>
+<p>primaryDataSource和secondaryDataSource都需要分别编写配置文件</p>
+<p>PrimaryConfig如下：</p>
+<pre><code>@Configuration
+@EnableTransactionManagement
+@EnableJpaRepositories(
+        entityManagerFactoryRef=&quot;entityManagerFactoryPrimary&quot;,
+        transactionManagerRef=&quot;transactionManagerPrimary&quot;,
+        basePackages= { &quot;com.didispace.domain.p&quot; }) //设置Repository所在位置
+public class PrimaryConfig {
+
+    @Autowired @Qualifier(&quot;primaryDataSource&quot;)
+    private DataSource primaryDataSource;
+
+    @Primary
+    @Bean(name = &quot;entityManagerPrimary&quot;)
+    public EntityManager entityManager(EntityManagerFactoryBuilder builder) {
+        return entityManagerFactoryPrimary(builder).getObject().createEntityManager();
+    }
+
+    @Primary
+    @Bean(name = &quot;entityManagerFactoryPrimary&quot;)
+    public LocalContainerEntityManagerFactoryBean entityManagerFactoryPrimary (EntityManagerFactoryBuilder builder) {
+        return builder
+                .dataSource(primaryDataSource)
+                .properties(getVendorProperties(primaryDataSource))
+                .packages(&quot;com.didispace.domain.p&quot;) //设置实体类所在位置
+                .persistenceUnit(&quot;primaryPersistenceUnit&quot;)
+                .build();
+    }
+
+    @Autowired
+    private JpaProperties jpaProperties;
+
+    private Map&lt;String, String&gt; getVendorProperties(DataSource dataSource) {
+        return jpaProperties.getHibernateProperties(dataSource);
+    }
+
+    @Primary
+    @Bean(name = &quot;transactionManagerPrimary&quot;)
+    public PlatformTransactionManager transactionManagerPrimary(EntityManagerFactoryBuilder builder) {
+        return new JpaTransactionManager(entityManagerFactoryPrimary(builder).getObject());
+    }
+
+}
+</code></pre><p>新增对第二数据源的JPA配置，内容与第一数据源类似，具体如下，SecondaryConfig：</p>
+<pre><code>@Configuration
+@EnableTransactionManagement
+@EnableJpaRepositories(
+        entityManagerFactoryRef=&quot;entityManagerFactorySecondary&quot;,
+        transactionManagerRef=&quot;transactionManagerSecondary&quot;,
+        basePackages= { &quot;com.didispace.domain.s&quot; }) //设置Repository所在位置
+public class SecondaryConfig {
+
+    @Autowired @Qualifier(&quot;secondaryDataSource&quot;)
+    private DataSource secondaryDataSource;
+
+    @Bean(name = &quot;entityManagerSecondary&quot;)
+    public EntityManager entityManager(EntityManagerFactoryBuilder builder) {
+        return entityManagerFactorySecondary(builder).getObject().createEntityManager();
+    }
+
+    @Bean(name = &quot;entityManagerFactorySecondary&quot;)
+    public LocalContainerEntityManagerFactoryBean entityManagerFactorySecondary (EntityManagerFactoryBuilder builder) {
+        return builder
+                .dataSource(secondaryDataSource)
+                .properties(getVendorProperties(secondaryDataSource))
+                .packages(&quot;com.didispace.domain.s&quot;) //设置实体类所在位置
+                .persistenceUnit(&quot;secondaryPersistenceUnit&quot;)
+                .build();
+    }
+
+    @Autowired
+    private JpaProperties jpaProperties;
+
+    private Map&lt;String, String&gt; getVendorProperties(DataSource dataSource) {
+        return jpaProperties.getHibernateProperties(dataSource);
+    }
+
+    @Bean(name = &quot;transactionManagerSecondary&quot;)
+    PlatformTransactionManager transactionManagerSecondary(EntityManagerFactoryBuilder builder) {
+        return new JpaTransactionManager(entityManagerFactorySecondary(builder).getObject());
+    }
+
+}
+</code></pre><p>完成了以上配置之后，<br>主数据源的实体和数据访问对象位于：com.didispace.domain.p，<br>次数据源的实体和数据访问接口位于：com.didispace.domain.s。</p>
+<p>分别在这两个package下创建各自的实体和数据访问接口</p>
+<p>主数据源下，创建User实体和对应的Repository接口：</p>
+<pre><code>@Entity
+public class User {
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
+    private Integer age;
+
+    public User(){}
+
+    public User(String name, Integer age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    // 省略getter、setter
+
+}
+public interface UserRepository extends JpaRepository&lt;User, Long&gt; {
+
+}
+</code></pre><p>从数据源下，创建Message实体和对应的Repository接口：</p>
+<pre><code>@Entity
+public class Message {
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
+    private String content;
+
+    public Message(){}
+
+    public Message(String name, String content) {
+        this.name = name;
+        this.content = content;
+    }
+
+    // 省略getter、setter
+
+}
+public interface MessageRepository extends JpaRepository&lt;Message, Long&gt; {
+
+}
+</code></pre><p>接下来通过测试用例来验证使用这两个针对不同数据源的配置进行数据操作。</p>
+<pre><code>@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(Application.class)
+public class ApplicationTests {
+
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private MessageRepository messageRepository;
+
+    @Test
+    public void test() throws Exception {
+        //主数据源测试
+        userRepository.save(new User(&quot;aaa&quot;, 10));
+        userRepository.save(new User(&quot;bbb&quot;, 20));
+        userRepository.save(new User(&quot;ccc&quot;, 30));
+        userRepository.save(new User(&quot;ddd&quot;, 40));
+        userRepository.save(new User(&quot;eee&quot;, 50));
+
+        Assert.assertEquals(5, userRepository.findAll().size());
+
+        //从数据源测试
+        messageRepository.save(new Message(&quot;o1&quot;, &quot;aaaaaaaaaa&quot;));
+        messageRepository.save(new Message(&quot;o2&quot;, &quot;bbbbbbbbbb&quot;));
+        messageRepository.save(new Message(&quot;o3&quot;, &quot;cccccccccc&quot;));
+
+        Assert.assertEquals(3, messageRepository.findAll().size());
+
+    }
+
+}
+</code></pre><p>多数据源下的事务管理，只需要只需要通过value属性指定配置的事务管理器名即可，比如上面的PrimaryConfig和SecondaryConfig中配置了transactionManagerRef属性值，我们只要去声明即可：</p>
+<p>@Transactional(value=”transactionManagerPrimary”)</p>
+<p>除了指定不同的事务管理器之后，还能对事务进行隔离级别和传播行为的控制，下面分别详细解释：</p>
+<p>-隔离级别</p>
+<p>隔离级别是指若干个并发的事务之间的隔离程度，与我们开发时候主要相关的场景包括：脏读取、重复读、幻读。</p>
+<p>我们可以看org.springframework.transaction.annotation.Isolation枚举类中定义了五个表示隔离级别的值：</p>
+<pre><code>public enum Isolation {
+    DEFAULT(-1),
+    READ_UNCOMMITTED(1),
+    READ_COMMITTED(2),
+    REPEATABLE_READ(4),
+    SERIALIZABLE(8);
+}
+</code></pre><p>DEFAULT：这是默认值，表示使用底层数据库的默认隔离级别。对大部分数据库而言，通常这值就是：READ_COMMITTED。<br>READ_UNCOMMITTED：该隔离级别表示一个事务可以读取另一个事务修改但还没有提交的数据。该级别不能防止脏读和不可重复读，因此很少使用该隔离级别。<br>READ_COMMITTED：该隔离级别表示一个事务只能读取另一个事务已经提交的数据。该级别可以防止脏读，这也是大多数情况下的推荐值。<br>REPEATABLE_READ：该隔离级别表示一个事务在整个过程中可以多次重复执行某个查询，并且每次返回的记录都相同。即使在多次查询之间有新增的数据满足该查询，这些新增的记录也会被忽略。该级别可以防止脏读和不可重复读。<br>SERIALIZABLE：所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰，也就是说，该级别可以防止脏读、不可重复读以及幻读。但是这将严重影响程序的性能。通常情况下也不会用到该级别。</p>
+<p>指定方法：通过使用isolation属性设置，例如：</p>
+<p>@Transactional(isolation = Isolation.DEFAULT)</p>
+<p>-传播行为</p>
+<p>所谓事务的传播行为是指，如果在开始当前事务之前，一个事务上下文已经存在，此时有若干选项可以指定一个事务性方法的执行行为。</p>
+<p>我们可以看org.springframework.transaction.annotation.Propagation枚举类中定义了6个表示传播行为的枚举值：</p>
+<pre><code>public enum Propagation {
+    REQUIRED(0),
+    SUPPORTS(1),
+    MANDATORY(2),
+    REQUIRES_NEW(3),
+    NOT_SUPPORTED(4),
+    NEVER(5),
+    NESTED(6);
+}
+</code></pre><p>REQUIRED：如果当前存在事务，则加入该事务；如果当前没有事务，则创建一个新的事务。<br>SUPPORTS：如果当前存在事务，则加入该事务；如果当前没有事务，则以非事务的方式继续运行。<br>MANDATORY：如果当前存在事务，则加入该事务；如果当前没有事务，则抛出异常。<br>REQUIRES_NEW：创建一个新的事务，如果当前存在事务，则把当前事务挂起。<br>NOT_SUPPORTED：以非事务方式运行，如果当前存在事务，则把当前事务挂起。<br>NEVER：以非事务方式运行，如果当前存在事务，则抛出异常。<br>NESTED：如果当前存在事务，则创建一个事务作为当前事务的嵌套事务来运行；如果当前没有事务，则该取值等价于REQUIRED。</p>
+<p>指定方法：通过使用propagation属性设置，例如：</p>
+<p>@Transactional(propagation = Propagation.REQUIRED)</p>
+<h2 id="同源数据库的多源支持"><a href="#同源数据库的多源支持" class="headerlink" title="同源数据库的多源支持"></a>同源数据库的多源支持</h2><p>日常项目中因为使用的分布式开发模式，不同的服务有不同的数据源，常常需要在一个项目中使用多个数据源，因此需要配置sping data jpa对多数据源的使用，一般分一下为三步：</p>
 <p>1 配置多数据源<br>2 不同源的实体类放入不同包路径<br>3 声明不同的包路径下使用不同的数据源、事务支持</p>
 <p>参考文章：<a href="https://www.jianshu.com/p/34730e595a8c" target="_blank" rel="noopener">https://www.jianshu.com/p/34730e595a8c</a></p>
-<p> 异构数据库多源支持 </p>
-<p>比如我们的项目中，即需要对mysql的支持，也需要对mongodb的查询等。</p>
+<h2 id="异构数据库多源支持"><a href="#异构数据库多源支持" class="headerlink" title="异构数据库多源支持"></a>异构数据库多源支持</h2><p>比如我们的项目中，即需要对mysql的支持，也需要对mongodb的查询等。</p>
 <p>实体类声明@Entity 关系型数据库支持类型、声明@Document 为mongodb支持类型，不同的数据源使用不同的实体就可以了</p>
 <pre><code>interface PersonRepository extends Repository&lt;Person, Long&gt; {
  …
@@ -693,8 +998,7 @@ public class Person {
 }
 </code></pre><p>也可以通过对不同的包路径进行声明，比如A包路径下使用mysql,B包路径下使用mongoDB</p>
 <p>@EnableJpaRepositories(basePackages = “com.neo.repositories.jpa”)<br>@EnableMongoRepositories(basePackages = “com.neo.repositories.mongo”)<br>interface Configuration { }</p>
-<p> 其它 </p>
-<p>使用枚举</p>
+<h1 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h1><p>使用枚举</p>
 <p>使用枚举的时候，我们希望数据库中存储的是枚举对应的String类型，而不是枚举的索引值，需要在属性上面添加@Enumerated(EnumType.STRING) 注解</p>
 <p>@Enumerated(EnumType.STRING)<br>@Column(nullable = true)<br>private UserType type;<br>不需要和数据库映射的属性</p>
 <p>正常情况下我们在实体类上加入注解@Entity，就会让实体类和表相关连如果其中某个属性我们不需要和数据库来关联只是在展示的时候做计算，只需要加上@Transient属性既可。</p>
@@ -778,6 +1082,10 @@ public class Person {
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/04/22/database-ConnectionPool/" rel="prev" title="数据库连接池性能对比">
+                数据库连接池性能对比 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -860,8 +1168,17 @@ var jiathis_config={
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -880,7 +1197,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-count">53</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -973,6 +1290,22 @@ var jiathis_config={
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#spring-data-jpa"><span class="nav-number">1.</span> <span class="nav-text">spring-data-jpa</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Query注解自定义SQL查询"><span class="nav-number">1.1.</span> <span class="nav-text">Query注解自定义SQL查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预先生成方法（默认自带方法）"><span class="nav-number">1.2.</span> <span class="nav-text">预先生成方法（默认自带方法）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义简单查询"><span class="nav-number">1.3.</span> <span class="nav-text">自定义简单查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复杂查询"><span class="nav-number">1.4.</span> <span class="nav-text">复杂查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分页查询"><span class="nav-number">1.4.1.</span> <span class="nav-text">分页查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#限制查询"><span class="nav-number">1.4.2.</span> <span class="nav-text">限制查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多表查询"><span class="nav-number">1.4.3.</span> <span class="nav-text">多表查询</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#多数据源的支持"><span class="nav-number">2.</span> <span class="nav-text">多数据源的支持</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#同源数据库的多源支持"><span class="nav-number">2.1.</span> <span class="nav-text">同源数据库的多源支持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异构数据库多源支持"><span class="nav-number">2.2.</span> <span class="nav-text">异构数据库多源支持</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其它"><span class="nav-number">3.</span> <span class="nav-text">其它</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -1016,7 +1349,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共200.5k字</span>
+  <span class="post-count">博客全站共209.1k字</span>
 </div>
 
         
