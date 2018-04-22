@@ -114,7 +114,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/03/22/springboot/p4.png">
 <meta property="og:image" content="http://yoursite.com/2018/03/22/springboot/p5.png">
 <meta property="og:image" content="http://yoursite.com/2018/03/22/springboot/aop.png">
-<meta property="og:updated_time" content="2018-04-18T16:18:25.395Z">
+<meta property="og:updated_time" content="2018-04-22T03:44:37.789Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Boot之路(一)--概念介绍及注解配置">
 <meta name="twitter:description" content="Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。也被称为spring的脚手架。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。 spring boot 致力于简洁，让开发者写更少的配置，程序能够更快的运行和启动。它是下一代javaweb框架，并且它是spring cloud（微服务）的基础。(spr">
@@ -1076,6 +1076,14 @@ public class WebLogAspect {
 <p>在@Before中优先执行@Order(5)的内容，再执行@Order(10)的内容<br>在@After和@AfterReturning中优先执行@Order(10)的内容，再执行@Order(5)的内容<br>所以我们可以这样子总结：</p>
 <p>在切入点前的操作，按order的值由小到大执行<br>在切入点后的操作，按order的值由大到小执行</p>
 <p>就是一种像洋葱一样的aop结构，order越小就越外层。。。</p>
+<h1 id="SpringBoot中的事务管理支持"><a href="#SpringBoot中的事务管理支持" class="headerlink" title="SpringBoot中的事务管理支持"></a>SpringBoot中的事务管理支持</h1><p>事务管理的功能模块主要用于业务层，因为业务层要调用持久层组件，实际是对数据读写的多步操作的结合。多步读写操作意味着多步调用持久层，期间每一步的读写操作都不能够错，一旦错就需要全部回滚，之前的所有操作都无效。</p>
+<p>事务的作用就是为了保证用户的每一个操作都是可靠的，事务中的每一步操作都必须成功执行，只要有发生异常就回退到事务开始未进行操作的状态。</p>
+<p>事务管理是Spring框架中最为常用的功能之一，我们在使用Spring Boot开发应用时，大部分情况下也都需要使用事务。（业务层使用）</p>
+<p>在SpringBoot中，持久层组件常用mybatis-spring-boot-starter（Mybatis），spring-boot-starter-jdbc（JDBC）或spring-boot-starter-data-jpa（spring-data-jpa，相当于Hibernate的增强版）这三个持久层技术框架。</p>
+<p>当我们使用了spring-boot-starter-jdbc或spring-boot-starter-data-jpa依赖的时候，框架会自动默认分别注入DataSourceTransactionManager或JpaTransactionManager。所以我们不需要任何额外配置就可以用@Transactional注解进行事务的使用。</p>
+<p>在相应的业务层加上@Transactional即可。</p>
+<p>通常我们在测试的时候，会加上@Rollback来保证每一次测试的独立性，即测试完逻辑代码后直接进行回滚，避免数据污染。</p>
+<p>这些只是事务管理的默认配置，在实际开发中会出现较大较为复杂的项目代码（几十万行的项目？）</p>
 <p>如何学习Spring Boot：<a href="https://www.zhihu.com/question/53729800/answer/255785661" target="_blank" rel="noopener">https://www.zhihu.com/question/53729800/answer/255785661</a></p>
 
       
@@ -1267,7 +1275,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-count">52</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1289,7 +1297,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">47</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1369,7 +1377,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#如何spring-boot快速开发"><span class="nav-number">1.</span> <span class="nav-text">如何spring boot快速开发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Test项目下载"><span class="nav-number">1.1.</span> <span class="nav-text">Test项目下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目目录结构分析"><span class="nav-number">1.2.</span> <span class="nav-text">项目目录结构分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目POM-XML"><span class="nav-number">1.3.</span> <span class="nav-text">项目POM.XML</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#出现的问题及解决方案"><span class="nav-number">1.4.</span> <span class="nav-text">出现的问题及解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何做单元测试"><span class="nav-number">1.5.</span> <span class="nav-text">如何做单元测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于Eclipse的热启动及热部署"><span class="nav-number">1.6.</span> <span class="nav-text">关于Eclipse的热启动及热部署</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于SpringBootApplication的各项注解配置"><span class="nav-number">2.</span> <span class="nav-text">关于SpringBootApplication的各项注解配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义Filter"><span class="nav-number">2.1.</span> <span class="nav-text">自定义Filter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义Property"><span class="nav-number">2.2.</span> <span class="nav-text">自定义Property</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#log配置"><span class="nav-number">2.3.</span> <span class="nav-text">log配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库操作"><span class="nav-number">2.4.</span> <span class="nav-text">数据库操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#thymeleaf模板"><span class="nav-number">2.5.</span> <span class="nav-text">thymeleaf模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WebJars"><span class="nav-number">2.6.</span> <span class="nav-text">WebJars</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于SpringBoot的多环境配置（实际开发）"><span class="nav-number">3.</span> <span class="nav-text">关于SpringBoot的多环境配置（实际开发）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于springboot的AOP"><span class="nav-number">4.</span> <span class="nav-text">关于springboot的AOP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于AOP优化问题"><span class="nav-number">5.</span> <span class="nav-text">关于AOP优化问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#如何spring-boot快速开发"><span class="nav-number">1.</span> <span class="nav-text">如何spring boot快速开发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Test项目下载"><span class="nav-number">1.1.</span> <span class="nav-text">Test项目下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目目录结构分析"><span class="nav-number">1.2.</span> <span class="nav-text">项目目录结构分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目POM-XML"><span class="nav-number">1.3.</span> <span class="nav-text">项目POM.XML</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#出现的问题及解决方案"><span class="nav-number">1.4.</span> <span class="nav-text">出现的问题及解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何做单元测试"><span class="nav-number">1.5.</span> <span class="nav-text">如何做单元测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于Eclipse的热启动及热部署"><span class="nav-number">1.6.</span> <span class="nav-text">关于Eclipse的热启动及热部署</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于SpringBootApplication的各项注解配置"><span class="nav-number">2.</span> <span class="nav-text">关于SpringBootApplication的各项注解配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义Filter"><span class="nav-number">2.1.</span> <span class="nav-text">自定义Filter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义Property"><span class="nav-number">2.2.</span> <span class="nav-text">自定义Property</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#log配置"><span class="nav-number">2.3.</span> <span class="nav-text">log配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库操作"><span class="nav-number">2.4.</span> <span class="nav-text">数据库操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#thymeleaf模板"><span class="nav-number">2.5.</span> <span class="nav-text">thymeleaf模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WebJars"><span class="nav-number">2.6.</span> <span class="nav-text">WebJars</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于SpringBoot的多环境配置（实际开发）"><span class="nav-number">3.</span> <span class="nav-text">关于SpringBoot的多环境配置（实际开发）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于springboot的AOP"><span class="nav-number">4.</span> <span class="nav-text">关于springboot的AOP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于AOP优化问题"><span class="nav-number">5.</span> <span class="nav-text">关于AOP优化问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringBoot中的事务管理支持"><span class="nav-number">6.</span> <span class="nav-text">SpringBoot中的事务管理支持</span></a></li></ol></div>
             
 
           </div>
@@ -1419,7 +1427,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共194.5k字</span>
+  <span class="post-count">博客全站共195.6k字</span>
 </div>
 
         
