@@ -108,7 +108,7 @@
 <meta property="og:site_name" content="Funk Jungle">
 <meta property="og:description" content="spring-data-jpa其实JPA本身并不是一种框架，是一种规范，其全称是Java Persistence API，是是Sun官方提出的Java持久化规范，而他的出现主要是为了简化现有的持久化开发工作和整合ORM技术，并且其是在充分吸收了现有Hibernate，TopLink，JDO等ORM框架的基础上发展而来的，具有易于使用，伸缩性强等优点。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-04-22T06:27:30.915Z">
+<meta property="og:updated_time" content="2018-04-22T06:33:57.746Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="springboot-JPA">
 <meta name="twitter:description" content="spring-data-jpa其实JPA本身并不是一种框架，是一种规范，其全称是Java Persistence API，是是Sun官方提出的Java持久化规范，而他的出现主要是为了简化现有的持久化开发工作和整合ORM技术，并且其是在充分吸收了现有Hibernate，TopLink，JDO等ORM框架的基础上发展而来的，具有易于使用，伸缩性强等优点。">
@@ -524,7 +524,22 @@ UserDto findByUserId(@Param(&quot;userId&quot;) userId);
 <pre><code>@Query(value=&quot;update User set userId = :userId&quot;)
 @Modify
 User findByUserId(@Param(&quot;userId&quot;) userId);
-</code></pre>
+</code></pre><p>3.如果是like（模糊查询），后面的参数需要前面或者后面加”%”，比如下面都对：</p>
+<pre><code>@Query(&quot;select o from UserModel o where o.name like ?1%&quot;)
+public List&lt;UserModel&gt; findByUuidOrAge(String name);
+
+@Query(&quot;select o from UserModel o where o.name like %?1&quot;)
+public List&lt;UserModel&gt; findByUuidOrAge(String name);
+
+@Query(&quot;select o from UserModel o where o.name like %?1%&quot;)
+public List&lt;UserModel&gt; findByUuidOrAge(String name);
+</code></pre><p>当然，这样在传递参数值的时候就可以不加’%’了，当然加了也不会错</p>
+<p>4.还有个很有意思的，就是这个例子：</p>
+<pre><code>@Query(value = &quot;select * from Book b where b.name=?1&quot;, nativeQuery = true)   
+List&lt;Book&gt; findByName(String name);
+此方法sql将会报错(java.lang.IllegalArgumentException)，看出原因了吗,若没看出来，请看下一个例子  
+</code></pre><p>因为指定了nativeQuery = true，即使用原生的sql语句查询。使用java对象’Book’作为表名来查自然是不对的。只需将Book替换为表名book。因为若按数据库方法去查就找不到这张表了。</p>
+
       
     </div>
     
@@ -839,7 +854,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共198.3k字</span>
+  <span class="post-count">博客全站共198.5k字</span>
 </div>
 
         
